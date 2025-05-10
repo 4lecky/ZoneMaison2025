@@ -13,18 +13,20 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../assets/Css/home.css"/>
 </head>
 <body>
-    <nav>
 
-        <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Acerca de</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Contacto</a></li>
-            <li><a href="./crud.php">Usuarios</a></li>
-        </ul>    
-    </nav>
+
+      <nav> 
+        <a href="#" class="nav-link"> Inicio </a>
+        <a href="#" class="nav-link"> Notificaciones </a>
+        <a href="#" class="nav-link"> Parqueaderos </a>
+        <a href="#" class="nav-link"> Reservas </a>
+        <a href="#" class="nav-link"> PQRS </a>
+        <a href="#" class="nav-link"> Notificaciones </a>
+        <a href="./crud.php" class="nav-link"> Usuarios </a>
+      </nav>
     
 </body>
 </html>
