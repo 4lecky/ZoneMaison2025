@@ -1,0 +1,372 @@
+CREATE DATABASE zonemaisons; 
+USE zonemaisons;
+
+/* Tablas */
+
+CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCREMENT,
+    usu_nombre_completo Varchar(60) NOT null,
+    usu_telefono BIGINT (10) NOT NULL,
+    usu_correo Varchar(50) NOT null,
+    usu_password Varchar(30) NOT null,
+	usu_apartamento_residencia  Varchar(100) NOT null,
+	usu_torre_residencia Varchar(100) NOT null,
+	usu_parqueadero_asignado  Varchar(20) NOT null,
+	usu_propiedades  Varchar(100) NOT null,  
+    usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante') NOT null,
+    usu_estado ENUM ('Activo', 'Inactivo') NOT null,
+    PRIMARY KEY (usuario_cc),
+    UNIQUE (usu_correo),
+    UNIQUE (usu_telefono),
+    UNIQUE (usu_apartamento_residencia),
+    UNIQUE (usu_torre_residencia),
+    UNIQUE (usu_parqueadero_asignado),
+    UNIQUE (usu_propiedades)
+);
+                         
+
+CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
+    mor_nombre_usuarios VARCHAR(60),
+    mor_estado ENUM('Pendiente', 'Pagado'),
+    PRIMARY KEY (mor_id));
+                           
+
+CREATE TABLE  if NOT EXISTS tbl_tiempo_mora (tiem_id INT AUTO_INCREMENT,
+    tiem_usuario_cc INT(10),
+    tiem_mor_id INT(10),
+    PRIMARY KEY (tiem_id),
+    FOREIGN KEY (tiem_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
+    FOREIGN KEY (tiem_mor_id) REFERENCES tbl_mora(mor_id));
+    
+  
+
+CREATE TABLE IF NOT EXISTS tbl_area_evento ( area_id INT NOT NULL AUTO_INCREMENT,
+   	area_descripcion VARCHAR(255) NOT NULL,
+    area_estado VARCHAR(50) NOT NULL,
+    area_capacidad INT NOT NULL,
+    area_disponibilidad BOOLEAN NOT NULL,
+    area_costo DECIMAL(10, 2) NOT NULL,
+    area_terminos_condiciones TEXT NOT NULL,
+    area_fotos BLOB,
+    area_videos BLOB,
+    area_link_url VARCHAR(255),
+    area_even_titulo VARCHAR(100),
+    area_even_descripcion TEXT,
+    area_even_lugar VARCHAR(150),
+    area_even_fecha DATE,
+    area_even_hora TIME,
+    PRIMARY KEY (area_id));
+
+
+CREATE TABLE IF NOT EXISTS tbl_reserva ( rese_id INT NOT NULL,
+    rese_descripcion VARCHAR(255) NOT NULL,
+    rese_valor DECIMAL(10, 2) NOT NULL,
+    rese_cantidad INT NOT NULL,
+    rese_impuesto DECIMAL(10, 2) NOT NULL,
+    rese_fecha_inicio DATE NOT NULL,
+    rese_fecha_fin DATE NOT NULL,
+    rese_hora_inicio TIME NOT NULL,
+    rese_hora_fin TIME NOT NULL,
+    rese_area_id INT NOT NULL,
+    rese_usuario_cc INT NOT NULL,
+    PRIMARY KEY (rese_id),
+    FOREIGN KEY (rese_area_id) REFERENCES tbl_area_evento(area_id),
+    FOREIGN KEY (rese_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
+
+
+CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INTEGER (10) NOT null,
+    Paqu_Destinatario VARCHAR (60) NOT null,
+    Paqu_Firma BLOB NOT null,
+    paqu_FechaLlegada DATE NOT null,
+    paqu_usuario_cc INTEGER (10) NOT null, 
+    PRIMARY KEY (Paqu_Id),
+    FOREIGN KEY (paqu_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+
+
+CREATE TABLE IF NOT EXISTS tbl_notificaciones (noti_Id Integer NOT null,
+    Noti_Fecha date NOT null,
+    Noti_Descripción text NOT null,
+    Noti_Contenido text NOT null,
+    Noti_Paqu_Id INTEGER (10) NOT null,
+    Noti_usuario_cc Integer NOT null,        
+    PRIMARY KEY (noti_Id),
+    FOREIGN KEY (Noti_Paqu_Id) REFERENCES tbl_paquetes (Paqu_Id),
+    FOREIGN KEY (Noti_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
+
+
+CREATE TABLE IF NOT EXISTS tbl_novedades (Nove_Id INTEGER (10) NOT null,
+    Nove_Fecha DATE NOT null,
+    Nove_ImageNovedades BLOB NOT null,
+    Nove_Novedades TEXT NOT null,
+    Nove_noti_Id Integer NOT null,
+    PRIMARY KEY (Nove_Id),
+    FOREIGN KEY (Nove_noti_Id) REFERENCES tbl_notificaciones (noti_Id));
+
+
+CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
+    vis_hora_inicio TIME,
+    vis_hora_salida TIME,
+    vis_fecha_entrada DATE,
+    vis_fecha_salida DATE,
+    vis_usuario_cc INT (10),
+    PRIMARY KEY (vis_id),
+    FOREIGN KEY (vis_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+
+
+CREATE TABLE if NOt EXISTS Tbl_Visitante ( visi_id INT AUTO_INCREMENT,
+    visi_nombre VARCHAR(100) NOT NULL,
+    visi_documento VARCHAR(20) NOT NULL,
+    visi_reporte VARCHAR (20) NOT NULL,
+    visi_telefono BIGINT (20) NOT NULL,
+    visi_vis_id INT,
+    PRIMARY KEY (visi_id),
+    FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id));
+                                            
+                                          
+CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT ,
+    parq_estado VARCHAR (200) NOT NULL,
+    parq_vehi_placa VARCHAR (6) NOT NULL,
+    parq_vehi_modelo VARCHAR (50) NOT NULL,
+    parq_vehi_color VARCHAR (30) NOT NULL,
+    parq_vehi_estadiIngreso VARCHAR (90) NOT NULL,
+    parq_vehi_alqu_id INT (30) NOT NULL,
+    parq_usuario_cc INT (10) NOT NULL,
+    PRIMARY KEY (parq_id),
+    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+                           
+
+CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
+    alqu_horaSalida DATE NOT NULL,
+    alqu_fechaSalida DATE NOT NULL,
+    alqu_observaciones VARCHAR (30000) NOT NULL,
+    alqu_impuesto FLOAT (2) NOT NULL,
+    alqu_precio FLOAT (2) NOT NULL,
+    alqu_fechaIngreso DATE NOT NULL,
+    alqu_horaIngreso DATE NOT NULL,
+    alqu_mult_id INT (20),
+    alqu_mult_valor FLOAT (2),
+    alqu_mult_fecha DATE,
+    alqu_mult_vigencia DATE,
+    alqu_mult_dercripcion VARCHAR (30000),
+    alqu_mult_alqu_id INT (30),
+    alqu_vis_id INT (10) NOT NULL,
+    PRIMARY KEY (alqu_id),
+    FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
+
+
+CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
+    desg_parq_id INT (20) NOT NULL,
+    desg_alqu_id INT (20) NOT NULL,
+    PRIMARY KEY (desg_id),
+    FOREIGN KEY (desg_parq_id) REFERENCES tbl_parqueadero (parq_id),
+    FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));
+                           
+
+CREATE TABLE tbl_PQRS (pqr_id INT AUTO_INCREMENT,
+  	pqr_descripcion VARCHAR(100) NOT NULL,
+    pqr_fecha_creacion DATE NOT NULL,
+  	pqr_fecha_respuesta DATE NOT NULL,
+  	pqr_estado ENUM('sugerencia', 'peticion', 'queja', 'reclamo') NOT NULL,
+  	pqr_est_id INT(10),
+  	pqr_regis_id INT,
+  	PRIMARY KEY (pqr_id));
+
+
+
+CREATE TABLE tbl_Registrar (regis_id INT AUTO_INCREMENT PRIMARY KEY,
+    regis_usuario_cc INT,
+    regis_pqr_id INT,
+    FOREIGN KEY (regis_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
+    FOREIGN KEY (regis_pqr_id) REFERENCES tbl_PQRS(pqr_id));
+
+
+
+CREATE TABLE tbl_Archivos (arch_id INT AUTO_INCREMENT,
+    arch_nombre VARCHAR(255) NOT NULL,
+  	arch_tipo VARCHAR(100) NOT NULL,
+    arch_ruta VARCHAR(255) NOT NULL,
+    arch_pqr_id INT,
+  	PRIMARY KEY (arch_id),
+ 	FOREIGN KEY (arch_pqr_id) REFERENCES tbl_PQRS(pqr_id));
+
+
+
+
+
+
+
+
+    
+
+/* Inserts */
+
+INSERT INTO tbl_mora (mor_id, mor_nombre_usuarios, mor_estado)
+VALUES (NULL, 'Luis Rodriguez', 'Pendiente'),
+(NULL, 'Carlos Perez', 'Pagado'),
+(NULL,'Maria Lopez','Pendiente');
+
+
+INSERT INTO tbl_tiempo_mora (tiem_id, tiem_usuario_cc,tiem_mor_id)
+VALUES (NULL, 2, 1),
+(NULL, 5, 2),
+(NULL, 3, 3);
+
+
+INSERT INTO tbl_area_evento (area_id, area_descripcion, area_estado, area_capacidad, area_disponibilidad, area_costo, area_terminos_condiciones, area_fotos, area_videos, area_link_url, area_even_titulo, area_even_descripcion, area_even_lugar, area_even_fecha, area_even_hora)
+VALUES (1, 'Salón Social', 'Disponible', 50, TRUE, 150.00, 'Uso exclusivo para residentes', NULL, NULL, 'http://example.com/salon', 'Fiesta de Año Nuevo', 'Celebración del Año Nuevo', 'Salón Social', '2024-12-31', '20:00:00'),
+       (2, 'Gimnasio', 'Disponible', 20, TRUE, 100.00, 'Reservas para máximo 2 horas', NULL, NULL, 'http://example.com/gym', 'Clase de Yoga', 'Clase de Yoga para todos los niveles', 'Gimnasio', '2024-09-15', '07:00:00'),
+       (3, 'Piscina', 'En mantenimiento', 30, FALSE, 0.00, 'No disponible temporalmente', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+       (4, 'Cancha de Tenis', 'Disponible', 4, TRUE, 80.00, 'Reservas de 1 hora máximo', NULL, NULL, 'http://example.com/tenis', 'Torneo de Tenis', 'Torneo interno para residentes', 'Cancha de Tenis', '2024-10-10', '09:00:00'),
+       (5, 'Auditorio', 'Disponible', 100, TRUE, 300.00, 'Reservas para eventos corporativos', NULL, NULL, 'http://example.com/auditorio', 'Conferencia de Tecnología', 'Evento de tecnología para residentes', 'Auditorio', '2024-11-20', '10:00:00');
+
+
+
+
+INSERT INTO tbl_reserva (rese_id, rese_descripcion, rese_valor, rese_cantidad, rese_impuesto, rese_fecha_inicio, rese_fecha_fin, rese_hora_inicio, rese_hora_fin, rese_area_id, rese_usuario_cc)
+VALUES (1, 'Reserva para Fiesta de Año Nuevo', 150.00, 1, 15.00, '2024-12-31', '2025-01-01', '20:00:00', '02:00:00',1,1),
+       (2, 'Reserva para Clase de Yoga', 100.00, 10, 10.00, '2024-09-15', '2024-09-15', '07:00:00', '08:00:00',2,2),
+       (3, 'Reserva para Torneo de Tenis', 80.00, 1, 8.00, '2024-10-10', '2024-10-10', '09:00:00', '10:00:00',4,3),
+       (4, 'Reserva para Conferencia de Tecnología', 300.00, 50, 30.00, '2024-11-20', '2024-11-20', '10:00:00', '13:00:00',5,2),
+       (5, 'Reserva de Gimnasio', 100.00, 1, 10.00, '2024-09-15', '2024-09-15', '07:00:00', '09:00:00',2,1);
+
+
+
+
+insert into tbl_paquetes (Paqu_Id,Paqu_Destinatario,Paqu_Firma,paqu_FechaLlegada,paqu_usuario_cc) 
+values ("11100","Juan Perez","[firma]","2024-10-02",6),
+("22200","Luis Rodriguez","[firma]","2024-10-07",7), 
+("33300","Maria Lopez","[firma]",'2024-10-08',8),
+("44400","Luis Rodriguez","[firma]","2024-10-09",7),
+("55500","Carlos Perez","[firma]","2024-10-15",10);
+
+
+
+
+insert into tbl_notificaciones 
+(noti_id,Noti_Fecha,Noti_Descripción,Noti_Contenido,Noti_Paqu_id,Noti_usuario_cc)
+values (12,"2024-09-03","!Importante¡","Próximamente se iniciará el mantenimiento de las aéreas verdes del conjunto","11100",6),
+(13,"2024-09-10","Paquete Recibido","Ha llegado un paquete para usted en la recepción.","22200",7),
+(14,"2024-09-10","Mantenimiento Programado","El mantenimiento del ascensor se realizará el 10 de septiembre. El servicio estará interrumpido de 8:00 a 12:00.","33300",8),
+(15,"2024-09-19","Evento:","La junta comenzará en 30 minutos en el salón comunal.","44400",8),
+(16,"2024-09-25","Alerta de Seguridad:","Se ha reportado un corte de energía en el bloque C.","55500",10);
+
+
+
+
+insert into tbl_novedades 
+(Nove_Id,Nove_Fecha,Nove_ImageNovedades,Nove_Novedades,Nove_noti_id) 
+values (21,"2024-09-03","[imagen]","Estimados residentes, Les informamos que el próximo lunes 6 de septiembre se llevará a cabo el mantenimiento de las áreas verdes del conjunto. Durante ese día, las áreas comunes estarán cerradas desde las 8:00 a.m. hasta las 4:00 p.m. Les pedimos amablemente que eviten el uso de estas áreas durante ese período para garantizar un trabajo eficiente.
+
+Para cualquier pregunta o inconveniente, por favor, contacten a la administración
+
+Agradecemos su comprensión y cooperación.
+
+Atentamente,
+[Nombre del Responsable]
+Administración del Conjunto Residencial [Nombre conjunto residencial]",12),
+
+(31,"2024-09-01","[imagen]","Recordatorio de Pago de Cuotas
+Estimados Residentes, Este es un recordatorio de que la fecha límite para el pago de las cuotas de mantenimiento del mes de octubre es el próximo lunes 15 de septiembre. Les solicitamos que realicen el pago a tiempo para evitar recargos por demora y garantizar la continuidad en los servicios del conjunto.
+
+Para realizar el pago, pueden hacerlo en la oficina administrativa durante el horario de atención.
+
+Agradecemos su atención a este asunto.
+
+Atentamente,
+[Nombre del Responsable] 
+Administrador del Conjunto Residencial [Nombre conjunto residencial]",13),
+
+(41,"2024-09-15","[imagen]","Reunión
+Estimados Residentes, Se convoca a todos los residentes a la próxima reunión de la Junta de Propietarios que se celebrará el jueves 19 de septiembre a las 7:00 p.m. en el salón de comunal del conjunto.
+
+En esta reunión se discutirán temas importantes, incluyendo el presupuesto para el próximo año y proyectos de mejora para las instalaciones comunes. Su participación es fundamental para asegurar una gestión efectiva del conjunto.
+
+Esperamos contar con su presencia.
+
+Atentamente,
+[Nombre del Responsable]
+Administrador del Conjunto Residencial [Nombre conjunto residencial]",14),
+
+(51,"2024-09-23","[imagen]","Cambio en el Horario de Recolección de Basura
+Estimados Residentes,Les informamos que a partir del 1 de octubre, el horario de recolección de basura en nuestro conjunto cambiará. El nuevo horario será los lunes, miércoles y viernes entre las 7:00 a.m. y las 9:00 a.m.
+
+Este ajuste tiene como objetivo mejorar la eficiencia del servicio y garantizar que la recolección se realice de manera oportuna. Les pedimos que coloquen sus desechos en los puntos designados antes de las 7:00 a.m. para asegurar que sean recogidos a tiempo.
+
+Para cualquier pregunta, pueden contactar a la administración
+
+Atentamente,
+[Nombre del Responsable]
+Administrador del Conjunto Residencial [Nombre conjunto residencial]",15),
+
+(61,"2024-09-20","[imagen]","Reapertura de Área Recreativa
+Estimados Residentes, Nos complace informarles que el área recreativa del conjunto, que estuvo cerrada por renovación, reabrirá el próximo sábado 23 de septiembre. Las nuevas instalaciones incluyen una zona de juegos actualizada.
+
+La inauguración oficial será a las 10:00 a.m., y todos están invitados a asistir y disfrutar de las nuevas mejoras.
+
+Para cualquier duda o consulta, pueden contactar a la administración
+ 
+Esperamos verlos en la inauguración.
+
+Atentamente,
+[Nombre del Responsable]
+Administrador del Conjunto Residencial [Nombre conjunto residencial]",16);
+
+
+INSERT INTO tbl_visita (vis_id,vis_hora_inicio, vis_hora_salida, vis_fecha_entrada, vis_fecha_salida, vis_usuario_id)
+VALUES (null,'08:00:00', '09:00:00', '2024-09-01', '2024-09-01', 6),
+       (null,'10:00:00', '11:00:00', '2024-09-02', '2024-09-02', 7),
+       (null,'14:00:00', '15:00:00', '2024-09-03', '2024-09-03', 8),
+       (null,'09:00:00', '10:00:00', '2024-09-04', '2024-09-04', 10),
+       (null,'13:00:00', '14:00:00', '2024-09-05', '2024-09-05', 6);
+
+
+
+INSERT INTO Tbl_Visitante (visi_id,visi_nombre, visi_documento, visi_reporte, visi_telefono, visi_vis_id)
+VALUES (null,'Carlos Pérez', '1234567890', 'Ninguno',3001234567,1),
+       (null,'Ana Martinez', '2345678901', 'Informe de visita',3002345678,2),
+       (null,'Luis Rodríguez', '3456789012', 'Visita de inspección',3003456789,3),
+       (null,'María López', '4567890123', 'Visita programada',3004567890,4),
+       (null,'Pedro Gomez', '5678901234', 'Visita de cortesía',3005678901,5);
+
+
+INSERT INTO tbl_parqueadero (parq_id, parq_estado, parq_vehi_placa, parq_vehi_modelo, parq_vehi_color, parq_vehi_estadiIngreso, parq_vehi_alqu_id, parq_usuario_cc)
+VALUES  (NULL, "Buenas condiciones", "AAA-123", "BMW X3 xDriv (2018)", "Rojo", "Ingreso en buenas condiciones", 1, 1),
+	(NULL, "Medianas condiciones", "DOL-159", "Infiniti QX50 (2019)", "Gris", "Ingreso con abolladura en la puerta derecha", 2, 2),
+	(NULL, "Malas condiciones", "BMX-672", "Volkswagen Taos (2015)", "Azul", "Ingreso sin bobilla led derecha", 3, 3),
+	(NULL, "Buenas condiciones", "ZKS-904", "Nissan Sentra (2012)", "Negro", "Ingreso en buenas condiciones", 4, 4);
+
+INSERT INTO tbl_alquiler (alqu_id, alqu_horaSalida, alqu_fechaSalida, alqu_observaciones, alqu_impuesto, alqu_precio, alqu_fechaIngreso, alqu_horaIngreso, alqu_mult_id, alqu_mult_valor, alqu_mult_fecha, alqu_mult_vigencia, alqu_mult_dercripcion, alqu_mult_alqu_id,alqu_vis_id )
+VALUES (NULL, '16:30:00', '2024-15-03', "No supero limite de tiempo", 20.00, 50.00, '2024-15-03', '16:00:00', 000, 00.00,  '2024-15-03', '2024-15-03', "No aplica, cumplio con las horas establecidas", 024, 1),
+	(NULL, '18:00:00', '2024-31-09', "Supero limite de tiempo", 10.00, 40.00, '2024-31-09', '07:00:00', 023, 20.00, '2024-31-09', '2024-31-09', "Si aplica, no cumplio con las horas establecidas", 000, 2),
+	(NULL, '15:30:00', '2024-22-05', "No supero limite de tiempo", 15.00, 45.00, '2024-22-05', '05:00:00', 000, 00.00,  '2024-22-05', '2024-22-05', "No aplica, cumplio con las horas establecidas", 000, 3),
+	(NULL, '12:00:00', '2024-03-12', "Supero limite de tiempo", 25.00, 60.00, '2024-03-12', '11:00:00', 009, 10.00, '2024-03-12', '2024-03-12', "Si aplica, no cumplio con las horas establecidas", 009, 4),
+	(NULL, '13:00:00', '2024-12-11', "No supero limite de tiempo", 30.00, 80.00, '2024-12-11', '10:00:00', 000, 00.00, '2024-12-11', '2024-12-11', "No aplica, cumplio con las horas establecidas", 000, 5); 
+
+INSERT INTO tbl_designacion (desg_id, desg_parq_id, desg_alqu_id) 	VALUES (001, 1, 6),
+							(002, 2, 7),
+							(003, 3, 8),
+							(004, 4, 9);
+
+
+INSERT INTO tbl_PQRS (pqr_id, pqr_descripcion, pqr_fecha_creacion, pqr_fecha_respuesta, pqr_estado, pqr_est_id, pqr_regis_id)
+VALUES (null, 'Problema con la puerta de entrada', '2024-09-01', '2024-09-05', 'reclamo', 1,1),
+(null, 'Solicitud de mejora de jardines', '2024-09-02', '2024-09-06', 'peticion', 2,2),
+(null, 'Queja por ruido excesivo', '2024-09-03', '2024-09-07', 'queja', 3,3),
+(null, 'Revisión de luces en áreas comunes', '2024-09-04', '2024-09-08', 'sugerencia', 4,4),
+(null, 'Reclamo por retraso en mantenimiento', '2024-09-05', '2024-09-09', 'reclamo', 5,5);
+
+
+INSERT INTO tbl_registrar (regis_id,regis_usuario_id, regis_pqr_id)
+VALUES (null,7,1),
+       (null,8,2),
+       (null,6,3),
+       (null,10,4),
+       (null,10,5);
+
+
+
+INSERT INTO tbl_Archivos (arch_id, arch_nombre, arch_tipo, arch_ruta, arch_pqr_id)
+VALUES (1, 'PuertaEntrada.jpg', 'imagen', '/archivos/PuertaEntrada.jpg',1),
+(2, 'MejoraJardines.docx', 'documento', '/archivos/MejoraJardines.docx',2),
+(3, 'RuidoExcesivo.mp3', 'video', '/archivos/RuidoExcesivo.mp3',3),
+(4, 'RevisiónLuces.pdf', 'documento', '/archivos/RevisiónLuces.pdf',4),
+(5, 'RetrasoMantenimiento.pdf', 'documento', '/archivos/RetrasoMantenimiento.pdf',5);

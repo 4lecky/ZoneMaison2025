@@ -1,0 +1,49 @@
+header{ 
+
+    display: flex;
+    margin: auto;
+    width: 100%;
+    padding-bottom: 30px;
+    padding-top: 5px;
+  }
+  
+  
+  header .logo-ZM{
+    width: 20%;
+    /* background-color: bisque; */
+  }
+  
+  header .Logo{
+    width: 250px;
+    height: 90px;
+    top: 18px;
+    margin-left: 30px;
+  }
+  
+  header .Titulo {
+    width: 60%;
+   /* background-color: rgb(153, 16, 178); */
+    display: flex;
+    justify-content: center;
+  }
+  
+  header .LogoT {
+
+    margin-top: 20px;
+    width: 400px;
+    height: 70px;
+  }
+  
+  header .menu {
+    width: 20%;
+    display: flex;
+    justify-content: right;
+    margin-right: 30px;
+    margin-top: 20px;
+  }
+  
+  header .IconoMenu{
+
+    width: 80px;
+    height: 70px;
+  }
