@@ -18,21 +18,21 @@ if (!isset($_GET['cc']) || empty($_GET['cc'])) {
 $cc = $_GET['cc'];
 
 // Usar consultas preparadas para evitar inyección SQL
-$stmt = $conexion->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = ?");
-if (!$stmt) {
-    echo "Error en la preparación de la consulta: " . $conexion->error;
-    exit;
-}
+// $stmt = $conexion->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = ?");
+// if (!$stmt) {
+//     echo "Error en la preparación de la consulta: " . $conexion->error;
+//     exit;
+// }
 
-$stmt->bind_param("i", $cc); // "i" para entero (int) ya que usuario_cc es int(10)
-$stmt->execute();
-$result = $stmt->get_result();
+// $stmt->bind_param("i", $cc); // "i" para entero (int) ya que usuario_cc es int(10)
+// $stmt->execute();
+// $result = $stmt->get_result();
 
-// Verificar si la consulta fue exitosa
-if (!$result) {
-    echo "Error al ejecutar la consulta: " . $stmt->error;
-    exit;
-}
+// // Verificar si la consulta fue exitosa
+// if (!$result) {
+//     echo "Error al ejecutar la consulta: " . $stmt->error;
+//     exit;
+// }
 
 // Verificar si se encontraron resultados
 if ($result->num_rows === 0) {

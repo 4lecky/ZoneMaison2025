@@ -16,11 +16,7 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCRE
     usu_estado ENUM ('Activo', 'Inactivo') NOT null,
     PRIMARY KEY (usuario_cc),
     UNIQUE (usu_correo),
-    UNIQUE (usu_telefono),
-    UNIQUE (usu_apartamento_residencia),
-    UNIQUE (usu_torre_residencia),
-    UNIQUE (usu_parqueadero_asignado),
-    UNIQUE (usu_propiedades)
+    UNIQUE (usu_telefono)
 );
                          
 

@@ -8,8 +8,8 @@ document.getElementById('formulario_ingreso').addEventListener('submit', functio
         e.preventDefault();
     }
 
-    if (password.trim().length < 7) {
-        alert("La contraseña debe tener al menos 8 caracteres");
+    if (password.trim().length < 6) {
+        alert("La contraseña debe tener al menos 8 caracteres.");
         e.preventDefault();
     }
 });

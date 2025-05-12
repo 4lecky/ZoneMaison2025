@@ -21,10 +21,10 @@ window.addEventListener("DOMContentLoaded",(event)  => {
         }
     
         const Password = this.Password.value;
-        let expresionRegularPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,10}$/gm;
+        let expresionRegularPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     
         if (expresionRegularPassword.test(Password)==false) {
-            alert("La contraseña no cumple. Debe contener mayúsculas, minúsculas, números y debe ser minimo de 8 caracteres");
+            alert("La contraseña debe tener al entre 8 y 10 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos");
             e.preventDefault();
         }
     });
