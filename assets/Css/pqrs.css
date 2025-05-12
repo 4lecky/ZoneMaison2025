@@ -1,0 +1,1171 @@
+/* ======================= */
+/*    INDEX - PÁGINA INICIO   */
+/* ======================= */
+
+/* Elimina márgenes y padding predeterminados de todos los elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Evita que width y height se vean afectados por padding y border */
+    font-family: Arial, sans-serif; /* Fuente predeterminada */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* Configuración general del cuerpo */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #f1f1f1 20%, #b4d2c5 100%, #7b9a82 40%);
+    max-width: 100%; /* Mantiene tu control de ancho */
+    overflow-x: hidden; /* Mantiene la prevención de scroll horizontal */
+    background-color: #f9f9f9; /* Conserva tu fondo gris claro */
+}
+
+
+/* 
+==================
+ESTILOS DEL HEADER
+==================
+*/
+
+/* Contenedor principal del header */
+header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0; /* Línea sutil debajo del header */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para separación */
+    position: relative;
+    height: 110px;
+}
+
+/* Logo alineado a la izquierda */
+.logo-container {
+    position: absolute;
+    left: 15px;
+    flex-shrink: 0; /* Evita que el logo se reduzca */
+
+}
+
+/* Configuración del logo */
+.logo {
+    width: 130px; /* Tamaño del logo */
+    height: auto; /* Mantiene la proporción */
+}
+
+/* Estilos del título principal */
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: underline;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+/* 
+=======================
+ESTILOS DE LA NAVEGACIÓN
+=======================
+*/
+
+/* Barra de navegación principal */
+.main-nav {
+    background-color: #7b9a82; /* Verde oscuro */
+    padding: 12px 0;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5); 
+    position: relative; /* Asegura que la sombra se dibuje correctamente */
+    z-index: 10; /* Asegura que esté sobre otros elementos */
+}
+
+
+/* Contenedor de los elementos de la navegación */
+.main-nav ul {
+    display: flex;
+    justify-content: space-around; /* Espacia los elementos uniformemente */
+    list-style: none; /* Elimina los estilos de lista */
+    max-width: 800px; /* Limita el ancho máximo de la navegación */
+    margin: 0 auto; /* Centra la barra de navegación */
+}
+
+/* Estilos de los enlaces de navegación */
+.main-nav a {
+    color: white; /* Texto blanco */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 25px;
+    padding: 5px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease; /* Efecto suave en el hover */
+}
+
+/* Efecto al pasar el mouse sobre los enlaces */
+.main-nav a:hover {
+    background-color: rgba(255,255,255,0.2); /* Fondo blanco semitransparente */
+}
+
+/* 
+=====================
+ESTILOS DEL FONDO
+=====================
+*/
+
+/* Contenedor principal del fondo */
+.fondo-container {
+    position: relative;
+    width: 100vw; /* 80% del ancho de la pantalla */
+    min-height: 100vh;
+    background-image: url('../img/fondo.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    
+    margin: 0 auto; /* Centra el contenedor automáticamente */
+    box-shadow: 
+        inset -10px 0px 30px rgba(0, 0, 0, 0.5),
+        inset 10px 0px 30px rgba(0, 0, 0, 0.5),
+        -15px 0px 50px rgba(0, 0, 0, 0.6),
+        8px 0px 30px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 640px) {
+    .fondo-container {
+        width: 100vw; /* En móviles el fondo se expande al ancho total */
+        box-shadow: none; /* Opcional: puedes quitar las sombras si molestan en móvil */
+    }
+}
+
+.titulo-container {
+    position: absolute; /* Lo coloca sobre la imagen */
+    top: 20%; /* Ajusta según la posición deseada (mantén tu valor para la posición vertical) */
+    left: 50%; /* Lo coloca al 50% desde el lado izquierdo */
+    color: aliceblue;
+    font-family: KAVOON;
+    transform: translateX(-45%); /* Solo centra horizontalmente */
+    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 8px;
+    z-index: 10; /* Asegura que esté por encima de la imagen */
+
+
+
+}
+
+/* 
+=========================
+ESTILOS DEL TEXTO SOBRE EL FONDO
+=========================
+*/
+/* NUEVO: contenedor central que limita el ancho en pantallas grandes */
+/* Limita el ancho general en pantallas grandes */
+.contenedor-limitado {
+    max-width: 700px;  /* Ajusta el ancho máximo de las opciones */
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px; /* Espacio lateral para móviles */
+    text-align: center; /* Centra el texto y elementos inline */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos flex horizontalmente */
+    justify-content: center; /* Si quieres centrado vertical también */
+}
+
+.opciones-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 80px;
+    margin: 140px auto 55px auto;
+    justify-items: center;
+    width: 100%; /* Para que en móvil use todo el ancho */
+    padding: 0 20px; /* Un poco de espacio lateral en móviles */
+}
+
+/* Cada opción */
+.opcion {
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+a.opcion {
+  text-decoration: none;      /* quita el subrayado */
+  color: inherit;             /* mantiene el color original */
+  display: block;             /* asegura que se comporte como div */
+}
+
+
+/* Imagen ocupa casi todo el bloque */
+.opcion img {
+    width: 100%;
+    height: 245px;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+/* Texto como pie */
+.opcion p {
+    font-weight: bold;
+    font-size: 22px;
+    color: #333;
+    margin: 6px 0 0;
+    padding: 6px 10px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* NUEVO: adaptamos para móviles */
+@media (max-width: 640px) {
+    .opciones-container {
+        max-width: 100%;
+        gap: 20px;
+    }
+
+    .opcion {
+        width: 90%;
+        height: auto;
+    }
+
+    .opcion img {
+        height: 180px;
+    }
+}
+
+/* Efecto al pasar el mouse sobre la opción */
+.opcion:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+
+
+/* Efecto al pasar el mouse sobre la opción */
+.opcion:hover {
+    transform: scale(1.05);
+}
+
+
+
+/* Estilos del modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Contenido del modal */
+.modal-content {
+    background: rgb(252, 244, 219);
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón para cerrar el modal */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Estilos generales del botón */
+.btn {
+    background-color: #7b9a82;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+.btn:hover {
+    background-color: #5a7b62;
+}
+
+.texto-container {
+    position: relative;
+    width: 100%;             
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.3s;
+    background: rgb(248, 246, 241);
+    background-position: center;        
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
+    font-family: KAVOON;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    line-height: 1.5;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contenedor principal ajustado */
+.inquietudes-container {
+    flex: 1;
+    background: linear-gradient(to bottom, #b4d2c5, #f1f1f1);
+    padding: 90px 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Título */
+.inquietudes-container h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #1f1f1f;
+    font-family: 'Kavoon', cursive;
+}
+
+/* Preguntas */
+.faq-item {
+    background-color: #fff;
+    border: 3px solid #1d6b38;
+    border-radius: 8px;
+    max-width: 860px;
+    margin: 15px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Botón de pregunta */
+.faq-question {
+    width: 100%;
+    background-color: #fefefe;
+    border: none;
+    padding: 16px 20px;
+    font-size: 23px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 620;
+    color: #1f1f1f;
+}
+
+.faq-question:hover {
+    background-color: #f0f0f0;
+}
+
+/* Flechita */
+.arrow {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* Respuesta oculta */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    background-color: #ffffff;
+    border-left: 4px solid #b1ffb1;
+    font-size: 19px;
+    border-radius: 0 0 8px 8px;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mostrar respuesta */
+.faq-item.active .faq-answer {
+    max-height: 300px;
+    padding: 20px;
+}
+
+.faq-item.active .arrow {
+    transform: rotate(180deg);
+}
+
+/* Footer */
+/* Definir variables CSS */
+:root {
+  --color-dark: #333;
+  --color-light: #eee;
+  --color-accent: #4CAF50;
+  --color-primary: #2196F3;
+}
+
+/* Seleccionar correctamente el footer */
+.footer {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  margin-top: 30px;
+  background-color: var(--color-dark);
+  padding: 40px 0;
+}
+
+
+/* Container para centrar el contenido */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  flex-basis: 30%;
+  margin-bottom: 30px;
+}
+
+.footer-col h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: var(--color-light);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--color-accent);
+}
+
+.social-links {
+  margin-top: 20px;
+  display: flex;
+}
+
+.social-links a {
+  color: white;
+  margin-right: 15px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer-col {
+    flex-basis: 100%;
+  }
+}
+/* Fin estilos index.html */
+
+
+
+
+
+
+/* Inicio estilos crear_pqr.html */
+
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+h1, h2, h3 {
+  color: #2e7d32;
+}
+
+.titulo-principal h1 {
+  text-align: center;
+  margin-top: 60px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.404);
+  font-family: 'Lucida Sans Unicode';
+  color: rgb(0, 0, 0);
+  font-size: 35px;
+  border-radius: 8px;
+
+
+  /* Subrayado decorativo */
+  text-decoration: underline;
+  text-decoration-color: rgb(20, 114, 7);
+  text-decoration-style: dashed;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 6px;
+}
+
+/* ====== FORMULARIO PQR ====== */
+.formulario-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+  top: 15px;
+}
+
+.form-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.form-subtitle,
+.campo-obligatorio {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 13px;
+
+
+}
+
+.formulario-pqr {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.formulario-pqr {
+  position: relative;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  top: 20px;
+}
+
+.formulario-pqr input,
+.formulario-pqr select,
+.formulario-pqr textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+}
+
+.formulario-pqr input:hover,
+.formulario-pqr select:hover,
+.formulario-pqr textarea:hover {
+  border-color: #2e7d32;
+  box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+}
+
+.textarea-grande {
+  grid-column: span 2;
+}
+
+.archivo-row label {
+  font-weight: bold;
+}
+
+.medios-respuesta {
+  grid-column: span 2;
+  margin-top: 1rem;
+}
+
+.medios-respuesta p {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.checkbox-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #007f5f; /* Cambia el color del checkbox al marcar */
+}
+
+
+
+.boton-envio {
+  grid-column: span 2;
+  text-align: center;
+  position: relative;
+  bottom: 9px;
+}
+
+.boton-envio button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.boton-envio button:hover {
+  background-color: #1b5e20;
+}
+
+/* ====== SECCIÓN VISUAL EXTRAS ====== */
+.extras-visuales {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.icono-pqr {
+  flex: 1 1 250px;
+  text-align: center;
+}
+
+.icono-pqr img {
+  width: 90px;
+  margin-bottom: 10px;
+  animation: levitar 2.5s ease-in-out infinite;
+}
+
+.icono-pqr p {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.frase-destacada {
+  flex: 1 1 300px;
+  background-color: #e8f5e9;
+  padding: 20px;
+  border-left: 5px solid #2e7d32;
+  font-style: italic;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}
+
+.img-ilustrativa {
+  flex: 1 1 250px;
+  text-align: center;
+}
+
+.img-ilustrativa img {
+  width: 100px;
+  opacity: 0.9;
+  animation: rebotar 3s infinite ease-in-out;
+}
+
+/* ====== TESTIMONIOS ====== */
+.testimonios {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+}
+
+.testimonios h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+.testimonio {
+  background-color: #fff;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #66bb6a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  max-width: 600px;
+  font-style: italic;
+}
+
+.testimonio span {
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* ====== ANIMACIÓN FINAL ====== */
+.animacion-valor {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #c8e6c9;
+  position: relative;
+  overflow: hidden;
+}
+
+.animacion-valor h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #1b5e20;
+}
+
+.ondas {
+  position: absolute;
+  width: 200%;
+  height: 100px;
+  bottom: 0;
+  left: -50%;
+  background: url('https://svgshare.com/i/xdU.svg') repeat-x;
+  animation: onda 8s linear infinite;
+}
+
+/* ====== ANIMACIONES ====== */
+@keyframes levitar {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rebotar {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05);
+  }
+}
+
+@keyframes onda {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 1000px;
+  }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .formulario-pqr {
+    grid-template-columns: 1fr;
+  }
+
+  .textarea-grande,
+  .medios-respuesta,
+  .boton-envio {
+    grid-column: span 1 !important;
+  }
+
+  .extras-visuales {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+
+
+/* Inicio estilos sugerencias.html */
+
+/* Fuente base */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f4f3;
+  color: #2c3e50;
+}
+
+/* Contenedor principal */
+.sugerencias-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px;
+}
+
+/* Header - solo al ancho del texto */
+.header {
+  background-color: #ffffff;
+  padding: 20px 35px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: inline-block;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #2c5a40;
+  white-space: nowrap;
+}
+
+/* Imagen decorativa */
+.ilustracion img {
+  width: 160px;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+/* Frase motivadora */
+.frase-motivadora blockquote {
+  background-color: #dff2e4;
+  border-left: 6px solid #52a075;
+  padding: 20px;
+  border-radius: 10px;
+  font-style: italic;
+  font-size: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #2c3e50;
+}
+
+/* Formulario */
+.formulario-sugerencias {
+  background-color: #ffffff;
+  padding: 50px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-sugerencias h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+  color: #2c5a40;
+}
+
+.formulario-sugerencias form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formulario-sugerencias input,
+.formulario-sugerencias textarea {
+  padding: 15px;
+  border: 1px solid #a1c3b4;
+  border-radius: 10px;
+  font-size: 15px;
+  resize: vertical;
+  background-color: #fefefe;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.formulario-sugerencias input:focus,
+.formulario-sugerencias textarea:focus {
+  border-color: #52a075;
+  box-shadow: 0 0 0 2px rgba(82, 160, 117, 0.2);
+  outline: none;
+}
+
+.formulario-sugerencias textarea {
+  min-height: 150px;
+}
+
+/* Botón */
+.formulario-sugerencias button {
+  background-color: #52a075;
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-sugerencias button:hover {
+  background-color: #2c5a40;
+}
+
+/* Testimonios */
+.testimonios {
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.testimonios h3 {
+  margin-bottom: 25px;
+  font-size: 20px;
+  color: #2c5a40;
+}
+
+.cards-testimonio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  max-width: 280px;
+  flex: 1 1 250px;
+  font-size: 14px;
+}
+
+.card p {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card span {
+  font-weight: 500;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .formulario-sugerencias {
+    padding: 30px 20px;
+  }
+
+  .header {
+    padding: 20px 25px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+}
+
+
+/* Estilos Adminpqrs */
+
+
+.admin-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 95%;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table th {
+  background: #16a085;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background: #ecf0f1;
+}
+
+a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #2980b9;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 
+   Estilos - Vista Admin (editar_pqr.php)
+*/
+.editar-form {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 30px auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.editar-form h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.editar-form label {
+  display: block;
+  margin-top: 15px;
+  color: #34495e;
+}
+
+.editar-form input,
+.editar-form textarea,
+.editar-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.editar-form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #16a085;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.editar-form button:hover {
+  background-color: #138d75;
+}
+
+
+/*
+   Estilos - Vista Admin (ver_pqr.php)
+*/
+.ver-pqr {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 30px auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.ver-pqr h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.ver-pqr .detalle {
+  margin-top: 10px;
+}
+
+.ver-pqr .detalle strong {
+  display: inline-block;
+  width: 150px;
+  color: #34495e;
+}
+
+.ver-pqr .detalle p {
+  margin: 5px 0 15px;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.ver-pqr a.boton-volver {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  background-color: #2980b9;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.ver-pqr a.boton-volver:hover {
+  background-color: #1f618d;
+}
+
