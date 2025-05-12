@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Notificaciones</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../assets/Css/novedades.css">
 </head>
 <body>
 
   <header>
         
     <div class="logo-container">
-        <img src="img/logo.jpeg" alt="Logo de ZONEMAISONS" class="logo">
+      <img src="../assets/img/logoZM.png" alt="Logo de ZONEMAISONS" class="logo" />
         <div class="title-container">
             <h1><strong>ZONE</strong>MAISONS</h1>
             <div class="underline"></div>
@@ -51,7 +51,7 @@
     <section class="muro">
         <h3>Muro</h3>
         <div class="tarjeta">
-            <img src="img/areasverdes.png" alt="Mantenimiento de áreas verdes">
+            <img src="../assets/img/areasverdes.png" alt="Mantenimiento de áreas verdes">
             <div class="contenido">
                 <h4>Próximamente se iniciará el mantenimiento de las áreas verdes del conjunto</h4>
                 <p>Estimados residentes, les informamos que el próximo 15 de septiembre...</p>
@@ -72,7 +72,7 @@
 </div>
 
         <div class="tarjeta">
-            <img src="img/pay.png" alt="Pago de cuotas">
+            <img src="../assets/img/pay.png" alt="Pago de cuotas">
             <div class="contenido">
                 <h4>Recordatorio de Pago de Cuotas</h4>
                 <p>Estimados residentes, este es un recordatorio de que la fecha límite...</p>

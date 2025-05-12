@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZONEMAISONS - admin</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="../assets/Css/comunicacion.css">
 </head>
 <body>
 
   <header>
     <div class="logo-container">
-      <img src="img/logo.jpg" alt="Logo de ZONEMAISONS" class="logo" />
+   <img src="../assets/img/logoZM.png" alt="Logo de ZONEMAISONS" class="logo" />
       <div class="title-container">
         <h1>ZONEMAISONS</h1>
         <div class="underline"></div>
@@ -77,6 +77,6 @@
     </div>
   </main>
 
-  <script src="script.js"></script>
+  <script src="../assets/js/comunicacion.js"></script>
 </body>
 </html>
