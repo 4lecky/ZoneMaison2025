@@ -25,6 +25,7 @@ session_start();
         <a href="#" class="nav-link"> Reservas </a>
         <a href="#" class="nav-link"> PQRS </a>
         <a href="#" class="nav-link"> Notificaciones </a>
+        <a href="./visitas.php" class="nav-link"> Notificaciones </a>
         <a href="./crud.php" class="nav-link"> Usuarios </a>
       </nav>
     

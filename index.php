@@ -10,6 +10,7 @@
 
     <a href="./views/login.php">Login</a>
     <a href="./views/signUp.php">Registrarse</a>
+    <a href="./views/visitas.php">Visitas</a>
     
 </body>
 </html>
