@@ -11,8 +11,8 @@
     <a href="./views/login.php">Login</a>
     <a href="./views/signUp.php">Registrarse</a>
     <a href="./views/visitas.php">Visitas</a>
-    <a href="./views/comunicacion.php">Comunicacion</a>
-    <a href="./views/paqueteria.php">Paquetería</a>
+    <a href="./views/paquetes.php">Paquetes</a> 
+    <a href="./views/muro.php">muro</a> 
     <a href="./views/novedades.php">novedades</a>
 </body>
 </html>

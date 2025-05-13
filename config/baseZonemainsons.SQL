@@ -71,32 +71,23 @@ CREATE TABLE IF NOT EXISTS tbl_reserva ( rese_id INT NOT NULL,
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INTEGER (10) NOT null,
     Paqu_Destinatario VARCHAR (60) NOT null,
-    Paqu_Firma BLOB NOT null,
+    paqu_Asunto text NOT null,
+    paqu_Descripción text NOT null, 
+    paqu_Hora time NOT null,
     paqu_FechaLlegada DATE NOT null,
     paqu_usuario_cc INTEGER (10) NOT null, 
     PRIMARY KEY (Paqu_Id),
     FOREIGN KEY (paqu_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
 
-
-CREATE TABLE IF NOT EXISTS tbl_notificaciones (noti_Id Integer NOT null,
-    Noti_Fecha date NOT null,
-    Noti_Descripción text NOT null,
-    Noti_Contenido text NOT null,
-    Noti_Paqu_Id INTEGER (10) NOT null,
-    Noti_usuario_cc Integer NOT null,        
-    PRIMARY KEY (noti_Id),
-    FOREIGN KEY (Noti_Paqu_Id) REFERENCES tbl_paquetes (Paqu_Id),
-    FOREIGN KEY (Noti_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
-
-
-CREATE TABLE IF NOT EXISTS tbl_novedades (Nove_Id INTEGER (10) NOT null,
-    Nove_Fecha DATE NOT null,
-    Nove_ImageNovedades BLOB NOT null,
-    Nove_Novedades TEXT NOT null,
-    Nove_noti_Id Integer NOT null,
-    PRIMARY KEY (Nove_Id),
-    FOREIGN KEY (Nove_noti_Id) REFERENCES tbl_notificaciones (noti_Id));
-
+CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INTEGER (10) NOT null,
+    muro_Destinatario VARCHAR (60) NOT null,
+    muro_Asunto text NOT null,
+    muro_Descripción text NOT null, 
+    paqu_Hora time NOT null,
+    paqu_FechaLlegada DATE NOT null,
+    muro_usuario_cc Integer NOT null,
+    PRIMARY KEY (muro_id),
+    FOREIGN KEY (muro_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_inicio TIME,
