@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZONEMAISONS - vigilante</title>
-   <link rel="stylesheet" href="../assets/Css/paqueteria.css">
+   <link rel="stylesheet" href="../assets/Css/paquetes.css">
 </head>
 <body>
 
@@ -70,6 +70,6 @@
     </div>
   </main>  
 
-  <script src="../assets/js/paqueteria.js"></script>
+  <script src="../assets/js/paquetes.js"></script>
 </body>
 </html>

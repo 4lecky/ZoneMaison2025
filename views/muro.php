@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZONEMAISONS - admin</title>
-  <link rel="stylesheet" href="../assets/Css/comunicacion.css">
+  <link rel="stylesheet" href="../assets/Css/muro.css">
 </head>
 <body>
 
@@ -77,6 +77,6 @@
     </div>
   </main>
 
-  <script src="../assets/js/comunicacion.js"></script>
+  <script src="../assets/js/muro.js"></script>
 </body>
 </html>
