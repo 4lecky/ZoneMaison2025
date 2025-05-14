@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="../assets/Css/globals.css"/>
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css"/>
+    <link rel="stylesheet" href="../assets/Css/Layout/nav.css"/>
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css"/>
+ 
 </head>
 <body>
 
-    <header>
+    <header >
 
             <div class="logo-ZM" >
                 <img class="Logo" src="../assets/img/LogoZM.png" alt="Imagen Logo">
@@ -18,10 +24,26 @@
             </div>
 
             <div class="menu">
-                <img class="IconoMenu" src="../assets/img/menu.png" alt="Icono/Menu">
+                <img src="../assets/img/menu.png" alt="menu" class="IconoMenu">
             </div>
 
     </header>
 
+    <main>     
+            <nav> 
+
+                <a href="./home.php" class="nav-link"> Inicio </a>
+                <a href="./novedades.php" class="nav-link"> Notificaciones </a>
+                <a href="#" class="nav-link"> Parqueaderos </a>
+                <a href="#" class="nav-link"> Reservas </a>
+                <a href="./pqrs.php" class="nav-link"> PQRS </a>
+                <a href="./visitas.php" class="nav-link"> Notificaciones </a>
+                <a href="./crud.php" class="nav-link"> Usuarios </a>
+
+            </nav>
+
+    </main>
+
+     <script src="https://kit.fontawesome.com/dbd1801b06.js" crossorigin="anonymous"></script>
 </body>
 </html>

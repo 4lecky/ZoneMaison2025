@@ -15,10 +15,10 @@
                         <h3>ZoneMaisons</h3>
                         <p>Soluciones integrales para administración de propiedad horizontal, diseñadas para optimizar la gestión y mejorar la calidad de vida comunitaria.</p>
                         <div class="social-links">
-                            <a href="#">📘</a>
+                            <!-- <a href="#">📘</a>
                             <a href="#">📱</a>
                             <a href="#">📸</a>
-                            <a href="#">🔗</a>
+                            <a href="#">🔗</a> -->
                         </div>
                     </div>
                     <div class="footer-col">

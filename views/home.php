@@ -16,21 +16,19 @@ require_once "./Layout/header.php"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="../assets/Css/home.css"/>
+    <link rel="stylesheet" href="../assets/Css/globals.css"/>
+
 </head>
 <body>
 
+    <div class="container">
+        <h1>Bienvenido a ZoneMaisons</h1>
+        <p>Esta es la página de inicio de tu aplicación.</p>
+        <p>¡Disfruta navegando!</p>
+    </div>
 
-      <nav> 
-        <a href="./home.php" class="nav-link"> Inicio </a>
-        <a href="./novedades.php" class="nav-link"> Notificaciones </a>
-        <a href="#" class="nav-link"> Parqueaderos </a>
-        <a href="#" class="nav-link"> Reservas </a>
-        <a href="./pqrs.php" class="nav-link"> PQRS </a>
-        <a href="./visitas.php" class="nav-link"> Notificaciones </a>
-        <a href="./crud.php" class="nav-link"> Usuarios </a>
-      </nav>
-    
+    <?php require_once "./Layout/footer.php" ?>
 </body>
 </html>

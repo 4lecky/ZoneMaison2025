@@ -6,8 +6,6 @@
      <!-- <link rel="stylesheet" href="./assets/Css/crud/" /> -->
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/crud/style.css" />
-    <link rel="stylesheet" href="../assets/Css/crud/header.css"/>
-    <link rel="stylesheet" href="../assets/Css/crud/nav.css"/> 
     <!-- Bootstrap   -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Iconos--> 
@@ -16,35 +14,7 @@
   </head>
   <body>
 
-
-    <header>
-
-        <div class="logo-ZM" >
-              <img class="Logo" src="../assets/img/LogoZM.png" alt="Imagen Logo">
-        </div>
-
-        <div class="Titulo">
-            <img class="LogoT" src="../assets/img/tituloCentro.png" alt="Titulo/Zm">
-        </div>
-
-        <div class="menu">
-            <img class="IconoMenu" src="../assets/img/menu.png" alt="Icono/Menu">
-        </div>
-
-    </header>
-
     <main>
-
-      <nav> 
-        <a href="#" class="nav-link"> Inicio </a>
-        <a href="#" class="nav-link"> Notificaciones </a>
-        <a href="#" class="nav-link"> Parqueaderos </a>
-        <a href="#" class="nav-link"> Reservas </a>
-        <a href="#" class="nav-link"> PQRS </a>
-        <a href="#" class="nav-link"> Notificaciones </a>
-        <a href="#" class="nav-link"> Usuarios </a>
-      </nav>
-
 
       <table class="table">
         <thead> <!-- Cabecera de la tabla-->
