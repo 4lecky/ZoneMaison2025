@@ -1,3 +1,9 @@
+<?php
+
+require_once './Layout/header.php'
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,11 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Áreas Comunes</title>
     <link rel="stylesheet" href="../assets/css/areas-comunes/reserva1.css">
+    <link rel="stylesheet" href="../assets/Css/globals.css"/>
+
 </head>
 <body>
-    <div class="header">
+    <!-- <div class="header">
         <div class="logo-container">
-            <img src="./assets/img/LogoZM.jpg" alt="Logo" class="logo">
+            <img src="../assets/img/LogoZM.jpg" alt="Logo" class="logo">
         </div>
         
         <div class="brand-container">
@@ -27,7 +35,7 @@
         <a href="./visitas.php" class="nav-item">Visitantes</a>
         <a href="./reserva1.php" class="nav-item">Reservas</a>
         <a href="./pqrs.php" class="nav-item">Pqrs</a>
-    </nav>
+    </nav> -->
     
     <main>
         <h2>Áreas Comunes</h2>
@@ -35,21 +43,21 @@
         <div class="areas-container">
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="img/salon-comunal.jpg" alt="Salon Comunal">
+                    <img src="../assets/img/preguntas.png" alt="Salon Comunal">
                     <h3>Salón Comunal</h3>
                 </a>
             </div>
             
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="img/piscina.jpg" alt="Piscina">
+                    <img src="../assets/img/preguntas.png" alt="Piscina">
                     <h3>Piscina</h3>
                 </a>
             </div>
             
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="img/gimnasio.jpg" alt="Gimnasio">
+                    <img src="../assets/img/preguntas.png" alt="Gimnasio">
                     <h3>Gimnasio</h3>
                 </a>
             </div>
@@ -66,5 +74,9 @@
             </a>
         </div>
     </footer>
+     <?php
+
+        //require_once './Layout/footer.php'
+    ?> 
 </body>
 </html>

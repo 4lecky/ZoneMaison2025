@@ -1,3 +1,9 @@
+<?php
+
+require_once './Layout/header.php'
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +13,7 @@
     <link rel="stylesheet" href="../assets/css/areas-comunes/zona-comun1.css">
 </head>
 <body>
-    <div class="header">
+    <!-- <div class="header">
         <div class="logo-container">
             <img src="img/logo.jpg" alt="Logo" class="logo">
         </div>
@@ -23,19 +29,19 @@
     </div>
     
     <nav class="nav-bar">
-        <a href="index.php" class="nav-item active">Inicio</a>
+        <a href="../index.php" class="nav-item active">Inicio</a>
         <a href="./visitas.php" class="nav-item">Visitantes</a>
         <a href="./reserva1.php" class="nav-item">Reservas</a>
         <a href="./pqrs.php" class="nav-item">Pqrs</a>
-    </nav>
+    </nav> -->
     
     <main class="salon-comunal-page">
         <h2>Salón Comunal</h2>
         
         <div class="salon-gallery">
-            <img src="img/salon-comunal-1.jpg" alt="Salon Comunal Vista 1" class="gallery-image">
-            <img src="img/salon-comunal-2.jpg" alt="Salon Comunal Vista 2" class="gallery-image gallery-image-large">
-            <img src="img/salon-comunal-3.jpg" alt="Salon Comunal Vista 3" class="gallery-image">
+            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 1" class="gallery-image">
+            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 2" class="gallery-image gallery-image-large">
+            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 3" class="gallery-image">
         </div>
         
         <div class="salon-description">

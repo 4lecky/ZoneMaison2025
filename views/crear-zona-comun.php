@@ -1,3 +1,9 @@
+<?php
+
+require_once './Layout/header.php'
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +13,7 @@
     <link rel="stylesheet" href="../assets/css/areas-comunes/crear-zona-comun.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<!-- <body>
     <header>
         <div class="logo-container">
             <img src="img/logo.jpg" alt="ZONEMAISONS Logo" class="logo">
@@ -29,7 +35,7 @@
             <li><a href="admin-users.html"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="admin-pqrs.html"><i class="fas fa-comments"></i> PQRS</a></li>
         </ul>
-    </nav>
+    </nav> -->
     
     <main class="admin-page">
         <div class="admin-header">
