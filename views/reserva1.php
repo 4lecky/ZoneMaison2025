@@ -43,21 +43,21 @@ require_once './Layout/header.php'
         <div class="areas-container">
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="../assets/img/preguntas.png" alt="Salon Comunal">
+                    <img src="../assets/img/salon-comunal.jpg" alt="Salon Comunal">
                     <h3>Salón Comunal</h3>
                 </a>
             </div>
             
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="../assets/img/preguntas.png" alt="Piscina">
+                    <img src="../assets/img/piscina.jpg" alt="Piscina">
                     <h3>Piscina</h3>
                 </a>
             </div>
             
             <div class="area-card">
                 <a href="zona-comun1.php">
-                    <img src="../assets/img/preguntas.png" alt="Gimnasio">
+                    <img src="../assets/img/gimnasio.jpg" alt="Gimnasio">
                     <h3>Gimnasio</h3>
                 </a>
             </div>

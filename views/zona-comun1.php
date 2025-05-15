@@ -39,9 +39,9 @@ require_once './Layout/header.php'
         <h2>Salón Comunal</h2>
         
         <div class="salon-gallery">
-            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 1" class="gallery-image">
-            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 2" class="gallery-image gallery-image-large">
-            <img src="../assets/img/preguntas.png" alt="Salon Comunal Vista 3" class="gallery-image">
+            <img src="../assets/img/salon-comunal-1.jpg" alt="Salon Comunal Vista 1" class="gallery-image">
+            <img src="../assets/img/salon-comunal-2.jpg" alt="Salon Comunal Vista 2" class="gallery-image gallery-image-large">
+            <img src="../assets/img/salon-comunal-3.jpg" alt="Salon Comunal Vista 3" class="gallery-image">
         </div>
         
         <div class="salon-description">
