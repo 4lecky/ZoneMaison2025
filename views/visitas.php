@@ -1,43 +1,26 @@
+<?php
+require_once"./Layout/header.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - admin</title>
+    <link rel="stylesheet" href="../../assets/css/global.css">
     <link rel="stylesheet" href="../assets/Css/visitas.css">
 </head>
 <body>
-
-    <header>
-        <div class="logo-container">
-            <img src="../assets/img/LogoZM.png" alt="Logo de ZONEMAISONS" class="logo">
-            <div class="title-container">
-                <h1>ZONEMAISONS</h1>
-                <div class="underline"></div>
-            </div>
-        </div>
-        <nav class="menu-button">
-            <div class="lines">&#9776;</div>
-        </nav>
-    </header> 
-
-    <nav class="main-nav">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="index.html" class="active">Notificaciones</a></li>
-            <li><a href="#">Reservas</a></li>
-            <li><a href="#">Pqrs</a></li>
-        </ul>
-    </nav>
 
     <!-- Registro de Visitas -->
     <main class="container mt-4">
         <h2>REGISTRO DE VISITAS</h2>
         <section class="form-card">
-            <h3>Datos Visitante</h3>
              <form id="formVisitante">
                 <fieldset style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
-                    <legend><strong>Datos del Visitante</strong></legend>
+                    <legend><strong>Datos Visitante</strong></legend>
 
                     <input type="text" data-validate="text" name="nombre" placeholder="Nombre Completo" required><br><br>
 
@@ -57,7 +40,7 @@
 
             <form id="formVisita">
                 <fieldset style="border: 1px solid #ccc; padding: 20px;">
-                    <legend><strong>Datos de Visita</strong></legend>
+                    <legend><strong>Datos Visita</strong></legend>
 
                     <input type="text" data-validate="number" name="torre" placeholder="Num. Torre Visitada" required>
                     <input type="text" data-validate="number" name="apto" placeholder="Num. Apto Visitado" required><br><br>
@@ -105,7 +88,10 @@
 
     <!-- Scripts -->
     <script src="../assets/Js/visitas.js"></script>
+<?php
+require_once"./Layout/footer.php"
 
+?>
 
 </body>
 </html>
