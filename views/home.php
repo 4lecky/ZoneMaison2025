@@ -23,7 +23,7 @@ require_once "./Layout/header.php"
 </head>
 <body>
 
-    <div class="container">
+    <div class="container_home">
         <h1>Bienvenido a ZoneMaisons</h1>
         <p>Esta es la página de inicio de tu aplicación.</p>
         <p>¡Disfruta navegando!</p>
