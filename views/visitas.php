@@ -1,63 +1,59 @@
+<?php
+require_once"./Layout/header.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - admin</title>
+    <link rel="stylesheet" href="../../assets/css/global.css">
     <link rel="stylesheet" href="../assets/Css/visitas.css">
 </head>
 <body>
-
-    <header>
-        <div class="logo-container">
-            <img src="../assets/img/LogoZM.png" alt="Logo de ZONEMAISONS" class="logo">
-            <div class="title-container">
-                <h1>ZONEMAISONS</h1>
-                <div class="underline"></div>
-            </div>
-        </div>
-        <nav class="menu-button">
-            <div class="lines">&#9776;</div>
-        </nav>
-    </header> 
-
-    <nav class="main-nav">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="index.html" class="active">Notificaciones</a></li>
-            <li><a href="#">Reservas</a></li>
-            <li><a href="#">Pqrs</a></li>
-        </ul>
-    </nav>
 
     <!-- Registro de Visitas -->
     <main class="container mt-4">
         <h2>REGISTRO DE VISITAS</h2>
         <section class="form-card">
-            <h3>Datos Visitante</h3>
-            <form class="visit-form" id="visit-form">
-                <input type="text" placeholder="Nombre Completo">
-                <div class="form-row">
-                    <select>
-                        <option>Tipo Doc.</option>
-                        <option>C.C.</option>
-                        <option>T.I.</option>
+             <form id="formVisitante">
+                <fieldset style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
+                    <legend><strong>Datos Visitante</strong></legend>
+
+                    <input type="text" data-validate="text" name="nombre" placeholder="Nombre Completo" required><br><br>
+
+                    <select name="tipoDoc" required>
+                        <option value="">Tipo Doc.</option>
+                        <option value="CC">C.C</option>
+                        <option value="TI">T.I</option>
                     </select>
-                    <input type="text" placeholder="Número Documento">
-                </div>
-                <input type="email" placeholder="Email">
-                <div class="form-row">
-                    <input type="text" placeholder="Num. Torre Visitada">
-                    <input type="text" placeholder="Num. Apto Visitado">
-                </div>
-                <div class="form-row">
-                    <input type="date">
-                    <input type="date">
-                </div>
-                <button type="button" class="secondary" id="Limpiarbtn">
-                    <i class="fa-solid fa-keyboard"></i> Limpiar
-                  </button>                  
-                <button type="submit" class="primary full-width" id="Registrar">Registrar Visitante </button>
+
+                    <input type="text" data-validate="number" name="documento" placeholder="Número Documento" required><br><br>
+
+                    <input type="email" data-validate="email" name="email" placeholder="Email" required><br><br>
+
+                    <input type="tel" data-validate="number" name="telefono" placeholder="Número de Teléfono" required><br>
+                </fieldset>
+            </form>
+
+            <form id="formVisita">
+                <fieldset style="border: 1px solid #ccc; padding: 20px;">
+                    <legend><strong>Datos Visita</strong></legend>
+
+                    <input type="text" data-validate="number" name="torre" placeholder="Num. Torre Visitada" required>
+                    <input type="text" data-validate="number" name="apto" placeholder="Num. Apto Visitado" required><br><br>
+
+                    <input type="date" name="fechaEntrada" data-validate="date" required>
+                    <input type="date" name="fechaSalida" data-validate="date" required>
+
+                    <input type="time" name="horaInicio" time-valitime="time" required>
+                    <input type="time" name="horaSalida" time-valitime="time" required><br><br>
+
+                    <button type="reset" id="btnLimpiar">Limpiar</button>
+                    <button type="submit" id="btnRegistrar">Registrar Visitante</button>
+                </fieldset>
             </form>
         </section>
 
@@ -86,10 +82,16 @@
             <div class="empty-state">
                 <i class="fa-solid fa-circle-info"></i> No hay visitas programadas próximamente
             </div>
+            <button type="button" id="btnEditar">Editar Visita</button>
         </section>
     </main>
 
     <!-- Scripts -->
     <script src="../assets/Js/visitas.js"></script>
+<?php
+require_once"./Layout/footer.php"
+
+?>
+
 </body>
 </html>
