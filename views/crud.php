@@ -1,8 +1,16 @@
+<?php
+
+
+require_once "./Layout/header.php"
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <!-- Css  -->
+  
      <!-- <link rel="stylesheet" href="./assets/Css/crud/" /> -->
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/crud/style.css" />
@@ -72,6 +80,13 @@
 
 
     </footer>
+
+    
+  <?php
+  
+    require_once "./Layout/footer.php"
+
+  ?>
 
   </body>
 </html>

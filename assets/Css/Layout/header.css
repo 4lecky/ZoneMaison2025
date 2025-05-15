@@ -5,6 +5,7 @@ header{
     width: 100%;
     padding-bottom: 30px;
     padding-top: 5px;
+
   }
   
   
@@ -78,9 +79,89 @@ header{
   
   nav a:hover {
   
-    font-weight:700;
+    font-weight:600;
     text-decoration: solid;
-    color: #E5D2B8;
+    color: #ffffff;
 
   }
   
+
+  /* Responsive */
+
+  @media (max-width: 768px) {
+  
+  header {
+    /* flex-direction: column; */
+    align-items: center;
+    padding: 15px;
+  }
+
+  .LogoT{
+    display: none;
+  }
+
+  header .logo-ZM,
+  header .Titulo,
+  header .menu {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  header .Logo {
+    margin-left: 0;
+    width: 180px;
+    height: auto;
+  }
+
+  .LogoT{
+    display: none;
+  }
+
+
+  header .menu {
+    justify-content: center;
+    margin-top: 10px;
+
+  }
+
+    header .IconoMenu {
+    width: 35px;
+    height: 35px;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+
+  }
+
+  nav a {
+    /* margin: 8px 0; */
+    margin-right: 10px;
+  }
+}
+
+
+
+
+
+@media (max-width: 480px) {
+  header .Logo {
+    width: 140px;
+  }
+
+  header .LogoT {
+    width: 200px;
+  }
+
+  header .IconoMenu {
+    width: 35px;
+    height: 35px;
+  }
+
+  nav {
+    font-size: 14px;
+  }
+}

@@ -5,7 +5,9 @@ session_start();
 //     exit();
 // }
 
-require_once "./Layout/header.php"
+require_once "./Layout/header.php";
+
+
 ?>
 
 
@@ -29,6 +31,10 @@ require_once "./Layout/header.php"
         <p>¡Disfruta navegando!</p>
     </div>
 
-    <?php require_once "./Layout/footer.php" ?>
+    <?php 
+
+    require_once "./Layout/footer.php" 
+    
+    ?>
 </body>
 </html>
