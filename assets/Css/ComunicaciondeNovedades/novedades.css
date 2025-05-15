@@ -1,115 +1,6 @@
-body {
-    max-width: 100%;
-    overflow-x: hidden;
-    background-color: #f9f9f9;
-  }
-  
-  .container {
-    display: flex;
-    max-height: 100vh;
-  }
-  
-  /* Header Styles */
-  header {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background-color: white;
-    border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative;
-    justify-content: space-between;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 130px;
-    height: auto;
-    margin-right: 10px;
-  }
-  
-  .title-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  h1 {
-    font-size: 50px;
-    font-weight: normal;
-    letter-spacing: 1px;
-    margin-bottom: -10px;
-    
-  }
-  
-  .underline {
-    height: 2px;
-    width: 100%;
-    background-color: #000;
-    margin-top: 3px;
-  }
-  
-  .lines {
-    font-size: 50px;
-    cursor: pointer;
-    margin-left: auto;
-  }
-  
-  /* Navigation Styles */
-  .main-nav {
-    background-color: #7b9a82;
-    padding: 12px 0;
-  }
-  
-  .main-nav ul {
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .main-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 5px 15px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  
-  .main-nav a:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-  
-  .main-nav a.active {
-    background-color: rgba(0,0,0,0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-    font-weight: bold;
-  }
-  
-  /* Main Content Styles */
-  main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-    margin-top: 20px;
-    margin-bottom: 40px;
-  }
-  
   .principal-page {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: auto;
   }
   
   .container-principal {
@@ -117,6 +8,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 50px;
   }
 
 h2 {
@@ -176,21 +68,20 @@ h2 {
   }
   
   /*muro*/
-  .container {
+  .container-muro {
     display: flex;
     gap: 10px;
-    padding: 10px;
+    width: max-content;
+    white-space: nowrap;
   }
   .muro {
     max-width: 1000px;
-    margin: auto;
     background-color: #ffffff;
-    padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    flex: 1;
+    padding: auto;
   }
+  
   h3 {
     color: #d8b99a;
   }

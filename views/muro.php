@@ -1,38 +1,28 @@
+<?php
+session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: login.php");
+//     exit();
+// }
+
+require_once "./Layout/header.php"
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZONEMAISONS - admin</title>
-  <link rel="stylesheet" href="../assets/Css/muro.css">
+  <link rel="stylesheet" href="../assets/Css/ComunicaciondeNovedades/muro.css">
 </head>
 <body>
-
-  <header>
-    <div class="logo-container">
-   <img src="../assets/img/logoZM.png" alt="Logo de ZONEMAISONS" class="logo" />
-      <div class="title-container">
-        <h1>ZONEMAISONS</h1>
-        <div class="underline"></div>
-      </div>
-    </div>
-    <nav class="menu-button">
-      <div class="lines">&#9776;</div>
-    </nav>
-  </header>
-
-  <nav class="main-nav">
-    <ul>
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="index.html" class="active">Notificaciones</a></li>
-      <li><a href="#">Reservas</a></li>
-      <li><a href="#">Pqrs</a></li>
-    </ul>
-  </nav>
 
   <main>
     <h2>Muro</h2>
 
+    
     <div class="form-container">
       <!-- Destinatario -->
       <select class="form-select" id="filtrodestinatario">
@@ -76,6 +66,10 @@
       </div>
     </div>
   </main>
+
+    <?php require_once "./Layout/footer.php" ?>
+</body>
+</html>
 
   <script src="../assets/js/muro.js"></script>
 </body>
