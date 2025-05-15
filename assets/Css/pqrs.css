@@ -122,7 +122,7 @@ ESTILOS DEL FONDO
     position: relative;
     width: 100vw; /* 80% del ancho de la pantalla */
     min-height: 100vh;
-    background-image: url('../img/fondo.png');
+    background: linear-gradient(to bottom, #f5f5eb, #f5f5eb);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -130,13 +130,7 @@ ESTILOS DEL FONDO
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    
-    margin: 0 auto; /* Centra el contenedor automáticamente */
-    box-shadow: 
-        inset -10px 0px 30px rgba(0, 0, 0, 0.5),
-        inset 10px 0px 30px rgba(0, 0, 0, 0.5),
-        -15px 0px 50px rgba(0, 0, 0, 0.6),
-        8px 0px 30px rgba(0, 0, 0, 0.6);
+
 }
 
 @media (max-width: 640px) {
@@ -150,10 +144,9 @@ ESTILOS DEL FONDO
     position: absolute; /* Lo coloca sobre la imagen */
     top: 20%; /* Ajusta según la posición deseada (mantén tu valor para la posición vertical) */
     left: 50%; /* Lo coloca al 50% desde el lado izquierdo */
-    color: aliceblue;
-    font-family: KAVOON;
+    color: rgb(0, 0, 0);
     transform: translateX(-45%); /* Solo centra horizontalmente */
-    background: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    background: rgb(255, 255, 255); /* Fondo semitransparente */
     padding: 10px 20px;
     text-align: center;
     font-size: 40px;

@@ -144,3 +144,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const faqItem = button.closest('.faq-item');
+        faqItem.classList.toggle('active');
+    });
+});

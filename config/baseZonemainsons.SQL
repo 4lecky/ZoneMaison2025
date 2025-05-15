@@ -154,41 +154,32 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));
                            
 
-CREATE TABLE tbl_PQRS (pqr_id INT AUTO_INCREMENT,
-  	pqr_descripcion VARCHAR(100) NOT NULL,
-    pqr_fecha_creacion DATE NOT NULL,
-  	pqr_fecha_respuesta DATE NOT NULL,
-  	pqr_estado ENUM('sugerencia', 'peticion', 'queja', 'reclamo') NOT NULL,
-  	pqr_est_id INT(10),
-  	pqr_regis_id INT,
-  	PRIMARY KEY (pqr_id));
+CREATE TABLE IF NOT EXISTS pqrs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombres VARCHAR(100) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  identificacion VARCHAR(20) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  telefono VARCHAR(15) NOT NULL,
+  tipo_pqr ENUM('peticion', 'queja', 'reclamo') NOT NULL,
+  asunto VARCHAR(255) NOT NULL,
+  mensaje TEXT NOT NULL,
+  archivos TEXT, -- puedes guardar los nombres o rutas de archivos
+  medio_respuesta SET('correo', 'sms'),
+  fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+  estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente'
+);
 
 
 
-CREATE TABLE tbl_Registrar (regis_id INT AUTO_INCREMENT PRIMARY KEY,
-    regis_usuario_cc INT,
-    regis_pqr_id INT,
-    FOREIGN KEY (regis_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
-    FOREIGN KEY (regis_pqr_id) REFERENCES tbl_PQRS(pqr_id));
+CREATE TABLE IF NOT EXISTS sugerencias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  mensaje TEXT NOT NULL,
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
-
-
-CREATE TABLE tbl_Archivos (arch_id INT AUTO_INCREMENT,
-    arch_nombre VARCHAR(255) NOT NULL,
-  	arch_tipo VARCHAR(100) NOT NULL,
-    arch_ruta VARCHAR(255) NOT NULL,
-    arch_pqr_id INT,
-  	PRIMARY KEY (arch_id),
- 	FOREIGN KEY (arch_pqr_id) REFERENCES tbl_PQRS(pqr_id));
-
-
-
-
-
-
-
-
-    
 
 /* Inserts */
 
