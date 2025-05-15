@@ -35,7 +35,7 @@ require_once "./Layout/header.php"
 </section>
 </div>
 <!--muro-->
-  <div class="container">
+  <div class="container-muro">
     <section class="muro">
         <h3>Muro</h3>
         <div class="tarjeta">
