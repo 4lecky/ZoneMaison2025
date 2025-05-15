@@ -14,5 +14,7 @@
     <a href="./views/paquetes.php">Paquetes</a> 
     <a href="./views/muro.php">muro</a> 
     <a href="./views/novedades.php">novedades</a>
+    <a href="./views/reserva1.php">reserva</a>
+
 </body>
 </html>
