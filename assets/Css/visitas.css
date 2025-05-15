@@ -5,7 +5,7 @@ body {
     line-height: 1.6;
 }
 
-/* ========== Encabezado ========== */
+
 header {
     display: flex;
     align-items: center;
@@ -54,7 +54,7 @@ h1 {
     cursor: pointer;
 }
 
-/* ========== Navegación Principal ========== */
+
 .main-nav {
     background-color: #7b9a82;
     padding: 12px 0;
@@ -87,7 +87,7 @@ h1 {
     font-weight: bold;
 }
 
-/* ========== Contenido principal ========== */
+
 main {
     padding: 20px;
     max-width: 1200px;
@@ -114,73 +114,74 @@ main h2::after {
     margin: 10px auto 0;
 }
 
-/* ========== Formulario de Visitas ========== */
-.form-card {
-    padding: 1.5em;
-    border: 1px solid #ddd;
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+form {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+
+form label {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+    display: block;
+}
+
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
     border-radius: 10px;
-    margin-bottom: 2em;
-}
-
-.visit-form input,
-.visit-form select {
-    width: 100%;
-    padding: 0.75em;
-    margin-bottom: 1em;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
-.form-row {
-    display: flex;
-    gap: 1em;
+form input:focus,
+form select:focus {
+    color: black;
+    border-color: #7b9a82;
+    outline: none;
 }
 
-.form-row input,
-.form-row select {
-    flex: 1;
+
+form button,
+form input[type="button"],
+form input[type="submit"] {
+    background-color: #e5c9aa;         
+    color: #fff;                     
+    padding: 10px 20px;
+    border: 2px solid #e5c9aa;        
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;                
+    transition: all 0.3s ease;        
 }
 
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1em;
+
+form button:hover,
+form input[type="button"]:hover,
+form input[type="submit"]:hover {
+    background-color: #ffffff;    
+    color: black;                 
+    border: 2px solid #e5c9aa;        
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
 }
 
-.primary {
-    background-color: #7b9a82;
-    color: white;
-    padding: 1em;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 1em;
-}
 
-.primary:hover {
-    background-color: #218838;
-}
-
-.secondary {
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    padding: 0.75em 1em;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.secondary:hover {
-    background-color: #e0e0e0;
-}
-
-.full-width {
-    width: 100%;
-}
-
-/* ========== Tabla de visitas ========== */
 .table-card {
     padding: 1.5em;
     border: 1px solid #ddd;
@@ -196,7 +197,7 @@ main h2::after {
     margin-bottom: 1em;
 }
 
-/* Filtro de visitas */
+
 .filtro-visitas {
     width: 100%;
     padding: 0.75em;
@@ -213,11 +214,10 @@ main h2::after {
 
 .filtro-visitas:focus {
     outline: none;
-    border-color: #218838;
-    box-shadow: 0 0 4px #28a745aa;
+    border-color: #7b9a82;
+    box-shadow: 0 0 4px #7b9a82;
 }
 
-/* Tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -225,7 +225,7 @@ table {
 }
 
 thead {
-    background-color: #28a745;
+    background-color: #7b9a82;
     color: white;
 }
 
@@ -245,4 +245,29 @@ table td {
     border-radius: 6px;
     font-style: italic;
 
+}
+
+
+#btnEditar {
+    background-color: #e5c9aa;        
+    color: #ffffff;                   
+    padding: 10px 20px;
+    border: 2px solid #e5c9aa;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;                 
+    transition: all 0.3s ease;
+}
+
+/* Hover: al pasar el cursor */
+#btnEditar:hover {
+    background-color: #ffffff;        
+    color: black;                    
+    border: 2px solid #e5c9aa;
+}
+
+.campo-error {
+    border: 2px solid red !important;
+    background-color: #ffe6e6;
 }
