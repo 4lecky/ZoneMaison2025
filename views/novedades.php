@@ -4,32 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Notificaciones</title>
-  <link rel="stylesheet" href="../assets/Css/novedades.css">
+  <link rel="stylesheet" href="../../assets/Css/globals.css">
+  <link rel="stylesheet" href="../assets/Css/ComunicaciondeNovedades/novedades.css">
 </head>
 <body>
 
-  <header>
-        
-    <div class="logo-container">
-      <img src="../assets/img/logoZM.png" alt="Logo de ZONEMAISONS" class="logo" />
-        <div class="title-container">
-            <h1><strong>ZONE</strong>MAISONS</h1>
-            <div class="underline"></div>
-        </div>
-    </div>
-    <nav class="menu-button">
-        <div class="lines">&#9776;</div>
-    </nav>
-</header> 
+<?php
+session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: login.php");
+//     exit();
+// }
 
-<nav class="main-nav">
-    <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="index.html" class="active">Notificaciones</a></li>
-        <li><a href="#">Reservas</a></li>
-        <li><a href="#">Pqrs</a></li>
-    </ul>
-</nav>
+require_once "./Layout/header.php"
+?>
  
 <main class="principal-page">
 
@@ -122,5 +110,8 @@
     </div>
   </div>
 </main>
+
+<?php require_once "./Layout/footer.php" ?>
+
 </body>
 </html>
