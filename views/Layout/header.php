@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+     <!-- Estilos -->
     <link rel="stylesheet" href="../assets/Css/globals.css"/>
     <link rel="stylesheet" href="../assets/Css/Layout/header.css"/>
     <link rel="stylesheet" href="../assets/Css/Layout/nav.css"/>
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css"/>
+
+    <!-- iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
  
 </head>
 <body>
@@ -22,14 +26,17 @@
                 <img class="LogoT" src="../assets/img/tituloCentro.png" alt="Titulo/Zm">
             </div>
 
-            <div class="menu">
-                <img src="../assets/img/menu.png" alt="menu" class="IconoMenu">
-            </div>
+            <button class="menu" id="menu_toggle">
+    
+                <i class="ri-arrow-down-s-line" id="icon_open" style="font-size: 50px; color:black;"></i>
+                <i class="ri-arrow-up-s-line" id="icon_close"  style="display:none; font-size:50px; "></i>
+
+            </button>
 
     </header>
 
-    <main>     
-            <nav> 
+    <!-- <main>      -->
+            <nav class="nav_expanded" id="main_nav"> 
 
                 <a href="./home.php" class="nav-link"> Inicio </a>
                 <a href="#" class="nav-link"> Parqueaderos </a>
@@ -40,8 +47,10 @@
                 <a href="./visitas.php" class="nav-link"> visitas </a>
             </nav>
 
-    </main>
+    <!-- </main> -->
 
+    
     <script src="https://kit.fontawesome.com/dbd1801b06.js" crossorigin="anonymous"></script>
+    <script src="../../assets/Js/header.js"></script>
 </body>
 </html>

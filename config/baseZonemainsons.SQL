@@ -7,7 +7,7 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCRE
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
     usu_correo Varchar(50) NOT null,
-    usu_password Varchar(30) NOT null,
+    usu_password Varchar(225) NOT null,
 	usu_apartamento_residencia  Varchar(100) NOT null,
 	usu_torre_residencia Varchar(100) NOT null,
 	usu_parqueadero_asignado  Varchar(20) NOT null,
