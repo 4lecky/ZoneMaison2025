@@ -14,7 +14,7 @@ if (!empty($_POST['btn-confirmar'])) {
     $rol = $_POST["rol"];
     
     #Conexión base de datos  	
-    $sql = $conexion ->query(" update tbl_usuario set usu_correo='$correo', usu_torre_residencia='$torre', usu_apartamento_residencia=' $apartamento', usu_estado='$estado', usu_rol_id=$rol where usuario_cc=$cc ");
+    $stmt = $conexion ->query(" update tbl_usuario set usu_correo='$correo', usu_torre_residencia='$torre', usu_apartamento_residencia=' $apartamento', usu_estado='$estado', usu_rol_id=$rol where usuario_cc=$cc ");
     
     if ($sql==1) {
        header("localhost/index-diseño.php");

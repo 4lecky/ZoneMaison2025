@@ -45,13 +45,9 @@ require_once "./Layout/header.php"
           
           //Los '../' no son necesarios aqui ya que no se encuentra dentro de una carpeta
           require_once '../config/db.php';
-          $pdo = $conexion->PDO(" select us.usuario_cc, us.usu_nombre_completo, us.usu_telefono, 
-          us.usu_correo, us.usu_torre_residencia, us.usu_apartamento_residencia, 
-          us.usu_estado, rol.rol_nombre 
-          from tbl_usuario us 
-          inner join tbl_roles rol ON us.usu_rol_id = rol.rol_id ");
+          $stmt = $pdo -> query("SELECT * FROM `tbl_usuario`");
 
-          while ($datos = $sql ->fetch_object()){ ?>
+          while ($datos = $stmt ->fetch(PDO::FETCH_OBJ)){ ?>
             <tr>
               <td><?= $datos->usuario_cc ?></td>
               <td><?= $datos->usu_nombre_completo ?></td>
