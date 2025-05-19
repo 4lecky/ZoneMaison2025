@@ -58,7 +58,7 @@ require_once "./Layout/header.php"
               <td><?= $datos->usu_estado ?></td>
               <td><?= $datos->usu_rol ?></td> 
               <td>
-                <a href="../models/modificarProducto.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a href="#" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
               </td>
             </tr> 

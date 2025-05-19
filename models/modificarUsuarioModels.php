@@ -1,11 +1,5 @@
 <?php
 
-//Importante los '../' en el include puede fallar si no esta ya que este archivo esta en el interior de una carpeta
-
-/*
-. → Representa la carpeta actual.
-.. → Representa la carpeta padre (nivel superior).  */
-
 //Conexion a la base de datos
 include('../config/db.php');
 
@@ -18,17 +12,17 @@ if (!isset($_GET['cc']) || empty($_GET['cc'])) {
 $cc = $_GET['cc'];
 
 // Usar consultas preparadas para evitar inyección SQL
-// $stmt = $conexion->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = ?");
-// if (!$stmt) {
-//     echo "Error en la preparación de la consulta: " . $conexion->error;
-//     exit;
-// }
+$stmt = $pdo->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = ?");
+if (!$stmt) {
+    echo "Error en la preparación de la consulta: " . $conexion->error;
+    exit;
+}
 
-// $stmt->bind_param("i", $cc); // "i" para entero (int) ya que usuario_cc es int(10)
+// $stmt->bindparam("i", $cc); // "i" para entero (int) ya que usuario_cc es int(10)
 // $stmt->execute();
 // $result = $stmt->get_result();
 
-// // Verificar si la consulta fue exitosa
+// Verificar si la consulta fue exitosa
 // if (!$result) {
 //     echo "Error al ejecutar la consulta: " . $stmt->error;
 //     exit;

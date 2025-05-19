@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS tbl_reserva ( rese_id INT NOT NULL,
 
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INTEGER (10) NOT null,
-    Paqu_Destinatario VARCHAR (60) NOT null,
     paqu_Asunto text NOT null,
     paqu_Descripción text NOT null, 
     paqu_Hora time NOT null,
@@ -145,13 +144,14 @@ CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT
     alqu_precio FLOAT (2) NOT NULL,
     alqu_fechaIngreso DATE NOT NULL,
     alqu_horaIngreso DATE NOT NULL,
-    alqu_mult_id INT (20),
-    alqu_mult_valor FLOAT (2),
-    alqu_mult_fecha DATE,
-    alqu_mult_vigencia DATE,
-    alqu_mult_dercripcion VARCHAR (30000),
-    alqu_mult_alqu_id INT (30),
     alqu_vis_id INT (10) NOT NULL,
+    alqu_num_parqueadero INT (255) NOT NULL,
+    alqu_torre  INT (30) NOT NULL,
+    alqu_apto  INT (30) NOT NULL,
+    alqu_tipo_doc_propietario VARCHAR (255) NOT NULL,
+    alqu_num_doc_propietario INT (20) NOT NULL,
+    alqu_nombre_propietario VARCHAR (255) NOT NULL,
+    alqu_num_recibo INT (255) NOT NULL;
     PRIMARY KEY (alqu_id),
     FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
 
