@@ -62,7 +62,7 @@ if ($result->num_rows === 0) {
         <?php 
         
 
-        include ("../controller/ModificarProducto.php");
+        include ("../controller/ModificarUsuario.php");
         while ($datos= $result-> fetch_object()) { ?>
 
             <div class="col-md-4">

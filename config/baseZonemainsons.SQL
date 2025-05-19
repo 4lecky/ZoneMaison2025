@@ -104,15 +104,16 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     FOREIGN KEY (vis_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
 
 
-CREATE TABLE if NOt EXISTS Tbl_Visitante ( visi_id INT AUTO_INCREMENT,
+CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
     visi_nombre VARCHAR(100) NOT NULL,
     visi_documento VARCHAR(20) NOT NULL,
-    visi_Tipo_documento enum(C.C, T.I) NOT NULL,
+    visi_Tipo_documento enum('C.C', 'T.I') NOT NULL,
     visi_telefono BIGINT (20) NOT NULL,
     visi_email VARCHAR(100) NOT NULL,
     visi_vis_id INT,
     PRIMARY KEY (visi_id),
     FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id));
+                                            
                                             
                                           
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT ,

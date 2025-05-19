@@ -45,7 +45,7 @@ require_once "./Layout/header.php"
           
           //Los '../' no son necesarios aqui ya que no se encuentra dentro de una carpeta
           require_once '../config/db.php';
-          $sql = $conexion->query(" select us.usuario_cc, us.usu_nombre_completo, us.usu_telefono, 
+          $pdo = $conexion->PDO(" select us.usuario_cc, us.usu_nombre_completo, us.usu_telefono, 
           us.usu_correo, us.usu_torre_residencia, us.usu_apartamento_residencia, 
           us.usu_estado, rol.rol_nombre 
           from tbl_usuario us 
