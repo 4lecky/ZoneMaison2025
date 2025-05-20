@@ -1,7 +1,7 @@
 <?php
 
 //Conexion a la base de datos
-include('../config/db.php');
+$pdo = require ('../config/db.php');
 
 // Verificar si se proporcionó un ID (Si cc esta funcionando)
 if (!isset($_GET['cc']) || empty($_GET['cc'])) {
@@ -11,28 +11,24 @@ if (!isset($_GET['cc']) || empty($_GET['cc'])) {
 
 $cc = $_GET['cc'];
 
-// Usar consultas preparadas para evitar inyección SQL
-$stmt = $pdo->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = ?");
-if (!$stmt) {
-    echo "Error en la preparación de la consulta: " . $conexion->error;
+try {
+
+    $stmt = $pdo->prepare("SELECT * FROM tbl_usuario WHERE usuario_cc = :cc");
+    $stmt->bindparam(':cc', $cc, PDO::PARAM_INT); // PARAM_INT para entero (int) ya que usuario_cc es int(10)
+    $stmt->execute();
+
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario) {
+    echo "No hay algun usuario con el id: $cc";
+    exit;
+    }
+    $datos =(object)$usuario;
+} catch (PDOException $mensaje) {
+    echo "Error al ejecutar la consulta: ". $mensaje->getMessage();
     exit;
 }
 
-// $stmt->bindparam("i", $cc); // "i" para entero (int) ya que usuario_cc es int(10)
-// $stmt->execute();
-// $result = $stmt->get_result();
-
-// Verificar si la consulta fue exitosa
-// if (!$result) {
-//     echo "Error al ejecutar la consulta: " . $stmt->error;
-//     exit;
-// }
-
-// Verificar si se encontraron resultados
-if ($result->num_rows === 0) {
-    echo "No se encontró ningún usuario con el ID $cc";
-    exit;
-}
 
 
 ?>
@@ -49,15 +45,12 @@ if ($result->num_rows === 0) {
 </head>
 <body>
 
-    <form method="POST" >
+
+    <form method="POST" action="../controller/ModificarUsuarioController.php">
         <h3> Modificar usuario </h3>
-        <input type="hidden" name="cc" value="<?= $_GET["cc"] ?>">
 
-        <?php 
-        
-
-        include ("../controller/ModificarUsuario.php");
-        while ($datos= $result-> fetch_object()) { ?>
+          <!-- Con esto guardamos el id del usuario y es enviado al controlador -->
+         <input type="hidden" name="cc" value="<?= htmlspecialchars($_GET['cc']) ?>">
 
             <div class="col-md-4">
                 <label for="validationCustom01" class="form-label">Correo Electronico</label>
@@ -85,7 +78,6 @@ if ($result->num_rows === 0) {
 
                     <option value="<?= $datos->usu_estado ?>">Elija una opción</option>
                     <option> Activo </option>
-                    <option> Innactivo </option>
 
                 </select>
 
@@ -97,18 +89,16 @@ if ($result->num_rows === 0) {
                 <label for="validationCustom04" class="form-label">Rol</label>
                 <select class="form-select" id="validationCustom04" name="rol" >
 
-                    <option value="<?=$datos->usu_rol_id?>">Elija una opción</option>
-                    <option> 1</option>
-                    <option> 2 </option>
-                    <option> 3 </option>
-                    <option> 4 </option>
+                    <option value="<?=$datos->usu_rol?>">Elija una opción</option>
+                    <option> Administrador </option>
+                    <option> Residente </option>
+                    <option> Propietario </option>
+                    <option> Vigilante </option>
 
                 </select>
 
             </div>
 
-        <?php }
-        ?>
          
         <button type="submit" class="btn btn-primary" name="btn-confirmar" value="ok"> Confirmar </button>
         <button type="submit" class="btn btn-primary" name="btn-cancelar" value="ok"> Cancelar </button>

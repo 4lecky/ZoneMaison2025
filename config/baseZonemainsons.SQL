@@ -151,10 +151,9 @@ CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT
     alqu_tipo_doc_propietario VARCHAR (255) NOT NULL,
     alqu_num_doc_propietario INT (20) NOT NULL,
     alqu_nombre_propietario VARCHAR (255) NOT NULL,
-    alqu_num_recibo INT (255) NOT NULL;
+    alqu_num_recibo INT (255) NOT NULL,
     PRIMARY KEY (alqu_id),
     FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
-
 
 CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     desg_parq_id INT (20) NOT NULL,

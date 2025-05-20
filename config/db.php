@@ -23,5 +23,7 @@ try {
     die("Error de conexión: " . $e->getMessage());
 }
 
+return $pdo;
+// !IMPORTANTE¡ No olvidar el 'return'
 
 ?>
