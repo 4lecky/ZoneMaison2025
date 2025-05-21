@@ -1,6 +1,9 @@
-.h2
-/*miguel*/
+.first-container {
+    width: auto;
+    padding: 5%;
 
+}
+ 
 .table-section {
     display: flex;
     flex-direction: column;
@@ -10,7 +13,7 @@
 }
 
 .form-select {
-    width: 100%;
+    width: 102%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;

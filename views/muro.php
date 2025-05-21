@@ -19,11 +19,9 @@ require_once "./Layout/header.php"
 </head>
 <body>
 
-  <main>
+  <main class=first-container>
     <h2>Muro</h2>
 
-    
-    <div class="form-container">
       <!-- Destinatario -->
       <select class="form-select" id="filtrodestinatario">
         <option selected>Seleccione un Destinatario</option>
@@ -63,7 +61,11 @@ require_once "./Layout/header.php"
       <div style="display: flex; justify-content: center; gap: 10px;">
         <button class="Enviar">Enviar</button>
         <button class="Cancelar">Cancelar</button>
-      </div>
+        
+        <div class="buttons">
+        <a href="#" class="round-button edit-button">
+        <span>✎</span>
+        </a>
     </div>
   </main>
 

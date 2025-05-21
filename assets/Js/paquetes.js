@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   
       if (!descripcion.includes('Atentamente')) {
-        alert('Asegúrate de incluir un cierre con "Atentamente" en la descripción.');
+        alert('Asegúrate de incluir toda la información en la descripción.');
         return;
       }
   

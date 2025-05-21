@@ -18,11 +18,10 @@ require_once "./Layout/header.php"
 </head>
 <body>
 
-  <main>
+   <main class=first-container>
     <h2>Paqueteria</h2>
 
-    <div class="form-container">
-      <select class="form-select"  id="filtrodestinatario">
+    <select class="form-select"  id="filtrodestinatario">
         <option selected="">Seleccione un Destinatario</option>
         <option value="Juan Perez">Juan Perez</option>
         <option value="Luis Rodriguez">Luis Rodriguez</option>
@@ -54,7 +53,12 @@ require_once "./Layout/header.php"
       <div style="display: flex; justify-content: center; gap: 10px;">
         <button class="Enviar">Enviar</button>
         <button class="Cancelar">Cancelar</button>
-      </div>
+      
+      <div class="buttons">
+        <a href="#" class="round-button edit-button">
+        <span>✎</span>
+        </a>
+
     </div>
   </main>  
   <script src="../assets/js/paquetes.js"></script>
