@@ -23,7 +23,7 @@ require_once "./Layout/header.php"
     <h2>Muro</h2>
 
       <!-- Destinatario -->
-      <select class="form-select" id="filtrodestinatario">
+      <select class="form-control" id="filtrodestinatario">
         <option selected>Seleccione un Destinatario</option>
         <option value="p1">Residentes</option>
         <option value="p2">Administradores</option>
@@ -62,11 +62,6 @@ require_once "./Layout/header.php"
         <button class="Enviar">Enviar</button>
         <button class="Cancelar">Cancelar</button>
         
-        <div class="buttons">
-        <a href="#" class="round-button edit-button">
-        <span>✎</span>
-        </a>
-    </div>
   </main>
 
     <?php require_once "./Layout/footer.php" ?>

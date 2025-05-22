@@ -35,7 +35,7 @@ require_once "./Layout/header.php"
 </section>
 </div>
 <!--muro-->
-  <div class="container-muro">
+  <section class="container-muro">
     <section class="muro">
         <h3>Muro</h3>
         <div class="tarjeta">
@@ -44,6 +44,7 @@ require_once "./Layout/header.php"
                 <h4>Próximamente se iniciará el mantenimiento de las áreas verdes del conjunto</h4>
                 <p>Estimados residentes, les informamos que el próximo 15 de septiembre...</p>
 
+                <div style="display: flex; justify-content: right; gap: 10px;">
 <!-- Botón moderno -->
     <button class="animated-button">
       <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
@@ -55,17 +56,25 @@ require_once "./Layout/header.php"
         <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"/>
       </svg>
     </button>
-
+<div class="buttons">
+        <a href="#" class="round-button edit-button">
+        <span>✎</span>
+        </a>
+    </div>
+  </div>
   </div>
 </div>
 
         <div class="tarjeta">
             <img src="../assets/img/pay.png" alt="Pago de cuotas">
             <div class="contenido">
+              
                 <h4>Recordatorio de Pago de Cuotas</h4>
                 <p>Estimados residentes, este es un recordatorio de que la fecha límite...</p>
                 
-          
+   <div style="display: flex; justify-content: right; gap: 10px;">
+
+
     <!-- Botón moderno -->
     <button class="animated-button">
       <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
@@ -77,8 +86,13 @@ require_once "./Layout/header.php"
         <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"/>
       </svg>
     </button>
-
+<div class="buttons">
+        <a href="#" class="round-button edit-button">
+        <span>✎</span>
+        </a>
+    </div>
   </div>
+  
 </div>
 </section>
 
