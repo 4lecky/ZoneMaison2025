@@ -2,7 +2,7 @@
 
 //Conexion a la base de datos
 $pdo = require ('../config/db.php');
-
+session_start();
 // Verificar si se proporcionó un ID (Si cc esta funcionando)
 if (!isset($_GET['cc']) || empty($_GET['cc'])) {
     echo "Error: No se proporcionó un ID de usuario válido.";
@@ -54,27 +54,27 @@ try {
 
             <div class="col-md-4">
                 <label for="validationCustom01" class="form-label">Correo Electronico</label>
-                <input type="text" class="form-control" id="validationCustom01" name="correo" value="<?= $datos->usu_correo ?>"  >
+                <input type="text" class="form-control" id="validationCustom01" name="correo" value="<?= $datos->usu_correo ?>" required >
 
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustom02" class="form-label">Torre de residencia</label>
-                <input type="text" class="form-control" id="validationCustom02" name="torre" value="<?= $datos->usu_torre_residencia ?>" >
+                <input type="text" class="form-control" id="validationCustom02" name="torre" value="<?= $datos->usu_torre_residencia ?>" required >
 
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustomUsername" class="form-label">Apartamento de residencia</label>
                 <div class="input-group has-validation">
-                <input type="text" class="form-control" id="validationCustomUsername"  name="apartamento"  value="<?= $datos->usu_apartamento_residencia ?>" >
+                <input type="text" class="form-control" id="validationCustomUsername"  name="apartamento"  value="<?= $datos->usu_apartamento_residencia ?>" required >
 
             </div>
 
             <div class="col-md-10">
 
                 <label for="validationCustom04" class="form-label">Estado</label>
-                <select class="form-select" id="validationCustom04"  name="estado"  >
+                <select class="form-select" id="validationCustom04"  name="estado" >
 
                     <option value="<?= $datos->usu_estado ?>">Elija una opción</option>
                     <option> Activo </option>

@@ -10,8 +10,8 @@
 
     <a href="./views/login.php">Login</a>
     <a href="./views/signUp.php">Registrarse</a>
-<a href="./views/muro.php">muro</a>
-<a href="./views/paquetes.php">paque</a>
-<a href="./views/crear-zona-comun.php">zona</a>
+    <a href="./views/muro.php">muro</a>
+    <a href="./views/paquetes.php">paque</a>
+    <a href="./views/crear-zona-comun.php">zona</a>
 </body>
 </html>
