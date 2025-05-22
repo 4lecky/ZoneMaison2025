@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnEditar = document.getElementById('btnEditar');
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const numberRegex = /^\d+$/;
+  const telefonoRegex = /^\d+$/;
   const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
 
   const camposTipo = {
       email: emailRegex,
-      number: numberRegex,
+      telefono: telefonorRegex,
       date: dateRegex
   };
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const confirmar = confirm("Confirma que todos los datos estén correctos");
           if (confirmar) {
               alert("Formulario registrado correctamente (aquí puedes hacer el submit)");
-              // form.submit(); si deseas enviarlo
+            //   form.submit(); //si deseas enviarlo
           }
       }
 

@@ -1,38 +1,38 @@
 <?php
-class visitante {
+
+require_once __DIR__. "../config/db.php";
+class Visita {
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    public function registrarvisita($data) {
-
-        $sql = "INSERT INTO tbl_Visitante (
-                            vis_hora_entrada ,
-                            vis_hora_salida ,
-                            vis_fecha_entrada ,
-                            vis_fecha_salida ,
-                            vis_torre_visitada ,
-                            vis_Apto_visitado ,
-                            vis_usuario_cc ,
-        ) VALUES (?, ?, ?, ?, ?, ? )"; 
-        //Evitamos inyecciones sql
+    public function registrarVisita($data) {
+        $sql = "INSERT INTO tbl_visita (
+                    vis_hora_entrada,
+                    vis_hora_salida,
+                    vis_fecha_entrada,
+                    vis_fecha_salida,
+                    vis_torre_visitada,
+                    vis_Apto_visitado,
+                    vis_usuario_cc
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->pdo->prepare($sql);
 
+        $asignaciones = [
+            $data['horaInicio'],     // vis_hora_entrada
+            $data['horaSalida'],     // vis_hora_salida
+            $data['fechaEntrada'],   // vis_fecha_entrada
+            $data['fechaSalida'],    // vis_fecha_salida
+            $data['torre'],          // vis_torre_visitada
+            $data['apto'],           // vis_Apto_visitado
+            $data['usuario_cc']      // vis_usuario_cc
+        ];
 
-    // Crear un array indexado con los valores en el mismo orden que en la consulta
-    $asignaciones = [
-        $data['torre'],
-        $data['apto'],
-        $data['fechaEntrada'],
-        $data['fechaSalida'],
-        $data['horaInicio'],
-        $data['horaSalida']
-    ];
+        $stmt->execute($asignaciones);
 
-        return $stmt->execute($asignaciones);
+        return $this->pdo->lastInsertId();
     }
-
 }
