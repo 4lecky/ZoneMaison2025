@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-
-$pdo = require ("../config/db.php");          
-require_once '../models/visitante.php'; 
+require_once __DIR__."../config/db.php";          
+require_once __DIR__.'../models/visitante.php'; 
 
 $visitante = new Visitante($pdo);
 
