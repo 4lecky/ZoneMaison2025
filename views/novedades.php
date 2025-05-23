@@ -57,7 +57,7 @@ require_once "./Layout/header.php"
       </svg>
     </button>
 <div class="buttons">
-        <a href="#" class="round-button edit-button">
+        <a href="muro.php" class="round-button edit-button">
         <span>✎</span>
         </a>
     </div>
@@ -87,7 +87,7 @@ require_once "./Layout/header.php"
       </svg>
     </button>
 <div class="buttons">
-        <a href="#" class="round-button edit-button">
+        <a href="muro.php" class="round-button edit-button">
         <span>✎</span>
         </a>
     </div>
