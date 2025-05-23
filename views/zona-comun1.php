@@ -1,8 +1,6 @@
 <?php
-
 require_once './Layout/header.php'
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,29 +9,9 @@ require_once './Layout/header.php'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Salón Comunal</title>
     <link rel="stylesheet" href="../assets/css/areas-comunes/zona-comun1.css">
+    <link rel="stylesheet" href="../assets/css/calendar-styles.css">
 </head>
 <body>
-    <!-- <div class="header">
-        <div class="logo-container">
-            <img src="img/logo.jpg" alt="Logo" class="logo">
-        </div>
-        
-        <div class="brand-container">
-            <div class="brand-name">
-                <span class="zone">ZONE</span><span class="maisons">MAISONS</span>
-            </div>
-            <div class="underline"></div>
-        </div>
-        
-        <button class="menu-button">☰</button>
-    </div>
-    
-    <nav class="nav-bar">
-        <a href="../index.php" class="nav-item active">Inicio</a>
-        <a href="./visitas.php" class="nav-item">Visitantes</a>
-        <a href="./reserva1.php" class="nav-item">Reservas</a>
-        <a href="./pqrs.php" class="nav-item">Pqrs</a>
-    </nav> -->
     
     <main class="salon-comunal-page">
         <h2>Salón Comunal</h2>
@@ -71,12 +49,26 @@ require_once './Layout/header.php'
                         <!-- Calendar will be populated by JavaScript -->
                     </div>
                 </div>
+                
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <div class="legend-color available"></div>
+                        <span>Disponible</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color has-reservations"></div>
+                        <span>Con reservas</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color past"></div>
+                        <span>No disponible</span>
+                    </div>
+                </div>
             </div>
             
             <div id="time-slots" class="time-slots">
                 <h4>Horarios Disponibles</h4>
                 <div class="time-slots-content">
-                    <!-- Time slots will appear here when a date is selected -->
                     <p class="select-date-message">Seleccione una fecha en el calendario</p>
                 </div>
             </div>
@@ -106,26 +98,49 @@ require_once './Layout/header.php'
                 <h3>Datos Personales</h3>
                 <form id="booking-form">
                     <div class="form-group">
-                        <label for="name">Nombre</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="name">Nombre Completo</label>
+                        <input type="text" id="name" name="name" required minlength="3" maxlength="100">
+                        <div class="form-validation-error" id="name-error"></div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="apartment">Apartamento</label>
-                        <input type="text" id="apartment" name="apartment" required>
+                        <label for="apartment">Número de Apartamento</label>
+                        <input type="text" id="apartment" name="apartment" required pattern="[0-9A-Za-z\-]+" maxlength="10">
+                        <div class="form-validation-error" id="apartment-error"></div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="document">Documento</label>
-                        <input type="text" id="document" name="document" required>
+                        <label for="document">Número de Documento</label>
+                        <input type="text" id="document" name="document" required pattern="[0-9]+" minlength="7" maxlength="12">
+                        <div class="form-validation-error" id="document-error"></div>
                     </div>
                     
-                    <button type="submit" class="reserve-button">RESERVAR</button>
+                    <div class="reservation-summary" id="reservation-summary" style="display: none;">
+                        <h4>Resumen de Reserva</h4>
+                        <p><strong>Fecha:</strong> <span id="summary-date"></span></p>
+                        <p><strong>Horario:</strong> <span id="summary-time"></span></p>
+                        <p><strong>Duración:</strong> 1 hora</p>
+                    </div>
+                    
+                    <button type="submit" class="reserve-button" id="reserve-btn" disabled>
+                        RESERVAR
+                    </button>
                 </form>
             </div>
         </div>
     </main>
     
-    <script src="js/calendar.js"></script>
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+            <div class="loading"></div>
+            <p style="margin-top: 10px;">Procesando reserva...</p>
+        </div>
+    </div>
+    
+    <script src="../assets/js/calendario.js"></script>
+    
+    <style>
+        
+    </style>
 </body>
 </html>

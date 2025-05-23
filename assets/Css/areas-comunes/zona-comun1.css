@@ -455,3 +455,247 @@ h3:before {
         flex-direction: column;
     }
 }
+
+/* salon comunal calendario */
+.calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-color.available {
+            background-color: #4caf50;
+        }
+        
+        .legend-color.has-reservations {
+            background-color: #ff9800;
+        }
+        
+        .legend-color.past {
+            background-color: #ccc;
+        }
+        
+        .reservation-summary {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .reservation-summary h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+        
+        .reservation-summary p {
+            margin: 5px 0;
+        }
+        
+        #loading-overlay {
+            display: none;
+        }
+        
+        #loading-overlay.show {
+            display: flex !important;
+        }
+
+/*calendario */
+
+/* Estilos adicionales para el calendario de reservas */
+
+.calendar-day {
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.calendar-day:hover:not(.past-day):not(.other-month) {
+    background-color: #e3f2fd;
+    transform: scale(1.05);
+}
+
+.calendar-day.selected {
+    background-color: #2196f3;
+    color: white;
+    font-weight: bold;
+}
+
+.calendar-day.past-day {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.calendar-day.other-month {
+    color: #999;
+    cursor: not-allowed;
+}
+
+.calendar-day.has-reservations::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background-color: #ff9800;
+    border-radius: 50%;
+}
+
+.calendar-day.selected.has-reservations::after {
+    background-color: #fff;
+}
+
+/* Estilos para los horarios */
+.time-slots {
+    min-height: 300px;
+}
+
+.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.time-slot {
+    padding: 12px 8px;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.time-slot.available {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+.time-slot.available:hover {
+    background-color: #c8e6c9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.time-slot.booked {
+    background-color: #ffebee;
+    border-color: #f44336;
+    color: #c62828;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.time-slot.selected {
+    background-color: #2196f3;
+    border-color: #1976d2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+.booked-label {
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 2px;
+    text-transform: uppercase;
+}
+
+.select-date-message {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .availability-container {
+        flex-direction: column;
+    }
+    
+    .calendar-section,
+    .time-slots {
+        width: 100%;
+    }
+    
+    .slots-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 8px;
+    }
+    
+    .time-slot {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.time-slots-content {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Estilos para el formulario mejorado */
+.reserve-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.form-validation-error {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Indicador de carga */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2196f3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

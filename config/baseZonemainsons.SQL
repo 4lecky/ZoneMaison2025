@@ -53,12 +53,10 @@ CREATE TABLE IF NOT EXISTS tbl_area_evento ( area_id INT NOT NULL AUTO_INCREMENT
     PRIMARY KEY (area_id));
 
 
-CREATE TABLE IF NOT EXISTS tbl_reserva ( rese_id INT NOT NULL,
-    rese_descripcion VARCHAR(255) NOT NULL,
-    rese_valor DECIMAL(10, 2) NOT NULL,
-    rese_cantidad INT NOT NULL,
-    rese_impuesto DECIMAL(10, 2) NOT NULL,
-    rese_fecha_inicio DATE NOT NULL,
+CREATE TABLE IF NOT EXISTS tbl_reserva (
+    rese_id INT NOT NULL AUTO_INCREMENT,
+    rese_usuario_nombre VARCHAR(100) NOT NULL,     
+    rese_numero_apartamento VARCHAR(10) NOT NULL, 
     rese_fecha_fin DATE NOT NULL,
     rese_hora_inicio TIME NOT NULL,
     rese_hora_fin TIME NOT NULL,
@@ -66,7 +64,8 @@ CREATE TABLE IF NOT EXISTS tbl_reserva ( rese_id INT NOT NULL,
     rese_usuario_cc INT NOT NULL,
     PRIMARY KEY (rese_id),
     FOREIGN KEY (rese_area_id) REFERENCES tbl_area_evento(area_id),
-    FOREIGN KEY (rese_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
+    FOREIGN KEY (rese_usuario_cc) REFERENCES tbl_usuario (usuario_cc)
+);
 
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INTEGER (10) NOT null,
