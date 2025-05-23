@@ -1,0 +1,30 @@
+
+
+.contenedorBotones button:hover{
+
+ font-weight:500;
+ background-color: #a18c87;
+ color: white;
+
+}
+
+
+
+
+table{
+  margin-top: 100px;
+}
+
+
+.alerta_modificacion_crud{
+  background-color: green;
+  color: aliceblue;
+}
+  
+
+
+
+
+
+
+

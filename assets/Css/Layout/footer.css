@@ -1,0 +1,166 @@
+.footer {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 30px;
+  background: #7b9a82;
+  padding: 40px 0;
+  border-radius: 5px;
+}
+
+
+/* Container para centrar el contenido */
+
+.container_general_footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Titulos_footer{
+
+  color: rgb(56, 97, 56);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer-col {
+  flex-basis: 30%;
+  margin-bottom: 30px;
+}
+
+
+.nosotros_redes {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+
+.nosotros_redes li {
+  margin-left: 10px;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+}
+
+.contacto_footer{
+
+  list-style: none;
+  justify-content: center;
+
+}
+
+
+/* Redes sociales */
+
+.footer-col_redes{
+
+  margin-bottom: 30px;
+  justify-content: center;
+  display: flex;
+  margin-right: 20px;
+
+}
+
+.redes_sociales{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.redes_sociales li {
+  margin-left: 50px;
+
+}
+
+.redes_sociales li i:hover {
+ 
+  color: aliceblue;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+
+
+@media (max-width: 790px) {
+  .footer {
+    padding: 30px 15px;
+  }
+
+
+  .Titulos_footer {
+    font-size: 16px;
+    flex-direction: column;
+  }
+
+  .footer-col {
+    flex-basis: 100%;
+  }
+
+  .footer-col ul li a {
+    font-size: 14px;
+  }
+
+  .redes_sociales li {
+    margin-left: 15px;
+  }
+
+  .copyright {
+    font-size: 12px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px;
+  }
+
+  .footer-content {
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-col {
+    flex-basis: 100%;
+    margin-bottom: 15px;
+  }
+
+  .footer-col ul li a {
+    font-size: 12px;
+  }
+
+  .redes_sociales li {
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .copyright {
+    font-size: 12px;
+  }
+}

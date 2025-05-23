@@ -1,0 +1,246 @@
+header{ 
+
+    display: flex;
+    margin: auto;
+    width: 100%;
+    padding-bottom: 30px;
+    padding-top: 5px;
+
+  }
+  
+  
+  header .logo-ZM{
+    width: 25%;
+    /* background-color: bisque; */
+  }
+  
+  header .Logo{
+    width: 250px;
+    height: 90px;
+    top: 18px;
+    margin-left: 50px;
+  }
+  
+  header .Titulo {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  header .LogoT {
+    margin-top: 20px;
+    width: 400px;
+    height: 70px;
+  }
+  
+    .menu {
+
+    display: flex;
+    width: 20%;
+    margin-right: 40px;
+    margin-top: 20px;
+    justify-content: right;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff;
+    appearance: none;
+    /* margin-left: 5em; */
+  }
+  
+  header .IconoMenu{
+
+    width: 45px;
+    height: 45px;
+  }
+
+
+  /* Nav */
+
+
+  #main_nav {
+  display: flex;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: #7b9a82;
+  padding-top: 10px;
+  justify-content: center;
+  font-size: 18px; 
+  font-weight: 400;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Menú expandido */
+#main_nav.nav_expanded {
+  max-height: 200px; 
+}
+
+/* Línea visible solo cuando está colapsado */
+#main_nav.nav_collapsed::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+
+#main_nav a {
+  color: rgb(20, 26, 21);
+  font-weight: 400;
+  text-decoration: none;
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+#main_nav a:hover {
+  font-weight: 600;
+  text-decoration: solid;
+  color: #ffffff;
+}
+
+  
+  /* Responsive */
+
+  @media (max-width: 1200px) {
+  
+  header {
+    align-items: center;
+    padding: 15px;
+  }
+
+  .LogoT{
+    margin-top: 20px;
+    width: 200px;
+    height: 50px;
+  }
+
+  header .logo-ZM,
+  header .Titulo,
+  header .menu {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  header .Logo {
+    margin-left: 0;
+    width: 180px;
+    height: auto;
+  }
+
+
+  header .menu {
+    justify-content: center;
+    margin: 30px;
+    align-items: center;
+
+  }
+
+  #main_nav {
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  #main_nav::after {
+    display: none !important;
+    align-items: center;
+  }
+
+}
+
+  @media (max-width: 1199px) {
+  
+  header {
+    align-items: center;
+    padding: 15px;
+  }
+
+  .LogoT{
+    display: none;
+  }
+
+  header .logo-ZM,
+  header .Titulo,
+  header .menu {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  header .Logo {
+    margin-left: 0;
+    width: 180px;
+    height: auto;
+  }
+
+  .LogoT{
+    display: none;
+  }
+
+
+  header .menu {
+    justify-content: center;
+    margin: 30px;
+    align-items: center;
+
+  }
+
+  #main_nav {
+    align-items: center;
+    font-size: 16px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  #main_nav::after {
+    display: none !important;
+    align-items: center;
+  }
+
+  #main_nav.nav_collapsed  a {
+    display: none;
+    transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+  header .Logo {
+    width: 140px;
+  }
+
+  header .LogoT {
+    width: 200px;
+  }
+
+  header .IconoMenu {
+    width: 35px;
+    height: 35px;
+  }
+  #main_nav  {
+    font-size: 14px;
+    transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+   #main_nav.nav_collapsed  a {
+    display: none;
+    transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+
+}

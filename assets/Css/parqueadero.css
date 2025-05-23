@@ -1,0 +1,456 @@
+
+/* Formulario Registro de vehiculo */
+
+/* Botones e imagenes superiores del header*/
+.sidebar {
+  width: 1000px;
+  margin: auto;
+  padding: 100px;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  
+}
+
+
+/* Separador de las imagenes y botones superiores */
+.iconos-botones {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin-bottom: 30px;
+}
+
+/* Imagenes superiores */
+.sidebar img {
+  width: 100%;
+  height: 200px;
+}
+
+
+
+
+
+.iconos-botones img {
+  width: 100px; /* o el tamaño que prefieras */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.iconos-botones img:hover {
+  transform: scale(1.1); /* Efecto zoom */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+  filter: brightness(1.1); /* Un poco más brillante al pasar el mouse */
+}
+
+
+
+
+
+
+/* Botones del menú superior */
+.sidebar .menu-button {
+  width: 1600px;
+  margin-bottom: 15px;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+  background-color: #7b9a82;
+  color: white;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar .menu-button input {
+  display: none;
+  text-align: center;
+}
+
+.sidebar .menu-button:hover {
+  background-color: #395b41;
+}
+
+
+.texto-hover {
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  background-color: rgba(0,0,0,0.6);
+  padding: 8px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.contenedor-imagen:hover .texto-hover {
+  opacity: 1;
+}
+
+
+
+/* ----- Estructura General del Contenedor ----- */
+.formulario-container-registro {
+  flex: 1;
+  padding: 40px;
+  max-width: 1100px;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.formulario-container-registro h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+}
+
+/* ----- Fieldsets ----- */
+.formulario-registro fieldset {
+  border: 1px solid #ccc;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+}
+
+.formulario-registro legend {
+  font-weight: bold;
+  font-size: 18px;
+  color: #444;
+  padding: 0 10px;
+}
+
+/* ----- Etiquetas e Inputs ----- */
+.formulario-registro label {
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.formulario-registro input[type="text"],
+.formulario-registro input[type="email"],
+.formulario-registro input[type="date"],
+.formulario-registro input[type="time"],
+.formulario-registro textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.listaDesplegable {
+   width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.formulario-registro input:focus,
+.formulario-registro textarea:focus {
+  border-color: #7b9a82;
+  outline: none;
+}
+
+/* ----- Agrupación de Inputs ----- */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-box {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----- Área de Observaciones u otros textos largos ----- */
+.formulario-registro textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ----- Botones del Formulario ----- */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.acciones button {
+  padding: 12px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background-color: #7b9a82;
+  color: white;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+}
+
+.acciones button:hover {
+  background-color: #5f7d68;
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+/* Formulario cobro de tarifa */
+
+/* Recuadro general del contenedor */
+.formulario-container-cobro {
+  flex: 1;
+  padding: 40px;
+  max-width: 1100px;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos principales del formulario */
+.formulario-container-cobro h2,
+.formulario-container-cobro h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Formulario principal */
+.formulario-container-cobro form {
+  border: 1px solid #ccc;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Fieldset con marco y espaciado */
+.formulario-container-cobro fieldset {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+/* Estilo del legend (subtítulo del bloque) */
+.formulario-container-cobro legend {
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+/* Estilos de los labels */
+.formulario-container-cobro label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+/* Inputs y textarea */
+.formulario-container-cobro input[type="text"],
+.formulario-container-cobro input[type="email"],
+.formulario-container-cobro input[type="date"],
+.formulario-container-cobro input[type="time"],
+.formulario-container-cobro textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Textarea adaptable */
+.formulario-container-cobro textarea.auto-ajustable {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Agrupación en columnas */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-box {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botones de acción */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.acciones button {
+  padding: 12px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background-color: #7b9a82;
+  color: white;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+}
+
+.acciones button:hover {
+  background-color: #5f7d68;
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+/* ----- Contenedor del Formulario de Reportes ----- */
+.formulario-reporte {
+  flex: 1;
+  padding: 40px;
+  max-width: 1100px;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.formulario-reporte h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+}
+
+/* ----- Fieldset y Legend ----- */
+.formulario-reporte fieldset {
+  border: 1px solid #ccc;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+}
+
+.formulario-reporte legend {
+  font-weight: bold;
+  font-size: 18px;
+  color: #444;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+/* ----- Etiquetas e Inputs ----- */
+.formulario-reporte label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.formulario-reporte input[type="text"],
+.formulario-reporte input[type="email"],
+.formulario-reporte input[type="date"],
+.formulario-reporte textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.formulario-reporte input:focus,
+.formulario-reporte textarea:focus {
+  border-color: #7b9a82;
+  outline: none;
+}
+
+/* ----- Agrupación de Inputs ----- */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-box {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----- Textarea Estilo ----- */
+.formulario-reporte textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ----- Botones ----- */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.acciones button {
+  padding: 12px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background-color: #7b9a82;
+  color: white;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+}
+
+.acciones button:hover {
+  background-color: #5f7d68;
+  transform: scale(1.05);
+}
