@@ -1,10 +1,6 @@
 <?php
-
-
-require_once "./Layout/header.php";
 session_start();
-
-
+require_once __DIR__ . "/Layout/header.php";
 ?>
 
 
@@ -76,7 +72,7 @@ session_start();
             <td><?= $datos->usu_rol ?></td>
             <td class="contenedorBotones">
               <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="#" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
+              <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
             </td>
           </tr>
         <?php } ?>
@@ -89,7 +85,6 @@ session_start();
 
 
 
-  <?php require_once "./Layout/footer.php" ?>
 
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -116,6 +111,10 @@ session_start();
   <script src="../assets/Js/crud.js"></script>
   <script src="../assets/Js/header.js"></script>
 
+  
+  <?php 
+  require_once __DIR__ . "./Layout/footer.php" 
+  ?>
 
 </body>
 
