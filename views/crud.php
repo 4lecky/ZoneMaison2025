@@ -17,6 +17,7 @@ session_start();
   <!-- <link rel="stylesheet" href="./assets/Css/crud/" /> -->
   <link rel="stylesheet" href="../assets/Css/globals.css" />
   <link rel="stylesheet" href="../assets/Css/crud/style.css" />
+  <link rel="stylesheet" href="../assets/Css/crud/tbl_crud.css">
   <!-- DataTable-->
   <link href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.bootstrap5.min.css" rel="stylesheet" integrity="sha384-DJhypeLg79qWALC844KORuTtaJcH45J+36wNgzj4d1Kv1vt2PtRuV2eVmdkVmf/U" crossorigin="anonymous">
   <link href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" integrity="sha384-5hBbs6yhVjtqKk08rsxdk9xO80wJES15HnXHglWBQoj3cus3WT+qDJRpvs5rRP2c" crossorigin="anonymous">
@@ -32,7 +33,6 @@ session_start();
     <h1>Lista de usuarios</h1>
 
     <div class="container mt-4">
-
       <!-- Mostrar mensaje -->
       <?php if (isset($_SESSION['mensaje'])): ?>
         <div class="alert alert-<?= $_SESSION['mensaje']['tipo']; ?> fs-5 alert-dismissible fade show" role="alert">
@@ -55,7 +55,7 @@ session_start();
           <th scope="col">Apartamento</th>
           <th scope="col">Estado</th>
           <th scope="col">Rol</th>
-          <th></th>
+          <th scope="col">Editar/Eliminar</th>
         </tr>
       </thead>
 
@@ -74,7 +74,7 @@ session_start();
             <td><?= $datos->usu_apartamento_residencia ?></td>
             <td><?= $datos->usu_estado ?></td>
             <td><?= $datos->usu_rol ?></td>
-            <td>
+            <td class="contenedorBotones">
               <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
               <a href="#" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
             </td>
@@ -93,8 +93,6 @@ session_start();
 
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 
   <!-- DataTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous"></script>
