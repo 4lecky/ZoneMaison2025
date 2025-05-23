@@ -1,56 +1,62 @@
 
 /* Formulario Registro de vehiculo */
 
-/* Botones e imagenes superiores del header*/
-.sidebar {
-  width: 1000px;
-  margin: auto;
-  padding: 100px;
-  border-radius: 0 20px 20px 0;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  
-}
-
-
-/* Separador de las imagenes y botones superiores */
-.iconos-botones {
+/* Agrupa ambos bloques lado a lado */
+.contenedor-botones {
   display: flex;
   justify-content: center;
-  gap: 100px;
-  margin-bottom: 30px;
+  gap: 80px; /* Separación entre bloques */
+  flex-wrap: wrap; /* Opcional para adaptar en móviles */
 }
 
-/* Imagenes superiores */
-.sidebar img {
-  width: 100%;
-  height: 200px;
+/* Cada bloque de imagen + texto + botón */
+.bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  text-align: center;
 }
 
-
-
-
-
-.iconos-botones img {
-  width: 100px; /* o el tamaño que prefieras */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.iconos-botones img:hover {
-  transform: scale(1.1); /* Efecto zoom */
+/* Estilo de las imágenes */
+.img_parqueadero {
+  width: 350px;
+  height: 350px;
+  margin: 50px;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra ligera */
   filter: brightness(1.1); /* Un poco más brillante al pasar el mouse */
 }
 
+.img_parqueadero:hover {
+  width: 350px;
+  height: 350px;
+  margin: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  transform: scale(1.1); /* Efecto zoom */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+  filter: brightness(1.1); /* Un poco más brillante */
+}
+
+/* Texto explicativo debajo de la imagen */
+.texto-hover-parqueadero {
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 50px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
 
 
-
-
-
-/* Botones del menú superior */
-.sidebar .menu-button {
-  width: 1600px;
-  margin-bottom: 15px;
+/* Botón */
+.menu-button {
+  width: 100%;
   padding: 15px;
   font-weight: bold;
   font-size: 14px;
@@ -62,32 +68,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-.sidebar .menu-button input {
-  display: none;
-  text-align: center;
-}
-
-.sidebar .menu-button:hover {
+.menu-button:hover {
   background-color: #395b41;
-}
-
-
-.texto-hover {
-    position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  color: white;
-  background-color: rgba(0,0,0,0.6);
-  padding: 8px;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  text-align: center;
-}
-
-.contenedor-imagen:hover .texto-hover {
-  opacity: 1;
 }
 
 
