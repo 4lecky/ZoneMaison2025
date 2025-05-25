@@ -68,24 +68,25 @@ CREATE TABLE IF NOT EXISTS tbl_reserva (
 );
 
 
-CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INTEGER (10) NOT null,
-    paqu_Asunto text NOT null,
-    paqu_Descripción text NOT null, 
-    paqu_Hora time NOT null,
-    paqu_FechaLlegada DATE NOT null,
-    paqu_image BLOB NOT null,
-    paqu_estado enum('Entregado','Pendiente') NOT NULL,
+CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
+    Paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
     paqu_usuario_cc INTEGER (10) NOT null, 
+    paqu_Asunto text NOT null,
+    paqu_FechaLlegada DATE NOT null,
+    paqu_Hora time NOT null,
+    paqu_image BLOB NOT null,
+    paqu_Descripción text NOT null, 
+    paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
     FOREIGN KEY (paqu_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
 
-CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INTEGER (10) NOT null,
+CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Destinatario VARCHAR (60) NOT null,
     muro_Asunto text NOT null,
-    muro_Descripción text NOT null, 
-    muro_Hora time NOT null,
     muro_Fecha DATE NOT null,
+    muro_Hora time NOT null,
     muro_image BLOB NOT null,
+    muro_Descripción text NOT null, 
     muro_usuario_cc Integer NOT null,
     PRIMARY KEY (muro_id),
     FOREIGN KEY (muro_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
