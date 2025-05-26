@@ -33,7 +33,7 @@ require_once './Layout/header.php'
                         <img src="../assets/img/crear_pqr.png" alt="Crear PQR">
                         <p>Crear PQR</p>
                     </div>
-                    <div class="opcion" onclick="location.href='sugerencias.php'">
+                    <div class="opcion" onclick="location.href='crear_pqr.php'">
                         <img src="../assets/img/sugerencias.png" alt="Sugerencias">
                         <p>Sugerencias</p>
                     </div>
