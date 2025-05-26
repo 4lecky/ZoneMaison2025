@@ -10,15 +10,19 @@ require_once __DIR__ . "/Layout/header.php";
 <head>
   <meta charset="utf-8" />
 
-  <!-- <link rel="stylesheet" href="./assets/Css/crud/" /> -->
-  <link rel="stylesheet" href="../assets/Css/globals.css" />
-  <link rel="stylesheet" href="../assets/Css/crud/style.css" />
-  <link rel="stylesheet" href="../assets/Css/crud/tbl_crud.css">
   <!-- DataTable-->
   <link href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.bootstrap5.min.css" rel="stylesheet" integrity="sha384-DJhypeLg79qWALC844KORuTtaJcH45J+36wNgzj4d1Kv1vt2PtRuV2eVmdkVmf/U" crossorigin="anonymous">
   <link href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" integrity="sha384-5hBbs6yhVjtqKk08rsxdk9xO80wJES15HnXHglWBQoj3cus3WT+qDJRpvs5rRP2c" crossorigin="anonymous">
   <!-- Bootstrap   -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Css despues del Bootstrap -->
+  <link rel="stylesheet" href="../assets/Css/globals.css" />
+  <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+  <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
+  <link rel="stylesheet" href="../assets/Css/crud/usuCrud.css">
+  <link rel="stylesheet" href="../assets/Css/crud/tbl_crud.css">
+  <!-- Libreria de iconos RemixIcon-->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 </head>
 
@@ -58,10 +62,16 @@ require_once __DIR__ . "/Layout/header.php";
       <tbody>
         <?php
         require_once '../config/db.php';
-        $stmt = $pdo->query("SELECT * FROM `tbl_usuario`");
+        $stmt = $pdo->query("SELECT * FROM tbl_usuario ORDER BY CASE 
+              WHEN usu_estado = 'Activo' THEN 1
+              WHEN usu_estado = 'Inactivo' THEN 2
+              ELSE 3
+              END");
 
-        while ($datos = $stmt->fetch(PDO::FETCH_OBJ)) { ?>
-          <tr>
+        while ($datos = $stmt->fetch(PDO::FETCH_OBJ)) {
+          // $claseFila = ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : '';  
+        ?>
+          <tr class="<?= ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : 'usuario-activo' ?>">
             <td><?= $datos->usuario_cc ?></td>
             <td><?= $datos->usu_nombre_completo ?></td>
             <td><?= $datos->usu_telefono ?></td>
@@ -70,12 +80,14 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_apartamento_residencia ?></td>
             <td><?= $datos->usu_estado ?></td>
             <td><?= $datos->usu_rol ?></td>
+
             <td class="contenedorBotones">
               <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
               <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
             </td>
           </tr>
-        <?php } ?>
+        <?php  }
+        ?>
       </tbody>
     </table>
 
@@ -103,17 +115,17 @@ require_once __DIR__ . "/Layout/header.php";
 
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   <!-- Iconos-->
   <script src="https://kit.fontawesome.com/dbd1801b06.js" crossorigin="anonymous"></script>
 
   <!-- Links de JavaScript -->
-  <script src="../assets/Js/crud.js"></script>
+  <script src="../assets/Js/crud/tableCrud.js"></script>
   <script src="../assets/Js/header.js"></script>
 
-  
-  <?php 
-  require_once __DIR__ . "./Layout/footer.php" 
+
+  <?php
+  require_once __DIR__ . "./Layout/footer.php"
   ?>
 
 </body>

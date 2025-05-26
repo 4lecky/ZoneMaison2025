@@ -51,6 +51,7 @@ require_once './Layout/header.php'
         <option value="peticion">Petición</option>
         <option value="queja">Queja</option>
         <option value="reclamo">Reclamo</option>
+        <option value="sugerencia">Sugerencia</option>
       </select>
     </div>
     <div class="campo-doble">

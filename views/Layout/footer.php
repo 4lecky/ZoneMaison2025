@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../assets/Css/globals.css">
-    <link rel="stylesheet" href="../../assets/Css/Layout/footer.css">
-</head>
-<body>
 
     <footer class="footer">
 
@@ -67,5 +57,3 @@
 
     <script src="https://kit.fontawesome.com/dbd1801b06.js" crossorigin="anonymous"></script>
     
-</body>
-</html>
