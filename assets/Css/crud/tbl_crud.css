@@ -10,17 +10,22 @@
 }
 
 .btn-export-crud{
-
-    width: 60px;
-
+  width: 60px;
+  height: 40px !important;
 } 
 
-/* Color del encabezado de la pagina */
-table.dataTable thead>tr>th.dt-orderable-asc, table.dataTable thead>tr>th.dt-orderable-desc, table.dataTable thead>tr>td.dt-orderable-asc, table.dataTable thead>tr>td.dt-orderable-desc {
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-    background: #b49d97;
-    text-align: center;
+table.dataTable thead th,
+table.dataTable thead td {
+    background: #b49d97 !important;
+    color: #fff !important;
+    text-align: center !important;
+}
+
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+    background: #b49d97 !important;
+    color: #fff !important;
 }
 
 table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date, table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date{
@@ -50,5 +55,20 @@ table.table.dataTable>:not(caption)>*>* {
   background-color: #b49d97 !important; /* Cambia el fondo */
   border-color: #b49d97 !important; /* Cambia el borde */
 }
+
+
+
+table#usuarios tr.usuario-inactivo td {
+  background-color: #f3dfdf !important;
+  opacity: 1 !important;
+  /* Puedes agregar esto para asegurarte de que no haya transparencia: */
+}
+
+
+table#usuarios tr.usuario-activo td {
+  background-color: #ffffff !important;
+  /* Puedes agregar esto para asegurarte de que no haya transparencia: */
+}
+
 
 

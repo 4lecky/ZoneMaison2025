@@ -14,15 +14,22 @@ require_once "./Layout/header.php";
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../assets/Css/home.css"/>
-    <link rel="stylesheet" href="../assets/Css/globals.css"/>
+    <!-- iconos (RemixIcon+) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/Css/home.css" />
+    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
 
 </head>
+
 <body>
 
     <div class="container_home">
@@ -31,12 +38,13 @@ require_once "./Layout/header.php";
         <p>¡Disfruta navegando!</p>
     </div>
 
-    <?php 
+    <?php
 
-    require_once "./Layout/footer.php" 
-    
+    require_once "./Layout/footer.php"
+
     ?>
 
     <script src="../assets/Js/header.js"></script>
 </body>
+
 </html>

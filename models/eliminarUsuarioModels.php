@@ -1,21 +1,24 @@
 <?php
 require_once '../config/db.php';
 
+//Creamos la clase
 class EliminarUsuarioModels{
+    //$pdo es el objeto de conexión a la base de datos.
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
-    public function eliminar($usuario_cc) {
-        $stmt = $this->pdo->prepare("DELETE FROM tbl_usuario WHERE usuario_cc = cc:");
-        return $stmt->execute([$usuario_cc]);
+    //Definimos la función para eliminar
+    public function eliminar($cc) {
+        $stmt = $this->pdo->prepare("UPDATE tbl_usuario SET usu_estado = 'Inactivo'  WHERE usuario_cc = ?");
+        return $stmt->execute([$cc]);
     }
 
-    // Obtener todos los usuarios
-    public function obtenerTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM tbl_usuario");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    // public function ordenar($cc){
+    //     $stmt = $this->pdo->prepare("SELECT * FROM tbl_usuario ORDER BY 
+    //         CASE WHEN usu_estado = 'Inactivo' THEN 1 ELSE 0 END, usu_nombre_completo ASC");
+    // }
+
 }
