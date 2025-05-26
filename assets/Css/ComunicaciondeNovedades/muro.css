@@ -157,7 +157,7 @@
 }
 
  /* button */
-  .Enviar {
+  .enviar {
     background-color: #7b9a82;
     color: white;
     padding: 10px 20px;
@@ -167,7 +167,7 @@
     font-size: 16px;
   }
   
-  .Cancelar {
+  .cancelar {
     background-color: #f13a02;
     color: white;
     padding: 10px 20px;
@@ -178,7 +178,6 @@
   }  
 
 
-  
 /* Script */
 .script {
     display: none;

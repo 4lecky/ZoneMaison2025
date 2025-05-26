@@ -1,30 +1,33 @@
 <?php
 session_start();
+$conn = require_once '../config/db.php';       // ← así se recibe el objeto PDO
+require_once '../models/muroModel.php';
 
-$pdo = require ("../config/db.php");          
-require_once '../models/muro.php'; 
+$muroModel = new muroModel($conn);
 
-$muro = new muro($pdo); 
+// Obtener datos del formulario
+$destinatario = $_POST['destinatario'];
+$asunto = $_POST['asunto'];
+$fecha = $_POST['fecha'];
+$hora = $_POST['hora'];
+$descripcion = $_POST['descripcion'];
+$usuario_cc = $_POST['usuario_cc'];
 
-// Registro
-if (isset($_POST['enviarmuro'])) {
-    $data = [
-        'muro_Id'     => $_POST['muro_Id'],
-        'Destinatario' => $_POST['Destinatario'],
-        'Asunto'      => $_POST['Asunto'],
-        'Descripción' => $_POST['Descripción'],
-        'Hora'        => $_POST['Hora'],
-        'Fecha'       => $_POST['Fecha'],
-        'imagen'      => $_POST['imagen'], 
-        'usuario_cc'  => $_POST['usuario_cc'],
-    ];
+// Obtener imagen como binario
+$imagenBinaria = file_get_contents($_FILES['zone-images']['tmp_name']);
 
-    $success = $muro->enviarmuro($data);
+// Llamar al modelo con los 8 parámetros
+$muroModel->insertarMuro(
+    $destinatario,
+    $asunto,
+    $fecha,
+    $hora,
+    $imagenBinaria,
+    $descripcion,
+    $usuario_cc,
+    $_FILES['zone-images']['name']
+);
 
-    if ($success) {
-        header('Location: ./views/muro.php');
-        exit;
-    } else {
-        echo "Error al guardar en la base de datos.";
-    }
-}
+// Redirigir o mostrar mensaje
+header("Location: ../views/muro.php");
+exit;
