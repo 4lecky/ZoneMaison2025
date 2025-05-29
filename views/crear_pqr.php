@@ -28,7 +28,7 @@ require_once './Layout/header.php'
   <p class="form-subtitle">Por favor, diligencia la siguiente información para procesar tu solicitud.</p>
   <p class="campo-obligatorio">(*) Todos los campos son obligatorios</p>
 
-  <form class="formulario-pqr" method="POST" action="/PQRS/controller/pqrsController.php" enctype="multipart/form-data">
+  <form class="formulario-pqr" method="POST" action="../controller/pqrsController.php" enctype="multipart/form-data">
     <div class="campo-doble">
       <input type="text" name="nombres" placeholder="Nombres *">
     </div>

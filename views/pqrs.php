@@ -3,6 +3,14 @@
 require_once './Layout/header.php'
 ?>
 
+<?php if (isset($_GET['editado'])): ?>
+  <div class="alerta-exito">¡Registro editado exitosamente!</div>
+<?php elseif (isset($_GET['eliminado'])): ?>
+  <div class="alerta-exito">¡Registro eliminado exitosamente!</div>
+<?php elseif (isset($_GET['error']) && $_GET['error'] === 'eliminando'): ?>
+  <div class="alerta-error">Ocurrió un error al intentar eliminar el registro.</div>
+<?php endif; ?>
+
 
 
 <!DOCTYPE html>

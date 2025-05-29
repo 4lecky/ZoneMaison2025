@@ -1,11 +1,11 @@
 <?php
-require_once 'conexion.php';
+require_once __DIR__ . '/../config/db.php';
 
 class PqrsModel {
     private $pdo;
 
     public function __construct() {
-        $this->pdo = Conexion::conectar();
+        $this->pdo = require __DIR__ . '/../config/db.php';
     }
 
     public function registrar($data): mixed {
@@ -57,4 +57,6 @@ class PqrsModel {
         return $stmt->execute([$id]);
     }
 }
+
+
 
