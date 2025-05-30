@@ -6,12 +6,7 @@ session_start();
 // }
 
 require_once "./Layout/header.php";
-
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +18,6 @@ require_once "./Layout/header.php";
     <!-- iconos (RemixIcon+) -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/Css/home.css" />
-    <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />

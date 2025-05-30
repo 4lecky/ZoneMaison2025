@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS pqrs (
   identificacion VARCHAR(20) NOT NULL,
   email VARCHAR(100) NOT NULL,
   telefono VARCHAR(15) NOT NULL,
-  tipo_pqr ENUM('peticion', 'queja', 'reclamo') NOT NULL,
+  tipo_pqr ENUM('peticion', 'queja', 'reclamo', 'sugerencia') NOT NULL,
   asunto VARCHAR(255) NOT NULL,
   mensaje TEXT NOT NULL,
   archivos TEXT, -- puedes guardar los nombres o rutas de archivos

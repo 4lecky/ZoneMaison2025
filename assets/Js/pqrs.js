@@ -101,49 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 modal.style.display = "flex";
             }
 
-            // Preparar los datos del formulario
-            const formData = new FormData(formulario);
-
-            // Enviar formulario mediante fetch
-            fetch(formulario.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            formulario.submit();
+                    });
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Respuesta del servidor:', data);
-                
-                if (data.status === 'success') {
-                    // Mostrar mensaje de éxito sin redirigir
-                    alert(data.message);
-                    
-                    // Limpiar formulario
-                    formulario.reset();
-                } else {
-                    // Manejar errores
-                    alert('Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Hubo un problema al enviar el formulario');
-            })
-            .finally(() => {
-                // Cerrar modal después de 3 segundos
-                setTimeout(() => {
-                    if (modal) {
-                        modal.style.display = "none";
-                    }
-                }, 3000);
-            });
         });
-    }
-});
+
+
 
 
 document.querySelectorAll('.faq-question').forEach(button => {
