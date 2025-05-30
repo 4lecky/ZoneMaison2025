@@ -20,7 +20,11 @@ require_once './Layout/header.php'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PQRS ZONEMAISONS</title>
     <link rel="stylesheet" href="../assets/Css/pqrs.css">
-    <link rel="stylesheet" href="../assets/Css/globals.css">
+     <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
+    <!-- iconos (RemixIcon+) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="../assets/js/pqrs.js" defer></script>
 </head>
 <body> 

@@ -13,7 +13,6 @@
 
     <div class="container_derecho">
 
-        
             <img src="../assets/img/conjuntos.webp" alt="Imagen" class="conjunto">
             <h3 class="texto_superior">¡Bienvenido de nuevo!</h3>
             <i class="texto_superior2">Es un gusto tenerlo aqui</i>

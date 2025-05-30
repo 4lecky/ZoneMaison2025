@@ -10,6 +10,7 @@ if (isset($_POST['registrar'])) {
     $data = [
 
         'NombreUsuario' => $_POST['NombreUsuario'],
+        'NumeroCedula' => $_POST['NumeroCedula'],
         'NumeroTelefonico' => $_POST['NumeroTelefonico'],
         'Apartamento' => $_POST['Apartamento'],
         'Torre' => $_POST['Torre'],
