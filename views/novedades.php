@@ -1,12 +1,11 @@
   <?php
-  session_start();
-  // if (!isset($_SESSION['user_id'])) {
-  //     header("Location: login.php");
-  //     exit();
-  // }
-
   require_once "./Layout/header.php"
   ?>
+
+<?php
+session_start();
+require_once "../config/db.php"; // si estás en views/
+?>
 
 
 <!DOCTYPE html>
@@ -23,6 +22,12 @@
 </head>
 
 <body>
+
+<?php
+$stmt = $pdo->query("SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC");
+$mensajes = $stmt->fetchAll();
+?>
+
 
   <main>
     <section class="principal-page">
@@ -42,34 +47,39 @@
       <div class="muro">
         <h2>Muro</h2>
 
-        <!-- Tarjeta 1 -->
-        <div class="tarjeta">
-          <div class="tarjeta-interna">
-            <img src="../assets/img/areasverdes.png" alt="Mantenimiento de áreas verdes">
-            <div class="contenido">
-              <div class="Asunto">Próximamente se iniciará el mantenimiento de las áreas verdes del conjunto</div>
-              <div class="Descripcion">Estimados residentes, les informamos que el próximo 15 de septiembre...</div>
+        <!-- Tarjetas 1 -->
+  <?php if (count($mensajes) > 0): ?>
+    <?php foreach ($mensajes as $muro): ?>
+      <div class="tarjeta">
+        <div class="tarjeta-interna">
+          <img src="../<?= htmlspecialchars($muro['muro_image']) ?>" alt="Imagen del muro">
+          <div class="contenido">
+            <div class="Asunto"><?= htmlspecialchars($muro['muro_Asunto']) ?></div>
+            <div class="Descripcion"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'])) ?></div>
 
-              <div style="display: flex; justify-content: right; gap: 10px;">
-
-                <!-- Botón moderno -->
-                <button class="animated-button">
-                  <svg viewBox="0 0 24 24" class="arr-2">
-                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
-                  </svg>
-                  <span class="text">Ver más</span>
-                  <span class="circle"></span>
-                  <svg viewBox="0 0 24 24" class="arr-1">
-                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
-                  </svg>
-                </button>
-                <a href="muro.php" class="round-button edit-button"><span>✎</span></a>
-              </div>
+            <div style="display: flex; justify-content: right; gap: 10px;">
+              <button class="animated-button">
+                <svg viewBox="0 0 24 24" class="arr-2">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                </svg>
+                <span class="text">Ver más</span>
+                <span class="circle"></span>
+                <svg viewBox="0 0 24 24" class="arr-1">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                </svg>
+              </button>
+              <a href="muro.php" class="round-button edit-button"><span>✎</span></a>
             </div>
           </div>
         </div>
+      </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p>No hay publicaciones en el muro aún.</p>
+  <?php endif; ?>
+</div>
 
-        <!-- Tarjeta 2 -->
+        <!-- Tarjeta 2
         <div class="tarjeta">
           <div class="tarjeta-interna">
             <img src="../assets/img/pay.png" alt="Pago de cuotas">
@@ -79,8 +89,8 @@
 
               <div style="display: flex; justify-content: right; gap: 10px;">
 
-                <!-- Botón moderno -->
-                <button class="animated-button">
+                Botón moderno -->
+                <!-- <button class="animated-button">
                   <svg viewBox="0 0 24 24" class="arr-2">
                     <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
                   </svg>
@@ -95,7 +105,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Paquetería -->
       <section class="paqueteria">

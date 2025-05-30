@@ -1,33 +1,59 @@
 <?php
 session_start();
-$conn = require_once '../config/db.php';       // ← así se recibe el objeto PDO
+$conn = require_once '../config/db.php';
 require_once '../models/muroModel.php';
 
 $muroModel = new muroModel($conn);
 
-// Obtener datos del formulario
-$destinatario = $_POST['destinatario'];
-$asunto = $_POST['asunto'];
-$fecha = $_POST['fecha'];
-$hora = $_POST['hora'];
-$descripcion = $_POST['descripcion'];
-$usuario_cc = $_POST['usuario_cc'];
+$destinatario = $_POST['destinatario'] ?? '';
+$asunto = $_POST['asunto'] ?? '';
+$fecha = $_POST['fecha'] ?? '';
+$hora = $_POST['hora'] ?? '';
+$descripcion = $_POST['descripcion'] ?? '';
+$usuario_cc = $_POST['usuario_cc'] ?? 0;
 
-// Obtener imagen como binario
-$imagenBinaria = file_get_contents($_FILES['zone-images']['tmp_name']);
+// Validación básica
+if (empty($destinatario)) {
+    die("Error: No se seleccionó ningún destinatario.");
+}
 
-// Llamar al modelo con los 8 parámetros
+// Subida de imagen
+if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_ERR_OK) {
+    $directorio = '../uploads/';
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
+
+    $archivoNombre = uniqid() . '_' . basename($_FILES['zone-images']['name']);
+    $rutaDestino = $directorio . $archivoNombre;
+
+    if (!move_uploaded_file($_FILES['zone-images']['tmp_name'], $rutaDestino)) {
+        die("Error: No se pudo guardar el archivo.");
+    }
+
+    $rutaRelativaBD = 'uploads/' . $archivoNombre;
+} else {
+    die("Error: No se recibió o subió correctamente la imagen.");
+}
+
+// // Validar existencia de usuario
+// $stmt = $conn->prepare("SELECT COUNT(*) FROM tbl_usuario WHERE usu_cedula = ?");
+// $stmt->execute([$usu_cedula]);
+// if ($stmt->fetchColumn() == 0) {
+//     die("Error: El usuario con CC {$usu_cedula} no existe.");
+// }
+
+// Guardar en BD
 $muroModel->insertarMuro(
     $destinatario,
     $asunto,
     $fecha,
     $hora,
-    $imagenBinaria,
+    $rutaRelativaBD,
     $descripcion,
-    $usuario_cc,
-    $_FILES['zone-images']['name']
+    $usuario_cc
 );
 
-// Redirigir o mostrar mensaje
 header("Location: ../views/muro.php");
 exit;
+?>

@@ -8,19 +8,22 @@ class muroModel
         $this->db = $conexion;
     }
 
-public function insertarMuro($destinatario, $asunto, $fecha, $hora, $imagen, $descripcion, $usuario_cc,) {
-    $sql = "INSERT INTO muro (destinatario, asunto, fecha, hora, imagen, descripcion, usuario_cc, nombre_imagen)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen, $descripcion, $usuario_cc)
+    {
+        $sql = "INSERT INTO tbl_muro 
+        (muro_Destinatario, muro_Asunto, muro_Fecha, muro_Hora, muro_image, muro_Descripcion, muro_usuario_cc)
+        VALUES (:destinatario, :asunto, :fecha, :hora, :imagePath, :descripcion, :usuario_cc)";
 
-    $stmt = $this->db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':destinatario', $destinatario);
+        $stmt->bindParam(':asunto', $asunto);
+        $stmt->bindParam(':fecha', $fecha);
+        $stmt->bindParam(':hora', $hora);
+        $stmt->bindParam(':imagePath', $rutaImagen); // guarda ruta
+        $stmt->bindParam(':descripcion', $descripcion);
+        $stmt->bindParam(':usuario_cc', $usuario_cc, PDO::PARAM_INT);
 
-    $null = null; // imagen inicialmente null para enviar long data
-
-    $stmt->bind_param("sssssbis", $destinatario, $asunto, $fecha, $hora, $imagen, $descripcion, $usuario_cc,);
-    $stmt->send_long_data(4, $imagen); // índice 4 porque es el quinto parámetro (índice empieza en 0)
-
-    return $stmt->execute();
-}
-
+        return $stmt->execute();
+    }
 }
 ?>
