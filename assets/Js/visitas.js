@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const camposTipo = {
       email: emailRegex,
-      telefono: telefonorRegex,
+      telefono: telefonoRegex,
       date: dateRegex
   };
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const confirmar = confirm("Confirma que todos los datos estén correctos");
           if (confirmar) {
               alert("Formulario registrado correctamente (aquí puedes hacer el submit)");
-            //   form.submit(); //si deseas enviarlo
+             // form.submit(); //si deseas enviarlo
           }
       }
 
@@ -106,12 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btnLimpiar.addEventListener('click', e => {
       e.preventDefault();
-      manejarClick('limpiar');
+      manejarClick('btnLimpiar');
   });
 
   btnRegistrar.addEventListener('click', e => {
       e.preventDefault();
-      manejarClick('registrar');
+      manejarClick('btnRegistrar');
   });
 
   btnEditar.addEventListener('click', e => {

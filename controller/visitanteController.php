@@ -1,18 +1,18 @@
 <?php
 session_start();
 
-require_once __DIR__."../config/db.php";          
-require_once __DIR__.'../models/visitante.php'; 
+require_once __DIR__."/../config/db.php";          
+require_once __DIR__.'/../models/visitante.php'; 
 
 $visitante = new Visitante($pdo);
 
 // Registro
-if (isset($_POST['registrarvisitante'])) {
+if (isset($_POST['registrarFormVisi'])) {
 
 
-    $visita_id = $_POST['visita_id'] ?? null;
+    $visi_vis_id  = $_POST['visi_vis_id'] ?? null;
 
-    if (!$visita_id) {
+    if (!$visi_vis_id ) {
         
         die("Error: No se recibió ID de la visita.");
     }
@@ -23,7 +23,7 @@ if (isset($_POST['registrarvisitante'])) {
         'documento'  => $_POST['documento'],
         'email'      => $_POST['email'],
         'telefono'   => $_POST['telefono'],
-        'visita_id'  => $visita_id 
+        'visi_vis_id'  => $visi_vis_id  
     ];
 
     $visitante->registrarVisitante($data);
