@@ -12,10 +12,10 @@ class Usuario {
     public function registrar($data) {
 
         $sql = "INSERT INTO tbl_usuario (
-            usu_nombre_completo, usu_telefono, usu_apartamento_residencia,
+            usu_nombre_completo, usu_cedula,usu_telefono, usu_apartamento_residencia,
             usu_torre_residencia, usu_parqueadero_asignado, usu_propiedades,
             usu_rol, usu_correo, usu_password
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
         //Evitamos inyecciones sql
 
         $stmt = $this->pdo->prepare($sql);
@@ -24,6 +24,7 @@ class Usuario {
     // Crear un array indexado con los valores en el mismo orden que en la consulta
     $params = [
         $data['NombreUsuario'],
+        $data['NumeroCedula'],
         $data['NumeroTelefonico'],
         $data['Apartamento'],
         $data['Torre'], 

@@ -10,6 +10,9 @@ require_once './Layout/header.php'
     <title>ZONEMAISONS - Salón Comunal</title>
     <link rel="stylesheet" href="../assets/css/areas-comunes/zona-comun1.css">
     <link rel="stylesheet" href="../assets/css/calendar-styles.css">
+    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
 </head>
 <body>
     

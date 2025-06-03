@@ -16,7 +16,7 @@ require_once "./Layout/header.php"
   <link rel="stylesheet" href="../assets/Css/globals.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-  <link rel="stylesheet" href="../assets/Css/ComunicaciondeNovedades/paquetes.css">
+  <link rel="stylesheet" href="../assets/Css/ComunicaciondeNovedades/paquetess.css">
 </head>
 
 <body>

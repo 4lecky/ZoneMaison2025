@@ -8,11 +8,11 @@ class muroModel
         $this->db = $conexion;
     }
 
-    public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen, $descripcion, $usuario_cc)
+    public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen, $descripcion, $usu_cedula)
     {
         $sql = "INSERT INTO tbl_muro 
-        (muro_Destinatario, muro_Asunto, muro_Fecha, muro_Hora, muro_image, muro_Descripcion, muro_usuario_cc)
-        VALUES (:destinatario, :asunto, :fecha, :hora, :imagePath, :descripcion, :usuario_cc)";
+        (muro_Destinatario, muro_Asunto, muro_Fecha, muro_Hora, muro_image, muro_Descripcion, muro_usuario_cedula)
+        VALUES (:destinatario, :asunto, :fecha, :hora, :imagePath, :descripcion, :usu_cedula)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':destinatario', $destinatario);
@@ -21,7 +21,7 @@ class muroModel
         $stmt->bindParam(':hora', $hora);
         $stmt->bindParam(':imagePath', $rutaImagen); // guarda ruta
         $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':usuario_cc', $usuario_cc, PDO::PARAM_INT);
+        $stmt->bindParam(':usu_cedula', $usu_cedula, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

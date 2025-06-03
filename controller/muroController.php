@@ -10,7 +10,7 @@ $asunto = $_POST['asunto'] ?? '';
 $fecha = $_POST['fecha'] ?? '';
 $hora = $_POST['hora'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
-$usuario_cc = $_POST['usuario_cc'] ?? 0;
+$usu_cedula = $_POST['usu_cedula'] ?? 0;
 
 // Validación básica
 if (empty($destinatario)) {
@@ -51,7 +51,7 @@ $muroModel->insertarMuro(
     $hora,
     $rutaRelativaBD,
     $descripcion,
-    $usuario_cc
+    $usu_cedula
 );
 
 header("Location: ../views/muro.php");

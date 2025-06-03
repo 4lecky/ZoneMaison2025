@@ -1,0 +1,50 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h3{
+    margin-top: 20px;
+}
+.container_form_crud{
+    /* background-color: aquamarine; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7%;
+    box-shadow: 10px 10px 10px 10px rgb(0 0 0 / 0.05);
+    width: 50%;
+}
+
+
+.form-control {
+    --bs-border-radius: 10px;
+}
+
+.form-select{
+    --bs-border-radius: 10px;
+}
+.container_selects_crud{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.container-btn-crud{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-form-crud{
+    margin-top: 20px;
+    border: #7b9a82;
+    background-color: #7b9a82;
+}
+
+.btn:hover {
+
+    background: #637a68 ;
+}

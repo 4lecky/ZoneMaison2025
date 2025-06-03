@@ -11,7 +11,9 @@ require_once './Layout/header.php'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Áreas Comunes</title>
     <link rel="stylesheet" href="../assets/css/areas-comunes/reserva1.css">
-    <link rel="stylesheet" href="../assets/Css/globals.css"/>
+    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
 
 </head>
 <body>

@@ -63,4 +63,6 @@ if (!empty($_POST['btn-confirmar'])) {
         header("Location: ../views/crud.php");
         exit;
     }
+} else {
+    # code...
 }

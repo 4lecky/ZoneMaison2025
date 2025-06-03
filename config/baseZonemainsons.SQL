@@ -4,6 +4,7 @@ USE zonemaisons;
 /* Tablas */
 
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCREMENT,
+    usu_cedula INT (255) NOT null, 
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
     usu_correo Varchar(50) NOT null,
@@ -16,7 +17,8 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCRE
     usu_estado ENUM ('Activo', 'Inactivo') NOT null,
     PRIMARY KEY (usuario_cc),
     UNIQUE (usu_correo),
-    UNIQUE (usu_telefono)
+    UNIQUE (usu_telefono),
+    UNIQUE (usu_cedula)
 );
                          
 
@@ -70,7 +72,7 @@ CREATE TABLE IF NOT EXISTS tbl_reserva (
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
     Paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
-    paqu_usuario_cc INTEGER (10) NOT null, 
+    paqu_usuario_cedula INTEGER (10) NOT null, 
     paqu_Asunto text NOT null,
     paqu_FechaLlegada DATE NOT null,
     paqu_Hora time NOT null,
@@ -78,7 +80,7 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
     paqu_Descripcion text NOT null, 
     paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
-    FOREIGN KEY (paqu_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Destinatario VARCHAR (60) NOT null,
@@ -87,9 +89,9 @@ CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Hora time NOT null,
     muro_image VARCHAR (255) NOT null,
     muro_Descripcion text NOT null, 
-    muro_usuario_cc Integer NOT null,
+    muro_usuario_cedula Integer NOT null,
     PRIMARY KEY (muro_id),
-    FOREIGN KEY (muro_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_entrada TIME,
@@ -98,9 +100,9 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_fecha_salida DATE,
     vis_torre_visitada integer(10),
     vis_Apto_visitado integer(10),
-    vis_usuario_cc INT (10),
+    vis_usuario_cedula INT (10),
     PRIMARY KEY (vis_id),
-    FOREIGN KEY (vis_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (vis_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 
 CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
