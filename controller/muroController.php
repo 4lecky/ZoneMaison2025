@@ -1,16 +1,16 @@
 <?php
 session_start();
-$conn = require_once '../config/db.php';
+$pdo = require_once "../config/db.php";
 require_once '../models/muroModel.php';
 
-$muroModel = new muroModel($conn);
+$muroModel = new muroModel($pdo);
 
 $destinatario = $_POST['destinatario'] ?? '';
 $asunto = $_POST['asunto'] ?? '';
 $fecha = $_POST['fecha'] ?? '';
 $hora = $_POST['hora'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
-$usu_cedula = $_POST['usu_cedula'] ?? 0;
+$usuario_cc = $_POST['usuario_cc'] ?? 0;
 
 // Validación básica
 if (empty($destinatario)) {
@@ -37,11 +37,18 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
 }
 
 // // Validar existencia de usuario
-// $stmt = $conn->prepare("SELECT COUNT(*) FROM tbl_usuario WHERE usu_cedula = ?");
-// $stmt->execute([$usu_cedula]);
-// if ($stmt->fetchColumn() == 0) {
-//     die("Error: El usuario con CC {$usu_cedula} no existe.");
-// }
+$usuario_cc = $_SESSION['usuario_cc'] ?? null;
+
+if (!$usuario_cc) {
+    die("Error: usuario no autenticado o no definido.");
+}
+
+// Validar que el destinatario seleccionado sea un usuario válido con rol permitido
+
+if (!$rol || !in_array($rol, $rolesPermitidos)) {
+    die("Error: El destinatario seleccionado no tiene un rol válido para recibir mensajes.");
+}
+
 
 // Guardar en BD
 $muroModel->insertarMuro(
@@ -51,7 +58,7 @@ $muroModel->insertarMuro(
     $hora,
     $rutaRelativaBD,
     $descripcion,
-    $usu_cedula
+    $usuario_cc
 );
 
 header("Location: ../views/muro.php");

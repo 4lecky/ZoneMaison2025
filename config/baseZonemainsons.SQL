@@ -3,7 +3,7 @@ USE zonemaisons;
 
 /* Tablas */
 
-CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCREMENT,
+CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10),
     usu_cedula INT (255) NOT null, 
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
@@ -19,26 +19,22 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10)  NOT null AUTO_INCRE
     UNIQUE (usu_correo),
     UNIQUE (usu_telefono),
     UNIQUE (usu_cedula)
-);
-                         
+);                        
 
 CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
     mor_nombre_usuarios VARCHAR(60),
     mor_estado ENUM('Pendiente', 'Pagado'),
-    PRIMARY KEY (mor_id));
-                           
+    PRIMARY KEY (mor_id));                          
 
 CREATE TABLE  if NOT EXISTS tbl_tiempo_mora (tiem_id INT AUTO_INCREMENT,
     tiem_usuario_cc INT(10),
     tiem_mor_id INT(10),
     PRIMARY KEY (tiem_id),
     FOREIGN KEY (tiem_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
-    FOREIGN KEY (tiem_mor_id) REFERENCES tbl_mora(mor_id));
-    
-  
+    FOREIGN KEY (tiem_mor_id) REFERENCES tbl_mora(mor_id));  
 
 CREATE TABLE IF NOT EXISTS tbl_area_evento ( area_id INT NOT NULL AUTO_INCREMENT,
-   	area_descripcion VARCHAR(255) NOT NULL,
+    area_descripcion VARCHAR(255) NOT NULL,
     area_estado VARCHAR(50) NOT NULL,
     area_capacidad INT NOT NULL,
     area_disponibilidad BOOLEAN NOT NULL,
@@ -80,7 +76,7 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
     paqu_Descripcion text NOT null, 
     paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
-    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
+    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
 
 CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Destinatario VARCHAR (60) NOT null,
@@ -89,9 +85,9 @@ CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Hora time NOT null,
     muro_image VARCHAR (255) NOT null,
     muro_Descripcion text NOT null, 
-    muro_usuario_cedula Integer NOT null,
+    muro_usuario_cedula Integer,
     PRIMARY KEY (muro_id),
-    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
+    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_entrada TIME,
@@ -114,9 +110,7 @@ CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
     visi_vis_id INT,
     PRIMARY KEY (visi_id),
     FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id));
-                                            
-                                            
-                                          
+                                                                                                                                
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
     parq_vehi_placa VARCHAR (6) NOT NULL,
     parq_email_propietario VARCHAR (255) NOT NULL,
@@ -135,8 +129,7 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
     parq_vehi_alqu_id INT (30) NOT NULL,
     parq_usuario_cc INT (10) NOT NULL,
     PRIMARY KEY (parq_id),
-    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc)); 
-                           
+    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
 
 CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
     alqu_horaSalida DATE NOT NULL,
@@ -162,23 +155,22 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     desg_alqu_id INT (20) NOT NULL,
     PRIMARY KEY (desg_id),
     FOREIGN KEY (desg_parq_id) REFERENCES tbl_parqueadero (parq_id),
-    FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));
-                           
+    FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));                           
 
 CREATE TABLE IF NOT EXISTS pqrs (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombres VARCHAR(100) NOT NULL,
-  apellidos VARCHAR(100) NOT NULL,
-  identificacion VARCHAR(20) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  telefono VARCHAR(15) NOT NULL,
-  tipo_pqr ENUM('peticion', 'queja', 'reclamo', 'sugerencia') NOT NULL,
-  asunto VARCHAR(255) NOT NULL,
-  mensaje TEXT NOT NULL,
-  archivos TEXT, -- puedes guardar los nombres o rutas de archivos
-  medio_respuesta SET('correo', 'sms'),
-  fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-  estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente'
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    identificacion VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    tipo_pqr ENUM('peticion', 'queja', 'reclamo', 'sugerencia') NOT NULL,
+    asunto VARCHAR(255) NOT NULL,
+    mensaje TEXT NOT NULL,
+    archivos TEXT, -- puedes guardar los nombres o rutas de archivos
+    medio_respuesta SET('correo', 'sms'),
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente'
 );
 
 
