@@ -1,10 +1,9 @@
 <?php
-<<<<<<< HEAD
 
 require_once __DIR__."/../config/db.php";
-=======
+
 require_once __DIR__ . '/../config/db.php';
->>>>>>> 2f73a8f00e68e7957bd6b8c29e1ec33ef33fa761
+
 class Visitante {
     private $pdo;
 
