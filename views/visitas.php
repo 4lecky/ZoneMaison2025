@@ -1,7 +1,6 @@
 <?php
 require_once "./Layout/header.php"
-
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,7 @@ require_once "./Layout/header.php"
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-
+    <link rel="stylesheet" href="../assets/Css/visitas-form.css" />
 </head>
 
 <body>
@@ -22,21 +21,29 @@ require_once "./Layout/header.php"
     <!-- Registro de Visitas -->
     <main class="container mt-4">
         <h2>REGISTRO DE VISITAS</h2>
+
         <section class="form-card">
             <form id="formVisita" method="post" action="../controller/visitaController.php">
-                <fieldset style="border: 1px solid #ccc; padding: 20px;">
+                <fieldset>
                     <legend><strong>Datos Visita</strong></legend>
 
-                    <input type="text" data-validate="number" name="torre" placeholder="Num. Torre Visitada" required>
-                    <input type="text" data-validate="number" name="apto" placeholder="Num. Apto Visitado" required><br><br>
-                    
-                    <label Fecha de Entrada></label>
-                    <input type="date" name="fechaEntrada" required>
-                    <input type="date" name="fechaSalida" required>
+                    <label for="torre">Número Torre Visitada</label>
+                    <input type="text" data-validate="number" name="torre" id="torre" required>
 
-                    <input type="time" name="horaInicio" time-valitime="time" required>
-                    <input type="time" name="horaSalida" time-valitime="time" required><br><br>
+                    <label for="apto">Número Apto Visitado</label>
+                    <input type="text" data-validate="number" name="apto" id="apto" required>
 
+                    <label for="fechaEntrada">Fecha de Entrada</label>
+                    <input type="date" name="fechaEntrada" id="fechaEntrada" required>
+
+                    <label for="fechaSalida">Fecha de Salida</label>
+                    <input type="date" name="fechaSalida" id="fechaSalida" required>
+
+                    <label for="horaInicio">Hora de Ingreso</label>
+                    <input type="time" name="horaInicio" id="horaInicio" required>
+
+                    <label for="horaSalida">Hora de Salida</label>
+                    <input type="time" name="horaSalida" id="horaSalida" required>
                 </fieldset>
 
                 <button type="reset" id="btnLimpiar">Limpiar</button>
@@ -44,33 +51,32 @@ require_once "./Layout/header.php"
             </form>
 
             <form id="formVisitante" method="post" action="../controller/visitanteController.php">
-                <fieldset style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
+                <fieldset>
                     <legend><strong>Datos Visitante</strong></legend>
 
-                    <input type="text" data-validate="text" name="nombre" placeholder="Nombre Completo"
-                        required><br><br>
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" data-validate="text" name="nombre" id="nombre" required>
 
-                    <select name="tipoDoc" required>
+                    <label for="tipoDoc">Tipo Documento</label>
+                    <select name="tipoDoc" id="tipoDoc" required>
                         <option value="">Tipo Doc.</option>
                         <option value="CC">C.C</option>
                         <option value="TI">T.I</option>
                     </select>
 
-                    <input type="text" data-validate="number" name="documento" placeholder="Número Documento"
-                        required><br><br>
+                    <label for="documento">Número Documento</label>
+                    <input type="text" data-validate="number" name="documento" id="documento" required>
 
-                    <input type="email" data-validate="email" name="email" placeholder="Email" required><br><br>
+                    <label for="email">Email</label>
+                    <input type="email" data-validate="email" name="email" id="email" required>
 
-                    <input type="telefono" data-validate="number" name="telefono" placeholder="Número de Teléfono"
-                        required><br>
-
+                    <label for="telefono">Número de Teléfono</label>
+                    <input type="text" data-validate="number" name="telefono" id="telefono" required>
                 </fieldset>
 
                 <button type="reset" id="btnLimpiar">Limpiar</button>
                 <button type="submit" id="btnRegistrar" name="registrarFormVisi">Registrar Visitante</button>
             </form>
-
-
         </section>
 
         <section class="table-card">
@@ -106,9 +112,7 @@ require_once "./Layout/header.php"
     <script src="../assets/Js/visitas.js"></script>
     <?php
     require_once "./Layout/footer.php"
-
-        ?>
-
+    ?>
 </body>
 
 </html>
