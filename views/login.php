@@ -35,15 +35,7 @@
 
             <i class="fa-solid fa-envelope"></i>
             <label for="username" class="titulo_campo">Email</label><br>
-            <input type="text" placeholder=" Correo electronico" name="Email" class="campos" required><br>
-
-
-            <!-- <i class="fa-solid fa-lock"></i>
-            <label for="password" class="titulo_campo">Contraseña</label><br>
-            <input type="password" placeholder=" Contraseña" name="Password" class="campos" required><br>
-            <button type="button" id="toggle-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
-                <i class="fa-solid fa-eye" id="eye-icon"></i>
-            </button> -->
+            <input type="text" placeholder="Correo electronico" name="Email" class="campos" required><br>
 
             <i class="fa-solid fa-lock"></i>
             <label for="password" class="titulo_campo">Contraseña</label><br>
@@ -62,12 +54,10 @@
 
             <div class="texto_recuperarC">
 
-                <a href="#" class="text_usu"> ¿Olvido su contraseña? </a> <br>
+                <a href="./reset_contraseña.php" class="text_usu"> ¿Olvido su contraseña? </a> <br>
                 <a href="./signUp.php" class="text_usu"> Registrarse </a>
 
             </div>
-
-
 
         </form>
 

@@ -1,0 +1,19 @@
+{
+    "name": "4lecky/zone-maison2025",
+    "description": "Aplicación de composer al proyecto",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "4lecky\\ZoneMaison2025\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luna Salas"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    }
+}

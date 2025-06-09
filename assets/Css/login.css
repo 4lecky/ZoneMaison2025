@@ -105,12 +105,15 @@ body{
     
     margin-top: 10px;
     width: 500px;
-    height: 30px;
+    height: 40px;
+    line-height: 1.5;
+    background-color: rgb(255, 255, 255);
     margin-bottom: 20px;
-    background-color: rgba(127, 255, 212, 0);
-    border: 1px solid ;
-    border-radius: 20px;
+    border-style: none;
+    border-radius: 10px;
     padding-left: 10px;
+    appearance: none;
+
 }
 
 .contenedor_btn{
