@@ -23,36 +23,39 @@ require_once "./Layout/header.php";
     <section class="principal-page">
       <h2>Muro</h2>
 
+    
       <!--  Aquí comienza el formulario -->
       <form action="../controller/muroController.php" method="POST" enctype="multipart/form-data" class="muro">
         <fieldset>
           <legend>Formulario de Muro</legend>
 
           <!-- Destinatario -->
+          <label for="destinatario">Selecciona el rol destinatario</label>
           <?php
+          // Los roles que queremos permitir
           $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante'];
 
-          $query = "SELECT usu_cedula, usu_nombre_completo, usu_rol 
-          FROM tbl_usuario 
-          WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante') AND usu_estado = 'Activo'
-          ORDER BY usu_nombre_completo";
+          // Consulta para obtener roles activos
+          $query = "SELECT DISTINCT usu_rol
+                    FROM tbl_usuario 
+                    WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante') AND usu_estado = 'Activo'
+                    ORDER BY usu_rol";
 
           $stmt = $pdo->prepare($query);
           $stmt->execute();
-          $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
           ?>
 
           <select class="form-control" id="destinatario" name="destinatario" required>
-            <option value="" selected disabled>Seleccione un Destinatario</option>
-            <?php foreach ($usuarios as $usuario): ?>
-              <option value="<?= htmlspecialchars($usuario['usu_cedula']) ?>">
-                <?= htmlspecialchars($usuario['usu_nombre_completo'] . " (" . $usuario['usu_rol'] . ")") ?>
+            <option value="" selected disabled>Seleccione un Rol</option>
+            <?php foreach ($roles as $role): ?>
+              <option value="<?= htmlspecialchars($role['usu_rol']) ?>">
+                <?= htmlspecialchars($role['usu_rol']) ?>
               </option>
             <?php endforeach; ?>
           </select>
 
-
-
+          
           <!-- Asunto -->
           <label>Asunto</label>
           <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto" required />

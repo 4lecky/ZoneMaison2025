@@ -5,16 +5,20 @@ require_once '../models/muroModel.php';
 
 $muroModel = new muroModel($pdo);
 
-$destinatario = $_POST['destinatario'] ?? '';
+$destinatario = $_POST['destinatario'] ?? '';  // El rol seleccionado
 $asunto = $_POST['asunto'] ?? '';
 $fecha = $_POST['fecha'] ?? '';
 $hora = $_POST['hora'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
-$usuario_cc = $_POST['usuario_cc'] ?? 0;
+$usu_cedula = $_SESSION['usu_cedula'] ?? null;
 
 // Validación básica
 if (empty($destinatario)) {
     die("Error: No se seleccionó ningún destinatario.");
+}
+
+if (!$usu_cedula) {
+    die("Error: Usuario no autenticado o no definido.");
 }
 
 // Subida de imagen
@@ -36,31 +40,27 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
     die("Error: No se recibió o subió correctamente la imagen.");
 }
 
-// // Validar existencia de usuario
-$usuario_cc = $_SESSION['usuario_cc'] ?? null;
+// Consultar usuarios con el rol seleccionado
+$query = "SELECT usu_cedula FROM tbl_usuario WHERE usu_rol = :rol AND usu_estado = 'Activo'";
+$stmt = $pdo->prepare($query);
+$stmt->execute(['rol' => $destinatario]);
+$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (!$usuario_cc) {
-    die("Error: usuario no autenticado o no definido.");
+// Guardar en la base de datos para cada destinatario (enviando a múltiples usuarios)
+foreach ($usuarios as $usuario) {
+    // Guardar mensaje en la base de datos
+    $muroModel->insertarMuro(
+        $usuario['usu_cedula'],  // Este es el usuario destinatario
+        $asunto,
+        $fecha,
+        $hora,
+        $rutaRelativaBD,
+        $descripcion,
+        $usu_cedula  // El usuario que está enviando el mensaje
+    );
 }
 
-// Validar que el destinatario seleccionado sea un usuario válido con rol permitido
-
-if (!$rol || !in_array($rol, $rolesPermitidos)) {
-    die("Error: El destinatario seleccionado no tiene un rol válido para recibir mensajes.");
-}
-
-
-// Guardar en BD
-$muroModel->insertarMuro(
-    $destinatario,
-    $asunto,
-    $fecha,
-    $hora,
-    $rutaRelativaBD,
-    $descripcion,
-    $usuario_cc
-);
-
+// Redirigir después de guardar los datos
 header("Location: ../views/muro.php");
 exit;
 ?>

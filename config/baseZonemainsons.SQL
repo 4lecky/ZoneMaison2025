@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
     paqu_Descripcion text NOT null, 
     paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
-    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Destinatario VARCHAR (60) NOT null,
@@ -85,9 +85,9 @@ CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Hora time NOT null,
     muro_image VARCHAR (255) NOT null,
     muro_Descripcion text NOT null, 
-    muro_usuario_cedula Integer,
+    muro_usuario_cedula INT,
     PRIMARY KEY (muro_id),
-    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_entrada TIME,
