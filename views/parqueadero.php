@@ -15,6 +15,8 @@ require_once "./layout/header.php"
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
   <link rel="stylesheet" href="../assets/Css/parqueadero.css" />
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -150,7 +152,7 @@ require_once "./layout/header.php"
             <h2>COBRO TARIFAS</h2>
         
           
-              <form action="#" method="POST">
+              <form action="../controller/calculoParqueadero.php" method="POST">
                 <fieldset>
 
                   <label>Numero de Recibo</label>
@@ -216,7 +218,7 @@ require_once "./layout/header.php"
 
           
                   <div class="acciones">
-                      <button type="submit">Enviar Información</button>
+                      <button type="submit" id="enviarBtn">Enviar Información</button>
                       <button type="reset">Limpiar</button>
                   </div>
 
@@ -225,6 +227,39 @@ require_once "./layout/header.php"
           </div>
 
       </main>
+
+
+          
+
+      <!-- Botón que lanza SweetAlert -->
+      <!-- <button >Enviar Solicitud</button> -->
+
+      <script>
+
+        document.getElementById('enviarBtn').addEventListener('click', function () {
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas enviar la solicitud PQRS?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, enviar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                '¡Enviado!',
+                'Tu PQRS fue registrada correctamente.',
+                'success'
+              );
+            }
+          });
+        });
+
+      </script>
+
+
 
 
 <?php 

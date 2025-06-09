@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-=======
->>>>>>> 519872c20b6e1150205b699ec53d2e1d33b0bc05
 
 require_once __DIR__."/../config/db.php";
 
