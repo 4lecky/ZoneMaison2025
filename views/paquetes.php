@@ -42,7 +42,7 @@ require_once "./Layout/header.php"
 
         <!-- Destinatario -->
         <label>Destinatario</label>
-        <select class="form-control" type="text" name="filtrodestinatario" id="filtrodestinatario">
+        <select class="form-control" type="text" name="destinatario" id="destinatario">
           <option selected="">Seleccione un Destinatario</option>
           <option value="Juan Perez">Juan Perez</option>
           <option value="Luis Rodriguez">Luis Rodriguez</option>
@@ -52,15 +52,15 @@ require_once "./Layout/header.php"
 
         <!-- Asunto -->
         <label>Asunto</label>
-        <input type="text" class="form-control" placeholder="Asunto" id="Asunto" />
+        <input type="text" class="form-control" placeholder="Asunto" id="asunto" />
 
         <!-- Fecha -->
         <label>Fecha</label>
-        <input type="date" class="form-control" id="Fecha" />
+        <input type="date" class="form-control" id="fecha" />
 
         <!-- Hora -->
         <label>Hora</label>
-        <input type="time" class="form-control" id="Hora" />
+        <input type="time" class="form-control" id="hora" />
 
         <!-- Imagen -->
         <div class="imagen">

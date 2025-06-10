@@ -23,7 +23,7 @@ require_once "./Layout/header.php";
     <section class="principal-page">
       <h2>Muro</h2>
 
-    
+
       <!--  Aquí comienza el formulario -->
       <form action="../controller/muroController.php" method="POST" enctype="multipart/form-data" class="muro">
         <fieldset>
@@ -55,7 +55,7 @@ require_once "./Layout/header.php";
             <?php endforeach; ?>
           </select>
 
-          
+
           <!-- Asunto -->
           <label>Asunto</label>
           <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto" required />
