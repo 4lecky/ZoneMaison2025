@@ -3,7 +3,7 @@ USE zonemaisons;
 
 /* Tablas */
 
-CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10),
+CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
@@ -15,6 +15,9 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10),
 	usu_propiedades  Varchar(100) NOT null,  
     usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante') NOT null,
     usu_estado ENUM ('Activo', 'Inactivo') NOT null,
+    request_password enum('0','1') NOT NULL DEFAULT '0',
+    token_password varchar(200) DEFAULT NULL,
+    expired_session varchar(40) DEFAULT NULL,
     PRIMARY KEY (usuario_cc),
     UNIQUE (usu_correo),
     UNIQUE (usu_telefono),

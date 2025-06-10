@@ -55,10 +55,10 @@ $mensajes = $stmt->fetchAll();
           <img src="../<?= htmlspecialchars($muro['muro_image']) ?>" alt="Imagen del muro">
           <div class="contenido">
             <div class="Asunto"><?= htmlspecialchars($muro['muro_Asunto']) ?></div>
-            <div class="Descripcion"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'])) ?></div>
-
+            <div class="Descripcion">
+            <p class="texto-muro"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'])) ?></p>
             <div style="display: flex; justify-content: right; gap: 10px;">
-              <button class="animated-button">
+              <button class="animated-button btn-vermas">
                 <svg viewBox="0 0 24 24" class="arr-2">
                   <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
                 </svg>
@@ -72,6 +72,7 @@ $mensajes = $stmt->fetchAll();
             </div>
           </div>
         </div>
+       </div>
       </div>
     <?php endforeach; ?>
   <?php else: ?>
@@ -111,22 +112,24 @@ $mensajes = $stmt->fetchAll();
       <section class="paqueteria">
         <h2>Paquetería</h2>
 
+        <div class="subtitulo">Recibido</div>
+
         <div class="tarjeta">
           <div class="tarjeta-interna">
             <div class="paquete-icono">📦</div>
             <div class="contenido">
-              <div class="subtitulo">Recibido</div>
               <div class="Asunto">Paquete grande de SHEIN</div>
               <div class="Descripcion">Caja de cartón</div>
             </div>
           </div>
         </div>
 
+      <div class="subtitulo">Pendiente</div>
+      
         <div class="tarjeta">
           <div class="tarjeta-interna">
             <div class="paquete-icono">📦</div>
             <div class="contenido">
-              <div class="subtitulo">Pendiente</div>
               <div class="Asunto">Paquete mediano de SHEIN</div>
               <div class="Descripcion">Bolsa Blanca</div>
             </div>
@@ -135,6 +138,7 @@ $mensajes = $stmt->fetchAll();
       </section>
     </section>
 </main>
+    <script src="../assets/Js/novedades.js"></script>
 
     <?php 
     require_once "./Layout/footer.php"

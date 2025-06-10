@@ -119,9 +119,17 @@
   font-weight: bold;
 }
 
-.Descripcion {
+.Descripcion, .texto-muro {
   font-size: 0.95rem;
   color: #333;
+}
+
+/* ver más/ Ver menos */
+.texto-muro {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .muro, .paqueteria {

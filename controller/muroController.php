@@ -17,9 +17,9 @@ if (empty($destinatario)) {
     die("Error: No se seleccionó ningún destinatario.");
 }
 
-if (!$usu_cedula) {
-    die("Error: Usuario no autenticado o no definido.");
-}
+// if (!$usu_cedula) {
+//     die("Error: Usuario no autenticado o no definido.");
+// }
 
 // Subida de imagen
 if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_ERR_OK) {
@@ -47,10 +47,10 @@ $stmt->execute(['rol' => $destinatario]);
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Guardar en la base de datos para cada destinatario (enviando a múltiples usuarios)
-foreach ($usuarios as $usuario) {
+foreach ($usuarios as $usuarios) {
     // Guardar mensaje en la base de datos
     $muroModel->insertarMuro(
-        $usuario['usu_cedula'],  // Este es el usuario destinatario
+        $usuarios['usu_cedula'],  // Este es el usuario destinatario
         $asunto,
         $fecha,
         $hora,
@@ -61,6 +61,6 @@ foreach ($usuarios as $usuario) {
 }
 
 // Redirigir después de guardar los datos
-header("Location: ../views/muro.php");
+header("Location: ../views/novedades.php");
 exit;
 ?>

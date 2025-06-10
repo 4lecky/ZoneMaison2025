@@ -72,7 +72,7 @@ require_once __DIR__ . "/Layout/header.php";
           // $claseFila = ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : '';  
         ?>
           <tr class="<?= ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : 'usuario-activo' ?>">
-            <td><?= $datos->usuario_cc ?></td>
+            <td><?= $datos->usu_cedula ?></td>
             <td><?= $datos->usu_nombre_completo ?></td>
             <td><?= $datos->usu_telefono ?></td>
             <td><?= $datos->usu_correo ?></td>

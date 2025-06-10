@@ -109,7 +109,7 @@ require_once "./Layout/header.php"
   <script src="../assets/js/paquetes.js"></script>
 
   <?php
-  require_once __DIR__ . "./Layout/footer.php"
+  require_once "./Layout/footer.php"
   ?>
 </body>
 
