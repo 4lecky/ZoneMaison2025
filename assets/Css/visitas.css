@@ -335,7 +335,7 @@
 }
 
 .btn-editar {
-  background-color: #005b8f;
+  background-color: var(--primary-color);
   color: #fff;
   padding: 8px 18px;
   border: none;
@@ -346,5 +346,12 @@
 }
 
 .btn-editar:hover {
-  background-color: #00456b;
+  background-color: var(--primary-dark);
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
