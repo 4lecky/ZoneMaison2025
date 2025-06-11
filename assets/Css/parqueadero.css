@@ -122,7 +122,8 @@
 .formulario-registro input[type="email"],
 .formulario-registro input[type="date"],
 .formulario-registro input[type="time"],
-.formulario-registro textarea {
+.formulario-registro textarea,
+.formulario-registro select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -261,7 +262,8 @@
 .formulario-container-cobro input[type="email"],
 .formulario-container-cobro input[type="date"],
 .formulario-container-cobro input[type="time"],
-.formulario-container-cobro textarea {
+.formulario-container-cobro textarea,
+.formulario-container-cobro select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -436,3 +438,85 @@
   background-color: #5f7d68;
   transform: scale(1.05);
 }
+
+
+
+
+
+
+
+
+/* Formulario Consulta Parqueadero */
+.formulario-registro select,
+.formulario-container-consulta select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+
+.formulario-container-consulta {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+
+.table-card h3 {
+  margin-bottom: 15px;
+}
+
+.consulta-filtros {
+  margin-bottom: 20px;
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+}
+
+.tabla-parqueaderos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-parqueaderos th,
+.tabla-parqueaderos td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+}
+
+.acciones-tabla {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.btn-editar {
+  padding: 10px 20px;
+  background-color: #7b9a82;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-editar:hover {
+  background-color: #5f7d68;
+}
+

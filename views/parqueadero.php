@@ -64,7 +64,13 @@ require_once "./layout/header.php"
                 <div class="input-group">
                   <div class="input-box">
                     <label>Tipo Doc</label>
-                    <input type="text" name="tipo_doc" placeholder="Tipo Doc" required />
+                    <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                      <option value="">-- Selecciona un tipo --</option>
+                      <option value="CC">Cédula de Ciudadanía (CC)</option>
+                      <option value="TI">Tarjeta de Identidad (TI)</option>
+                      <option value="CE">Cédula de Extranjería (CE)</option>
+                      <option value="PA">Pasaporte (PA)</option>
+                    </select>
                   </div>
                   <div class="input-box">
                     <label>Número Documento</label>
@@ -93,7 +99,13 @@ require_once "./layout/header.php"
                 <div class="input-group">
                   <div class="input-box">
                     <label>Tipo Doc</label>
-                    <input type="text" name="tipo_doc_vehiculo" placeholder="Tipo Doc" required />
+                    <select type="text" name="tipo_doc_vehiculo" placeholder="Tipo Doc" required>
+                      <option value="">-- Selecciona un tipo --</option>
+                      <option value="CC">Cédula de Ciudadanía (CC)</option>
+                      <option value="TI">Tarjeta de Identidad (TI)</option>
+                      <option value="CE">Cédula de Extranjería (CE)</option>
+                      <option value="PA">Pasaporte (PA)</option>
+                    </select>
                   </div>
                   <div class="input-box">
                     <label>Número Documento</label>
@@ -167,7 +179,13 @@ require_once "./layout/header.php"
                   <div class="input-group">
                       <div class="input-box">
                           <label>Tipo Doc</label>
-                          <input type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                          <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                            <option value="">-- Selecciona un tipo --</option>
+                            <option value="CC">Cédula de Ciudadanía (CC)</option>
+                            <option value="TI">Tarjeta de Identidad (TI)</option>
+                            <option value="CE">Cédula de Extranjería (CE)</option>
+                            <option value="PA">Pasaporte (PA)</option>
+                          </select>
                       </div>
                       <div class="input-box">
                           <label>Número Documento</label>
@@ -229,7 +247,57 @@ require_once "./layout/header.php"
       </main>
 
 
-          
+            <!-- Formulario Consulta Parqueadero -->
+      <main id="formularioConsulta" style="display: none;">
+        <div class="formulario-container-consulta">
+
+          <h2>CONSULTA DE PARQUEADERO</h2>
+
+          <section class="table-card">
+            <h3>Consulta de Parqueaderos</h3>
+
+            <div class="consulta-filtros">
+              <label for="filtroParqueadero">Filtrar:</label>
+              <select class="filtro-parqueadero" id="filtroParqueadero">
+                <option value="todos">Todos los registros</option>
+                <option value="ocupados">Parqueaderos ocupados</option>
+                <option value="disponibles">Parqueaderos disponibles</option>
+                <option value="reservados">Reservados</option>
+              </select>
+            </div>
+
+            <div class="tabla-responsive">
+              <table class="tabla-parqueaderos">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Placa</th>
+                    <th>Propietario</th>
+                    <th>Num. Parqueadero</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaParqueaderoCuerpo">
+                  <!-- Aquí se insertarán filas dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="estadoVacioParqueadero">
+              <i class="fa-solid fa-circle-info"></i>
+              No hay registros de parqueadero disponibles
+            </div>
+
+            <div class="acciones-tabla">
+              <button type="button" id="btnEditarParqueadero" class="btn-editar">Editar Registro</button>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+
+
 
       <!-- Botón que lanza SweetAlert -->
       <!-- <button >Enviar Solicitud</button> -->
