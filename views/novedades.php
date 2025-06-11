@@ -54,7 +54,10 @@ $mensajes = $stmt->fetchAll();
         <div class="tarjeta-interna">
           <img src="../<?= htmlspecialchars($muro['muro_image']) ?>" alt="Imagen del muro">
           <div class="contenido">
-            <div class="Asunto"><?= htmlspecialchars($muro['muro_Asunto']) ?></div>
+            <div class="Asunto"><?= htmlspecialchars($muro['muro_Asunto']) ?>
+          <section class="hora"><?=htmlspecialchars($muro['muro_Hora'])?></section>
+          <section class="fecha"><?=htmlspecialchars($muro['muro_Fecha'])?> </section>
+</div>
             <div class="Descripcion">
             <p class="texto-muro"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'])) ?></p>
             <div style="display: flex; justify-content: right; gap: 10px;">
