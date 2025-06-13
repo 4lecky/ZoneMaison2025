@@ -163,6 +163,7 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
 
 CREATE TABLE IF NOT EXISTS pqrs (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_cc INT NULL,
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
     identificacion VARCHAR(20) NOT NULL,
@@ -174,8 +175,16 @@ CREATE TABLE IF NOT EXISTS pqrs (
     archivos TEXT, -- puedes guardar los nombres o rutas de archivos
     medio_respuesta SET('correo', 'sms'),
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente'
+    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente',
+    CONSTRAINT fk_usuario_pqr FOREIGN KEY (usuario_cc) REFERENCES tbl_usuario(usuario_cc)
+    ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+-- ON DELETE SET NULL: Si se elimina un usuario en 'tbl_usuario', el campo 'usuario_cc' en 'pqrs' quedará en NULL,
+--                     evitando la pérdida del historial de PQRs pero indicando que ya no está asociado a un usuario activo.
+
+-- ON UPDATE CASCADE: Si el valor de 'usuario_cc' en 'tbl_usuario' se actualiza, el cambio se propaga automáticamente
+--                    a todos los registros relacionados en la tabla 'pqrs', manteniendo la coherencia de los datos.
 
 
 

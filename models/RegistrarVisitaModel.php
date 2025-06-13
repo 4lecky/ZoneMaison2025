@@ -1,20 +1,32 @@
 <?php
-require_once 'db.php';
 
-class RegistrarVisitaModelo {
+require_once __DIR__ . '/../config/db.php';
+
+
+class RegistrarVisitaModel {
     private $pdo;
 
     public function __construct() {
-        $this->pdo = require 'db.php';
+        $this->pdo = require __DIR__ . '/../config/db.php';
     }
+
+    //Usa prepare y execute para evitar inyecciones SQL.
 
     public function insertarVisitaCompleta($datos) {
         try {
             $this->pdo->beginTransaction();
+            // var_dump($this->pdo);
+            // exit;
+
 
             // Insertar visitante
             $stmtVisitante = $this->pdo->prepare("
-                INSERT INTO visitante (tipo_doc, numero_doc, nombre, correo, telefono)
+                INSERT INTO tbl_Visitante (
+                    visi_Tipo_documento, 
+                    visi_documento, 
+                    visi_nombre, 
+                    visi_email , 
+                    visi_telefono)
                 VALUES (?, ?, ?, ?, ?)
             ");
             $stmtVisitante->execute([
@@ -30,7 +42,15 @@ class RegistrarVisitaModelo {
 
             // Insertar visita
             $stmtVisita = $this->pdo->prepare("
-                INSERT INTO visita (id_visitante, fecha_entrada, hora_entrada, fecha_salida, hora_salida, torre_visitada, apto_visitado, cedula_usuario)
+                INSERT INTO tbl_visita (
+                    vis_id, 
+                    vis_fecha_entrada, 
+                    vis_hora_entrada, 
+                    vis_fecha_salida, 
+                    vis_hora_salida, 
+                    vis_torre_visitada, 
+                    vis_Apto_visitado, 
+                    vis_usuario_cedula)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
             $stmtVisita->execute([
@@ -49,8 +69,10 @@ class RegistrarVisitaModelo {
 
         } catch (Exception $e) {
             $this->pdo->rollBack();
-            return "Error: " . $e->getMessage();
+            echo "Error en la base de datos: " . $e->getMessage();
+            exit;
         }
+        
     }
 }
 ?>

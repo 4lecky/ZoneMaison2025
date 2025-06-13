@@ -1,8 +1,10 @@
 <?php
-require_once 'RegistrarVisitaModelo.php';
+session_start();
+$pdo = require_once '../models/RegistrarVisitaModel.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $modelo = new RegistrarVisitaModelo();
+    $modelo = new RegistrarVisitaModel();
 
     $datos = [
         'tipo_doc'      => $_POST['tipo_doc'],
@@ -17,15 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'torreVisitada' => $_POST['torreVisitada'],
         'aptoVisitado'  => $_POST['aptoVisitado'],
         'usuario'       => $_POST['usuario']
+
+        //Verifica que todos los campos estén definidos para poder trabajar con ellos.
     ];
+
+
 
     $resultado = $modelo->insertarVisitaCompleta($datos);
 
     if ($resultado === true) {
-        header("Location: visita.php?registro=exitoso");
+        header("Location: ../views/visita.php");
         exit();
     } else {
         echo $resultado;
     }
 }
+
+header("")
 ?>
