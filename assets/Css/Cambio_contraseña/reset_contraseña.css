@@ -4,14 +4,15 @@
 }
 
 .fondo_reset {
-    width: 50%;
+    width: 40%;
+    height: 100%;
     background: #7b9a82;
     height: 100%;
     border-radius: 0% 50% 50% 0%;
 }
 
 .img_fondo_reset {
-    width: 935px;
+    width: 100%;
     opacity: 50%;
     height: 920px;
     border-radius: 0% 50% 50% 0%;

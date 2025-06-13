@@ -37,7 +37,7 @@ session_start();
 
             <div class="col-md-25">
                 <label for="validationCustom01" class="form-label" placeholder="Correo electronico">Correo Electronico</label>
-                <input type="text" class="form-control" id="validationCustom01" name="correo" required>
+                <input type="text" class="form-control" id="validationCustom01" name="correo" placeholder="Ingrese su correo electronico" required>
             </div>
 
             <div class="container-btn-reset">
