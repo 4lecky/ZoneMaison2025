@@ -24,7 +24,7 @@ require_once "./Layout/header.php"
 
         <div class="principal-page">
             
-            <form method="POST" action="procesar_visitante.php">
+            <form method="POST" action="../controller/RegistrarVisitaController.php">
                 <fieldset>
                     <legend>Datos del Visitante</legend>
 
@@ -107,7 +107,7 @@ require_once "./Layout/header.php"
 
                     <div class="input-group">
                         <div class="input-box">
-                        <label for="usuario">Cédula del Usuario</label>
+                        <label for="usuario">Cédula del Residente</label>
                         <input type="number" class="form-control" name="usuario" id="usuario" placeholder="Ej: 1234567890" data-validate="telefono" min="1" required>
                         </div>
                     </div>
@@ -142,7 +142,8 @@ require_once "./Layout/header.php"
                 <th>Registro</th>
                 <th>Nombre</th>
                 <th>Fecha</th>
-                <th>Torre/Apto</th>
+                <th>Torre</th>
+                <th>Apartamento</th>
                 </tr>
             </thead>
             <tbody id="tablaCuerpo">
