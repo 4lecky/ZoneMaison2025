@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const telefonoRegex = /^\d+$/;
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
-  const horaRegex = /^\d{2}:\d{2}$/;        // formato HH:MM
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const horaRegex = /^\d{2}:\d{2}$/;
 
   const camposTipo = {
     email: emailRegex,
@@ -28,10 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const tipoEsperado = campo.getAttribute('data-validate');
       const valor = campo.value.trim();
 
-      if (valor === '') {
+      // Validar select con opción deshabilitada
+      if (campo.tagName === 'SELECT' && (valor === '' || campo.selectedIndex === 0)) {
         camposVacios.push(campo);
         if (!primerCampoErroneo) primerCampoErroneo = campo;
-      } else if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
+      } 
+      // Validar campos vacíos
+      else if (valor === '') {
+        camposVacios.push(campo);
+        if (!primerCampoErroneo) primerCampoErroneo = campo;
+      } 
+      // Validar formato incorrecto
+      else if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
         camposVacios.push(campo);
         if (!primerCampoErroneo) primerCampoErroneo = campo;
       }
@@ -47,10 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function mostrarMensajeValidacion(campos, nombreFormulario) {
     if (campos.length === 1) {
-      const label = campos[0].placeholder || campos[0].name || "un campo";
-      alert(`Falta llenar ${label} en ${nombreFormulario}`);
+      const campo = campos[0];
+      const label = campo.labels?.[0]?.innerText || campo.placeholder || campo.name || "un campo";
+      alert(`Falta llenar: ${label} en ${nombreFormulario}`);
     } else {
-      alert(`Faltan llenar más campos en ${nombreFormulario}`);
+      alert(`Faltan llenar varios campos en ${nombreFormulario}`);
     }
   }
 
@@ -79,12 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const mensaje = boton === 'editar'
         ? "¿Seguro que quieres editar una visita?"
-        : "Confirma que todos los datos estén correctos";
+        : "Confirma que todos los datos estén correctos antes de registrar.";
 
       const confirmar = confirm(mensaje);
       if (confirmar) {
         alert(boton === 'editar' ? "Visita editada correctamente" : "Formulario registrado correctamente");
-        // form.submit(); // activar si deseas enviar el formulario
+        // form.submit(); // Descomentar si quieres enviar el formulario
       }
     }
   }
@@ -104,3 +113,4 @@ document.addEventListener('DOMContentLoaded', () => {
     manejarClick('editar');
   });
 });
+

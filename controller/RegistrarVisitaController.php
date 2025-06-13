@@ -1,5 +1,8 @@
 <?php
-require_once 'RegistrarVisitaModelo.php';
+session_start();
+$pdo = require_once "../config/db.php";
+require_once '../models/RegistrarVisitaModel.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $modelo = new RegistrarVisitaModelo();
