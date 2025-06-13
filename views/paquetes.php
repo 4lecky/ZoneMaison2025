@@ -1,18 +1,19 @@
 <?php
 session_start();
-require_once "./Layout/header.php"
+$pdo = require_once "../config/db.php";
+require_once "./Layout/header.php";
 
+// Obtener los usuarios
+$stmt = $pdo->query("SELECT usu_nombre_completo, usu_cedula FROM tbl_usuario");
+$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZONEMAISONS - vigilante</title>
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-
+  <title>ZONEMAISONS - Paquetería</title>
   <link rel="stylesheet" href="../assets/Css/globals.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
@@ -20,97 +21,61 @@ require_once "./Layout/header.php"
 </head>
 
 <body>
-
   <main>
     <section class="principal-page">
       <h2>Paquetería</h2>
 
-      <!-- <form action="procesarFormulario.php" method="POST" class="formulario-registro"> -->
-      <fieldset>
-        <legend>Formulario de Paquetes</legend>
-        <!-- Destinatario cc -->
+      <form action="../controller/paquetesController.php" method="POST" enctype="multipart/form-data" class="paquetes">
+        <fieldset>
+          <legend>Formulario de Paquetes</legend>
 
-        <label>Tipo de Documento</label>
-        <select class="form-control" type="text" name="tipo_doc" placeholder="Tipo Doc" required>
-          <option selected="">Seleccione el Tipo de Documento</option>
-          <option value="C.C.">C.C.</option>
-          <option value="Otro">Otro</option>
-        </select>
+          <label>Tipo de Documento</label>
+          <select class="form-control" name="tipo_doc" id="tipo_doc" required>
+            <option value="">Seleccione el Tipo de Documento</option>
+            <option value="C.C.">C.C.</option>
+            <option value="Otro">C.E.</option>
+          </select>
 
-        <label>Número Documento</label>
-        <input type="text" class="form-control" name="numero_doc" placeholder="Número Documento" required />
+          <label>Número Documento</label>
+          <input type="text" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required />
+          <input type="hidden" name="paqu_usuario_cedula" id="cedula_oculta">
 
-        <!-- Destinatario -->
-        <label>Destinatario</label>
-        <select class="form-control" type="text" name="destinatario" id="destinatario">
-          <option selected="">Seleccione un Destinatario</option>
-          <option value="Juan Perez">Juan Perez</option>
-          <option value="Luis Rodriguez">Luis Rodriguez</option>
-          <option value="Maria Lopez">Maria Lopez</option>
-          <option value="Carlos Perez">Carlos Perez</option>
-        </select>
+          <label>Destinatario</label>
+          <input type="text" name="paqu_Destinatario" id="paqu_Destinatario" class="form-control" placeholder="Nombre del destinatario" readonly required />
 
-        <!-- Asunto -->
-        <label>Asunto</label>
-        <input type="text" class="form-control" placeholder="Asunto" id="asunto" />
+          <label>Asunto</label>
+          <input type="text" class="form-control" name="asunto" id="asunto" placeholder="Asunto" />
 
-        <!-- Fecha -->
-        <label>Fecha</label>
-        <input type="date" class="form-control" id="fecha" />
+          <label>Fecha</label>
+          <input type="date" class="form-control" name="fecha" id="fecha" />
 
-        <!-- Hora -->
-        <label>Hora</label>
-        <input type="time" class="form-control" id="hora" />
+          <label>Hora</label>
+          <input type="time" class="form-control" name="hora" id="hora" />
 
-        <!-- Imagen -->
-        <div class="imagen">
           <label><i class="fas fa-images"></i> Imágenes</label>
-          <div class="image-upload-container">
-            <div class="image-upload-box">
-              <input type="file" id="zone-images" name="zone-images" accept="image/*" multiple class="hidden-upload">
-              <label for="zone-images" class="upload-label">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <span>Arrastra imágenes aquí o haz clic para seleccionar</span>
-                <span class="upload-hint">Máximo 5 imágenes (JPEG/PNG, 5MB max cada una)</span>
-              </label>
-            </div>
-            <div id="image-preview" class="image-preview-grid">
-              <!-- Las imágenes seleccionadas aparecerán aquí -->
-            </div>
-          </div>
+          <input type="file" name="zone-images" accept="image/*" />
+
+          <label>Descripción</label>
+          <input type="text" class="form-control" name="descripcion" placeholder="Descripción del paquete" />
+
+          <label>Estado</label>
+          <select name="estado" id="estado" required>
+            <option value="">Seleccione estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Entregado">Entregado</option>
+          </select>
+        </fieldset>
+
+        <div style="display: flex; justify-content: center; gap: 10px;">
+          <button type="submit" class="Enviar">Enviar</button>
+          <button type="reset" class="Cancelar">Cancelar</button>
         </div>
-
-        <!-- Descripción -->
-        <label>Descripción</label>
-        <input type="text" class="form-control" placeholder="Descripción del paquete" name="descripcion" id="descripcion">
-
-        <!--  Estado -->
-        <label>Estado</label>
-        <div class="cyberpunk-checkbox-group">
-          <label class="cyberpunk-checkbox-label">
-            <input type="checkbox" class="cyberpunk-checkbox">
-            Pendiente
-          </label>
-          <label class="cyberpunk-checkbox-label">
-            <input type="checkbox" class="cyberpunk-checkbox">
-            Entregado
-          </label>
-          </label>
-        </div>
-      </fieldset>
-
-      <!-- Botones -->
-      <div style="display: flex; justify-content: center; gap: 10px;">
-        <button class="Enviar">Enviar</button>
-        <button class="Cancelar">Cancelar</button>
-      </div>
-
+      </form>
+    </section>
   </main>
+
   <script src="../assets/js/paquetes.js"></script>
 
-  <?php
-  require_once "./Layout/footer.php"
-  ?>
+  <?php require_once "./Layout/footer.php"; ?>
 </body>
-
 </html>

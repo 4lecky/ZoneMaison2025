@@ -69,9 +69,10 @@ CREATE TABLE IF NOT EXISTS tbl_reserva (
 );
 
 
-CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
-    Paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
+CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
+    paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
     paqu_usuario_cedula INTEGER (10) NOT null, 
+    paqu_Destinatario VARCHAR (60) NOT null,
     paqu_Asunto text NOT null,
     paqu_FechaLlegada DATE NOT null,
     paqu_Hora time NOT null,

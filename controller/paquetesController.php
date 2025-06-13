@@ -5,25 +5,23 @@ require_once '../models/paquetesModel.php';
 
 $paquetesModel = new paquetesModel($pdo);
 
-$TipoDoc = $_POST['TipoDoc'] ?? '';
-$usu_cedula = $_SESSION['usu_cedula'] ?? null;
-$destinatario = $_POST['destinatario'] ?? '';  // El rol seleccionado
+$tipoDoc = $_POST['tipo_doc'] ?? '';
+$numeroDoc = $_POST['numero_doc'] ?? '';
+$cedulaDestinatario = $_POST['paqu_usuario_cedula'] ?? '';
+$nombreDestinatario = $_POST['paqu_Destinatario'] ?? '';
 $asunto = $_POST['asunto'] ?? '';
 $fecha = $_POST['fecha'] ?? '';
 $hora = $_POST['hora'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
-$estado = $_SESSION['estado'] ?? '';
+$estado = $_POST['estado'] ?? '';
 
 // Validación básica
-if (empty($destinatario)) {
-    die("Error: No se seleccionó ningún destinatario.");
+if (!$tipoDoc || !$numeroDoc || !$cedulaDestinatario) {
+    die("Faltan datos obligatorios.");
 }
 
-// if (!$usu_cedula) {
-//     die("Error: Usuario no autenticado o no definido.");
-// }
-
-// Subida de imagen
+// Imagen
+$rutaRelativaBD = null;
 if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_ERR_OK) {
     $directorio = '../uploads/';
     if (!is_dir($directorio)) {
@@ -34,35 +32,24 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
     $rutaDestino = $directorio . $archivoNombre;
 
     if (!move_uploaded_file($_FILES['zone-images']['tmp_name'], $rutaDestino)) {
-        die("Error: No se pudo guardar el archivo.");
+        die("Error al guardar la imagen.");
     }
 
     $rutaRelativaBD = 'uploads/' . $archivoNombre;
-} else {
-    die("Error: No se recibió o subió correctamente la imagen.");
 }
 
-// Consultar usuarios con el rol seleccionado
-$query = "SELECT usu_cedula FROM tbl_usuario WHERE usu_rol = :rol AND usu_estado = 'Activo'";
-$stmt = $pdo->prepare($query);
-$stmt->execute(['rol' => $destinatario]);
-$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$paquetesModel->insertarPaquete(
+    $tipoDoc,
+    $cedulaDestinatario,
+    $nombreDestinatario,
+    $asunto,
+    $fecha,
+    $hora,
+    $rutaRelativaBD,
+    $descripcion,
+    $estado
+);
 
-// Guardar en la base de datos para cada destinatario (enviando a múltiples usuarios)
-foreach ($usuarios as $usuarios) {
-    // Guardar mensaje en la base de datos
-    $muroModel->insertarMuro(
-        $usuarios['usu_cedula'],  // Este es el usuario destinatario
-        $asunto,
-        $fecha,
-        $hora,
-        $rutaRelativaBD,
-        $descripcion,
-        $usu_cedula  // El usuario que está enviando el mensaje
-    );
-}
 
-// Redirigir después de guardar los datos
 header("Location: ../views/novedades.php");
 exit;
-?>
