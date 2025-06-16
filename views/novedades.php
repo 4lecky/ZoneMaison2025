@@ -45,8 +45,10 @@ $mensajes = $stmt->fetchAll();
     <section class="second-page">
       <!-- Muro -->
       <div class="muro">
+        <a href="muro.php" class="round-button add-button">
+              <span>+</span>
+          </a>
         <h2>Muro</h2>
-
         <!-- Tarjetas 1 -->
   <?php if (count($mensajes) > 0): ?>
     <?php foreach ($mensajes as $muro): ?>
@@ -74,7 +76,9 @@ $mensajes = $stmt->fetchAll();
               <a href="muro.php" class="round-button edit-button"><span>✎</span></a>
             </div>
           </div>
+         </div>
         </div>
+       
        </div>
       </div>
     <?php endforeach; ?>

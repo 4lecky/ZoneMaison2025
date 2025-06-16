@@ -15,7 +15,7 @@
 <nav class="nav_expanded" id="main_nav"> 
     <a href="./home.php" class="nav-link"> Inicio </a>
     <a href="./parqueadero.php" class="nav-link"> Parqueaderos </a>
-    <a href="./reserva1.php" class="nav-link">Reservas</a>
+    <a href="./reserva2.php" class="nav-link">Reservas</a>
     <a href="./pqrs.php" class="nav-link"> PQRS </a>
     <a href="./novedades.php" class="nav-link"> Notificaciones </a>
     <a href="./crud.php" class="nav-link"> Usuarios </a>
