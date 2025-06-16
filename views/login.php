@@ -54,7 +54,7 @@
 
             <div class="texto_recuperarC">
 
-                <a href="./reset_contraseña.php" class="text_usu"> ¿Olvido su contraseña? </a> <br>
+                <a href="./reset_contrasenha.php" class="text_usu"> ¿Olvido su contraseña? </a> <br>
                 <a href="./signUp.php" class="text_usu"> Registrarse </a>
 
             </div>

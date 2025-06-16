@@ -23,8 +23,7 @@ try {
     die("Error de conexión: " . $e->getMessage());
 }
 
-return $pdo;
-// !IMPORTANTE¡ No olvidar el 'return'
+
 
 // Para pruebas de correo electronico (mailtrap)
 define("HOST","sandbox.smtp.mailtrap.io");
@@ -41,5 +40,8 @@ define("PASSWORD","fe72640e7e8274");
 
 define("SMTP_SECURE", "TLS");
 define("TIEMPO_VIDA", time() * 24);
+
+return $pdo;
+// !IMPORTANTE¡ No olvidar el 'return'
 
 ?>
