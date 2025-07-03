@@ -2,9 +2,9 @@
 session_start();
 
 require_once __DIR__."/../config/db.php";          
-require_once __DIR__.'/../models/visitante.php'; 
+require_once __DIR__."/../models/RegistrarVisitaModel.php";
 
-$visitante = new Visitante($pdo);
+$visitante = new RegistrarVisitaModel($pdo);
 
 // Registro
 if (isset($_POST['registrarFormVisi'])) {
@@ -26,7 +26,7 @@ if (isset($_POST['registrarFormVisi'])) {
         'visi_vis_id'  => $visi_vis_id  
     ];
 
-    $visitante->registrarVisitante($data);
+    $visitante->insertarVisitaCompleta($data);
 
 
     header('Location: ./views/visitas.php');

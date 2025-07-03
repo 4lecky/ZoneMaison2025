@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const formVisitante = document.getElementById('formVisitante');
-  const formVisita = document.getElementById('formVisita');
 
   const btnRegistrar = document.getElementById('btnRegistrar');
   const btnLimpiar = document.getElementById('btnLimpiar');
@@ -68,23 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const confirmacion = confirm("¿Seguro que deseas limpiar todos los formularios?");
       if (confirmacion) {
         formVisitante.reset();
-        formVisita.reset();
       }
     }
 
     if (boton === 'btnRegistrar' || boton === 'editar') {
       const erroresVisitante = validarFormulario(formVisitante);
-      const erroresVisita = validarFormulario(formVisita);
+
 
       if (erroresVisitante.length > 0) {
         mostrarMensajeValidacion(erroresVisitante, "Datos del Visitante");
         return;
       }
 
-      if (erroresVisita.length > 0) {
-        mostrarMensajeValidacion(erroresVisita, "Datos de Visita");
-        return;
-      }
 
       const mensaje = boton === 'editar'
         ? "¿Seguro que quieres editar una visita?"
