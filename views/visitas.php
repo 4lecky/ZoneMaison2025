@@ -115,8 +115,11 @@ require_once "./Layout/header.php"
 
                 <!-- Botones -->
                 <div class="input-group" style="justify-content: center;">
-                <button type="submit" class="Enviar">Registrar Visita</button>
-                <button type="reset" class="Cancelar">Limpiar</button>
+
+                    <!-- <button type="submit" class="Enviar">Registrar Visita</button> -->
+                <a href="visitas.php" class="Enviar "><span>Registrar Visita</span></a>
+
+                    <button type="reset" class="Cancelar">Limpiar</button>
                 </div>
             </form>
         </div>
