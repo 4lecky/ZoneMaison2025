@@ -32,6 +32,12 @@
                 <div style="color: red;"><?php echo $mensaje; ?></div>
             <?php endif; ?>
 
+            <?php
+            if (isset($_GET['message']) && $_GET['message'] === 'success_password') {
+                echo '<div style="color: green; margin-bottom: 10px; margin-left:120px;">¡Contraseña actualizada exitosamente! </div>';
+            }
+            ?>
+
 
             <i class="fa-solid fa-envelope"></i>
             <label for="username" class="titulo_campo">Email</label><br>

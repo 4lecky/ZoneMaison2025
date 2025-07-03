@@ -4,10 +4,11 @@
 }
 
 .fondo_reset {
+    background: #7b9a82;
     width: 40%;
     height: 100%;
-    background: #7b9a82;
-    height: 100%;
+    display: flex;
+    align-items: center;
     border-radius: 0% 50% 50% 0%;
 }
 
@@ -19,6 +20,30 @@
 
 }
 
+.texto_superior {
+    position: absolute;
+    left: 18%;
+    font-size: 50px;
+    transform: translate(-50%, -50%);
+    font-family: "Raleway", sans-serif;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+.texto_superior2 {
+
+    position: absolute;
+    left: 18%;
+    margin-top: 50px;
+    transform: translatex(-50%);
+    font-size: 30px;
+    font-family: "Raleway", sans-serif;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+
+}
+
+/* */
 .container_form_update {
     width: 50%;
     display: flex;
@@ -43,6 +68,7 @@ h4 {
     display: block;
     width: 500px !important;
     margin-bottom: 10px;
+    border: #ffffff !important;
 }
 
 .form-label {

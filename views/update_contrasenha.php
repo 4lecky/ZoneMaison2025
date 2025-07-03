@@ -7,9 +7,8 @@ $tiempo = time();
 
 $sql = "SELECT * FROM tbl_usuario WHERE usuario_cc=? and token_password=? and expired_session>?";
 
-
 try {
-  $stmt = $pdo ->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->bindParam(1, $_GET['id']);
   $stmt->bindParam(2, $_GET['token']);
   $stmt->bindParam(3, $tiempo);
@@ -46,7 +45,8 @@ if (count($data) > 0):
     <div class="fondo_reset">
 
       <img src="../assets/img/conjuntos.webp" alt="" class="img_fondo_reset">
-
+      <h3 class="texto_superior">¿Olvidaste tu contraseña?</h3>
+      <i class="texto_superior2">Restablecela aqui</i>
 
     </div>
 
@@ -79,11 +79,11 @@ if (count($data) > 0):
         endif;
         ?>
 
-
         <div class="container-btn-update">
 
           <button type="submit" class="btn btn-form-update btn-primary" name="save"> Enviar </button>
           <button type="reset" class="btn btn-form-update btn-primary" onclick="window.location.href='../views/login.php';"> Cancelar </button>
+
 
         </div>
       </form>
@@ -97,6 +97,7 @@ if (count($data) > 0):
   </body>
 
   </html>
+
 <?php else:
   header("Location:Login.php");
 endif; ?>

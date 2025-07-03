@@ -19,10 +19,6 @@ if (isset($_POST['send'])):
 
             $token_ = bin2hex(random_bytes(32));
 
-            // if (!defined('TIEMPO_VIDA')) {
-            //     die('TIEMPO_VIDA no está definida. Verifica que db.php se haya incluido correctamente.');
-            // }
-
             if (updateUser($pdo, $token_, TIEMPO_VIDA, $Usuario[0]->usuario_cc)); {
                 EnviarCorreoResetPassword(
                     $Usuario[0]->usu_correo,
@@ -30,18 +26,21 @@ if (isset($_POST['send'])):
                     $Usuario[0]->usuario_cc,
                     $token_
                 );
+                $_SESSION['response'] = 'Se ha enviado un correo con instrucciones para restablecer la contraseña.';
+                $_SESSION['response_type'] = 'success';
             }
         } else {
-            // echo "no existe el usuario";
             $_SESSION['response'] = 'No existe usuario';
-            header("location:../view/reset_contrasenha.php?message=no_found");
+            $_SESSION['response_type'] = 'danger';
+            // header("location:../view/reset_contrasenha.php?message=no_found");
         }
     } else {
-        // echo "Ingrese su correo electrónico";
         $_SESSION['response'] = 'Email incorrecto';
-        header("location:../view/reset_contrasenha.php?message=error");
+        $_SESSION['response_type'] = 'warning';
+        // header("location:../view/reset_contrasenha.php?message=error");
     }
-    header("location:../views/login.php?message=ok");
+    header("location:../view/reset_contrasenha.php");
+    exit();
 endif;
 
 if (isset($_POST['save'])):
@@ -59,18 +58,19 @@ if (isset($_POST['save'])):
         } else {
             // echo "no existe el usuario";
             $_SESSION['response'] = 'No existe usuario';
+            $_SESSION['response_type'] = 'danger';
         }
     } else {
         // echo "Ingrese su correo electrónico";
         $_SESSION['response'] = 'Email incorrecto';
+        $_SESSION['response_type'] = 'warning';
     }
 
-    header("location:../views/reset_contrasenha.php?message=success_password");
+    header("location:../views/login.php?message=success_password");
+    exit();
 
 endif;
 
-
-// ConsultaUsuarioPorEmail()
 
 // metodo que consulta usuario por email
 function ConsultaUsuarioPorEmail($pdo, $email)
@@ -175,21 +175,23 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
         // $mail->Port = 587;
 
         // //Recipients
-        // $mail->setFrom('washington79289@gmail.com', 'Luna S');
+        // $mail->setFrom('zonemaizon2025@gmail.com', 'ZoneMaisons');
         // $mail->addAddress($Correo, $NombreReceptor);     //Add a recipient
 
         // //Content
         // $mail->isHTML(true);                                  //Set email format to HTML
         // $mail->Subject = 'Reseteo de password';
-        // $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b> <a href="http://localhost/recuperarpassword/view/update_contraseña.php?id=' . 
-        // $userid . '&&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
+        // $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b> 
+        // <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' .$userid . '&&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
 
 
         // $mail->send();
-        // echo 'Se ha enviado un correo con las instrucciones para recuperar contraseña';
+        // echo 'Se ha enviado un correo con las instrucciones para recuperar contraseña';       
+        // } catch (Exception $e) {
+        //     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // }
 
         //Pruebas con mailTrap
-
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->isSMTP();
         $mail->Host       = HOST;
@@ -207,7 +209,7 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Reseteo de password';
         $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b> 
-        <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' .$userid.'&token='.$token_User.'">Cambiar Contraseña</a> </b>';
+            <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' . $userid . '&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
 
         $mail->send();
         echo 'Se ha enviado un correo con las instrucciones para recuperar contraseña';

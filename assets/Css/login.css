@@ -1,10 +1,7 @@
 
 body{
-
     display: flex;
     background:#f2f1f0
-    
-
 }
 
 
@@ -48,7 +45,6 @@ body{
     font-family: "Raleway", sans-serif;
     color: rgb(0, 0, 0);
     font-weight: 400;
-    
 }
 
 /* Contenedor derecho (Formulario) */

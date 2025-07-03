@@ -25,8 +25,8 @@ session_start();
     <div class="fondo_reset">
 
         <img src="../assets/img/conjuntos.webp" alt="" class="img_fondo_reset">
-
-
+        <h3 class="texto_superior">¿Olvidaste tu contraseña?</h3>
+        <i class="texto_superior2">No te preocupes, aqui puedes recuperarla </i>
     </div>
 
     <div class="container_form_reset">
@@ -36,20 +36,18 @@ session_start();
         <form method="POST" action="../controller/ResetPasswordController.php">
 
             <div class="col-md-25">
-                <label for="email" class="form-label" >Correo Electronico</label>
+                <label for="email" class="form-label">Correo Electronico</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo electronico" required>
             </div>
 
             <!-- Apartado para ver los mensajes -->
-            <?php
-            if (isset($_SESSION['response'])):
-
-            ?>
-                <h2><?php echo $_SESSION['response'] ?></h2>
-            <?php
-                unset($_SESSION['response']);
-            endif;
-            ?>
+            <?php if (isset($_SESSION['response'])): ?>
+                <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show mt-3" role="alert">
+                    <?php echo $_SESSION['response']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+            <?php endif; ?>
 
 
             <div class="container-btn-reset">
