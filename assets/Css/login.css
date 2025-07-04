@@ -1,38 +1,36 @@
-
-body{
-    display: flex;
-    background:#f2f1f0
+body {
+    display: flex !important;
+    background: #f2f1f0 !important;
 }
 
 
 /* Contenedor derecho (imagen) */
-.container_derecho{
+.container_derecho {
 
-    background:#7b9a82;
+    background: #7b9a82;
     height: 100%;
     width: 40%;
     display: flex;
     align-items: center;
     border-radius: 0% 50% 50% 0%;
 
-} 
+}
 
-.conjunto{
-
-    height:47cqmax;
+.conjunto {
+    height: 47cqmax;
     width: 100%;
     opacity: 50%;
     border-radius: 0% 50% 50% 0%;
 }
 
-.texto_superior{
+.texto_superior {
     position: absolute;
-    top: 50%;
     left: 18%;
     font-size: 50px;
     transform: translate(-50%, -50%);
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
+    font-weight: bold;
+    color: #1f291b;
 }
 
 .texto_superior2 {
@@ -43,13 +41,14 @@ body{
     transform: translatex(-50%);
     font-size: 30px;
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    font-weight: 400;
+    color: #f9f8f7;
+    font-weight: 500;
 }
+
 
 /* Contenedor derecho (Formulario) */
 
-.container_izquierdo{
+.container_izquierdo {
 
     height: 100%;
     width: 60%;
@@ -57,48 +56,54 @@ body{
     justify-content: center;
 }
 
-/* .logo_zm {
-    width: 250px;
-    height: 90px;
-    position: absolute;
-    align-items: center;
-    margin-top: 20px;
-    /*top: 20px; Ajusta la distancia desde la parte superior 
-    left: 20px;  Asegura que el logo esté alineado a la izquierda 
-    
-} */
-
-
-
-.formulario_ingreso{
+.formulario_ingreso {
 
     margin-top: 20%;
     align-items: center;
     justify-content: center;
-
 }
 
 
-.formulario_ingreso h2{
+.formulario_ingreso h2 {
 
     font-family: "Raleway", sans-serif;
     text-align: center;
     font-size: 40px;
     margin-bottom: 40px;
     color: #3d3431;
-    text-decoration:double ;
+    text-decoration: double;
+    font-weight: 700;
 }
 
-.titulo_campo{
+.titulo_campo {
 
     font-family: "Raleway", sans-serif;
     font-size: 18px;
     margin-bottom: 100px;
+    display: contents !important;
 
 }
 
-.campos{
-    
+.campos_login{
+    position: relative;
+}
+
+.campo_login {
+
+    margin-top: 10px;
+    width: 500px;
+    height: 40px;
+    line-height: 1.5;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    border-style: none;
+    border-radius: 10px;
+    padding-left: 35px;
+    appearance: none;
+}
+
+.campo_login_p {
+
     margin-top: 10px;
     width: 500px;
     height: 40px;
@@ -112,12 +117,27 @@ body{
 
 }
 
-.contenedor_btn{
+.campos_login #iconos_log {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7b9a82;
+  font-size: 1.2em;
+  pointer-events: none; /* para que no bloquee el input */
+  margin-top: 10px;
+} 
+
+#eye-icon{
+    color: #7b9a82;
+}
+
+.contenedor_btn {
     display: flex;
     justify-content: center;
 }
 
-#btn_incio{
+#btn_incio {
 
     width: 100px;
     height: 35px;
@@ -127,12 +147,12 @@ body{
     /*margin-top: 10px;*/
     font-family: "Raleway", sans-serif;
     font-size: 15px;
-    font-weight:500;
+    font-weight: 500;
     margin-bottom: 20px;
 
 }
 
-#btn_incio:hover{
+#btn_incio:hover {
 
     font-weight: 800;
     color: white;
@@ -140,13 +160,13 @@ body{
 }
 
 
-.text_usu{
+.text_usu {
 
-    
+
     font-family: "Raleway", sans-serif;
     text-decoration: none;
     color: #0c0c0c;
     font-weight: bolder;
     margin-top: 50px;
-   
+
 }

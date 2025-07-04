@@ -1,19 +1,3 @@
-// document.getElementById('formulario_ingreso').addEventListener('submit', function (e) {
-
-//     const email = this.Email.value;
-//     const password = this.Password.value;
-
-//     if (!email.includes('@')) {
-//         alert("Correo electrónico no válido.");
-//         e.preventDefault();
-//     }
-
-//     if (password.trim().length < 6) {
-//         alert("La contraseña debe tener al menos 8 caracteres.");
-//         e.preventDefault();
-//     }
-
-// });
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formulario_ingreso');
     if (form) {
@@ -40,12 +24,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const eyeIcon = document.getElementById('eye-icon');
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
+                eyeIcon.classList.remove('ri-eye-off-fill');
+                eyeIcon.classList.add('ri-eye-fill');
             } else {
                 passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
+                eyeIcon.classList.remove('ri-eye-fill');
+                eyeIcon.classList.add('ri-eye-off-fill');
             }
         });
     }

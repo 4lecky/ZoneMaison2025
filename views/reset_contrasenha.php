@@ -12,11 +12,14 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email de recuperación</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Css -->
     <link rel="stylesheet" href="../assets/Css/Cambio_contraseña/reset_contraseña.css">
     <link rel="stylesheet" href="../assets/Css/globals.css">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Libreria de iconos RemixIcon-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
 </head>
 
 <body id="body_reset">
@@ -35,20 +38,23 @@ session_start();
 
         <form method="POST" action="../controller/ResetPasswordController.php">
 
-            <div class="col-md-25">
-                <label for="email" class="form-label">Correo Electronico</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo electronico" required>
+            <div class="container_mensajes_reset">
+                <!-- Apartado para ver los mensajes custom-alert -->
+                <?php if (isset($_SESSION['response'])): ?>
+                    <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> fs-5 alert-dismissible fade show mt-3" role="alert">
+                        <?php echo $_SESSION['response']; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+                <?php endif; ?>
+
             </div>
 
-            <!-- Apartado para ver los mensajes -->
-            <?php if (isset($_SESSION['response'])): ?>
-                <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show mt-3" role="alert">
-                    <?php echo $_SESSION['response']; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
-            <?php endif; ?>
-
+            <div class="col-md-25 container-input-reset">
+                <label for="email" class="form-label">Correo Electronico</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo electronico" required>
+                <i class="ri-mail-open-fill"></i>
+            </div>
 
             <div class="container-btn-reset">
 
@@ -60,7 +66,8 @@ session_start();
 
     </div>
 
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

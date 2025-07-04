@@ -7,6 +7,10 @@
     <title>Registro</title>
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/registro.css" />
+    <!-- Libreria de iconos RemixIcon-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -30,15 +34,17 @@
 
                 <div class="campo">
                     <label for="NombreUsuario" class="titulo_campo">
-                        <i class="fa-solid fa-user"></i> Nombres y apellidos
+                        Nombres y apellidos
                     </label>
                     <input type="text" placeholder="Ingrese la información" class="campos" name="NombreUsuario" required>
+                    <i class="ri-user-3-fill"></i>
                 </div>
 
                 <div class="campo">
                     <label for="NumeroCedula" class="titulo_campo">
-                        <i class="fa-solid fa-address-card"></i> Numero de documento
+                        Numero de documento
                     </label>
+                    <i class="ri-hashtag"></i>
                     <input type="number" placeholder="Ingrese su de cedula" class="campos" name="NumeroCedula" required>
                 </div>
 
@@ -48,15 +54,17 @@
 
                 <div class="campo">
                     <label for="NumeroTelefonico" class="titulo_campo">
-                        <i class="fa-solid fa-mobile-screen-button"></i> Teléfono
+                        Teléfono
                     </label>
+                    <i class="ri-phone-fill"></i>
                     <input type="tel" placeholder="Ingrese su número telefónico" class="campos" name="NumeroTelefonico" required>
                 </div>
 
                 <div class="campo">
                     <label for="Apartamento" class="titulo_campo">
-                        <i class="fa-solid fa-building-user"></i> Apartamento
+                    Apartamento
                     </label>
+                    <i class="ri-building-line"></i>
                     <input type="text" placeholder="  Ingrese el apartamento donde vive" class="campos" name="Apartamento" required>
                 </div>
 
@@ -68,8 +76,9 @@
 
                 <div class="campo">
                     <label for="Torre" class="titulo_campo">
-                        <i class="fa-solid fa-building"></i>Torre
+                        Torre
                     </label>
+                    <i class="ri-building-line"></i>
                     <input type="text" placeholder="Ingrese donde vive" class="campos" name="Torre" required>
                 </div>
 
@@ -77,8 +86,9 @@
                 <div class="campo">
 
                     <label for="Parqueadero" class="titulo_campo">
-                        <i class="fa-solid fa-square-parking"></i> Parqueadero
+                        Parqueadero
                     </label>
+                    <i class="ri-car-fill"></i>
                     <input type="text" placeholder="Ingrese su parqueadero asignado" class="campos" name="Parqueadero" required>
 
                 </div>
@@ -90,8 +100,9 @@
                 <div class="campo">
 
                     <label for="Propiedades" class="titulo_campo">
-                        <i class="fa-solid fa-file-lines"></i> Propiedades
+                        Propiedades
                     </label>
+                    <i class="ri-home-6-fill"></i>
                     <input type="text" placeholder="Ingrese su propiedad" class="campos" name="Propiedades" required>
 
                 </div>
@@ -99,7 +110,8 @@
                 <div class="campo">
 
                     <label for="Rol" class="titulo_campo">Rol</label>
-                    <select class="campos" id="validationCustom04" name="Rol">
+                    <i class="ri-group-fill"></i>
+                    <select class="campos_select" id="validationCustom04" name="Rol">
 
                         <option>Elija una opción</option>
                         <option> Administrador </option>
@@ -118,16 +130,18 @@
 
                 <div class="campo">
                     <label for="Email" class="titulo_campo">
-                        <i class="fa-solid fa-envelope"></i> Correo electronico
+                    Correo electronico
                     </label>
+                    <i class="ri-mail-star-fill"></i>
                     <input type="email" placeholder="Defina una contraseña" class="campos" name="Email" required>
                 </div>
 
 
                 <div class="campo">
                     <label for="Password" class="titulo_campo">
-                        <i class="fa-solid fa-lock"></i> Contraseña
+                     Contraseña
                     </label>
+                    <i class="ri-lock-fill"></i>
                     <input type="password" placeholder="Defina una contraseña" class="campos" name="Password" required>
                 </div>
             </div>
@@ -150,9 +164,10 @@
 
     </div>
 
-    <script src="../assets/Js/singnUp.js"></script>
+    <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/dbd1801b06.js" crossorigin="anonymous"></script>
-
+    <!-- Custom JavaScript -->
+    <script src="../assets/Js/singnUp.js"></script>
 
 </body>
 

@@ -15,9 +15,8 @@
 .img_fondo_reset {
     width: 100%;
     opacity: 50%;
-    height: 920px;
+    height: 47cqmax;
     border-radius: 0% 50% 50% 0%;
-
 }
 
 .texto_superior {
@@ -27,7 +26,7 @@
     transform: translate(-50%, -50%);
     font-family: "Raleway", sans-serif;
     font-weight: bold;
-    color: rgb(0, 0, 0);
+    color: #1f291b;
 }
 
 .texto_superior2 {
@@ -38,8 +37,8 @@
     transform: translatex(-50%);
     font-size: 30px;
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    font-weight: 400;
+    color: #f9f8f7;
+    font-weight: 500;
 
 }
 
@@ -51,7 +50,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-
+    margin-left: 90px;
 }
 
 h4 {
@@ -65,16 +64,33 @@ h4 {
     margin-bottom: 20px !important;
 }
 
+.container-input-reset {
+    position: relative;
+}
+
 .form-control {
     display: block;
     width: 500px !important;
     margin-bottom: 10px;
     border: #ffffff !important;
+    padding-left: 35px;
 }
 
 .form-label {
     font-style: unset;
     color: #000000;
+}
+
+.container-input-reset i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7b9a82;
+    font-size: 1.2em;
+    pointer-events: none;
+    /* para que no bloquee el input */
+    margin-top: 15px;
 }
 
 .container-btn-reset {
@@ -93,4 +109,38 @@ h4 {
 
 .btn-form-reset:hover {
     background: #637a68 !important;
+}
+
+.container_mensajes_reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Alertas */
+
+.alert-danger {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    border: none;
+    color: #a27272 !important;
+    background-color: #ffe5e5;
+    border-radius: 12px;
+    font-weight: bold;
+    width: 350px;
+    padding: 13px 20px 15px 20px !important;
+}
+
+.alert-success {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    border: none;
+    color: #78a272 !important;
+    background-color: #d9fce1;
+    border-radius: 12px;
+    font-weight: bold;
+    width: 480px;
+    padding: 13px 20px 15px 20px !important;
 }

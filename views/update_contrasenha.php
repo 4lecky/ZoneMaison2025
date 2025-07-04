@@ -33,11 +33,13 @@ if (count($data) > 0):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambio de contraseña</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Css -->
     <link rel="stylesheet" href="../assets/Css/Cambio_contraseña/update_contraseña.css">
     <link rel="stylesheet" href="../assets/Css/globals.css">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Libreria de iconos RemixIcon-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   </head>
 
   <body id="body_update">
@@ -56,14 +58,16 @@ if (count($data) > 0):
 
       <form method="POST" action="../controller/ResetPasswordController.php">
 
-        <div class="col-md-25">
+        <div class="col-md-25 container-input-update">
           <label for="password" class="form-label" placeholder="Correo electronico">Nueva contraseña</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su nueva contraseña" required>
+          <input type="password" class="form-control_update" id="password" name="password" placeholder="Ingrese su nueva contraseña" required>
+          <i class="ri-lock-password-fill"></i>
         </div>
 
-        <div class="col-md-25">
+        <div class="col-md-25 container-input-update">
           <label for="password" class="form-label">Confirmación de contraseña</label>
-          <input type="password" class="form-control" id="password" name="new_password" placeholder="Confirmación de contraseña" required>
+          <input type="password" class="form-control_update" id="password" name="new_password" placeholder="Confirmación de contraseña" required>
+          <i class="ri-lock-password-fill"></i>
           <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
         </div>
 
@@ -93,8 +97,8 @@ if (count($data) > 0):
 
 
 
-
-  </body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   </html>
 

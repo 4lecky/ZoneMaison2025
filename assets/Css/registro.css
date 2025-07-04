@@ -25,13 +25,12 @@ body {
 
 .texto_superior {
     position: absolute;
-    top: 50%;
     left: 18%;
     font-size: 50px;
     transform: translate(-50%, -50%);
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    padding-bottom: 10px;
+    font-weight: bold;
+    color: #1f291b;
 }
 
 .texto_superior2 {
@@ -42,8 +41,8 @@ body {
     transform: translatex(-50%);
     font-size: 30px;
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    font-weight: 400;
+    color: #f9f8f7;
+    font-weight: 500;
 
 }
 
@@ -80,13 +79,13 @@ body {
     margin-top: 5%;
     align-items: center;
     justify-content: center;
-    margin-left: 12%;
 
 }
 
 .columnas {
 
     display: flex;
+    justify-content: center;
     margin-left: 100px;
 }
 
@@ -111,18 +110,49 @@ body {
 
 }
 
+.campo {
+    position: relative;
+}
 
 .campos {
 
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 25px;
     width: 350px;
     height: 40px;
     margin-bottom: 20px;
     background-color: rgb(255, 255, 255);
     border: none;
     border-radius: 10px;
-    padding-left: 10px;
+    padding-left: 35px;
+    padding-right: 10px;
+}
+
+.campos_select {
+
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 397px;
+    height: 40px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10px;
+    padding-left: 35px;
+    padding-right: 10px;
+
+}
+
+.campo i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7b9a82;
+    font-size: 1.2em;
+    pointer-events: none;
+    /* para que no bloquee el input */
+    margin-top: 10px;
 }
 
 .contenedor_btn {
@@ -166,7 +196,7 @@ body {
     color: #0c0c0c;
     font-weight: bolder;
     margin-top: 50px;
-    margin-left: 100px;
+    margin-left: 220px;
     margin-bottom: 10px;
 
 }

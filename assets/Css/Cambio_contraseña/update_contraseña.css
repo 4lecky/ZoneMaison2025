@@ -27,7 +27,7 @@
     transform: translate(-50%, -50%);
     font-family: "Raleway", sans-serif;
     font-weight: bold;
-    color: rgb(0, 0, 0);
+    color: #1f291b;
 }
 
 .texto_superior2 {
@@ -38,8 +38,8 @@
     transform: translatex(-50%);
     font-size: 30px;
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    font-weight: 400;
+    color: #f9f8f7;
+    font-weight: 500;
 
 }
 
@@ -64,11 +64,29 @@ h4 {
     margin-bottom: 20px !important;
 }
 
-.form-control {
+.container-input-update {
+    position: relative;
+}
+
+.form-control_update {
     display: block;
     width: 500px !important;
     margin-bottom: 10px;
     border: #ffffff !important;
+    margin-left: 35px;
+}
+
+.container-input-update i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7b9a82;
+    font-size: 1.2em;
+    pointer-events: none;
+    /* para que no bloquee el input */
+    margin-top: 10px;
+
 }
 
 .form-label {
