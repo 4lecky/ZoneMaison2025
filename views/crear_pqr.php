@@ -36,6 +36,10 @@ require_once './Layout/header.php'
     <p class="campo-obligatorio">(*) Todos los campos son obligatorios</p>
 
     <form class="formulario-pqr" method="POST" action="../controller/pqrsController.php" enctype="multipart/form-data">
+    <div id="mensaje-exito" style="display:none; background:#d4edda; color:#155724; padding:10px; margin-top:10px; border-radius:5px;">
+    Tu solicitud fue registrada correctamente. ¡Gracias por comunicarte con nosotros!
+    </div>
+
       <div class="campo-doble">
         <input type="text" name="nombres" placeholder="Nombres *">
       </div>

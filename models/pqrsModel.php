@@ -9,7 +9,7 @@ class PqrsModel {
     }
 
     public function registrar($data): mixed {
-        $sql = "INSERT INTO pqrs (nombres, apellidos, identificacion, email, telefono, tipo_pqr, asunto, mensaje, archivos, medio_respuesta) 
+        $sql = "INSERT INTO tbl_pqrs (nombres, apellidos, identificacion, email, telefono, tipo_pqr, asunto, mensaje, archivos, medio_respuesta) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
 
@@ -27,18 +27,18 @@ class PqrsModel {
     }
 
     public function obtenerTodos() {
-        $stmt = $this->pdo->query("SELECT * FROM pqrs");
+        $stmt = $this->pdo->query("SELECT * FROM tbl_pqrs");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function obtenerPorId($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM pqrs WHERE id = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM tbl_pqrs WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function actualizar($id, $data): bool {
-        $sql = "UPDATE pqrs SET nombres = ?, apellidos = ?, identificacion = ?, email = ?, telefono = ?, tipo_pqr = ?, asunto = ?, mensaje = ?, archivos = ?, medio_respuesta = ? 
+        $sql = "UPDATE tbl_pqrs SET nombres = ?, apellidos = ?, identificacion = ?, email = ?, telefono = ?, tipo_pqr = ?, asunto = ?, mensaje = ?, archivos = ?, medio_respuesta = ? 
                 WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $medioRespuesta = is_array($data['medio_respuesta']) ? $data['medio_respuesta'] : [$data['medio_respuesta']];
@@ -53,10 +53,17 @@ class PqrsModel {
     }
 
     public function eliminar($id): bool {
-        $stmt = $this->pdo->prepare("DELETE FROM pqrs WHERE id = ?");
+        $stmt = $this->pdo->prepare("DELETE FROM tbl_pqrs WHERE id = ?");
         return $stmt->execute([$id]);
     }
+
+    public function obtenerPorIdentificacion($identificacion) {
+    $stmt = $this->pdo->prepare("SELECT * FROM tbl_pqrs WHERE identificacion = ?");
+    $stmt->execute([$identificacion]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+}
+
 
 
 
