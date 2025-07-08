@@ -13,6 +13,26 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const expanded = !p.classList.toggle('texto-muro');
       btn.querySelector('.text').textContent = expanded ? 'Ver menos' : 'Ver más';
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-button');
+    
+    editButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const confirmed = confirm('¿Estás seguro de que quieres editar esta publicación?');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    });
+});
+
+function confirmarEliminacion(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta publicación? Esta acción no se puede deshacer.')) {
+        window.location.href = 'eliminar_publicacion.php?id=' + id;
+    }
+}
     });
   });
 });
