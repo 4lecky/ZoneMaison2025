@@ -442,8 +442,6 @@ $roles = $controller->obtenerRoles();
 
         <?php else: ?>
             <fieldset>
-                <legend>Error</legend>
-                <p>No se pudo cargar la publicación para editar.</p>
                 <div class="btn-container">
                     <a href="novedades.php" class="cancelar">Volver</a>
                 </div>
