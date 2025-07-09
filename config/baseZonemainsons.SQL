@@ -161,7 +161,11 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     FOREIGN KEY (desg_parq_id) REFERENCES tbl_parqueadero (parq_id),
     FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));                           
 
+<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS pqrs (
+=======
+CREATE TABLE IF NOT EXISTS tbl_pqrs (
+>>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_cc INT NULL,
     nombres VARCHAR(100) NOT NULL,
