@@ -54,10 +54,10 @@ require_once './Layout/header.php'
                         <p>Estado de mi PQR</p>
                     </div>
 
-                    <a href="#dudas" class="opcion">
+                    <div class="opcion" onclick="location.href='#dudas'">
                         <img src="../assets/img/preguntas.png" alt="Preguntas Frecuentes">
                         <p>Preguntas Frecuentes</p>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>

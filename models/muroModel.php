@@ -8,7 +8,7 @@ class muroModel
         $this->db = $conexion;
     }
 
-public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen, $descripcion, $usuario_cc)
+public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen, $descripcion, $usu_cedula)
 {
     // Validar que el destinatario tenga rol permitido
     $stmtCheck = $this->db->prepare("SELECT usu_rol FROM tbl_usuario WHERE usu_cedula = ?");
@@ -32,7 +32,7 @@ public function insertarMuro($destinatario, $asunto, $fecha, $hora, $rutaImagen,
     $stmtInsert->bindParam(':hora', $hora);
     $stmtInsert->bindParam(':imagePath', $rutaImagen);
     $stmtInsert->bindParam(':descripcion', $descripcion);
-    $stmtInsert->bindParam(':muro_usuario_cedula', $usuario_cc, PDO::PARAM_INT);
+    $stmtInsert->bindParam(':muro_usuario_cedula', $usu_cedula, PDO::PARAM_INT);
 
     return $stmtInsert->execute();
 }

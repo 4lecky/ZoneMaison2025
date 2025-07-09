@@ -13,7 +13,7 @@ require_once "./Layout/header.php"
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-    <link rel="stylesheet" href="../assets/Css/visitas-form.css" />
+    <link rel="stylesheet" href="../assets/Css/visitas.css" />
 </head>
 
 <body>
@@ -22,89 +22,144 @@ require_once "./Layout/header.php"
     <main class="container mt-4">
         <h2>REGISTRO DE VISITAS</h2>
 
-        <section class="form-card">
-            <form id="formVisita" method="post" action="../controller/visitaController.php">
+        <div class="principal-page">
+            
+            <form method="POST" action="../controller/RegistrarVisitaController.php">
                 <fieldset>
-                    <legend><strong>Datos Visita</strong></legend>
+                    <legend>Datos del Visitante</legend>
 
-                    <label for="torre">Número Torre Visitada</label>
-                    <input type="text" data-validate="number" name="torre" id="torre" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="tipo_doc">Tipo de Documento</label>
+                        <select class="form-control" name="tipo_doc" id="tipo_doc" required>
+                            <option selected disabled>Seleccione el Tipo de Documento</option>
+                            <option value="C.C.">C.C.</option>
+                            <option value="T.I.">T.I.</option>
+                            <option value="C.E.">C.E.</option>
+                        </select>
+                        </div>
 
-                    <label for="apto">Número Apto Visitado</label>
-                    <input type="text" data-validate="number" name="apto" id="apto" required>
+                        <div class="input-box">
+                        <label for="numero_doc">Número de Documento</label>
+                        <input type="text" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required>
+                        </div>
+                    </div>
 
-                    <label for="fechaEntrada">Fecha de Entrada</label>
-                    <input type="date" name="fechaEntrada" id="fechaEntrada" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="nombre">Nombre del Visitante</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre completo" required>
+                        </div>
 
-                    <label for="fechaSalida">Fecha de Salida</label>
-                    <input type="date" name="fechaSalida" id="fechaSalida" required>
+                        <div class="input-box">
+                        <label for="correo">Correo Electrónico</label>
+                        <input type="email" class="form-control" name="correo" id="correo" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
 
-                    <label for="horaInicio">Hora de Ingreso</label>
-                    <input type="time" name="horaInicio" id="horaInicio" required>
-
-                    <label for="horaSalida">Hora de Salida</label>
-                    <input type="time" name="horaSalida" id="horaSalida" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Número de teléfono">
+                        </div>
+                    </div>
                 </fieldset>
 
-                <button type="reset" id="btnLimpiar">Limpiar</button>
-                <button type="submit" id="btnRegistrar" name="registrarFormVisi">Registrar Visitante</button>
-            </form>
-
-            <form id="formVisitante" method="post" action="../controller/visitanteController.php">
+                
                 <fieldset>
-                    <legend><strong>Datos Visitante</strong></legend>
+                    <legend>Datos de la Visita</legend>
 
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" data-validate="text" name="nombre" id="nombre" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="fechaEntrada">Fecha de Entrada</label>
+                        <input type="date" class="form-control" name="fechaEntrada" id="fechaEntrada" data-validate="date" required>
+                        </div>
 
-                    <label for="tipoDoc">Tipo Documento</label>
-                    <select name="tipoDoc" id="tipoDoc" required>
-                        <option value="">Tipo Doc.</option>
-                        <option value="CC">C.C</option>
-                        <option value="TI">T.I</option>
-                    </select>
+                        <div class="input-box">
+                        <label for="horaEntrada">Hora de Entrada</label>
+                        <input type="time" class="form-control" name="horaEntrada" id="horaEntrada" data-validate="hora" required>
+                        </div>
+                    </div>
 
-                    <label for="documento">Número Documento</label>
-                    <input type="text" data-validate="number" name="documento" id="documento" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="fechaSalida">Fecha de Salida</label>
+                        <input type="date" class="form-control" name="fechaSalida" id="fechaSalida" data-validate="date" required>
+                        </div>
 
-                    <label for="email">Email</label>
-                    <input type="email" data-validate="email" name="email" id="email" required>
+                        <div class="input-box">
+                        <label for="horaSalida">Hora de Salida</label>
+                        <input type="time" class="form-control" name="horaSalida" id="horaSalida" data-validate="hora" required>
+                        </div>
+                    </div>
 
-                    <label for="telefono">Número de Teléfono</label>
-                    <input type="text" data-validate="number" name="telefono" id="telefono" required>
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="torreVisitada">Número de Torre</label>
+                        <input type="number" class="form-control" name="torreVisitada" id="torreVisitada" placeholder="Ej: Torre 3" data-validate="telefono" min="1" required>
+                        </div>
+
+                        <div class="input-box">
+                        <label for="aptoVisitado">Número de Apartamento</label>
+                        <input type="number" class="form-control" name="aptoVisitado" id="aptoVisitado" placeholder="Ej: 302" data-validate="telefono" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-box">
+                        <label for="usuario">Cédula del Residente</label>
+                        <input type="number" class="form-control" name="usuario" id="usuario" placeholder="Ej: 1234567890" data-validate="telefono" min="1" required>
+                        </div>
+                    </div>
                 </fieldset>
 
-                <button type="reset" id="btnLimpiar">Limpiar</button>
-                <button type="submit" id="btnRegistrar" name="registrarFormVisi">Registrar Visitante</button>
+                <!-- Botones -->
+                <div class="input-group" style="justify-content: center;">
+                <button type="submit" class="Enviar">Registrar Visita</button>
+                <button type="reset" class="Cancelar">Limpiar</button>
+                </div>
             </form>
-        </section>
+        </div>
+
 
         <section class="table-card">
-            <h3>Consulta Visitantes</h3>
-            <div class="Consulta">
-                <select class="filtro-visitas">
-                    <option>Todos los visitantes</option>
-                    <option>Visitas de hoy</option>
-                    <option>Pendientes de salida</option>
-                    <option>Completadas</option>
-                </select>
-            </div>
+        <h3>Consulta de Visitantes</h3>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Registro</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Torre/Apto</th>
-                    </tr>
-                </thead>
+        <div class="consulta-filtros">
+            <label for="filtroVisitas">Filtrar:</label>
+            <select class="filtro-visitas" id="filtroVisitas">
+            <option value="todos">Todos los visitantes</option>
+            <option value="hoy">Visitas de hoy</option>
+            <option value="pendientes">Pendientes de salida</option>
+            <option value="completadas">Completadas</option>
+            </select>
+        </div>
+
+        <div class="tabla-responsive">
+            <table class="tabla-visitas">
+            <thead>
+                <tr>
+                <th>Registro</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Torre</th>
+                <th>Apartamento</th>
+                </tr>
+            </thead>
+            <tbody id="tablaCuerpo">
+                <!-- Aquí se insertarán filas dinámicamente -->
+            </tbody>
             </table>
+        </div>
 
-            <div class="empty-state">
-                <i class="fa-solid fa-circle-info"></i> No hay visitas programadas próximamente
-            </div>
-            <button type="button" id="btnEditar">Editar Visita</button>
+        <div class="empty-state" id="estadoVacio">
+            <i class="fa-solid fa-circle-info"></i>
+            No hay visitas programadas próximamente
+        </div>
+
+        <div class="acciones-tabla">
+            <button type="button" id="btnEditar" class="btn-editar">Editar Visita</button>
+        </div>
         </section>
     </main>
 

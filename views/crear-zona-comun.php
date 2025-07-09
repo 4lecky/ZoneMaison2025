@@ -1,6 +1,9 @@
+    <?php
+    require_once './Layout/header.php' 
+    ?>
 <?php
-
-require_once './Layout/header.php'
+session_start();
+require_once "../config/db.php"; 
 ?>
 
 
@@ -12,31 +15,11 @@ require_once './Layout/header.php'
     <title>ZONEMAISONS - Administrador</title>
     <link rel="stylesheet" href="../assets/css/areas-comunes/crear-zona-comun.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
+    <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
 </head>
-<!-- <body>
-    <header>
-        <div class="logo-container">
-            <img src="img/logo.jpg" alt="ZONEMAISONS Logo" class="logo">
-            <div class="title-container">
-                <h1>ZONEMAISONS</h1>
-                <div class="underline"></div>
-            </div>
-        </div>
-        <nav class="menu-button">
-            <div class="hamburger">≡</div>
-        </nav>
-    </header>
-    
-    <nav class="main-nav">
-        <ul>
-            <li><a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> Panel</a></li>
-            <li><a href="admin-reservations.html"><i class="fas fa-calendar-check"></i> Reservas</a></li>
-            <li><a href="admin-zones.html" class="active"><i class="fas fa-home"></i> Zonas Comunes</a></li>
-            <li><a href="admin-users.html"><i class="fas fa-users"></i> Usuarios</a></li>
-            <li><a href="admin-pqrs.html"><i class="fas fa-comments"></i> PQRS</a></li>
-        </ul>
-    </nav> -->
-    
+
     <main class="admin-page">
         <div class="admin-header">
             <h2><i class="fas fa-plus-circle"></i> Crear Nueva Zona Común</h2>

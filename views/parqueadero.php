@@ -15,6 +15,8 @@ require_once "./layout/header.php"
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
   <link rel="stylesheet" href="../assets/Css/parqueadero.css" />
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -62,7 +64,13 @@ require_once "./layout/header.php"
                 <div class="input-group">
                   <div class="input-box">
                     <label>Tipo Doc</label>
-                    <input type="text" name="tipo_doc" placeholder="Tipo Doc" required />
+                    <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                      <option value="">-- Selecciona un tipo --</option>
+                      <option value="CC">Cédula de Ciudadanía (CC)</option>
+                      <option value="TI">Tarjeta de Identidad (TI)</option>
+                      <option value="CE">Cédula de Extranjería (CE)</option>
+                      <option value="PA">Pasaporte (PA)</option>
+                    </select>
                   </div>
                   <div class="input-box">
                     <label>Número Documento</label>
@@ -91,7 +99,13 @@ require_once "./layout/header.php"
                 <div class="input-group">
                   <div class="input-box">
                     <label>Tipo Doc</label>
-                    <input type="text" name="tipo_doc_vehiculo" placeholder="Tipo Doc" required />
+                    <select type="text" name="tipo_doc_vehiculo" placeholder="Tipo Doc" required>
+                      <option value="">-- Selecciona un tipo --</option>
+                      <option value="CC">Cédula de Ciudadanía (CC)</option>
+                      <option value="TI">Tarjeta de Identidad (TI)</option>
+                      <option value="CE">Cédula de Extranjería (CE)</option>
+                      <option value="PA">Pasaporte (PA)</option>
+                    </select>
                   </div>
                   <div class="input-box">
                     <label>Número Documento</label>
@@ -150,7 +164,7 @@ require_once "./layout/header.php"
             <h2>COBRO TARIFAS</h2>
         
           
-              <form action="#" method="POST">
+              <form action="../controller/calculoParqueadero.php" method="POST">
                 <fieldset>
 
                   <label>Numero de Recibo</label>
@@ -165,7 +179,13 @@ require_once "./layout/header.php"
                   <div class="input-group">
                       <div class="input-box">
                           <label>Tipo Doc</label>
-                          <input type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                          <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                            <option value="">-- Selecciona un tipo --</option>
+                            <option value="CC">Cédula de Ciudadanía (CC)</option>
+                            <option value="TI">Tarjeta de Identidad (TI)</option>
+                            <option value="CE">Cédula de Extranjería (CE)</option>
+                            <option value="PA">Pasaporte (PA)</option>
+                          </select>
                       </div>
                       <div class="input-box">
                           <label>Número Documento</label>
@@ -216,7 +236,7 @@ require_once "./layout/header.php"
 
           
                   <div class="acciones">
-                      <button type="submit">Enviar Información</button>
+                      <button type="submit" id="enviarBtn">Enviar Información</button>
                       <button type="reset">Limpiar</button>
                   </div>
 
@@ -225,6 +245,89 @@ require_once "./layout/header.php"
           </div>
 
       </main>
+
+
+            <!-- Formulario Consulta Parqueadero -->
+      <main id="formularioConsulta" style="display: none;">
+        <div class="formulario-container-consulta">
+
+          <h2>CONSULTA DE PARQUEADERO</h2>
+
+          <section class="table-card">
+            <h3>Consulta de Parqueaderos</h3>
+
+            <div class="consulta-filtros">
+              <label for="filtroParqueadero">Filtrar:</label>
+              <select class="filtro-parqueadero" id="filtroParqueadero">
+                <option value="todos">Todos los registros</option>
+                <option value="ocupados">Parqueaderos ocupados</option>
+                <option value="disponibles">Parqueaderos disponibles</option>
+                <option value="reservados">Reservados</option>
+              </select>
+            </div>
+
+            <div class="tabla-responsive">
+              <table class="tabla-parqueaderos">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Placa</th>
+                    <th>Propietario</th>
+                    <th>Num. Parqueadero</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaParqueaderoCuerpo">
+                  <!-- Aquí se insertarán filas dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="estadoVacioParqueadero">
+              <i class="fa-solid fa-circle-info"></i>
+              No hay registros de parqueadero disponibles
+            </div>
+
+            <div class="acciones-tabla">
+              <button type="button" id="btnEditarParqueadero" class="btn-editar">Editar Registro</button>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+
+
+
+      <!-- Botón que lanza SweetAlert -->
+      <!-- <button >Enviar Solicitud</button> -->
+
+      <script>
+
+        document.getElementById('enviarBtn').addEventListener('click', function () {
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas enviar la solicitud PQRS?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, enviar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                '¡Enviado!',
+                'Tu PQRS fue registrada correctamente.',
+                'success'
+              );
+            }
+          });
+        });
+
+      </script>
+
+
 
 
 <?php 

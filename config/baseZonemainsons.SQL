@@ -69,9 +69,10 @@ CREATE TABLE IF NOT EXISTS tbl_reserva (
 );
 
 
-CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
-    Paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
+CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
+    paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
     paqu_usuario_cedula INTEGER (10) NOT null, 
+    paqu_Destinatario VARCHAR (60) NOT null,
     paqu_Asunto text NOT null,
     paqu_FechaLlegada DATE NOT null,
     paqu_Hora time NOT null,
@@ -79,7 +80,7 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (Paqu_Id INT AUTO_INCREMENT,
     paqu_Descripcion text NOT null, 
     paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
-    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Destinatario VARCHAR (60) NOT null,
@@ -88,9 +89,9 @@ CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
     muro_Hora time NOT null,
     muro_image VARCHAR (255) NOT null,
     muro_Descripcion text NOT null, 
-    muro_usuario_cedula Integer,
+    muro_usuario_cedula INT,
     PRIMARY KEY (muro_id),
-    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usuario_cc)); 
+    FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_entrada TIME,
@@ -162,6 +163,7 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
 
 CREATE TABLE IF NOT EXISTS pqrs (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_cc INT NULL,
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
     identificacion VARCHAR(20) NOT NULL,
@@ -173,8 +175,16 @@ CREATE TABLE IF NOT EXISTS pqrs (
     archivos TEXT, -- puedes guardar los nombres o rutas de archivos
     medio_respuesta SET('correo', 'sms'),
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente'
+    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente',
+    CONSTRAINT fk_usuario_pqr FOREIGN KEY (usuario_cc) REFERENCES tbl_usuario(usuario_cc)
+    ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+-- ON DELETE SET NULL: Si se elimina un usuario en 'tbl_usuario', el campo 'usuario_cc' en 'pqrs' quedará en NULL,
+--                     evitando la pérdida del historial de PQRs pero indicando que ya no está asociado a un usuario activo.
+
+-- ON UPDATE CASCADE: Si el valor de 'usuario_cc' en 'tbl_usuario' se actualiza, el cambio se propaga automáticamente
+--                    a todos los registros relacionados en la tabla 'pqrs', manteniendo la coherencia de los datos.
 
 
 

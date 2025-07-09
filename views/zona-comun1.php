@@ -49,7 +49,6 @@ require_once './Layout/header.php'
                         <div class="day-header">SAB</div>
                     </div>
                     <div id="calendar-grid">
-                        <!-- Calendar will be populated by JavaScript -->
                     </div>
                 </div>
                 
@@ -132,14 +131,7 @@ require_once './Layout/header.php'
             </div>
         </div>
     </main>
-    
-    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;">
-        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
-            <div class="loading"></div>
-            <p style="margin-top: 10px;">Procesando reserva...</p>
-        </div>
-    </div>
-    
+      
     <script src="../assets/js/calendario.js"></script>
     
     <style>

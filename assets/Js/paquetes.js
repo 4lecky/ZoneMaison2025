@@ -1,62 +1,66 @@
-// Obtener la fecha actual y establecerla
-const hoy = new Date();
-document.getElementById("Fecha").value = hoy.toISOString().split("T")[0];
-
-// Obtener la hora actual y establecerla
-const hora = hoy.toTimeString().slice(0,5); // formato HH:MM
-document.getElementById("Hora").value = hora;
+console.log("📦 JavaScript cargado correctamente");
 
 document.addEventListener('DOMContentLoaded', () => {
-    const enviarBtn = document.querySelector('.Enviar');
-    const cancelarBtn = document.querySelector('.Cancelar');
+  const hoy = new Date();
+  const fechaInput = document.getElementById("fecha");
+  const horaInput = document.getElementById("hora");
   
-    enviarBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-  
-      const destinatario = document.getElementById('filtrodestinatario').value;
-      const asunto = document.getElementById('Asunto').value.trim();
-      const fecha = document.getElementById('Fecha').value;
-      const hora = document.getElementById('Hora').value;
-      const descripcion = document.getElementById('Descripcion').value.trim();
-  
-      if (!destinatario || destinatario === 'Seleccione un Destinatario') {
-        alert('Por favor selecciona un destinatario.');
-        return;
-      }
-  
-      if (asunto.length < 5) {
-        alert('El asunto debe tener al menos 5 caracteres.');
-        return;
-      }
-  
-      if (!fecha) {
-        alert('Por favor selecciona una fecha.');
-        return;
-      }
-  
-      if (!hora) {
-        alert('Por favor selecciona una hora.');
-        return;
-      }
-  
-      if (!descripcion.includes('Atentamente')) {
-        alert('Asegúrate de incluir toda la información en la descripción.');
-        return;
-      }
-  
-      alert('¡Formulario enviado correctamente!');
-      // Aquí podrías enviar los datos al servidor
-    });
-  
-    cancelarBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (confirm('¿Estás seguro de que quieres cancelar? Esto limpiará el formulario.')) {
-        document.getElementById('filtrodestinatario').value = '';
-        document.getElementById('Asunto').value = '';
-        document.getElementById('Fecha').value = '';
-        document.getElementById('Hora').value = '';
-        document.getElementById('Descripcion').value = '';
-        document.getElementById('archivo').value = '';
-      }
-    });
+  const numeroDocInput = document.getElementById('numero_doc');
+  const destinatarioInput = document.getElementById('paqu_Destinatario');
+  const inputCedulaOculta = document.getElementById('cedula_oculta');  
+
+  // Buscar nombre desde backend usando AJAX
+  numeroDocInput.addEventListener('input', function () {
+    const cedula = this.value.trim();
+
+    if (cedula.length >= 5) {
+      fetch(`../controller/buscar_usuario.php?cedula=${encodeURIComponent(cedula)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.nombre) {
+            destinatarioInput.value = data.nombre;
+            if (inputCedulaOculta) inputCedulaOculta.value = cedula;
+          } else {
+            destinatarioInput.value = '';
+            if (inputCedulaOculta) inputCedulaOculta.value = '';
+          }
+        })
+        .catch(err => {
+          console.error('Error al consultar el usuario:', err);
+          destinatarioInput.value = '';
+          if (inputCedulaOculta) inputCedulaOculta.value = '';
+        });
+    } else {
+      destinatarioInput.value = '';
+      if (inputCedulaOculta) inputCedulaOculta.value = '';
+    }
   });
+
+  if (fechaInput) fechaInput.value = hoy.toISOString().split("T")[0];
+  if (horaInput) horaInput.value = hoy.toTimeString().slice(0, 5); // HH:MM
+
+  const enviarBtn = document.querySelector('.Enviar');
+  const formulario = document.querySelector('form');
+
+  enviarBtn.addEventListener('click', function (e) {
+    const tipo_doc = document.querySelector('[name="tipo_doc"]').value;
+    const numero_doc = numeroDocInput.value.trim();
+    const destinatario = destinatarioInput.value;
+    const asunto = document.querySelector('[name="asunto"]').value.trim();
+    const fecha = fechaInput.value;
+    const hora = horaInput.value;
+    const descripcion = document.querySelector('[name="descripcion"]').value.trim();
+    const estado = document.querySelector('[name="estado"]').value;
+
+    if (!tipo_doc) return alert('Por favor seleccione el tipo de documento.');
+    if (!numero_doc || isNaN(numero_doc)) return alert('Número de documento inválido.');
+    if (!destinatario) return alert('Selecciona un destinatario válido.');
+    if (asunto.length < 5) return alert('El asunto debe tener al menos 5 caracteres.');
+    if (!fecha) return alert('Selecciona una fecha.');
+    if (!hora) return alert('Selecciona una hora.');
+    if (!descripcion) return alert('Incluye una descripción.');
+    if (!estado) return alert('Selecciona el estado.');
+
+    formulario.submit();
+  });
+});
