@@ -1,0 +1,70 @@
+/* 1. Margin alrededor de la tabla */
+#usuarios{
+    margin-top: 40px;
+}
+
+
+#usuarios_wrapper  {
+  margin: 10px; /* Arriba, derecha, abajo, izquierda */
+  color: rgb(0, 0, 0);
+}
+
+.btn-export-crud{
+  width: 60px;
+  height: 40px !important;
+} 
+
+table.dataTable thead th,
+table.dataTable thead td {
+    background: #b49d97 !important;
+    color: #fff !important;
+    text-align: center !important;
+}
+
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+    background: #b49d97 !important;
+    color: #fff !important;
+}
+
+table.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date, table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date{
+    text-align: center !important;
+}
+
+table.table.dataTable.table-striped>tbody>tr:nth-of-type(2n+1)>* {
+    box-shadow: none !important;
+    text-align: center;
+}
+
+
+table.table.dataTable>:not(caption)>*>* {
+    background-color: var(--bs-table-bg);
+    text-align: center;
+}
+
+/* Margin entre la paginación y la tabla */
+.pagination {
+  margin-top: 24px !important; /* Ajusta según lo que necesites */
+
+}
+
+/* Ejemplo: Personalizando el color y fondo del paginador activo de la paginacion*/
+.pagination .page-item.active .page-link,
+.pagination .page-link.active {
+  color: #ffffff !important; /* Cambia el color del texto */
+  background-color: #b49d97 !important; /* Cambia el fondo */
+  border-color: #b49d97 !important; /* Cambia el borde */
+}
+
+
+
+table#usuarios tr.usuario-inactivo td {
+  background-color: #f3dfdf !important;
+  opacity: 1 !important;
+  /* Puedes agregar esto para asegurarte de que no haya transparencia: */
+}
+
+
+
+

@@ -1,0 +1,156 @@
+
+body{
+
+    display: flex;
+    background:#f2f1f0
+    
+
+}
+
+
+/* Contenedor derecho (imagen) */
+.container_derecho{
+
+    background:#7b9a82;
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    border-radius: 0% 50% 50% 0%;
+
+} 
+
+.conjunto{
+
+    height:47cqmax;
+    width: 100%;
+    opacity: 50%;
+    border-radius: 0% 50% 50% 0%;
+}
+
+.texto_superior{
+    position: absolute;
+    top: 50%;
+    left: 18%;
+    font-size: 50px;
+    transform: translate(-50%, -50%);
+    font-family: "Raleway", sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+.texto_superior2 {
+
+    position: absolute;
+    left: 18%;
+    margin-top: 50px;
+    transform: translatex(-50%);
+    font-size: 30px;
+    font-family: "Raleway", sans-serif;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+    
+}
+
+/* Contenedor derecho (Formulario) */
+
+.container_izquierdo{
+
+    height: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+
+/* .logo_zm {
+    width: 250px;
+    height: 90px;
+    position: absolute;
+    align-items: center;
+    margin-top: 20px;
+    /*top: 20px; Ajusta la distancia desde la parte superior 
+    left: 20px;  Asegura que el logo esté alineado a la izquierda 
+    
+} */
+
+
+
+.formulario_ingreso{
+
+    margin-top: 20%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.formulario_ingreso h2{
+
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+    color: #3d3431;
+    text-decoration:double ;
+}
+
+.titulo_campo{
+
+    font-family: "Raleway", sans-serif;
+    font-size: 18px;
+    margin-bottom: 100px;
+
+}
+
+.campos{
+    
+    margin-top: 10px;
+    width: 500px;
+    height: 40px;
+    line-height: 1.5;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    border-style: none;
+    border-radius: 10px;
+    padding-left: 10px;
+    appearance: none;
+
+}
+
+.contenedor_btn{
+    display: flex;
+    justify-content: center;
+}
+
+#btn_incio{
+
+    width: 100px;
+    height: 35px;
+    background: #7b9a82;
+    border: none;
+    border-radius: 20px;
+    /*margin-top: 10px;*/
+    font-family: "Raleway", sans-serif;
+    font-size: 15px;
+    font-weight:500;
+    margin-bottom: 20px;
+
+}
+
+#btn_incio:hover{
+
+    font-weight: 800;
+    color: white;
+
+}
+
+
+.text_usu{
+
+    
+    font-family: "Raleway", sans-serif;
+    text-decoration: none;
+    color: #0c0c0c;
+    font-weight: bolder;
+    margin-top: 50px;
+   
+}

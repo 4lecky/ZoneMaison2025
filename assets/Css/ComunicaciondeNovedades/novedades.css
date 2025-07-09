@@ -1,0 +1,269 @@
+    .principal-page {
+    max-width: auto;
+    margin: 20px;
+  }
+
+    .second-page {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 20px 0;
+    color: #e5c9aa;
+    font-size: 28px;
+    position: relative;
+  }
+  
+  h2:after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 3px;
+    background-color: #7b9a82;
+    margin: 10px auto ;
+  }
+  
+
+  /* Mantente al tanto */ 
+  .code-loader {
+    color: #7b9a82;
+    font-family: Consolas, Menlo, Monaco, monospace;
+    font-weight: bold;
+    font-size: 30px;
+    opacity: 0.8;
+    text-align: center;
+  }
+  
+  .code-loader span {
+    display: inline-block;
+    animation: pulse_414 0.9s alternate infinite ease-in-out;
+  }
+  
+  @keyframes pulse_414 {
+    to {
+      transform: scale(1.0);
+      opacity: 0.5;
+    }
+  }
+  
+  /*muro*/
+  .muro {
+    max-width: auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: max-content;
+  }
+
+   .paqueteria {
+    max-width: 1000px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: max-content;
+  }
+  
+  h3 {
+    color: #000000;
+    text-align: center;
+  }
+
+  .tarjeta {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    display: list-item;
+    place-items: stretch;
+    box-shadow: 0 4px 10px rgba(194, 0, 0, 0.1);
+  }
+ /* Estilos para hacer los contenedores más compactos y alinear imagen a la izquierda */
+.tarjeta {
+  max-width: 500px;
+  margin: 10px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(194, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.tarjeta-interna {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tarjeta img,
+.paquete-icono {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.contenido {
+  flex-grow: 1;
+}
+
+.Asunto {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+}
+
+.Descripcion, .texto-muro {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+section.hora {
+  margin-inline-start: auto;
+  font-family: serif;
+  font-size: small;
+}
+
+/* ver más/ Ver menos */
+.texto-muro {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.muro, .paqueteria {
+  max-width: 600px;
+  margin: 10px;
+  padding: 15px;
+}
+
+  /*recibido y pendiente*/
+      .subtitulo {
+        background-color: #d8b99a;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+  
+
+      .paquete-icono {
+        font-size: 24px;
+      }
+      
+    /* boton editar   */
+      .round-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e5c9aa;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+  
+     /* Botón animado - Más pequeño */
+    .animated-button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 20px; /* Reducido el padding */
+      border: 2px solid; /* Reducido el borde si lo deseas */
+      border-color: transparent;
+      font-size: 14px; /* Reducido el tamaño de la fuente */
+      background-color: inherit;
+      border-radius: 100px;
+      font-weight: 600;
+      color: #d8b99a;
+      box-shadow: 0 0 0 1px #d8b99a; /* Ajustado el tamaño de la sombra */
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      margin-top: 10px; /* Reducido el margen superior si lo deseas */
+    }
+  
+    .animated-button svg {
+      position: absolute;
+      width: 18px; /* Reducido el tamaño del SVG */
+      fill: #d8b99a;
+      z-index: 9;
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+  
+    .animated-button .arr-1 {
+      right: 8px; /* Ajustado la posición de la flecha */
+    }
+  
+    .animated-button .arr-2 {
+      left: -20%; /* Ajustado la posición de la flecha */
+    }
+  
+    .animated-button .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; /* Reducido el tamaño del círculo */
+      height: 14px; /* Reducido el tamaño del círculo */
+      background-color: #d8b99a;
+      border-radius: 50%;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+  
+    .animated-button .text {
+      position: relative;
+      z-index: 1;
+      transform: translateX(-8px); /* Ajustado la posición del texto */
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+  
+    .animated-button:hover {
+      box-shadow: 0 0 0 8px transparent; /* Ajustado el tamaño de la sombra al pasar el ratón */
+      color: #ffffff;
+      border-radius: 8px; /* Ajustado el radio del borde al pasar el ratón */
+    }
+  
+    .animated-button:hover .arr-1 {
+      right: -20%; /* Ajustado la posición de la flecha al pasar el ratón */
+    }
+  
+    .animated-button:hover .arr-2 {
+      left: 8px; /* Ajustado la posición de la flecha al pasar el ratón */
+    }
+  
+    .animated-button:hover .text {
+      transform: translateX(8px); /* Ajustado la posición del texto al pasar el ratón */
+    }
+  
+    .animated-button:hover svg {
+      fill: #ffffff;
+    }
+  
+    .animated-button:active {
+      scale: 0.95;
+      box-shadow: 0 0 0 2px #d8b99a; /* Ajustado el tamaño de la sombra al hacer clic */
+    }
+  
+    .animated-button:hover .circle {
+      width: 150px; /* Reducido el tamaño del círculo al pasar el ratón */
+      height: 150px; /* Reducido el tamaño del círculo al pasar el ratón */
+      opacity: 1;
+    }  
+
+    

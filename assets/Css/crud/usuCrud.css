@@ -1,0 +1,18 @@
+
+
+.contenedorBotones button:hover{
+
+ font-weight:500;
+ background-color: #a18c87;
+ color: white;
+
+}
+
+.alerta_modificacion_crud{
+  background-color: green;
+  color: aliceblue;
+}
+
+
+
+
