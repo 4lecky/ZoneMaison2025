@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+$errorLogin = $_SESSION['errorLogin'] ?? false;
+unset($_SESSION['errorLogin']);
+
 
 ?>
 
@@ -16,7 +19,7 @@ session_start();
     <!-- Css -->
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/login.css" />
-     <!-- Libreria de iconos RemixIcon-->
+    <!-- Libreria de iconos RemixIcon-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -52,11 +55,17 @@ session_start();
 
             </div>
 
+            <?php if ($errorLogin): ?>
+                <p style="color: red; margin-top: 10px;">Credenciales incorrectas. Intente nuevamente.</p>
+            <?php endif; ?>
+
+
+
 
             <div class="campos_login">
 
                 <label for="username" class="titulo_campo">Email</label><br>
-                <input type="text" placeholder="Correo electronico" name="Email" class="campo_login" required><br>
+                <input type="text" placeholder="Correo electronico" name="Email" class="campo_login  <?php echo $errorLogin ? 'input-error' : ''; ?>" required><br>
                 <i class="ri-mail-star-fill" id="iconos_log"></i>
             </div>
 
@@ -64,9 +73,9 @@ session_start();
 
                 <label for="password" class="titulo_campo">Contraseña</label><br>
                 <div style="position: relative;">
-                    <input type="password" placeholder=" Contraseña" name="Password" class="campo_login_p" id="password-input" required>
+                    <input type="password" placeholder="Contraseña" name="Password" class="campo_login_p <?php echo $errorLogin ? 'input-error' : ''; ?>" id="password-input" required>
                     <button type="button" id="toggle-password" style="position: absolute; right: 10px; top: 40%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
-                        <i class="ri-eye-off-fill" id="eye-icon" ></i>
+                        <i class="ri-eye-off-fill" id="eye-icon"></i>
                     </button>
                 </div>
 

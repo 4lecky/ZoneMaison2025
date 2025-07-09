@@ -37,11 +37,11 @@
                     <div class="footer-col_redes">
 
                             <ul class="redes_sociales">
-                                <li><i class="fa-brands fa-whatsapp fa-2xl"></i></li>
-                                <li><i class="fa-brands fa-facebook fa-2xl"></i></li>
-                                <li><i class="fa-brands fa-x-twitter fa-2xl"></i></li>
-                                <li><i class="fa-brands fa-instagram fa-2xl"></i></li>
-                                <li><i class="fa-brands fa-github fa-2xl"></i></li>
+                                <li><i class="ri-whatsapp-fill"></i></li>
+                                <li><i class="ri-facebook-circle-fill"></i></li>
+                                <li><i class="ri-twitter-x-line"></i></li>
+                                <li><i class="ri-instagram-fill"></i></i></li>
+                                <li><i class="ri-github-fill"></i></li>
                             </ul>
     
                     </div>

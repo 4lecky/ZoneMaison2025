@@ -90,6 +90,11 @@
 
 }
 
+.redes_sociales li i {
+ 
+  font-size: 30px;
+}
+
 .redes_sociales li i:hover {
  
   color: aliceblue;

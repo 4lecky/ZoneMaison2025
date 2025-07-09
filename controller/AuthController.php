@@ -18,7 +18,7 @@ if (isset($_POST['registrar'])) {
         'Propiedades' => $_POST['Propiedades'],
         'Rol' => $_POST['Rol'],
         'Email' => $_POST['Email'],
-        'Password' => $_POST['Password'] ,
+        'Password' => $_POST['Password'],
 
     ];
     $usuario->registrar($data);
@@ -34,11 +34,9 @@ if (isset($_POST['login'])) {
         $_SESSION['usuario'] = $user;
         header('Location: ../views/home.php');
     } else {
-        echo "Credenciales incorrectas.";
+        // echo "Credenciales incorrectas.";
+        $_SESSION['errorLogin'] = true;
+        header('Location: ../views/login.php'); // redirige con error
+        exit;
     }
 }
-
-
-
-
-

@@ -82,8 +82,8 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_rol ?></td>
 
             <td class="contenedorBotones">
-              <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
+              <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="ri-quill-pen-fill" id="icon_crud"></i></a>
+              <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="ri-delete-bin-2-fill" id="icon_crud"></i></a>
             </td>
           </tr>
         <?php  }
@@ -125,7 +125,9 @@ require_once __DIR__ . "/Layout/header.php";
 
 
   <?php
-  require_once __DIR__ . "./Layout/footer.php"
+
+  require_once __DIR__ . "/Layout/footer.php";
+
   ?>
 
 </body>
