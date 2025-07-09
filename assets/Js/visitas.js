@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const formVisitante = document.getElementById('formVisitante');
 
   const btnRegistrar = document.getElementById('btnRegistrar');
-  const btnLimpiar = document.getElementById('btnLimpiar');
-  const btnEditar = document.getElementById('btnEditar');
+  const btnLimpiar   = document.getElementById('btnLimpiar');
+  const btnEditar    = document.getElementById('btnEditar');  // puede crearse dinámicamente
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  /* Expresiones regulares */
+  const emailRegex    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const telefonoRegex = /^\d+$/;
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  const horaRegex = /^\d{2}:\d{2}$/;
+  const dateRegex     = /^\d{4}-\d{2}-\d{2}$/;
+  const horaRegex     = /^\d{2}:\d{2}$/;
 
   const camposTipo = {
     email: emailRegex,
@@ -17,94 +18,102 @@ document.addEventListener('DOMContentLoaded', () => {
     hora: horaRegex
   };
 
+  /* ---------- Validación ---------- */
   function validarFormulario(form) {
-    const campos = Array.from(form.querySelectorAll('input, select, textarea'));
-    const camposVacios = [];
-    let primerCampoErroneo = null;
+    const campos        = Array.from(form.querySelectorAll('input, select, textarea'));
+    const camposError   = [];
+    let primerError     = null;
 
     campos.forEach(campo => {
       campo.classList.remove('campo-error');
       const tipoEsperado = campo.getAttribute('data-validate');
-      const valor = campo.value.trim();
+      const valor        = campo.value.trim();
 
-      // Validar select con opción deshabilitada
-      if (campo.tagName === 'SELECT' && (valor === '' || campo.selectedIndex === 0)) {
-        camposVacios.push(campo);
-        if (!primerCampoErroneo) primerCampoErroneo = campo;
-      } 
-      // Validar campos vacíos
+      // 1. Select sin opción válida
+      if (
+        campo.tagName === 'SELECT' &&
+        (valor === '' || campo.selectedIndex === 0)
+      ) {
+        camposError.push(campo);
+        if (!primerError) primerError = campo;
+      }
+      // 2. Campo vacío
       else if (valor === '') {
-        camposVacios.push(campo);
-        if (!primerCampoErroneo) primerCampoErroneo = campo;
-      } 
-      // Validar formato incorrecto
+        camposError.push(campo);
+        if (!primerError) primerError = campo;
+      }
+      // 3. Formato incorrecto
       else if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
-        camposVacios.push(campo);
-        if (!primerCampoErroneo) primerCampoErroneo = campo;
+        camposError.push(campo);
+        if (!primerError) primerError = campo;
       }
     });
 
-    if (camposVacios.length > 0) {
-      camposVacios.forEach(c => c.classList.add('campo-error'));
-      if (primerCampoErroneo) primerCampoErroneo.focus();
+    if (camposError.length) {
+      camposError.forEach(c => c.classList.add('campo-error'));
+      if (primerError) primerError.focus();
     }
 
-    return camposVacios;
+    return camposError;
   }
 
-  function mostrarMensajeValidacion(campos, nombreFormulario) {
+  function mostrarMensajeValidacion(campos) {
     if (campos.length === 1) {
       const campo = campos[0];
-      const label = campo.labels?.[0]?.innerText || campo.placeholder || campo.name || "un campo";
-      alert(`Falta llenar: ${label} en ${nombreFormulario}`);
+      const label = campo.labels?.[0]?.innerText || campo.placeholder || campo.name || 'un campo';
+      alert(`Falta llenar: ${label}`);
     } else {
-      alert(`Faltan llenar varios campos en ${nombreFormulario}`);
+      alert('Faltan llenar varios campos');
     }
   }
 
-  function manejarClick(boton) {
-    if (boton === 'btnLimpiar') {
-      const confirmacion = confirm("¿Seguro que deseas limpiar todos los formularios?");
-      if (confirmacion) {
+  /* ---------- Acciones de botones ---------- */
+  function manejarClick(accion) {
+    if (accion === 'limpiar') {
+      if (confirm('¿Seguro que deseas limpiar todos los campos?')) {
         formVisitante.reset();
       }
+      return;
     }
 
-    if (boton === 'btnRegistrar' || boton === 'editar') {
-      const erroresVisitante = validarFormulario(formVisitante);
+    // Registrar o editar: primero validar
+    const errores = validarFormulario(formVisitante);
+    if (errores.length) {
+      mostrarMensajeValidacion(errores);
+      return;
+    }
 
-
-      if (erroresVisitante.length > 0) {
-        mostrarMensajeValidacion(erroresVisitante, "Datos del Visitante");
-        return;
+    if (accion === 'registrar') {
+      if (confirm('Confirma que todos los datos estén correctos antes de registrar.')) {
+        formVisitante.submit();            // ← ¡envío real!
       }
-
-
-      const mensaje = boton === 'editar'
-        ? "¿Seguro que quieres editar una visita?"
-        : "Confirma que todos los datos estén correctos antes de registrar.";
-
-      const confirmar = confirm(mensaje);
-      if (confirmar) {
-        alert(boton === 'editar' ? "Visita editada correctamente" : "Formulario registrado correctamente");
-        // form.submit(); // Descomentar si quieres enviar el formulario
+    } else if (accion === 'editar') {
+      if (confirm('¿Seguro que quieres editar una visita?')) {
+        alert('Visita editada correctamente');
+        // Aquí iría tu lógica de edición (AJAX, recarga de tabla, etc.)
       }
     }
   }
 
-  btnLimpiar.addEventListener('click', e => {
-    e.preventDefault();
-    manejarClick('btnLimpiar');
-  });
+  /* ---------- Listeners ---------- */
+  if (btnLimpiar) {
+    btnLimpiar.addEventListener('click', e => {
+      e.preventDefault();
+      manejarClick('limpiar');
+    });
+  }
 
-  btnRegistrar.addEventListener('click', e => {
-    e.preventDefault();
-    manejarClick('btnRegistrar');
-  });
+  if (btnRegistrar) {
+    btnRegistrar.addEventListener('click', e => {
+      e.preventDefault();
+      manejarClick('registrar');
+    });
+  }
 
-  btnEditar.addEventListener('click', e => {
-    e.preventDefault();
-    manejarClick('editar');
-  });
+  if (btnEditar) {
+    btnEditar.addEventListener('click', e => {
+      e.preventDefault();
+      manejarClick('editar');
+    });
+  }
 });
-
