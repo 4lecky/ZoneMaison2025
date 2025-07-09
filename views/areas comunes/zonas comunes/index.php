@@ -54,8 +54,8 @@
                         <i class="fas fa-edit"></i>
                     </a>
                     <a href="index.php?controller=zona&action=eliminar&id=<?php echo $zona['id']; ?>" 
-                       class="btn btn-sm btn-danger" 
-                       onclick="return confirm('¿Estás seguro de eliminar esta zona?')">
+                    class="btn btn-sm btn-danger" 
+                    onclick="return confirm('¿Estás seguro de eliminar esta zona?')">
                         <i class="fas fa-trash"></i>
                     </a>
                 </td>

@@ -36,37 +36,37 @@ CREATE TABLE  if NOT EXISTS tbl_tiempo_mora (tiem_id INT AUTO_INCREMENT,
     FOREIGN KEY (tiem_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
     FOREIGN KEY (tiem_mor_id) REFERENCES tbl_mora(mor_id));  
 
-CREATE TABLE IF NOT EXISTS tbl_area_evento ( area_id INT NOT NULL AUTO_INCREMENT,
-    area_descripcion VARCHAR(255) NOT NULL,
-    area_estado VARCHAR(50) NOT NULL,
-    area_capacidad INT NOT NULL,
-    area_disponibilidad BOOLEAN NOT NULL,
-    area_costo DECIMAL(10, 2) NOT NULL,
-    area_terminos_condiciones TEXT NOT NULL,
-    area_fotos BLOB,
-    area_videos BLOB,
-    area_link_url VARCHAR(255),
-    area_even_titulo VARCHAR(100),
-    area_even_descripcion TEXT,
-    area_even_lugar VARCHAR(150),
-    area_even_fecha DATE,
-    area_even_hora TIME,
-    PRIMARY KEY (area_id));
+CREATE TABLE IF NOT EXISTS zonas_comunes (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    capacidad INT(11) DEFAULT NULL,
+    estado ENUM('activo','inactivo','mantenimiento') DEFAULT 'activo',
+    imagen VARCHAR(255) DEFAULT NULL,
+    hora_apertura TIME DEFAULT '08:00:00',
+    hora_cierre TIME DEFAULT '20:00:00',
+    duracion_maxima INT(11) DEFAULT 2,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE IF NOT EXISTS tbl_reserva (
-    rese_id INT NOT NULL AUTO_INCREMENT,
-    rese_usuario_nombre VARCHAR(100) NOT NULL,     
-    rese_numero_apartamento VARCHAR(10) NOT NULL, 
-    rese_fecha_fin DATE NOT NULL,
-    rese_hora_inicio TIME NOT NULL,
-    rese_hora_fin TIME NOT NULL,
-    rese_area_id INT NOT NULL,
-    rese_usuario_cc INT NOT NULL,
-    PRIMARY KEY (rese_id),
-    FOREIGN KEY (rese_area_id) REFERENCES tbl_area_evento(area_id),
-    FOREIGN KEY (rese_usuario_cc) REFERENCES tbl_usuario (usuario_cc)
-);
+
+CREATE TABLE IF NOT EXISTS reservas (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    zona_id INT(11) NOT NULL,
+    apartamento VARCHAR(50) NOT NULL,
+    nombre_residente VARCHAR(100) NOT NULL,
+    fecha_reserva DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    estado ENUM('activa','cancelada','completada') DEFAULT 'activa',
+    observaciones TEXT,
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_zona_id (zona_id),
+    CONSTRAINT fk_zona_reserva FOREIGN KEY (zona_id) REFERENCES zonas_comunes(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
@@ -161,11 +161,8 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     FOREIGN KEY (desg_parq_id) REFERENCES tbl_parqueadero (parq_id),
     FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));                           
 
-<<<<<<< HEAD
-CREATE TABLE IF NOT EXISTS pqrs (
-=======
+
 CREATE TABLE IF NOT EXISTS tbl_pqrs (
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_cc INT NULL,
     nombres VARCHAR(100) NOT NULL,
@@ -205,26 +202,6 @@ INSERT INTO tbl_tiempo_mora (tiem_id, tiem_usuario_cc,tiem_mor_id)
 VALUES (NULL, 2, 1),
 (NULL, 5, 2),
 (NULL, 3, 3);
-
-
-INSERT INTO tbl_area_evento (area_id, area_descripcion, area_estado, area_capacidad, area_disponibilidad, area_costo, area_terminos_condiciones, area_fotos, area_videos, area_link_url, area_even_titulo, area_even_descripcion, area_even_lugar, area_even_fecha, area_even_hora)
-VALUES (1, 'Salón Social', 'Disponible', 50, TRUE, 150.00, 'Uso exclusivo para residentes', NULL, NULL, 'http://example.com/salon', 'Fiesta de Año Nuevo', 'Celebración del Año Nuevo', 'Salón Social', '2024-12-31', '20:00:00'),
-       (2, 'Gimnasio', 'Disponible', 20, TRUE, 100.00, 'Reservas para máximo 2 horas', NULL, NULL, 'http://example.com/gym', 'Clase de Yoga', 'Clase de Yoga para todos los niveles', 'Gimnasio', '2024-09-15', '07:00:00'),
-       (3, 'Piscina', 'En mantenimiento', 30, FALSE, 0.00, 'No disponible temporalmente', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-       (4, 'Cancha de Tenis', 'Disponible', 4, TRUE, 80.00, 'Reservas de 1 hora máximo', NULL, NULL, 'http://example.com/tenis', 'Torneo de Tenis', 'Torneo interno para residentes', 'Cancha de Tenis', '2024-10-10', '09:00:00'),
-       (5, 'Auditorio', 'Disponible', 100, TRUE, 300.00, 'Reservas para eventos corporativos', NULL, NULL, 'http://example.com/auditorio', 'Conferencia de Tecnología', 'Evento de tecnología para residentes', 'Auditorio', '2024-11-20', '10:00:00');
-
-
-
-
-INSERT INTO tbl_reserva (rese_id, rese_descripcion, rese_valor, rese_cantidad, rese_impuesto, rese_fecha_inicio, rese_fecha_fin, rese_hora_inicio, rese_hora_fin, rese_area_id, rese_usuario_cc)
-VALUES (1, 'Reserva para Fiesta de Año Nuevo', 150.00, 1, 15.00, '2024-12-31', '2025-01-01', '20:00:00', '02:00:00',1,1),
-       (2, 'Reserva para Clase de Yoga', 100.00, 10, 10.00, '2024-09-15', '2024-09-15', '07:00:00', '08:00:00',2,2),
-       (3, 'Reserva para Torneo de Tenis', 80.00, 1, 8.00, '2024-10-10', '2024-10-10', '09:00:00', '10:00:00',4,3),
-       (4, 'Reserva para Conferencia de Tecnología', 300.00, 50, 30.00, '2024-11-20', '2024-11-20', '10:00:00', '13:00:00',5,2),
-       (5, 'Reserva de Gimnasio', 100.00, 1, 10.00, '2024-09-15', '2024-09-15', '07:00:00', '09:00:00',2,1);
-
-
 
 
 insert into tbl_paquetes (Paqu_Id,Paqu_Destinatario,Paqu_Firma,paqu_FechaLlegada,paqu_usuario_cc) 

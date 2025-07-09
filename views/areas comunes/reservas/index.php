@@ -39,7 +39,7 @@ ob_start();
                                 <td>
                                     <?php 
                                     echo date('H:i', strtotime($reserva['hora_inicio'])) . ' - ' . 
-                                         date('H:i', strtotime($reserva['hora_fin'])); 
+                                        date('H:i', strtotime($reserva['hora_fin'])); 
                                     ?>
                                 </td>
                                 <td>
@@ -52,12 +52,12 @@ ob_start();
                                 </td>
                                 <td>
                                     <a href="index.php?controller=reserva&action=editar&id=<?php echo $reserva['id']; ?>" 
-                                       class="btn btn-sm btn-warning">
+                                    class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="index.php?controller=reserva&action=eliminar&id=<?php echo $reserva['id']; ?>" 
-                                       class="btn btn-sm btn-danger" 
-                                       onclick="return confirm('¿Está seguro de eliminar esta reserva?')">
+                                    class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('¿Está seguro de eliminar esta reserva?')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>

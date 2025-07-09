@@ -34,7 +34,7 @@ ob_start();
                     <div class="mb-3">
                         <label for="apartamento" class="form-label">Apartamento *</label>
                         <input type="text" class="form-control" id="apartamento" name="apartamento" 
-                               value="<?php echo htmlspecialchars($reserva['apartamento']); ?>" required>
+                            value="<?php echo htmlspecialchars($reserva['apartamento']); ?>" required>
                     </div>
                 </div>
             </div>
@@ -44,14 +44,14 @@ ob_start();
                     <div class="mb-3">
                         <label for="nombre_residente" class="form-label">Nombre del Residente *</label>
                         <input type="text" class="form-control" id="nombre_residente" name="nombre_residente" 
-                               value="<?php echo htmlspecialchars($reserva['nombre_residente']); ?>" required>
+                            value="<?php echo htmlspecialchars($reserva['nombre_residente']); ?>" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="tel" class="form-control" id="telefono" name="telefono" 
-                               value="<?php echo htmlspecialchars($reserva['telefono']); ?>">
+                            value="<?php echo htmlspecialchars($reserva['telefono']); ?>">
                     </div>
                 </div>
             </div>
@@ -61,22 +61,22 @@ ob_start();
                     <div class="mb-3">
                         <label for="fecha_reserva" class="form-label">Fecha de Reserva *</label>
                         <input type="date" class="form-control" id="fecha_reserva" name="fecha_reserva" 
-                               value="<?php echo $reserva['fecha_reserva']; ?>" 
-                               min="<?php echo date('Y-m-d'); ?>" required>
+                            value="<?php echo $reserva['fecha_reserva']; ?>" 
+                            min="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="hora_inicio" class="form-label">Hora de Inicio *</label>
                         <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" 
-                               value="<?php echo $reserva['hora_inicio']; ?>" required>
+                            value="<?php echo $reserva['hora_inicio']; ?>" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="hora_fin" class="form-label">Hora de Fin *</label>
                         <input type="time" class="form-control" id="hora_fin" name="hora_fin" 
-                               value="<?php echo $reserva['hora_fin']; ?>" required>
+                            value="<?php echo $reserva['hora_fin']; ?>" required>
                     </div>
                 </div>
             </div>

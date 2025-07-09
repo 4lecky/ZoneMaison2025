@@ -8,6 +8,21 @@ $reservas = $controller->listarReservas();
 require_once __DIR__ . '/Layout/header.php';
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZONEMAISONS - Sistema de Reservas</title>
+    
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="../assets/css/areas-comunes/reserva2.css">
+    <link rel="stylesheet" href="../assets/Css/globals.css">
+    <link rel="stylesheet" href="../assets/Css/Layout/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
 <div class="container mt-4">
     <?php if (isset($_SESSION['mensaje_exito'])): ?>
         <div class="alert alert-success alert-dismissible fade show">
@@ -69,4 +84,3 @@ require_once __DIR__ . '/Layout/header.php';
     </table>
 </div>
 
-<?php require_once __DIR__ . '/Layout/footer.php'; ?>

@@ -34,9 +34,9 @@ class ZonaComun {
 
     public function obtenerTodas() {
     $sql = "SELECT id, nombre, descripcion, capacidad,  
-                   TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,  
-                   TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre, 
-                   duracion_maxima, estado, imagen  
+                TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,  
+                TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre, 
+                duracion_maxima, estado, imagen  
             FROM {$this->table}  
             ORDER BY nombre ASC";
 
@@ -53,9 +53,9 @@ class ZonaComun {
     
     public function obtenerActivas() {
         $sql = "SELECT id, nombre, descripcion, capacidad, 
-                       TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura, 
-                       TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
-                       duracion_maxima, estado, imagen 
+                    TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura, 
+                    TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
+                    duracion_maxima, estado, imagen 
                 FROM {$this->table} 
                 WHERE estado = 'activo' 
                 ORDER BY nombre ASC";

@@ -58,7 +58,7 @@ ob_start();
                     <div class="mb-3">
                         <label for="fecha_reserva" class="form-label">Fecha de Reserva *</label>
                         <input type="date" class="form-control" id="fecha_reserva" name="fecha_reserva" 
-                               min="<?php echo date('Y-m-d'); ?>" required>
+                            min="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                 </div>
                 <div class="col-md-4">

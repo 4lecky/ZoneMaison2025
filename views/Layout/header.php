@@ -21,7 +21,3 @@
     <a href="./crud.php" class="nav-link"> Usuarios </a>
     <a href="./visitas.php" class="nav-link"> visitas </a>
 </nav>
-<<<<<<< HEAD
-
-=======
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
