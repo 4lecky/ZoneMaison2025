@@ -63,6 +63,22 @@ require_once './Layout/header.php'
         </div>
     </div>
 
+<<<<<<< HEAD
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Consultar Estado de PQR</h2>
+            <br>
+            <form id="pqr-form">
+                <label for="pqr-id">Número de PQR:</label>
+                <input type="text" id="pqr-id" name="pqr-id" required>
+                <br><br>
+                <button type="submit" class="btn">Consultar</button>
+            </form>
+        </div>
+    </div>
+=======
 <!-- Modal para consultar PQR por cédula -->
 <div id="modal" class="modal" style="display: none;">
     <div class="modal-content" style="width: 90%; max-height: 80vh; overflow-y: auto;">
@@ -83,6 +99,7 @@ require_once './Layout/header.php'
 </div>
 
 
+>>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
 
     <div class="texto-container">
         Con nuestro sistema PQRS, puedes enviar peticiones, quejas, reclamos y sugerencias de manera rápida y sencilla. 

@@ -59,6 +59,8 @@
     width: max-content;
   }
 
+<<<<<<< HEAD
+=======
 .muro-header {
   display: flex;
   align-items: center;
@@ -109,6 +111,7 @@
 .paqueteria-header h2:after {
   margin: 10px auto; 
 }
+>>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
    .paqueteria {
     max-width: 1000px;
     background-color: #ffffff;
@@ -212,8 +215,13 @@ section.hora {
       
     /* boton editar   */
       .round-button {
+<<<<<<< HEAD
+    width: 50px;
+    height: 50px;
+=======
     width: 40px;
     height: 40px;
+>>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -221,6 +229,10 @@ section.hora {
     background-color: #e5c9aa;
     color: #333;
     text-decoration: none;
+<<<<<<< HEAD
+    font-size: 20px;
+=======
+>>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
 }

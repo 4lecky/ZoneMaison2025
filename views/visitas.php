@@ -117,9 +117,9 @@ require_once "./Layout/header.php"
                 <div class="input-group" style="justify-content: center;">
 
                 <!-- onclick="window.location.href='visita.php';" -->
-
-                    <button type="submit" class="Enviar"  id="btnRegistrar" >Registrar Visita</button>
-
+ 
+                    <button type="submit" class="Enviar"  id="btnRegistrar" name="registrarFormVisi">Registrar Visita</button>
+                    
                     <button type="reset" class="Cancelar" id="btnLimpiar">Limpiar</button>
                 </div>
             </form> 
