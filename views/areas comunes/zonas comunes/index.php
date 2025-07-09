@@ -18,6 +18,14 @@ $zonas = $zonaModel->obtenerTodas();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
+            <div class="header-container">
+                <h1 class="reservas-title"><i class=></i> ZONAS COMUNES</h1>
+                <div class="botones-container">
+                    <a href="../zonas comunes/crear.php" class="btn-icon">
+                        <i class="fas fa-plus-circle"></i> Crear Zonas Comunes
+                    </a>
+                </div>
+            </div>
 
 <div class="table-responsive">
     <table class="table table-bordered table-striped align-middle">

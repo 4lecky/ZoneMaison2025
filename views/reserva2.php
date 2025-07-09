@@ -77,7 +77,7 @@ require_once './Layout/header.php';
                     <a href="reservas.php" class="btn-icon">
                         <i class="fas fa-list"></i> Ver Todas las Reservas
                     </a>
-                    <a href="/ZoneMaison2025/zonas.php?action=crear" class="btn-icon">
+                    <a href="../views/areas comunes/zonas comunes/index.php" class="btn-icon">
                         <i class="fas fa-plus-circle"></i> Crear Zonas Comunes
                     </a>
                 </div>
@@ -180,7 +180,8 @@ require_once './Layout/header.php';
                 <?php else: ?>
                     <?php foreach ($zonas as $zona): ?>
                     <div class="area-card">
-                        <a href="zona-comun-detalle.php?id=<?php echo $zona['id']; ?>" style="display: block;">
+                        <a href=../views/zona-comun1.php  
+                        <!-- <?php echo $zona['id']; ?> style="display: block;">  -->
                             <img src="../assets/img/<?php echo $zona['imagen'] ?? 'default.jpg'; ?>" 
                                  alt="<?php echo htmlspecialchars($zona['nombre']); ?>">
                         </a>
