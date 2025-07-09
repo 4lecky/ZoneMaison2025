@@ -1,4 +1,5 @@
 <?php
+// models/ZonaComun.php
 require_once __DIR__ . '/../config/db.php';
 
 class ZonaComun {
@@ -7,59 +8,66 @@ class ZonaComun {
 
     public function __construct() {
         global $pdo;
-        
+
         if (!isset($pdo)) {
             throw new RuntimeException("Conexión a la base de datos no disponible");
         }
-        
+
         $this->conn = $pdo;
-        
-        // Verificar si la tabla existe al instanciar el modelo
         $this->verificarEstructuraTabla();
     }
 
-    /**
-     * Verifica la estructura básica de la tabla
-     */
     private function verificarEstructuraTabla() {
         $sql = "SHOW TABLES LIKE '{$this->table}'";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        
+
         if ($stmt->rowCount() === 0) {
             throw new RuntimeException("La tabla {$this->table} no existe en la base de datos");
         }
     }
 
-
+    /**
+     * Obtiene todas las zonas comunes (para el index del controlador)
+     */
     public function obtenerTodas() {
-    $sql = "SELECT id, nombre, descripcion, capacidad,  
-                TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,  
-                TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre, 
-                duracion_maxima, estado, imagen  
-            FROM {$this->table}  
-            ORDER BY nombre ASC";
-
-    try {
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Error al obtener zonas: " . $e->getMessage());
-        return [];
-    }
-}
-
-    
-    public function obtenerActivas() {
-        $sql = "SELECT id, nombre, descripcion, capacidad, 
-                    TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura, 
-                    TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
-                    duracion_maxima, estado, imagen 
-                FROM {$this->table} 
-                WHERE estado = 'activo' 
+        $sql = "SELECT id, nombre, descripcion, capacidad,
+                TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,
+                TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
+                duracion_maxima, estado, imagen
+                FROM {$this->table}
                 ORDER BY nombre ASC";
-        
+
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error al obtener todas las zonas: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Obtiene todas las zonas comunes (para compatibilidad con controlador)
+     */
+    public function listarZonasComunes() {
+        // Cambiado para devolver todas las zonas, no sólo activas
+        return $this->obtenerTodas();
+    }
+
+    /**
+     * Obtiene zonas activas para reservas
+     */
+    public function obtenerActivas() {
+        $sql = "SELECT id, nombre, descripcion, capacidad,
+                TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,
+                TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
+                duracion_maxima, estado, imagen
+                FROM {$this->table}
+                WHERE estado = 'activo'
+                ORDER BY nombre ASC";
+
         try {
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -77,14 +85,14 @@ class ZonaComun {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("El ID debe ser numérico");
         }
-        
-        $sql = "SELECT id, nombre, descripcion, capacidad, 
-                       TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura, 
-                       TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
-                       duracion_maxima, estado, imagen 
-                FROM {$this->table} 
+
+        $sql = "SELECT id, nombre, descripcion, capacidad,
+                TIME_FORMAT(hora_apertura, '%H:%i') as hora_apertura,
+                TIME_FORMAT(hora_cierre, '%H:%i') as hora_cierre,
+                duracion_maxima, estado, imagen
+                FROM {$this->table}
                 WHERE id = :id";
-        
+
         try {
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -98,6 +106,7 @@ class ZonaComun {
 
     /**
      * Crea una nueva zona común
+     * Retorna el ID insertado o false en caso de error
      */
     public function crear($datos) {
         $required = ['nombre', 'capacidad', 'estado'];
@@ -106,15 +115,14 @@ class ZonaComun {
                 throw new InvalidArgumentException("El campo $field es requerido");
             }
         }
-        
-        $sql = "INSERT INTO {$this->table} 
-                (nombre, descripcion, capacidad, hora_apertura, hora_cierre, duracion_maxima, estado, imagen) 
+
+        $sql = "INSERT INTO {$this->table}
+                (nombre, descripcion, capacidad, hora_apertura, hora_cierre, duracion_maxima, estado, imagen)
                 VALUES (:nombre, :descripcion, :capacidad, :hora_apertura, :hora_cierre, :duracion_maxima, :estado, :imagen)";
-        
+
         try {
             $stmt = $this->conn->prepare($sql);
-            
-            // Asignar valores por defecto si no están presentes
+
             $params = [
                 ':nombre' => $datos['nombre'],
                 ':descripcion' => $datos['descripcion'] ?? null,
@@ -125,8 +133,12 @@ class ZonaComun {
                 ':estado' => $datos['estado'],
                 ':imagen' => $datos['imagen'] ?? null
             ];
-            
-            return $stmt->execute($params);
+
+            if ($stmt->execute($params)) {
+                return $this->conn->lastInsertId();
+            } else {
+                return false;
+            }
         } catch (PDOException $e) {
             error_log("Error al crear zona común: " . $e->getMessage());
             return false;
@@ -140,26 +152,25 @@ class ZonaComun {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("El ID debe ser numérico");
         }
-        
-        $sql = "UPDATE {$this->table} 
-                SET nombre = :nombre, 
-                    descripcion = :descripcion, 
-                    capacidad = :capacidad, 
-                    hora_apertura = :hora_apertura, 
-                    hora_cierre = :hora_cierre, 
-                    duracion_maxima = :duracion_maxima, 
+
+        $sql = "UPDATE {$this->table}
+                SET nombre = :nombre,
+                    descripcion = :descripcion,
+                    capacidad = :capacidad,
+                    hora_apertura = :hora_apertura,
+                    hora_cierre = :hora_cierre,
+                    duracion_maxima = :duracion_maxima,
                     estado = :estado";
-        
-        // Agregar imagen solo si está presente
+
         if (isset($datos['imagen'])) {
             $sql .= ", imagen = :imagen";
         }
-        
+
         $sql .= " WHERE id = :id";
-        
+
         try {
             $stmt = $this->conn->prepare($sql);
-            
+
             $params = [
                 ':nombre' => $datos['nombre'],
                 ':descripcion' => $datos['descripcion'] ?? null,
@@ -170,11 +181,11 @@ class ZonaComun {
                 ':estado' => $datos['estado'],
                 ':id' => $id
             ];
-            
+
             if (isset($datos['imagen'])) {
                 $params[':imagen'] = $datos['imagen'];
             }
-            
+
             return $stmt->execute($params);
         } catch (PDOException $e) {
             error_log("Error al actualizar zona común: " . $e->getMessage());
@@ -189,9 +200,9 @@ class ZonaComun {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("El ID debe ser numérico");
         }
-        
+
         $sql = "DELETE FROM {$this->table} WHERE id = :id";
-        
+
         try {
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -209,9 +220,9 @@ class ZonaComun {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("El ID debe ser numérico");
         }
-        
+
         $sql = "SELECT COUNT(*) as count FROM reservas WHERE zona_id = :id";
-        
+
         try {
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);

@@ -77,7 +77,7 @@ require_once './Layout/header.php';
                     <a href="reservas.php" class="btn-icon">
                         <i class="fas fa-list"></i> Ver Todas las Reservas
                     </a>
-                    <a href="views/areas-comunes/zonas-comunes/crear.php" class="btn-icon">
+                    <a href="/ZoneMaison2025/zonas.php?action=crear" class="btn-icon">
                         <i class="fas fa-plus-circle"></i> Crear Zonas Comunes
                     </a>
                 </div>

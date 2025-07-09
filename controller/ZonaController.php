@@ -13,7 +13,7 @@ class ZonaController {
 
     public function index() {
         $zonas = $this->zonaModel->obtenerTodas();
-        include __DIR__ . '/../views/zonas/index.php';
+        include __DIR__ . '/../views/areas comunes/zonas comunes/index.php';
     }
 
     public function crear() {
@@ -32,19 +32,20 @@ class ZonaController {
             if ($this->zonaModel->crear($datos)) {
                 $_SESSION['mensaje_exito'] = '✅ Zona común creada exitosamente';
 
-                // Manejar la subida de imagen si existe
+                // Subir imagen si se proporcionó
                 if (!empty($_FILES['imagen']['tmp_name'])) {
                     $this->subirImagen($_FILES['imagen'], $this->zonaModel->obtenerUltimoId());
                 }
 
-                header('Location: index.php?controller=zona&action=index');
+                // Redirigir directamente a la vista index.php dentro de views/areas comunes/zonas comunes/
+                header('Location: /ZoneMaison2025/views/areas comunes/zonas comunes/index.php');
                 exit;
             } else {
                 $_SESSION['mensaje_error'] = '❌ Error al crear la zona común';
             }
         }
 
-        include __DIR__ . '/../views/zonas/crear.php';
+        include __DIR__ . '/../views/areas comunes/zonas comunes/crear.php';
     }
 
     public function editar($id) {
@@ -66,7 +67,9 @@ class ZonaController {
 
             if ($this->zonaModel->actualizar($id, $datos)) {
                 $_SESSION['mensaje_exito'] = '✅ Zona común actualizada exitosamente';
-                header('Location: index.php?controller=zona&action=index');
+
+                // Redirigir directamente a la vista index.php dentro de views/areas comunes/zonas comunes/
+                header('Location: /ZoneMaison2025/views/areas comunes/zonas comunes/index.php');
                 exit;
             } else {
                 $_SESSION['mensaje_error'] = '❌ Error al actualizar la zona común';
@@ -74,7 +77,7 @@ class ZonaController {
         }
 
         $zona = $this->zonaModel->obtenerPorId($id);
-        include __DIR__ . '/../views/zonas/editar.php';
+        include __DIR__ . '/../views/areas comunes/zonas comunes/editar.php';
     }
 
     public function eliminar($id) {
@@ -87,7 +90,8 @@ class ZonaController {
                 $_SESSION['mensaje_error'] = '❌ Error al eliminar la zona común';
             }
         }
-        header('Location: index.php?controller=zona&action=index');
+
+        header('Location: /ZoneMaison2025/views/areas comunes/zonas comunes/index.php');
         exit;
     }
 
@@ -96,7 +100,7 @@ class ZonaController {
      * @return array
      */
     public function listarZonasComunes() {
-        $zonas = $this->zonaModel->obtenerTodas(); // muestra todas, no solo las activas
+        $zonas = $this->zonaModel->obtenerTodas();
 
         if (!is_array($zonas)) {
             $zonas = [];
