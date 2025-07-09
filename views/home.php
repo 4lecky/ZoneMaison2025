@@ -37,8 +37,7 @@ require_once "./Layout/header.php";
     require_once "./Layout/footer.php"
 
     ?>
-
-    <script src="../assets/Js/header.js"></script>
+    
 </body>
 
 </html>

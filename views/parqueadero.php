@@ -1,4 +1,3 @@
-
 <?php
 require_once "./layout/header.php"
 ?>
@@ -15,13 +14,14 @@ require_once "./layout/header.php"
   <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
   <link rel="stylesheet" href="../assets/Css/parqueadero.css" />
+  <!-- Libreria de iconos RemixIcon-->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
 <body>
-
 
   <aside class="sidebar">
     <div class="contenedor-botones">
@@ -222,95 +222,95 @@ require_once "./layout/header.php"
 
       <form method="POST" action="#">
 
-      <!-- <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-cobro"> -->
-          <!-- Campo oculto para enviar el costo calculado -->
-          <input type="hidden" name="costo" id="campoCosto">
+        <!-- <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-cobro"> -->
+        <!-- Campo oculto para enviar el costo calculado -->
+        <input type="hidden" name="costo" id="campoCosto">
 
 
-          <label>Numero de Recibo</label>
-          <input type="text" name="numRecibo" placeholder="Numero de Recibo" required>
+        <label>Numero de Recibo</label>
+        <input type="text" name="numRecibo" placeholder="Numero de Recibo" required>
 
-          <legend>Datos Personales Residente/Propietario</legend>
+        <legend>Datos Personales Residente/Propietario</legend>
 
-          <label>Nombre Completo Residente/Propietario</label>
-          <input type="text" name="nombre_residente" placeholder="Nombre completo residente/propietario" required>
+        <label>Nombre Completo Residente/Propietario</label>
+        <input type="text" name="nombre_residente" placeholder="Nombre completo residente/propietario" required>
 
 
-          <div class="input-group">
-            <div class="input-box">
-              <label>Tipo Doc</label>
-              <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
-                <option value="">-- Selecciona un tipo --</option>
-                <option value="CC">Cédula de Ciudadanía (CC)</option>
-                <option value="TI">Tarjeta de Identidad (TI)</option>
-                <option value="CE">Cédula de Extranjería (CE)</option>
-                <option value="PA">Pasaporte (PA)</option>
-              </select>
-            </div>
-            <div class="input-box">
-              <label>Número Documento</label>
-              <input type="text" name="num_doc" placeholder="Número Documento" required>
-            </div>
+        <div class="input-group">
+          <div class="input-box">
+            <label>Tipo Doc</label>
+            <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+              <option value="">-- Selecciona un tipo --</option>
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="TI">Tarjeta de Identidad (TI)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+              <option value="PA">Pasaporte (PA)</option>
+            </select>
           </div>
-
-
-          <div class="input-group">
-            <div class="input-box">
-              <label>Num. Torre</label>
-              <input type="text" name="torre" placeholder="Num. Torre" required>
-            </div>
-            <div class="input-box">
-              <label>Num. Apto</label>
-              <input type="text" name="apartamento" placeholder="Num. Apto" required>
-            </div>
+          <div class="input-box">
+            <label>Número Documento</label>
+            <input type="text" name="num_doc" placeholder="Número Documento" required>
           </div>
+        </div>
 
-          <div class="input-group">
-            <div class="input-box">
-              <label>Placa</label>
-              <input type="text" name="placa" placeholder="Placa" required />
-            </div>
-            <div class="input-box">
-              <label>Num. Parqueadero</label>
-              <input type="text" name="parqueadero" placeholder="Num Parqueadero" required />
-            </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label>Num. Torre</label>
+            <input type="text" name="torre" placeholder="Num. Torre" required>
           </div>
-
-          <label>Estado de Salida/Observaciones</label>
-          <textarea name="observaciones" class="auto-ajustable" placeholder="observaciones estado de salida" required></textarea>
-
-          <div class="input-group">
-            <div class="input-box">
-              <label>Fecha de Ingreso</label>
-              <input type="date" name="fecha_ingreso" placeholder="dd/mm/aaaa" required>
-            </div>
-            <div class="input-box">
-              <label>Fecha de Salida</label>
-              <input type="date" name="fecha_salida" placeholder="dd/mm/aaaa" required>
-            </div>
+          <div class="input-box">
+            <label>Num. Apto</label>
+            <input type="text" name="apartamento" placeholder="Num. Apto" required>
           </div>
+        </div>
 
-          <div class="input-group">
-            <div class="input-box">
-              <label>Hora de Ingreso</label>
-              <input type="time" name="hora_ingreso" placeholder="hh:mm" required>
-            </div>
-            <div class="input-box">
-              <label>Hora de Salida</label>
-              <input type="time" name="hora_salida" placeholder="hh:mm" required>
-            </div>
+        <div class="input-group">
+          <div class="input-box">
+            <label>Placa</label>
+            <input type="text" name="placa" placeholder="Placa" required />
           </div>
-
-
-
-
-
-
-
-          <div class="acciones">
-            <button type="button" id="enviarBtn">Enviar Información</button>
-            <button type="reset">Limpiar</button>
+          <div class="input-box">
+            <label>Num. Parqueadero</label>
+            <input type="text" name="parqueadero" placeholder="Num Parqueadero" required />
           </div>
+        </div>
+
+        <label>Estado de Salida/Observaciones</label>
+        <textarea name="observaciones" class="auto-ajustable" placeholder="observaciones estado de salida" required></textarea>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label>Fecha de Ingreso</label>
+            <input type="date" name="fecha_ingreso" placeholder="dd/mm/aaaa" required>
+          </div>
+          <div class="input-box">
+            <label>Fecha de Salida</label>
+            <input type="date" name="fecha_salida" placeholder="dd/mm/aaaa" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label>Hora de Ingreso</label>
+            <input type="time" name="hora_ingreso" placeholder="hh:mm" required>
+          </div>
+          <div class="input-box">
+            <label>Hora de Salida</label>
+            <input type="time" name="hora_salida" placeholder="hh:mm" required>
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="acciones">
+          <button type="button" id="enviarBtn">Enviar Información</button>
+          <button type="reset">Limpiar</button>
+        </div>
 
 
         </fieldset>
