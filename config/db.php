@@ -22,6 +22,24 @@ try {
     die("Error de conexión: " . $e->getMessage());
 }
 
+
+
+// Para pruebas de correo electronico (mailtrap)
+// define("HOST","sandbox.smtp.mailtrap.io");
+// define("PORT","587");
+// define("USERNAME","7b919ecea72a1d");
+// define("PASSWORD","fe72640e7e8274");
+
+// Direccion REAL (De donde van a salir los correos)
+define("HOST", "smtp.gmail.com");
+define("USERNAME", "zonemaizon2025@gmail.com");
+define("PASSWORD", "zzgovbvvgqrirzdh");
+// zzgo vbvv gqri rzdh
+
+
+define("SMTP_SECURE", "TLS");
+define("TIEMPO_VIDA", time() * 24);
+
 return $pdo;
 // !IMPORTANTE¡ No olvidar el 'return'
 

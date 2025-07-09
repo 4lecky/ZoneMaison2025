@@ -1,64 +1,71 @@
-header{ 
+header {
 
-    display: flex;
-    margin: auto;
-    width: 100%;
-    padding-bottom: 30px;
-    padding-top: 5px;
+  display: flex;
+  margin: auto;
+  width: 100%;
+  padding-bottom: 30px;
+  padding-top: 5px;
+  justify-content: space-between;
 
-  }
-  
-  
-  header .logo-ZM{
-    width: 25%;
-    /* background-color: bisque; */
-  }
-  
-  header .Logo{
-    width: 250px;
-    height: 90px;
-    top: 18px;
-    margin-left: 50px;
-  }
-  
-  header .Titulo {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  header .LogoT {
-    margin-top: 20px;
-    width: 400px;
-    height: 70px;
-  }
-  
-    .menu {
-
-    display: flex;
-    width: 20%;
-    margin-right: 40px;
-    margin-top: 20px;
-    justify-content: right;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    background-color: #ffffff;
-    appearance: none;
-    /* margin-left: 5em; */
-  }
-  
-  header .IconoMenu{
-
-    width: 45px;
-    height: 45px;
-  }
+}
 
 
-  /* Nav */
+header .logo-ZM {
+  width: 25%;
+  /* background-color: bisque; */
+}
+
+header .Logo {
+  width: 250px;
+  height: 90px;
+  top: 18px;
+  margin-left: 50px;
+}
+
+header .Titulo {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+header .LogoT {
+  margin-top: 20px;
+  width: 400px;
+  height: 70px;
+  margin-right: 80px;
+}
+
+.contenedor_btn_header {
+
+  display: flex;
+  width: 20%;
+  margin-right: 40px;
+  margin-top: 20px;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+  background-color: #ffffff;
+  appearance: none;
+  /* margin-left: 5em; */
+}
+
+.btns_header{
+
+  background-color: #7b9a82;
+  border-radius: 50px;
+  color: #ffffff;
+  font-weight: 500;
+  margin: 10px;
+  padding: 8px 12px 8px 12px; /* Arriba, derecha, abajo, izquierda*/
+  border: 1px solid #7b9a82;
+
+}
 
 
-  #main_nav {
+/* Nav */
+
+
+#main_nav {
   display: flex;
   overflow: hidden;
   max-height: 0;
@@ -67,15 +74,14 @@ header{
   background: #7b9a82;
   padding-top: 10px;
   justify-content: center;
-  font-size: 18px; 
-  font-weight: 400;
-  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 20px;
 }
 
 /* Menú expandido */
 #main_nav.nav_expanded {
-  max-height: 200px; 
+  max-height: 200px;
 }
 
 /* Línea visible solo cuando está colapsado */
@@ -105,17 +111,17 @@ header{
   color: #ffffff;
 }
 
-  
-  /* Responsive */
 
-  @media (max-width: 1200px) {
-  
+/* Responsive */
+
+@media (max-width: 1200px) {
+
   header {
     align-items: center;
     padding: 15px;
   }
 
-  .LogoT{
+  .LogoT {
     margin-top: 20px;
     width: 200px;
     height: 50px;
@@ -159,14 +165,14 @@ header{
 
 }
 
-  @media (max-width: 1199px) {
-  
+@media (max-width: 1199px) {
+
   header {
     align-items: center;
     padding: 15px;
   }
 
-  .LogoT{
+  .LogoT {
     display: none;
   }
 
@@ -184,7 +190,7 @@ header{
     height: auto;
   }
 
-  .LogoT{
+  .LogoT {
     display: none;
   }
 
@@ -209,7 +215,7 @@ header{
     align-items: center;
   }
 
-  #main_nav.nav_collapsed  a {
+  #main_nav.nav_collapsed a {
     display: none;
     transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -232,12 +238,13 @@ header{
     width: 35px;
     height: 35px;
   }
-  #main_nav  {
+
+  #main_nav {
     font-size: 14px;
     transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-   #main_nav.nav_collapsed  a {
+  #main_nav.nav_collapsed a {
     display: none;
     transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
   }

@@ -1,39 +1,36 @@
-body{
+body {
 
     display: flex;
-    background:#f2f1f0
-    
-
+    background: #f2f1f0
 }
 
-.container_derecho{
+.container_derecho {
 
-    background:#7b9a82;
+    background: #7b9a82;
     height: 100%;
     width: 40%;
     display: flex;
     align-items: center;
     border-radius: 0% 50% 50% 0%;
 
-} 
+}
 
-.conjunto{
+.conjunto {
 
-    height:47cqmax;
+    height: 47cqmax;
     width: 100%;
     opacity: 50%;
     border-radius: 0% 50% 50% 0%;
 }
 
-.texto_superior{
+.texto_superior {
     position: absolute;
-    top: 50%;
     left: 18%;
     font-size: 50px;
     transform: translate(-50%, -50%);
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    padding-bottom: 10px;
+    font-weight: bold;
+    color: #1f291b;
 }
 
 .texto_superior2 {
@@ -44,14 +41,14 @@ body{
     transform: translatex(-50%);
     font-size: 30px;
     font-family: "Raleway", sans-serif;
-    color: rgb(0, 0, 0);
-    font-weight: 400;
-    
+    color: #f9f8f7;
+    font-weight: 500;
+
 }
 
 /* Contenedor izquierdo (Formulario) */
 
-.container_izquierdo{
+.container_izquierdo {
 
     height: 100%;
     width: 60%;
@@ -62,13 +59,13 @@ body{
 
 
 
-.mensaje-registro{
+.mensaje-registro {
     background-color: #d4edda;
     color: #155724;
-    border:  1px solid #c3e6cb;
+    border: 1px solid #c3e6cb;
     padding: 12px 20px;
-    border-radius:8px; 
-    margin:20px auto;
+    border-radius: 8px;
+    margin: 20px auto;
     font-weight: bold;
     width: fit-content;
     max-width: 90%;
@@ -77,32 +74,33 @@ body{
 }
 
 
-.formulario_ingresosRe{
+.formulario_ingresosRe {
 
     margin-top: 5%;
     align-items: center;
     justify-content: center;
-    margin-left: 12%;
 
 }
 
 .columnas {
-    
+
     display: flex;
+    justify-content: center;
     margin-left: 100px;
 }
 
-.formulario_ingresosRe h2{
+.formulario_ingresosRe h2 {
 
     font-family: "Raleway", sans-serif;
     text-align: center;
     font-size: 40px;
     margin-bottom: 40px;
     color: #3d3431;
-    text-decoration:double ;
+    text-decoration: double;
+    margin-top: 10vh;
 }
 
-.titulo_campo{
+.titulo_campo {
 
     font-weight: bold;
     margin-bottom: 5px;
@@ -112,26 +110,57 @@ body{
 
 }
 
-
-.campos{
-    
-    margin-top: 10px;
-    margin-right: 10px;
-    width: 300px;
-    height: 30px;
-    margin-bottom: 20px;
-    background-color: rgba(127, 255, 212, 0);
-    border: 1px solid ;
-    border-radius: 20px;
-    padding-left: 10px;
+.campo {
+    position: relative;
 }
 
-.contenedor_btn{
+.campos {
+
+    margin-top: 10px;
+    margin-right: 25px;
+    width: 350px;
+    height: 40px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10px;
+    padding-left: 35px;
+    padding-right: 10px;
+}
+
+.campos_select {
+
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 397px;
+    height: 40px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10px;
+    padding-left: 35px;
+    padding-right: 10px;
+
+}
+
+.campo i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7b9a82;
+    font-size: 1.2em;
+    pointer-events: none;
+    /* para que no bloquee el input */
+    margin-top: 10px;
+}
+
+.contenedor_btn {
     display: flex;
     justify-content: center;
 }
 
-#btn_incio{
+#btn_incio {
 
     width: 100px;
     height: 35px;
@@ -141,33 +170,33 @@ body{
     /*margin-top: 10px;*/
     font-family: "Raleway", sans-serif;
     font-size: 15px;
-    font-weight:500;
+    font-weight: 500;
     margin-bottom: 20px;
 
 }
 
-#btn_incio:hover{
+#btn_incio:hover {
 
     font-weight: 800;
     color: white;
 
 }
 
-.texto_inf{
+.texto_inf {
 
     margin-bottom: 10px;
-    
+
 }
 
-.text_usu{
+.text_usu {
 
-    
+
     font-family: "Raleway", sans-serif;
     text-decoration: none;
     color: #0c0c0c;
     font-weight: bolder;
     margin-top: 50px;
-    margin-left: 100px;
+    margin-left: 220px;
     margin-bottom: 10px;
-   
+
 }

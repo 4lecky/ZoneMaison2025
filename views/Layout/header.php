@@ -3,14 +3,18 @@
     <div class="logo-ZM">
         <img class="Logo" src="../assets/img/LogoZM.png" alt="Imagen Logo">
     </div>
+
     <div class="Titulo">
         <img class="LogoT" src="../assets/img/tituloCentro.png" alt="Titulo/Zm">
     </div>
-    <button class="menu" id="menu_toggle">
-        <!-- <i class="ri-arrow-down-s-line" id="icon_open" style="font-size: 50px; color:black;"></i> -->
-        <i class="ri-logout-circle-r-line" style="font-size:40px; "></i>
-        <i class="ri-arrow-up-s-line" id="icon_close"  style="display:none; font-size:30px; "></i>
-    </button> <!--  Se va a modificar para realizar el cierre de sesión con este boton-->
+
+    <div class="contenedor_btn_header">
+
+        <button class="btns_header"> <i class="ri-logout-circle-line"></i> Cerrar sesión</button>
+        <button class="btns_header"><i class="ri-user-3-fill"></i> Mi cuenta </button>
+
+    </div>
+
 </header>
 <nav class="nav_expanded" id="main_nav"> 
     <a href="./home.php" class="nav-link"> Inicio </a>

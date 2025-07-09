@@ -1,6 +1,6 @@
-#body_reset {
-    display: flex;
-    background: #f2f1f0
+#body_update {
+    display: flex !important;
+    background: #f2f1f0 !important;
 }
 
 .fondo_reset {
@@ -15,8 +15,9 @@
 .img_fondo_reset {
     width: 100%;
     opacity: 50%;
-    height: 47cqmax;
+    height: 920px;
     border-radius: 0% 50% 50% 0%;
+
 }
 
 .texto_superior {
@@ -42,15 +43,14 @@
 
 }
 
-/* Izquierda */
-
-.container_form_reset {
+/* */
+.container_form_update {
     width: 50%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-left: 90px;
+
 }
 
 h4 {
@@ -64,24 +64,19 @@ h4 {
     margin-bottom: 20px !important;
 }
 
-.container-input-reset {
+.container-input-update {
     position: relative;
 }
 
-.form-control {
+.form-control_update {
     display: block;
     width: 500px !important;
     margin-bottom: 10px;
     border: #ffffff !important;
-    padding-left: 35px;
+    margin-left: 35px;
 }
 
-.form-label {
-    font-style: unset;
-    color: #000000;
-}
-
-.container-input-reset i {
+.container-input-update i {
     position: absolute;
     left: 10px;
     top: 50%;
@@ -90,15 +85,21 @@ h4 {
     font-size: 1.2em;
     pointer-events: none;
     /* para que no bloquee el input */
-    margin-top: 15px;
+    margin-top: 10px;
+
 }
 
-.container-btn-reset {
+.form-label {
+    font-style: unset;
+    color: #000000;
+}
+
+.container-btn-update {
     display: flex;
     justify-content: space-between;
 }
 
-.btn-form-reset {
+.btn-form-update {
     margin-top: 20px;
     border: #7b9a82 !important;
     background-color: #7b9a82 !important;
@@ -107,40 +108,6 @@ h4 {
     font-weight: 600 !important;
 }
 
-.btn-form-reset:hover {
+.btn-form-update:hover {
     background: #637a68 !important;
-}
-
-.container_mensajes_reset {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Alertas */
-
-.alert-danger {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    border: none;
-    color: #a27272 !important;
-    background-color: #ffe5e5;
-    border-radius: 12px;
-    font-weight: bold;
-    width: 350px;
-    padding: 13px 20px 15px 20px !important;
-}
-
-.alert-success {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    border: none;
-    color: #78a272 !important;
-    background-color: #d9fce1;
-    border-radius: 12px;
-    font-weight: bold;
-    width: 480px;
-    padding: 13px 20px 15px 20px !important;
 }
