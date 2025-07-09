@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const expanded = !p.classList.toggle('texto-muro');
       btn.querySelector('.text').textContent = expanded ? 'Ver menos' : 'Ver más';
-<<<<<<< HEAD
-=======
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -35,7 +33,6 @@ function confirmarEliminacion(id) {
         window.location.href = 'eliminar_publicacion.php?id=' + id;
     }
 }
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     });
   });
 });
