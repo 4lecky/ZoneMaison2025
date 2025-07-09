@@ -6,29 +6,17 @@ $pqrs = new PqrsModel();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $archivoNombre = '';
 
-<<<<<<< HEAD
-    // Subida de archivo
-=======
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
     if (isset($_FILES['archivos']) && $_FILES['archivos']['error'] === UPLOAD_ERR_OK) {
         $directorio = '../uploads/';
         if (!is_dir($directorio)) {
             mkdir($directorio, 0777, true);
         }
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
         $archivoNombre = uniqid() . '_' . basename($_FILES['archivos']['name']);
         $rutaDestino = $directorio . $archivoNombre;
 
         if (!move_uploaded_file($_FILES['archivos']['tmp_name'], $rutaDestino)) {
-<<<<<<< HEAD
-            header("Location: ../views/crear_pqr.php?error=archivo");
-=======
             echo "<p>Error al subir el archivo.</p>";
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
             exit;
         }
     }
@@ -51,16 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if (isset($_POST['id'])) {
             $pqrs->actualizar($_POST['id'], $datos);
-<<<<<<< HEAD
-            header("Location: ../views/pqrs.php?editado=1");
-        } else {
-            $pqrs->registrar($datos);
-            header("Location: ../views/crear_pqr.php?exito=1");
-        }
-        exit;
-    } catch (Exception $e) {
-        header("Location: ../views/crear_pqr.php?error=bd");
-=======
             echo "<p>Actualizado con éxito</p>";
         } else {
             $resultado = $pqrs->registrar($datos);
@@ -87,21 +65,6 @@ if (isset($_GET['eliminar'])) {
         exit;
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
         exit;
     }
 }
-
-<<<<<<< HEAD
-if (isset($_GET['eliminar'])) {
-    try {
-        $pqrs->eliminar($_GET['eliminar']);
-        header("Location: ../views/pqrs.php?eliminado=1");
-        exit;
-    } catch (Exception $e) {
-        header("Location: ../views/pqrs.php?error=eliminando");
-        exit;
-    }
-}
-=======
->>>>>>> b749a1aeeb17e11874b55fe17b55fa3d883dc79d
