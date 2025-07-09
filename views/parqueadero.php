@@ -106,7 +106,7 @@ require_once "./layout/header.php"
     <div class="formulario-container-registro">
 
       <h2>REGISTRO DE VEHICULOS</h2>
-      <form action="../controller/generarCostoParqueadero.php" method="POST" class="formulario-registro">
+      <form action="/ZoneMaison2025/controller/recibirDatosRegistroParqueadero.php" method="POST" class="formulario-registro">
 
 
         <fieldset>
@@ -167,7 +167,7 @@ require_once "./layout/header.php"
             </div>
             <div class="input-box">
               <label>Número Documento</label>
-              <input type="text" name="numero_doc_vehciulo" placeholder="Número Documento" required />
+              <input type="text" name="numero_doc_vehiculo" placeholder="Número Documento" required />
             </div>
           </div>
 
@@ -205,7 +205,6 @@ require_once "./layout/header.php"
         </fieldset>
 
         <div class="acciones">
-          <button type="submit">Guardar Cambios</button>
           <button type="reset">Limpiar</button>
           <button type="submit">Enviar Información</button>
         </div>
@@ -216,14 +215,17 @@ require_once "./layout/header.php"
 
   <!-- formulario cobro de Tarifas -->
 
-  <main id="formularioCobro" style="display: none;">
+  <main id="formularioCobro" style="display: none;" method="POST">
     <div class="formulario-container-cobro">
 
       <h2>COBRO TARIFAS</h2>
 
+      <form method="POST" action="#">
 
-      <form action="../controller/calculoParqueadero" method="POST">
-        <fieldset>
+      <!-- <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-cobro"> -->
+          <!-- Campo oculto para enviar el costo calculado -->
+          <input type="hidden" name="costo" id="campoCosto">
+
 
           <label>Numero de Recibo</label>
           <input type="text" name="numRecibo" placeholder="Numero de Recibo" required>
@@ -301,10 +303,15 @@ require_once "./layout/header.php"
 
 
 
+
+
+
+
           <div class="acciones">
             <button type="button" id="enviarBtn">Enviar Información</button>
             <button type="reset">Limpiar</button>
           </div>
+
 
         </fieldset>
       </form>
@@ -319,8 +326,6 @@ require_once "./layout/header.php"
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script src="../assets/Js/ticketparqueadero.js"></script>
-
   <!-- Contenedor donde se insertará el formulario de consulta -->
   <div id="zonaConsultaFinal"></div>
 
@@ -331,6 +336,7 @@ require_once "./layout/header.php"
 
 
   <script src="../assets/Js/parqueadero.js"></script>
+  <script src="../assets/Js/ticketparqueadero.js"></script>
 
 </body>
 

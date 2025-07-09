@@ -59,4 +59,103 @@ function mostrarFormulario(formularioId) {
     actualizarFormularioConsulta();
 }
 
+async function cargarTablaParqueaderos() {
+    const cuerpoTabla = document.getElementById('tablaParqueaderoCuerpo');
+    const estadoVacio = document.getElementById('estadoVacioParqueadero');
+    cuerpoTabla.innerHTML = ''; // Limpia antes de cargar
+
+    try {
+        const response = await fetch('/ZoneMaison2025/controller/obtenerRegistroParqueadero.php');
+        const registros = await response.json();
+
+        if (registros.length === 0 || registros.error) {
+            estadoVacio.style.display = 'block';
+            return;
+        }
+
+        estadoVacio.style.display = 'none';
+
+        registros.forEach((reg, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${index + 1}</td>
+                <td contenteditable="true" data-campo="placa" data-id="${reg.parq_id}">${reg.parq_vehi_placa}</td>
+                <td contenteditable="true" data-campo="propietario" data-id="${reg.parq_id}">${reg.parq_nombre_propietario}</td>
+                <td contenteditable="true" data-campo="parqueadero" data-id="${reg.parq_id}">${reg.parq_num_parqueadero}</td>
+                <td contenteditable="true" data-campo="estado" data-id="${reg.parq_id}">${reg.parq_vehi_estadiIngreso}</td>
+                <td>
+                    <button onclick="eliminarRegistro(${reg.parq_id})" class="btn-eliminar">🗑️</button>
+                </td>
+            `;
+            cuerpoTabla.appendChild(fila);
+        });
+
+    } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+    }
+}
+
+
+
+
+// Al editar celda y presionar Enter, se guarda el cambio
+document.addEventListener('keydown', async function (e) {
+    if (e.target.matches('[contenteditable="true"]') && e.key === 'Enter') {
+        e.preventDefault();
+
+        const celda = e.target;
+        const nuevoValor = celda.innerText.trim();
+        const campo = celda.getAttribute('data-campo');
+        const id = celda.getAttribute('data-id');
+
+        try {
+            const res = await fetch('/ZoneMaison2025/controller/editarRegistroParqueadero.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id=${id}&campo=${campo}&valor=${encodeURIComponent(nuevoValor)}`
+            });
+
+            const data = await res.json();
+
+            if (!data.success) {
+                alert('❌ Error al guardar el cambio');
+            }
+        } catch (error) {
+            alert('❌ Error de conexión');
+        }
+    }
+});
+
+async function eliminarRegistro(id) {
+    const confirmacion = confirm("¿Estás seguro de eliminar este registro?");
+    if (!confirmacion) return;
+
+    try {
+        const res = await fetch('/ZoneMaison2025/controller/eliminarRegistroParqueadero.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `id=${id}`
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert('✅ Registro eliminado');
+            cargarTablaParqueaderos();
+        } else {
+            alert('❌ No se pudo eliminar');
+        }
+    } catch (error) {
+        alert('❌ Error al eliminar');
+    }
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    cargarTablaParqueaderos();
+});
+
+
 
