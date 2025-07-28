@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
     parq_vehi_alqu_id INT (30) NOT NULL,
     parq_usuario_cc INT (10) NOT NULL,
     PRIMARY KEY (parq_id),
-    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc)),
+    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
     -- FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
 
 CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
