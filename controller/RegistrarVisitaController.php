@@ -3,6 +3,16 @@ session_start();
 
 require_once __DIR__ . '/../models/RegistrarVisitaModel.php';
 
+$modelo = new RegistrarVisitaModel();
+
+// ✅ CONSULTAR VISITAS (para la tabla)
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion']) && $_GET['accion'] === 'consultar') {
+    $visitas = $modelo->obtenerTodasLasVisitas();
+    header('Content-Type: application/json');
+    echo json_encode($visitas);
+    exit;
+}
+
 /*  Solo procesamos si llega por POST y desde el botón
     name="registrarFormVisi" del formulario */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -40,3 +50,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 /* Acceso por GET o sin el botón correcto: redirigimos a la vista */
 header('Location: /Zonemaison2025/views/visitas.php');
 exit;
+

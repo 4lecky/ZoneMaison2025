@@ -116,4 +116,39 @@ document.addEventListener('DOMContentLoaded', () => {
       manejarClick('editar');
     });
   }
+
+async function cargarTablaVisitas() {
+    const cuerpoTabla = document.getElementById('tablavisitasCuerpo');
+    const estadoVacio = document.getElementById('estadoVaciovisitas');
+    cuerpoTabla.innerHTML = ''; // Limpiar antes de cargar
+
+    try {
+        const response = await fetch('/ZoneMaison2025/controller/RegistrarVisitaController.php?accion=consultar');
+        const registros = await response.json();
+
+        if (!Array.isArray(registros) || registros.length === 0 || registros.error) {
+            estadoVacio.style.display = 'block';
+            return;
+        }
+
+        estadoVacio.style.display = 'none';
+
+        registros.forEach((reg, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${reg.nombre}</td>
+                <td>${reg.fechaEntrada}</td>
+                <td>${reg.torreVisitada}</td>
+                <td>${reg.aptoVisitado}</td>
+            `;
+            cuerpoTabla.appendChild(fila);
+        });
+
+    } catch (error) {
+        console.error("Error al cargar visitas:", error);
+    }
+}
+
+
 });
