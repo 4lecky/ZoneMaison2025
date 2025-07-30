@@ -60,6 +60,12 @@ header .LogoT {
   border: 1px solid #7b9a82;
   font-size: 16px;
   height: 42px;
+}
+
+.btns_header:hover{
+
+  background-color: #718d77;
+  font-weight: 600;
 
 }
 

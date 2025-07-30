@@ -10,7 +10,7 @@
 
     <div class="contenedor_btn_header">
 
-        <button class="btns_header"> <i class="ri-logout-circle-line" onclick=></i> Cerrar sesión</button>
+        <button class="btns_header" onclick="window.location.href='logout.php'"> <i class="ri-logout-box-r-line"></i> Cerrar sesión</button>
         <button class="btns_header"><i class="ri-user-3-fill"></i> Mi cuenta </button>
 
     </div>
