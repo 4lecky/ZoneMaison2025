@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
 $pdo = require_once "../config/db.php";
 require_once "./Layout/header.php";
 
@@ -44,7 +48,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <input type="text" name="paqu_Destinatario" id="paqu_Destinatario" class="form-control" placeholder="Nombre del destinatario" readonly required />
 
           <label>Asunto</label>
-          <input type="text" class="form-control" name="asunto" id="asunto" placeholder="Asunto" />
+         <textarea class="form-control" rows="1" placeholder="asunto" id="asunto" name="asunto" required>
+Ha llegado un paquete para usted. Por favor, recoja su paquete lo mas pronto posible.
+          </textarea> 
 
           <label>Fecha</label>
           <input type="date" class="form-control" name="fecha" id="fecha" />

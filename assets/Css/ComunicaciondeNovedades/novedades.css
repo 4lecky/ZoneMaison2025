@@ -3,11 +3,21 @@
     margin: 20px;
   }
 
-    .second-page {
+/* Layout dinámico para muro y paquetería */
+.second-page {
     display: flex;
-    width: fit-content;
-    margin: auto;
-  }
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto;
+    max-width: 1400px;
+}
+
+/* Cuando solo hay muro (sin paquetería) */
+.second-page .muro:only-child {
+    max-width: 100%;
+    width: 100%;
+}
 
   h2 {
     text-align: center;
@@ -51,12 +61,13 @@
   
   /*muro*/
   .muro {
-    max-width: auto;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    width: max-content;
+    padding: 15px;
+    flex: 1;
+    min-width: 400px;
+    max-width: 100%;
   }
 
 .muro-header {
@@ -109,13 +120,15 @@
 .paqueteria-header h2:after {
   margin: 10px auto; 
 }
-   .paqueteria {
-    max-width: 1000px;
+
+.paqueteria {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    width: max-content;
+    padding: 15px;
+    flex: 0 0 350px;
+    min-width: 300px;
+    max-width: 400px;
   }
   
   h3 {
@@ -123,19 +136,9 @@
     text-align: center;
   }
 
-  .tarjeta {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    display: list-item;
-    place-items: stretch;
-    box-shadow: 0 4px 10px rgba(194, 0, 0, 0.1);
-  }
  /* Estilos para hacer los contenedores más compactos y alinear imagen a la izquierda */
 .tarjeta {
-  max-width: 500px;
-  margin: 10px auto;
+  margin: 10px 0;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(194, 0, 0, 0.1);
@@ -150,8 +153,8 @@
 
 .tarjeta img,
 .paquete-icono {
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 90px;
   flex-shrink: 0;
   border-radius: 8px;
   display: flex;
@@ -168,6 +171,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   display: flex;
+  margin: 10px 0;
 }
 
 .Descripcion, .texto-muro {
@@ -187,12 +191,6 @@ section.hora {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.muro, .paqueteria {
-  max-width: 600px;
-  margin: 10px;
-  padding: 15px;
 }
 
   /*recibido y pendiente*/
@@ -313,6 +311,17 @@ section.hora {
       width: 150px; /* Reducido el tamaño del círculo al pasar el ratón */
       height: 150px; /* Reducido el tamaño del círculo al pasar el ratón */
       opacity: 1;
-    }  
+    }
 
+/* Responsive design */
+@media (max-width: 768px) {
+    .second-page {
+        flex-direction: column;
+        align-items: center;
+    }
     
+    .muro, .paqueteria {
+        max-width: 100%;
+        width: 100%;
+    }
+}
