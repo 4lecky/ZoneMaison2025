@@ -117,9 +117,6 @@ CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
                                                                                                                                 
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
     parq_vehi_placa VARCHAR (6) NOT NULL,
-    parq_email_propietario VARCHAR (255) NOT NULL,
-    parq_nombre_propietario VARCHAR (255) NOT NULL,
-    parq_tipo_doc_propietario VARCHAR (255) NOT NULL,
     parq_num_doc_propietario INT (20) NOT NULL,
     parq_torre INT (30) NOT NULL,
     parq_apto INT (30) NOT NULL,
@@ -131,9 +128,9 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
     parq_fecha_salida DATE,
     parq_vehi_estadiIngreso VARCHAR (90) NOT NULL,
     parq_vehi_alqu_id INT (30) NOT NULL,
-    parq_usuario_cc INT (10) NOT NULL,
+    parq_usuario_cedula INT (10) NOT NULL,
     PRIMARY KEY (parq_id),
-    FOREIGN KEY (parq_usuario_cc) REFERENCES tbl_usuario (usuario_cc));
+    FOREIGN KEY (parq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula));
     -- FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
 
 CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,

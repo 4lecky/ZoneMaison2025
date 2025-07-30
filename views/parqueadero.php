@@ -115,17 +115,12 @@ require_once "./layout/header.php"
           <label>Email</label>
           <input type="email" name="email" placeholder="Email" required />
 
-
-          <label>Nombre Completo Residente/Propietario</label>
-          <input type="text" name="nombre" placeholder="Nombre Completo" required />
-
           <div class="input-group">
             <div class="input-box">
               <label>Tipo Doc</label>
               <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
                 <option value="">-- Selecciona un tipo --</option>
                 <option value="CC">Cédula de Ciudadanía (CC)</option>
-                <option value="TI">Tarjeta de Identidad (TI)</option>
                 <option value="CE">Cédula de Extranjería (CE)</option>
                 <option value="PA">Pasaporte (PA)</option>
               </select>
@@ -135,6 +130,11 @@ require_once "./layout/header.php"
               <input type="text" name="numero_doc" placeholder="Número Documento" required />
             </div>
           </div>
+
+
+          <label>Nombre Completo Residente/Propietario</label>
+          <input type="text" name="nombre" placeholder="Nombre Completo" required />
+
 
           <div class="input-group">
             <div class="input-box">
@@ -151,16 +151,13 @@ require_once "./layout/header.php"
 
         <fieldset>
           <legend>Dirección Propietario Vehículo</legend>
-          <label>Nombre Completo Propietario Vehículo</label>
-          <input type="text" name="nombre_propietario_vehiculo" placeholder="Nombre Completo Propietario Vehículo" required />
 
-          <div class="input-group">
+        <div class="input-group">
             <div class="input-box">
               <label>Tipo Doc</label>
               <select type="text" name="tipo_doc_vehiculo" placeholder="Tipo Doc" required>
                 <option value="">-- Selecciona un tipo --</option>
                 <option value="CC">Cédula de Ciudadanía (CC)</option>
-                <option value="TI">Tarjeta de Identidad (TI)</option>
                 <option value="CE">Cédula de Extranjería (CE)</option>
                 <option value="PA">Pasaporte (PA)</option>
               </select>
@@ -170,6 +167,10 @@ require_once "./layout/header.php"
               <input type="text" name="numero_doc_vehiculo" placeholder="Número Documento" required />
             </div>
           </div>
+          
+          <label>Nombre Completo Propietario Vehículo</label>
+          <input type="text" name="nombre_propietario_vehiculo" placeholder="Nombre Completo Propietario Vehículo" required />
+
 
           <div class="input-group">
             <div class="input-box">
@@ -227,14 +228,12 @@ require_once "./layout/header.php"
         <input type="hidden" name="costo" id="campoCosto">
 
 
-        <label>Numero de Recibo</label>
-        <input type="text" name="numRecibo" placeholder="Numero de Recibo" required>
-
         <legend>Datos Personales Residente/Propietario</legend>
 
-        <label>Nombre Completo Residente/Propietario</label>
-        <input type="text" name="nombre_residente" placeholder="Nombre completo residente/propietario" required>
+        
 
+        <label>Numero de Recibo</label>
+        <input type="text" name="numRecibo" placeholder="Numero de Recibo" required>
 
         <div class="input-group">
           <div class="input-box">
@@ -242,7 +241,6 @@ require_once "./layout/header.php"
             <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
               <option value="">-- Selecciona un tipo --</option>
               <option value="CC">Cédula de Ciudadanía (CC)</option>
-              <option value="TI">Tarjeta de Identidad (TI)</option>
               <option value="CE">Cédula de Extranjería (CE)</option>
               <option value="PA">Pasaporte (PA)</option>
             </select>
@@ -252,6 +250,10 @@ require_once "./layout/header.php"
             <input type="text" name="num_doc" placeholder="Número Documento" required>
           </div>
         </div>
+
+
+        <label>Nombre Completo Residente/Propietario</label>
+        <input type="text" name="nombre_residente" placeholder="Nombre completo residente/propietario" required>
 
 
         <div class="input-group">
