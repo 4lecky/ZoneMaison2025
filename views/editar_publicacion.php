@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
 require_once "../config/db.php";
 require_once "../controller/PublicacionController.php";
 require_once "./Layout/header.php";

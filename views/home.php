@@ -1,9 +1,9 @@
 <?php
 session_start();
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: login.php");
-//     exit();
-// }
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
 
 require_once "./Layout/header.php";
 ?>
