@@ -44,7 +44,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <input type="text" name="paqu_Destinatario" id="paqu_Destinatario" class="form-control" placeholder="Nombre del destinatario" readonly required />
 
           <label>Asunto</label>
-          <input type="text" class="form-control" name="asunto" id="asunto" placeholder="Asunto" />
+          <textarea class="form-control" rows="1" placeholder="Asunto" id="Asunto" name="Asunto" required>
+Ha llegado un paquete para usted. Por favor, recoja su paquete lo mas pronto posible.
+                  </textarea>
 
           <label>Fecha</label>
           <input type="date" class="form-control" name="fecha" id="fecha" />
