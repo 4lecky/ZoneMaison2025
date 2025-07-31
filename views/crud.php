@@ -35,7 +35,7 @@ require_once __DIR__ . "/Layout/header.php";
 
   <main>
 
-    <h1>Lista de usuarios</h1>
+    <p id="tituloCrud">Lista de usuarios</p>
 
     <div class="container mt-4">
       <!-- Mostrar mensaje -->

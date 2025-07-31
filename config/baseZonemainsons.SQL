@@ -1,10 +1,11 @@
 CREATE DATABASE zonemaisons; 
 USE zonemaisons;
 
-/* Tablas */
+/* Tablas */   
 
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
+    usu_tipo_documento ENUM ('Cedula de cidadania', 'Cedula de extrangeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)'),
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
     usu_correo Varchar(50) NOT null,
@@ -13,8 +14,8 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
 	usu_torre_residencia Varchar(100) NOT null,
 	usu_parqueadero_asignado  Varchar(20) NOT null,
 	usu_propiedades  Varchar(100) NOT null,  
-    usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante') NOT null,
-    usu_estado ENUM ('Activo', 'Inactivo') NOT null,
+    usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario') DEFAULT 'Usuario',
+    usu_estado ENUM ('Activo', 'Inactivo') DEFAULT 'Activo' NOT null,
     request_password enum('0','1') NOT NULL DEFAULT '0',
     token_password varchar(200) DEFAULT NULL,
     expired_session varchar(40) DEFAULT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     UNIQUE (usu_correo),
     UNIQUE (usu_telefono),
     UNIQUE (usu_cedula)
-);                        
+);                
 
 CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
     mor_nombre_usuarios VARCHAR(60),

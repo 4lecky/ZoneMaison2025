@@ -20,5 +20,31 @@
   color: #ffffff;
 }
 
+/*  Titulos */
+
+#tituloCrud{
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #8B7355;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-left: 10px;
+
+}
+
+#tituloCrud::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Distancia entre texto y línea */
+  width: 100px;   /* Largo de la línea */
+  height: 4px;   /* Grosor de la línea */
+  background-color: #a17c50; 
+  border-radius: 2px; /* Bordes redondeados de la linea inferior */
+}
 
 
