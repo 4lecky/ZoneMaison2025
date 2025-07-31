@@ -136,11 +136,15 @@ async function cargarTablaVisitas() {
         registros.forEach((reg, index) => {
             const fila = document.createElement('tr');
             fila.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${reg.nombre}</td>
-                <td>${reg.fechaEntrada}</td>
-                <td>${reg.torreVisitada}</td>
-                <td>${reg.aptoVisitado}</td>
+                 <td>${index + 1}</td>
+                <td contenteditable="true" data-campo="Hora Entrada" data-id="${reg.parq_id}">${reg.vis_hora_entrada}</td>
+                <td contenteditable="true" data-campo="Hora Salida" data-id="${reg.parq_id}">${reg.vis_hora_salida}</td>
+                <td contenteditable="true" data-campo="Fecha Entrada" data-id="${reg.parq_id}">${reg.vis_fecha_entrada}</td>
+                <td contenteditable="true" data-campo="Fecha Salida" data-id="${reg.parq_id}">${reg.vis_fecha_salida}</td>
+                <td contenteditable="true" data-campo="Torre" data-id="${reg.parq_id}">${reg.vis_torre_visitada}</td>
+                <td contenteditable="true" data-campo="Apartamento" data-id="${reg.parq_id}">${reg.vis_Apto_visitado}</td>
+
+                <td>
             `;
             cuerpoTabla.appendChild(fila);
         });
@@ -149,6 +153,11 @@ async function cargarTablaVisitas() {
         console.error("Error al cargar visitas:", error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    cargarTablaVisitas();
+});
+
 
 
 });

@@ -101,19 +101,21 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_fecha_salida DATE,
     vis_torre_visitada integer(10),
     vis_Apto_visitado integer(10),
-    vis_usuario_cedula INT (10),
-    PRIMARY KEY (vis_id),
-    FOREIGN KEY (vis_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
+
+    PRIMARY KEY (vis_id);
+     
 
 
 CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
     visi_nombre VARCHAR(100) NOT NULL,
     visi_documento VARCHAR(20) NOT NULL,
-    visi_Tipo_documento enum('C.C', 'T.I') NOT NULL,
+    visi_Tipo_documento enum('C.C', 'T.I', 'C.E') NOT NULL,
     visi_telefono BIGINT (20) NOT NULL,
     visi_email VARCHAR(100) NOT NULL,
+    visi_usuario_cedula INT (10),
     visi_vis_id INT,
     PRIMARY KEY (visi_id),
+    FOREIGN KEY (visi_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)),
     FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id));
                                                                                                                                 
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
