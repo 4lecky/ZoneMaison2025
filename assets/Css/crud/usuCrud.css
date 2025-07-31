@@ -40,10 +40,10 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px; /* Distancia entre texto y línea */
+  bottom: 2px; /* Distancia entre texto y línea */
   width: 100px;   /* Largo de la línea */
-  height: 4px;   /* Grosor de la línea */
-  background-color: #a17c50; 
+  height: 3px;   /* Grosor de la línea */
+  background-color: #C19A6B; 
   border-radius: 2px; /* Bordes redondeados de la linea inferior */
 }
 

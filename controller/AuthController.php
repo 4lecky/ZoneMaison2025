@@ -17,7 +17,6 @@ if (isset($_POST['registrar'])) {
         'Torre' => $_POST['Torre'],
         'Parqueadero' => $_POST['Parqueadero'],
         'Propiedades' => $_POST['Propiedades'],
-        'Rol' => $_POST['Rol'],
         'Email' => $_POST['Email'],
         'Password' => $_POST['Password'],
 
