@@ -11,6 +11,7 @@ if (isset($_POST['registrar'])) {
 
         'NombreUsuario' => $_POST['NombreUsuario'],
         'NumeroCedula' => $_POST['NumeroCedula'],
+        'TipoDocumento' => $_POST['TipoDocumento'],
         'NumeroTelefonico' => $_POST['NumeroTelefonico'],
         'Apartamento' => $_POST['Apartamento'],
         'Torre' => $_POST['Torre'],

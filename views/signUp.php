@@ -53,19 +53,25 @@
             <div class="columnas">
 
                 <div class="campo">
+                    <label for="TipoDocumento" class="titulo_campo">Tipo de documento</label>
+                    <i class="ri-asterisk"></i>
+                    <select class="campos_select" id="validationCustom04" name="TipoDocumento">
+
+                        <option>Elija una opción</option>
+                        <option> Cedula de cidadania </option>
+                        <option> Cedula de extrangeria </option>
+                        <option> Pasaporte </option>
+                        <option> Permiso especial de permanencia (PEP) </option>
+
+                    </select>
+                </div>
+
+                <div class="campo">
                     <label for="NumeroTelefonico" class="titulo_campo">
                         Teléfono
                     </label>
                     <i class="ri-phone-fill"></i>
                     <input type="tel" placeholder="Ingrese su número telefónico" class="campos" name="NumeroTelefonico" required>
-                </div>
-
-                <div class="campo">
-                    <label for="Apartamento" class="titulo_campo">
-                    Apartamento
-                    </label>
-                    <i class="ri-building-line"></i>
-                    <input type="text" placeholder="  Ingrese el apartamento donde vive" class="campos" name="Apartamento" required>
                 </div>
 
 
@@ -75,6 +81,14 @@
             <div class="columnas">
 
                 <div class="campo">
+                    <label for="Apartamento" class="titulo_campo">
+                    Apartamento
+                    </label>
+                    <i class="ri-building-line"></i>
+                    <input type="text" placeholder="  Ingrese el apartamento donde vive" class="campos" name="Apartamento" required>
+                </div>
+
+                <div class="campo">
                     <label for="Torre" class="titulo_campo">
                         Torre
                     </label>
@@ -82,6 +96,9 @@
                     <input type="text" placeholder="Ingrese donde vive" class="campos" name="Torre" required>
                 </div>
 
+            </div>
+
+            <div class="columnas">
 
                 <div class="campo">
 
@@ -93,10 +110,6 @@
 
                 </div>
 
-            </div>
-
-            <div class="columnas">
-
                 <div class="campo">
 
                     <label for="Propiedades" class="titulo_campo">
@@ -107,7 +120,7 @@
 
                 </div>
 
-                <div class="campo">
+                <!-- <div class="campo">
 
                     <label for="Rol" class="titulo_campo">Rol</label>
                     <i class="ri-group-fill"></i>
@@ -121,7 +134,7 @@
 
                     </select>
 
-                </div>
+                </div> -->
 
             </div>
 
