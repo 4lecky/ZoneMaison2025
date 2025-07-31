@@ -12,9 +12,8 @@ class Usuario {
     public function registrar($data) {
 
         $sql = "INSERT INTO tbl_usuario (
-            usu_nombre_completo, usu_cedula,usu_telefono, usu_apartamento_residencia,
-            usu_torre_residencia, usu_parqueadero_asignado, usu_propiedades,
-            usu_rol, usu_correo, usu_password
+            usu_nombre_completo, usu_cedula, usu_tipo_documento, usu_telefono, usu_apartamento_residencia,
+            usu_torre_residencia, usu_parqueadero_asignado, usu_propiedades, usu_correo, usu_password
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
         //Evitamos inyecciones sql
 
@@ -25,12 +24,12 @@ class Usuario {
     $params = [
         $data['NombreUsuario'],
         $data['NumeroCedula'],
+        $data['TipoDocumento'],
         $data['NumeroTelefonico'],
         $data['Apartamento'],
         $data['Torre'], 
         $data['Parqueadero'],
         $data['Propiedades'],
-        $data['Rol'],
         $data['Email'],
         $data['Password']
     ];
