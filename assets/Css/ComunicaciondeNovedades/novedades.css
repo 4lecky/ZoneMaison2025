@@ -193,6 +193,14 @@ section.hora {
   overflow: hidden;
 }
 
+.acciones {
+  display: block ruby;
+}
+
+.btn-edit {
+  display: ruby;
+}
+
   /*recibido y pendiente*/
       .subtitulo {
         background-color: #d8b99a;
