@@ -49,7 +49,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
           <label>Asunto</label>
          <textarea class="form-control" rows="1" placeholder="asunto" id="asunto" name="asunto" required>
-Ha llegado un paquete para usted. Por favor, recoja su paquete lo mas pronto posible.
+Ha llegado un paquete para usted.
           </textarea> 
 
           <label>Fecha</label>

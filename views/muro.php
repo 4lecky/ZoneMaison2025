@@ -94,6 +94,7 @@ require_once "./Layout/header.php";
           <label>Descripción</label>
           <textarea class="form-control" rows="10" placeholder="Descripción..." id="descripcion" name="descripcion" required>
 Estimados residentes, Les informamos 
+
 Para cualquier pregunta o inconveniente, por favor, contacten a la administración.
 
 Agradecemos su comprensión y cooperación.

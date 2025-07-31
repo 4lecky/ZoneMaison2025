@@ -155,11 +155,16 @@ $mensaje = $_GET['success'] ?? '';
                                     <small><?= htmlspecialchars($paquete['paqu_Descripcion'], ENT_QUOTES, 'UTF-8') ?></small>
                                 </div>
                                 <div class="meta-paquete">
-                                    <small>Entregado: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
+                                    <small>Llego: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
                                     <?php if (!empty($paquete['paqu_Hora'])): ?>
                                         <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
                                     <?php endif; ?>
+                                    <div class="btn-edit">
+                                     <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paqueteria">
+                                                <span>✎</span>
+                                            </a>
                                 </div>
+                            </div>
                                 </div>
                             </div>
                         </div>
