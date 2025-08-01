@@ -3,10 +3,13 @@ USE zonemaisons;
 
 /* Tablas */   
 
-CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
-    mor_nombre_usuarios VARCHAR(60),
+CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10) AUTO_INCREMENT,
     mor_estado ENUM('Pendiente', 'Pagado'),
-    PRIMARY KEY (mor_id));                          
+    PRIMARY KEY (mor_id));  
+
+INSERT INTO tbl_mora (mor_estado)
+VALUES ('Pagado'),
+('Pendiente'); 
 
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
@@ -21,7 +24,7 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
 	usu_propiedades  Varchar(100) NOT null,  
     usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario') DEFAULT 'Usuario',
     usu_estado ENUM ('Activo', 'Inactivo') DEFAULT 'Activo' NOT null,
-    usu_mora INT,
+    usu_mora INT DEFAULT 1,
     request_password enum('0','1') NOT NULL DEFAULT '0',
     token_password varchar(200) DEFAULT NULL,
     expired_session varchar(40) DEFAULT NULL,
@@ -96,7 +99,6 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_fecha_salida DATE,
     vis_torre_visitada integer(10),
     vis_Apto_visitado integer(10),
-
     PRIMARY KEY (vis_id));
 
 
@@ -119,7 +121,7 @@ CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT
     alqu_observaciones VARCHAR (30000) NOT NULL,
     alqu_precio FLOAT (2) NOT NULL,
     alqu_vis_id INT (10) NOT NULL,
-    alqu_num_recibo INT (255) NOT NULL AUTO_INCREMENT,
+    alqu_num_recibo INT (255) NOT NULL,
     alqu_placa VARCHAR (20) NOT NULL,
     alqu_usuario_cedula INT (10) NOT NULL,
     PRIMARY KEY (alqu_id),
