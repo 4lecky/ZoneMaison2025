@@ -10,13 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-
     <!-- Hojas de estilo -->
-    <link rel="stylesheet" href="../assets/css/areas-comunes/reserva2.css">
+    <link rel="stylesheet" href="../assets/css/areas-comunes/crear-zona-comun.css">
     <link rel="stylesheet" href="../assets/Css/globals.css">
-    <link rel="stylesheet" href="../assets/Css/Layout/header.css">
-
+    <link rel="stylesheet" href="../assets/Css/Layout/headers.css">
 </head>
+
 <body>
     <div class="container mt-4">
         <div class="row justify-content-center">
@@ -160,12 +159,37 @@
                                 </div>
                             </div>
 
+                            <!-- Subida de video -->
+                            <div class="mb-3">
+                                <label for="video" class="form-label">
+                                    <i class="fas fa-video"></i> Video (opcional)
+                                </label>
+                                <input type="file" 
+                                       class="form-control" 
+                                       id="video" 
+                                       name="video" 
+                                       accept="video/*">
+                                <small class="form-text text-muted">
+                                    Formatos permitidos: MP4, AVI, MOV (máx. 5MB)
+                                </small>
+                            </div>
+
                             <!-- Preview de imagen -->
                             <div class="mb-3" id="imagePreview" style="display: none;">
                                 <label class="form-label">Vista previa:</label>
                                 <div>
                                     <img id="preview" src="" alt="Vista previa" class="img-thumbnail" style="max-width: 200px;">
                                 </div>
+                            </div>
+
+                            <!-- Términos y condiciones -->
+                            <div class="mb-3">
+                                <label for="terminos" class="form-label">
+                                    <textarea class="form-control" 
+                                              id="terminos" 
+                                              name="terminos" 
+                                              rows="5" 
+                                              placeholder="Escriba los términos y condiciones de la zona común aquí..."></textarea>
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -202,6 +226,7 @@
             const capacidad = document.getElementById('capacidad').value;
             const horaApertura = document.getElementById('hora_apertura').value;
             const horaCierre = document.getElementById('hora_cierre').value;
+            const terminos = document.getElementById('terminos').value.trim();
 
             if (!nombre) {
                 alert('El nombre es requerido');
@@ -217,6 +242,12 @@
 
             if (horaApertura && horaCierre && horaApertura >= horaCierre) {
                 alert('La hora de apertura debe ser menor a la hora de cierre');
+                e.preventDefault();
+                return;
+            }
+
+            if (!terminos) {
+                alert('Debe ingresar los términos y condiciones');
                 e.preventDefault();
                 return;
             }

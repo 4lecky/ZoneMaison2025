@@ -3,15 +3,7 @@ session_start();
 
 require_once __DIR__ . '/../models/RegistrarVisitaModel.php';
 
-$modelo = new RegistrarVisitaModel();
 
-// ✅ CONSULTAR VISITAS (para la tabla)
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion']) && $_GET['accion'] === 'consultar') {
-    $visitas = $modelo->obtenerTodasLasVisitas();
-    header('Content-Type: application/json');
-    echo json_encode($visitas);
-    exit;
-}
 
 /*  Solo procesamos si llega por POST y desde el botón
     name="registrarFormVisi" del formulario */

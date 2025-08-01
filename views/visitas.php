@@ -149,9 +149,11 @@ require_once "./Layout/header.php"
                 <table class="tabla-visitas">
                     <thead>
                         <tr>
-                            <th>Registro</th>
-                            <th>Nombre</th>
-                            <th>Fecha</th>
+                            <th>Id</th>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Fecha Entrada</th>
+                            <th>Fecha Salida</th>
                             <th>Torre</th>
                             <th>Apartamento</th>
                         </tr>
@@ -174,7 +176,7 @@ require_once "./Layout/header.php"
     </main>
 
     <!-- Scripts -->
-    <script src="../assets/Js/visitas.js"></script>
+    <script src="../assets/js/visitas.js"></script>
     <?php
     require_once "./Layout/footer.php"
     ?>

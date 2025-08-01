@@ -22,7 +22,8 @@ class RegistrarVisitaModel {
                     visi_documento,
                     visi_nombre,
                     visi_email,
-                    visi_telefono
+                    visi_telefono,
+                    visi_usuario_cedula
                 ) VALUES (?, ?, ?, ?, ?)
             ");
             $stmtVisitante->execute([
@@ -30,7 +31,8 @@ class RegistrarVisitaModel {
                 $datos['numero_doc'],
                 $datos['nombre'],
                 $datos['correo'],
-                $datos['telefono']
+                $datos['telefono'],
+                $datos['usuario']
             ]);
 
           
@@ -44,8 +46,7 @@ class RegistrarVisitaModel {
                     vis_fecha_salida,
                     vis_hora_salida,
                     vis_torre_visitada,
-                    vis_Apto_visitado,
-                    vis_usuario_cedula
+                    vis_Apto_visitado               
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
             $stmtVisita->execute([
@@ -55,8 +56,8 @@ class RegistrarVisitaModel {
                 $datos['fechaSalida'],
                 $datos['horaSalida'],
                 $datos['torreVisitada'],
-                $datos['aptoVisitado'],
-                $datos['usuario']
+                $datos['aptoVisitado']
+        
             ]);
 
             $this->pdo->commit();
@@ -71,25 +72,5 @@ class RegistrarVisitaModel {
 
 
 
-public function obtenerTodasLasVisitas() {
-    try {
-        $stmt = $this->pdo->prepare("
-            SELECT 
-                v.vis_id,
-                vi.visi_nombre AS nombre,
-                v.vis_fecha_entrada AS fechaEntrada,
-                v.vis_torre_visitada AS torreVisitada,
-                v.vis_Apto_visitado AS aptoVisitado
-            FROM 
-                tbl_visita v
-            INNER JOIN 
-                tbl_Visitante vi ON v.vis_id = vi.visi_id
-            ORDER BY v.vis_fecha_entrada DESC
-        ");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
-        return ['error' => 'Error al obtener visitas: ' . $e->getMessage()];
-    }
-}
+
 }

@@ -20,13 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_reserva'])) {
     try {
         $datosReserva = [
             'zona_id' => $_POST['zona_id'],
-            'apartamento' => $_POST['apartamento'],
-            'nombre_residente' => $_POST['nombre_residente'],
+            'cedula' => $_POST['cedula'],
             'fecha_reserva' => $_POST['fecha_reserva'],
             'hora_inicio' => $_POST['hora_inicio'],
-            'hora_fin' => $_POST['hora_fin'],
-            'observaciones' => $_POST['observaciones'] ?? null,
-            'telefono' => $_POST['telefono'] ?? null
+            'hora_fin' => $_POST['hora_fin']
         ];
 
         if ($controladorReservas->crearReserva($datosReserva)) {
@@ -43,12 +40,10 @@ require_once './Layout/header.php';
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZONEMAISONS - Sistema de Reservas</title>
-
     <!-- Hojas de estilo -->
     <link rel="stylesheet" href="../assets/css/areas-comunes/reserva2.css">
     <link rel="stylesheet" href="../assets/Css/globals.css">
@@ -56,10 +51,8 @@ require_once './Layout/header.php';
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Libreria de iconos RemixIcon-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="main-container">
         <!-- ======================
@@ -109,21 +102,8 @@ require_once './Layout/header.php';
                         </div>
 
                         <div class="form-group">
-                            <label for="nombre_residente" class="form-label">Nombre del Residente *</label>
-                            <input type="text" class="form-control" id="nombre_residente" name="nombre_residente" required>
-                        </div>
-                    </div>
-
-                    <!-- Columna derecha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="apartamento" class="form-label">Apartamento *</label>
-                            <input type="text" class="form-control" id="apartamento" name="apartamento" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefono" name="telefono">
+                            <label for="cedula" class="form-label">Cédula *</label>
+                            <input type="text" class="form-control" id="cedula" name="cedula" required>
                         </div>
                     </div>
                 </div>
@@ -153,12 +133,6 @@ require_once './Layout/header.php';
                     </div>
                 </div>
 
-                <!-- Observaciones -->
-                <div class="form-group">
-                    <label for="observaciones" class="form-label">Observaciones</label>
-                    <textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
-                </div>
-
                 <!-- Botones de acción -->
                 <div class="form-actions">
                     <button type="reset" class="btn btn-secondary">
@@ -172,8 +146,8 @@ require_once './Layout/header.php';
         </div>
 
         <!-- ======================
-             SECCIÓN DE ÁREAS COMUNES
-             ====================== -->
+            SECCIÓN DE ÁREAS COMUNES
+            ====================== -->
         <div class="areas-section">
             <h2 class="section-title">Áreas Comunes</h2>
 
@@ -183,8 +157,7 @@ require_once './Layout/header.php';
                 <?php else: ?>
                     <?php foreach ($zonas as $zona): ?>
                         <div class="area-card">
-                            <a href=../views/zona-comun1.php
-                                <!-- <?php echo $zona['id']; ?> style="display: block;"> -->
+                            <a href="../views/zona-comun1.php">
                                 <img src="../assets/img/<?php echo $zona['imagen'] ?? 'default.jpg'; ?>"
                                     alt="<?php echo htmlspecialchars($zona['nombre']); ?>">
                             </a>
@@ -273,14 +246,6 @@ require_once './Layout/header.php';
 
             return true;
         });
-
-        document.getElementById('zona_id').addEventListener('change', function() {
-            const zonaSeleccionada = this.options[this.selectedIndex];
-            if (zonaSeleccionada.value) {
-                console.log(`Capacidad: ${zonaSeleccionada.dataset.capacidad} personas`);
-            }
-        });
     </script>
 </body>
-
 </html>
