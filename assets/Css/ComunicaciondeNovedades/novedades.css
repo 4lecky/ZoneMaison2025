@@ -22,7 +22,7 @@
   h2 {
     text-align: center;
     margin: 20px 0;
-    color: #e5c9aa;
+    color: #9D825D;
     font-size: 28px;
     position: relative;
   }
@@ -49,7 +49,7 @@
   
   .code-loader span {
     display: inline-block;
-    animation: pulse_414 0.9s alternate infinite ease-in-out;
+    animation: pulse_414 3s alternate infinite ease-in-out;
   }
   
   @keyframes pulse_414 {
@@ -132,7 +132,7 @@
   }
   
   h3 {
-    color: #000000;
+    color: rgb(56, 97, 56);;
     text-align: center;
   }
 
@@ -172,6 +172,7 @@
   font-weight: bold;
   display: flex;
   margin: 10px 0;
+  color: rgb(56, 97, 56);;
 }
 
 .Descripcion, .texto-muro {
@@ -203,7 +204,7 @@ section.hora {
 
   /*recibido y pendiente*/
       .subtitulo {
-        background-color: #d8b99a;
+        background-color: #c49e78;
         color: #fff;
         padding: 6px 12px;
         border-radius: 8px;
@@ -224,7 +225,7 @@ section.hora {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e5c9aa;
+    background-color: #c49e78;
     color: #333;
     text-decoration: none;
     box-shadow: 0 3px 8px rgba(0,0,0,0.2);
@@ -244,8 +245,8 @@ section.hora {
       background-color: inherit;
       border-radius: 100px;
       font-weight: 600;
-      color: #d8b99a;
-      box-shadow: 0 0 0 1px #d8b99a; /* Ajustado el tamaño de la sombra */
+      color: #c49e78;
+      box-shadow: 0 0 0 1px #c49e78; /* Ajustado el tamaño de la sombra */
       cursor: pointer;
       overflow: hidden;
       transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -255,7 +256,7 @@ section.hora {
     .animated-button svg {
       position: absolute;
       width: 18px; /* Reducido el tamaño del SVG */
-      fill: #d8b99a;
+      fill: #c49e78;
       z-index: 9;
       transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
     }
@@ -275,7 +276,7 @@ section.hora {
       transform: translate(-50%, -50%);
       width: 14px; /* Reducido el tamaño del círculo */
       height: 14px; /* Reducido el tamaño del círculo */
-      background-color: #d8b99a;
+      background-color: #c49e78;
       border-radius: 50%;
       opacity: 0;
       transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
@@ -312,7 +313,7 @@ section.hora {
   
     .animated-button:active {
       scale: 0.95;
-      box-shadow: 0 0 0 2px #d8b99a; /* Ajustado el tamaño de la sombra al hacer clic */
+      box-shadow: 0 0 0 2px #c49e78; /* Ajustado el tamaño de la sombra al hacer clic */
     }
   
     .animated-button:hover .circle {

@@ -66,13 +66,24 @@ require_once __DIR__ . "/Layout/header.php";
       </thead>
 
       <tbody>
+
+   
         <?php
         require_once '../config/db.php';
-        $stmt = $pdo->query("SELECT * FROM tbl_usuario ORDER BY CASE 
+        $stmt = $pdo->query("SELECT usu.*, mor.*
+              FROM tbl_usuario usu 
+              INNER JOIN tbl_mora mor ON usu.usu_mora = mor.mor_id 
+              ORDER BY CASE 
               WHEN usu_estado = 'Activo' THEN 1
               WHEN usu_estado = 'Inactivo' THEN 2
               ELSE 3
               END");
+
+              // FROM tbl_usuario ORDER BY CASE 
+              // WHEN usu_estado = 'Activo' THEN 1
+              // WHEN usu_estado = 'Inactivo' THEN 2
+              // ELSE 3
+              // END
 
         while ($datos = $stmt->fetch(PDO::FETCH_OBJ)) {
           // $claseFila = ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : '';  
@@ -86,7 +97,7 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_apartamento_residencia ?></td>
             <td><?= $datos->usu_rol ?></td>
             <td><?= $datos->usu_estado ?></td>
-            <td></td>
+            <td><?= $datos->mor_estado ?></td>
 
 
             <td class="contenedorBotones">

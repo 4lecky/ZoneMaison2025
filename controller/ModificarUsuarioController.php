@@ -14,6 +14,7 @@ if (!empty($_POST['btn-confirmar'])) {
         $apartamento = $_POST["apartamento"];
         $estado = $_POST["estado"];
         $rol = $_POST["rol"];
+        $mora = $_POST["mora"];
 
         #Conexión base de datos  	
         try {
@@ -23,7 +24,9 @@ if (!empty($_POST['btn-confirmar'])) {
                     usu_torre_residencia = :torre,
                     usu_apartamento_residencia = :apartamento,
                     usu_estado = :estado,
-                    usu_rol = :rol
+                    usu_rol = :rol,
+                    usu_mora = :mora
+
                 WHERE usuario_cc = :cc");
 
             // Asignamos los valores a las variables creadar anteriormente
@@ -33,6 +36,7 @@ if (!empty($_POST['btn-confirmar'])) {
             $stmt->bindParam(':apartamento', $apartamento);
             $stmt->bindParam(':estado', $estado);
             $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':mora',$mora);
 
 
             if ($stmt->execute()) {

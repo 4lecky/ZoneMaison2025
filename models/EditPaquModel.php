@@ -25,10 +25,10 @@ class EditPaquModel {
     /**
      * Actualiza una publicación en la base de datos
      */
-    public function actualizar($id, $descripcion, $fecha, $hora) {
+    public function actualizar($id, $descripcion, $fecha, $hora, $estado) {
         try {
-            $stmt = $this->pdo->prepare("UPDATE tbl_paquetes SET paqu_Descripcion = ?, paqu_FechaLlegada = ?, paqu_Hora = ? WHERE paqu_Id = ?");
-            $stmt->execute([$descripcion, $fecha, $hora, $id]);
+            $stmt = $this->pdo->prepare("UPDATE tbl_paquetes SET paqu_Descripcion = ?, paqu_FechaLlegada = ?, paqu_Hora = ?, paqu_estado = ? paqu_image = ?,WHERE paqu_Id = ?");
+            $stmt->execute([$descripcion, $fecha, $hora, $estado, $id, $image]);
             return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             error_log("Error al actualizar publicación: " . $e->getMessage());

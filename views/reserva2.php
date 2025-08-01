@@ -102,7 +102,7 @@ require_once './Layout/header.php';
                         </div>
 
                         <div class="form-group">
-                            <label for="cedula" class="form-label">Cédula *</label>
+                            <label for="cedula" class="form-label">Documento *</label>
                             <input type="text" class="form-control" id="cedula" name="cedula" required>
                         </div>
                     </div>
