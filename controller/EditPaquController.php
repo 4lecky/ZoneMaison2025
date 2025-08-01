@@ -71,6 +71,9 @@ class EditPaquController {
                   ? trim($postData['hora']) 
                   : date('H:i:s');
 
+            // Obtener estado del formulario (con valor por defecto de 'Pendiente')
+            $estado = isset($postData['estado']) ? trim($postData['estado']) : 'Pendiente';
+
             // Validar ID
             if ($id <= 0) {
                 return ['success' => false, 'mensaje' => 'ID inválido'];
@@ -91,8 +94,13 @@ class EditPaquController {
                 return ['success' => false, 'mensaje' => 'Formato de hora inválido'];
             }
 
+            // Validar estado (debe ser 'Pendiente' o 'Entregado')
+            if (!in_array($estado, ['Pendiente', 'Entregado'])) {
+                return ['success' => false, 'mensaje' => 'Estado inválido'];
+            }
+
             // Actualizar en la base de datos
-            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora, $estado,);
+            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora, $estado, $image ?? null);
             
             if ($actualizado) {
                 // Obtener los datos actualizados para devolver
@@ -123,10 +131,9 @@ class EditPaquController {
     /**
      * Valida el formato de hora (HH:MM o HH:MM:SS)
      */
-
-        private function validarHora($hora) {
-            return preg_match('/^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/', $hora);
-        }
+    private function validarHora($hora) {
+        return preg_match('/^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/', $hora);
+    }
 
     /**
      * Redirige a la página de novedades
