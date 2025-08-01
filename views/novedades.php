@@ -147,6 +147,7 @@ $mensaje = $_GET['success'] ?? '';
                     <div class="tarjeta paquete-entregado">
                         <div class="tarjeta-interna">
                             <div class="paquete-icono">📦</div>
+                          
                             <div class="contenido">
                                 <div class="Asunto">
                                     <?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?>
@@ -159,14 +160,19 @@ $mensaje = $_GET['success'] ?? '';
                                     <?php if (!empty($paquete['paqu_Hora'])): ?>
                                         <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
                                     <?php endif; ?>
+                                      <div class=imagen>
+                                <?php if (!empty($paquete['paqu_image'])): ?>
+                                    <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete">
+                                <?php endif; ?>
+                                </div>
                                     <div class="btn-edit">
                                      <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paqueteria">
                                                 <span>✎</span>
                                             </a>
                                 </div>
                             </div>
-                                </div>
                             </div>
+                                </div>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -181,6 +187,10 @@ $mensaje = $_GET['success'] ?? '';
                     <div class="tarjeta paquete-entregado">
                         <div class="tarjeta-interna">
                             <div class="paquete-icono">✅</div>
+                            <div class=imagen>
+                                <?php if (!empty($paquete['paqu_image'])): ?>
+                                    <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete">
+                                <?php endif; ?>
                             <div class="contenido">
                                 <div class="Asunto">
                                     <?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?>
