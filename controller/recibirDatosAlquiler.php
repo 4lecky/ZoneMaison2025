@@ -1,51 +1,38 @@
-
 <?php
 session_start();
 
 $pdo = require_once '../config/db.php';
-require_once '../models/guardarDatosAlquiler.php';
+require_once '../models/insertaRegistroAlquiler.php';
 
-$guardarDatosAlquiler = new guardarDatosAlquiler($pdo);
+$guardarAlquiler = new insertaRegistroAlquiler($pdo);
 
 // Captura de datos del formulario
 $numRecibo     = $_POST['numRecibo'] ?? '';
-$nombre        = $_POST['nombre_residente'] ?? '';
-$tipoDoc       = $_POST['tipo_doc'] ?? '';
-$numDoc        = $_POST['num_doc'] ?? '';
-$torre         = $_POST['torre'] ?? '';
-$apartamento   = $_POST['apartamento'] ?? '';
-$placa         = $_POST['placa'] ?? '';
-$parqueadero   = $_POST['parqueadero'] ?? '';
 $observaciones = $_POST['observaciones'] ?? '';
-$fechaIngreso  = $_POST['fecha_ingreso'] ?? '';
-$fechaSalida   = $_POST['fecha_salida'] ?? '';
-$horaIngreso   = $_POST['hora_ingreso'] ?? '';
-$horaSalida    = $_POST['hora_salida'] ?? '';
-$costo         = $_POST['costo'] ?? '';
+$precio        = $_POST['costo'] ?? '';
+$visitaId      = $_POST['visita_id'] ?? '';
+$placa         = $_POST['placa'] ?? '';
+$usuarioCedula = $_POST['usuario_cedula'] ?? '';
 
-// Validación básica (puedes ampliarla)
-if (empty($numRecibo) || empty($nombre) || empty($placa) || empty($horaIngreso) || empty($horaSalida)) {
-    header('Location: ../views/error.php');
+// Validación básica
+if (empty($numRecibo) || empty($placa) || empty($usuarioCedula) || empty($visitaId)) {
+    echo "❌ Faltan datos obligatorios.";
     exit;
 }
 
-
 // Guardar en la base de datos
-$guardarDatosAlquiler->insertarAlquiler(
-    $numRecibo, $nombre, $tipoDoc, $numDoc,
-    $torre, $apartamento, $placa, $parqueadero,
-    $observaciones, $fechaIngreso, $fechaSalida,
-    $horaIngreso, $horaSalida, $costo
+$exito = $guardarAlquiler->insertarAlquiler(
+    $numRecibo,
+    $observaciones,
+    $precio,
+    $visitaId,
+    $placa,
+    $usuarioCedula
 );
 
-
-// Mensaje de éxito
-
-echo "✅ Alquiler registrado correctamente.";
-exit;
-
-
-// Redirigir después del registro
-// header("Location: ../views/exitoAlquiler.php"); // o la vista que desees mostrar
-// exit;
+if ($exito) {
+    echo "✅ Alquiler registrado correctamente.";
+} else {
+    echo "❌ Error al registrar el alquiler.";
+}
 

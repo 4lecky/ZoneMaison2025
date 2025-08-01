@@ -1,42 +1,32 @@
-// Java para mostrar el formulario de consulta al principio debajo de las imagenes y botones y luego entre el formulario y el fotter
-
+// Mueve el formulario de consulta según visibilidad de otros formularios
 function actualizarFormularioConsulta() {
     const registroVisible = document.getElementById('formularioRegistro').style.display === 'block';
     const cobroVisible = document.getElementById('formularioCobro').style.display === 'block';
     const consulta = document.getElementById('formularioConsulta');
-    //   Contenedor original (arriba del todo)
     const contenedorOriginal = document.querySelector('.contenedorConsulta');
-    //   Zona donde queremos que se muestre si hay formularios visibles
     const zonaFinal = document.getElementById('zonaConsultaFinal');
 
-
     if (registroVisible || cobroVisible) {
-        // Mover el formulario de consulta al final del body
         zonaFinal.appendChild(consulta);
         consulta.style.display = 'block';
     } else {
-        // Volver a su lugar original arriba
         contenedorOriginal.appendChild(consulta);
-        consulta.style.display = 'block'; // o flex si lo uso asi
+        consulta.style.display = 'block';
     }
 }
 
-//   Java para cambiar entre formularios y borrar la informacion si se recraga la pagina
-
+// Cambia entre formularios y limpia sus datos
 function mostrarFormulario(formularioId) {
     const formularios = ['formularioRegistro', 'formularioCobro'];
 
     formularios.forEach(id => {
         const seccion = document.getElementById(id);
         if (seccion) {
-            // Oculta el formulario
             seccion.style.display = 'none';
 
-            // Limpia TODOS los campos del formulario, incluso si estaba oculto
             const form = seccion.querySelector('form');
             if (form) {
-                form.reset(); // Intenta hacer reset general
-                // Limpieza manual por si reset falla
+                form.reset();
                 const campos = form.querySelectorAll('input, textarea, select');
                 campos.forEach(campo => {
                     if (campo.type === 'checkbox' || campo.type === 'radio') {
@@ -49,26 +39,25 @@ function mostrarFormulario(formularioId) {
         }
     });
 
-    // Mostrar el formulario deseado
     const formularioMostrar = document.getElementById(formularioId);
     if (formularioMostrar) {
         formularioMostrar.style.display = 'block';
     }
 
-    // Reubica el formulario de consulta si aplica
     actualizarFormularioConsulta();
 }
 
+// Carga dinámica de la tabla de parqueaderos
 async function cargarTablaParqueaderos() {
     const cuerpoTabla = document.getElementById('tablaParqueaderoCuerpo');
     const estadoVacio = document.getElementById('estadoVacioParqueadero');
-    cuerpoTabla.innerHTML = ''; // Limpia antes de cargar
+    cuerpoTabla.innerHTML = '';
 
     try {
         const response = await fetch('/ZoneMaison2025/controller/obtenerRegistroParqueadero.php');
         const registros = await response.json();
 
-        if (registros.length === 0 || registros.error) {
+        if (!registros || registros.length === 0 || registros.error) {
             estadoVacio.style.display = 'block';
             return;
         }
@@ -79,10 +68,9 @@ async function cargarTablaParqueaderos() {
             const fila = document.createElement('tr');
             fila.innerHTML = `
                 <td>${index + 1}</td>
-                <td contenteditable="true" data-campo="placa" data-id="${reg.parq_id}">${reg.parq_vehi_placa}</td>
-                <td contenteditable="true" data-campo="propietario" data-id="${reg.parq_id}">${reg.parq_nombre_propietario}</td>
-                <td contenteditable="true" data-campo="parqueadero" data-id="${reg.parq_id}">${reg.parq_num_parqueadero}</td>
-                <td contenteditable="true" data-campo="estado" data-id="${reg.parq_id}">${reg.parq_vehi_estadiIngreso}</td>
+                <td contenteditable="true" data-campo="parq_vehi_placa" data-id="${reg.parq_id}">${reg.parq_vehi_placa}</td>
+                <td contenteditable="true" data-campo="parq_nombre_propietario_vehi" data-id="${reg.parq_id}">${reg.parq_nombre_propietario_vehi}</td>
+                <td contenteditable="true" data-campo="parq_vehi_estadiIngreso" data-id="${reg.parq_id}">${reg.parq_vehi_estadiIngreso}</td>
                 <td>
                     <button onclick="eliminarRegistro(${reg.parq_id})" class="btn-eliminar">🗑️</button>
                 </td>
@@ -95,10 +83,7 @@ async function cargarTablaParqueaderos() {
     }
 }
 
-
-
-
-// Al editar celda y presionar Enter, se guarda el cambio
+// Guardar cambios al presionar Enter en una celda editable
 document.addEventListener('keydown', async function (e) {
     if (e.target.matches('[contenteditable="true"]') && e.key === 'Enter') {
         e.preventDefault();
@@ -126,6 +111,7 @@ document.addEventListener('keydown', async function (e) {
     }
 });
 
+// Eliminar registro
 async function eliminarRegistro(id) {
     const confirmacion = confirm("¿Estás seguro de eliminar este registro?");
     if (!confirmacion) return;
@@ -150,9 +136,7 @@ async function eliminarRegistro(id) {
     }
 }
 
-
-
-
+// Inicializa la tabla al cargar la página
 document.addEventListener('DOMContentLoaded', function () {
     cargarTablaParqueaderos();
 });

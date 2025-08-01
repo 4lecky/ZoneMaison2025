@@ -119,9 +119,10 @@ CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT
     alqu_observaciones VARCHAR (30000) NOT NULL,
     alqu_precio FLOAT (2) NOT NULL,
     alqu_vis_id INT (10) NOT NULL,
-    alqu_num_recibo INT (255) NOT NULL AUTO_INCREMENT,
+    alqu_num_recibo INT (255) NOT NULL,
     alqu_placa VARCHAR (20) NOT NULL,
     alqu_usuario_cedula INT (10) NOT NULL,
+    UNIQUE (alqu_num_recibo),
     PRIMARY KEY (alqu_id),
     FOREIGN KEY (alqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
     FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));

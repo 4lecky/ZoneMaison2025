@@ -1,49 +1,35 @@
 <?php
-$conexion = require_once '../config/db.php';
-require_once '../models/guardarDatosRegistroParqueadero.php'; // Importar la clase
+$pdo = require_once '../config/db.php';
+require_once '../models/guardarDatosRegistroParqueadero.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Validar que todos los campos requeridos están presentes
-    $camposRequeridos = [
-        'email', 'nombre', 'tipo_doc', 'numero_doc',
-        'torre', 'apto', 'nombre_propietario_vehiculo',
-        'tipo_doc_vehiculo', 'numero_doc_vehiculo',
-        'placa', 'parqueadero', 'estado',
-        'fecha_ingreso', 'fecha_salida'
-    ];
+    // Captura de datos
+    $placa               = $_POST['placa'] ?? '';
+    $nombrePropietarioVehi = $_POST['nombre_propietario_vehiculo'] ?? '';
+    $tipoDocVehi         = $_POST['tipo_doc_vehiculo'] ?? '';
+    $numDocVehi          = $_POST['numero_doc_vehiculo'] ?? '';
+    $estadoIngreso       = $_POST['estado'] ?? '';
+    $alquId              = $_POST['alqu_id'] ?? '';
+    $usuarioCedula       = $_POST['usuario_cedula'] ?? '';
+    $visitaId            = $_POST['visita_id'] ?? '';
 
-    foreach ($camposRequeridos as $campo) {
-        if (empty($_POST[$campo])) {
-            echo "<script>alert('⚠️ El campo \"$campo\" es obligatorio.'); history.back();</script>";
-            exit;
-        }
+    // Validación básica
+    if (empty($placa) || empty($nombrePropietarioVehi) || empty($usuarioCedula) || empty($visitaId) || empty($alquId)) {
+        echo "<script>alert('⚠️ Faltan datos obligatorios.'); history.back();</script>";
+        exit;
     }
 
-    // Captura de datos
-    $email = $_POST['email'];
-    $nombre = $_POST['nombre'];
-    $tipo_doc = $_POST['tipo_doc'];
-    $numero_doc = $_POST['numero_doc'];
-    $torre = $_POST['torre'];
-    $apto = $_POST['apto'];
-    $nombre_propietario_vehi = $_POST['nombre_propietario_vehiculo'];
-    $tipo_doc_vehi = $_POST['tipo_doc_vehiculo'];
-    $num_doc_vehi = $_POST['numero_doc_vehiculo'];
-    $placa = $_POST['placa'];
-    $parqueadero = $_POST['parqueadero'];
-    $estado = $_POST['estado'];
-    $fecha_ingreso = $_POST['fecha_ingreso'];
-    $fecha_salida = $_POST['fecha_salida'];
-
     try {
-        // Instanciar y usar la clase
-        $registro = new guardarDatosRegistroParqueadero($conexion);
-
+        $registro = new guardarDatosRegistroParqueadero($pdo);
         $exito = $registro->insertarRegistroVehiculo(
-            $email, $nombre, $tipo_doc, $numero_doc,
-            $torre, $apto, $nombre_propietario_vehi, $tipo_doc_vehi,
-            $num_doc_vehi, $placa, $parqueadero, $fecha_ingreso,
-            $fecha_salida, $estado
+            $placa, 
+            $nombrePropietarioVehi, 
+            $tipoDocVehi, 
+            $numDocVehi, 
+            $estadoIngreso, 
+            $alquId, 
+            $usuarioCedula, 
+            $visitaId
         );
 
         if ($exito) {
@@ -55,4 +41,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "<pre>ERROR DETECTADO:\n" . $e->getMessage() . "</pre>";
     }
 }
-?>

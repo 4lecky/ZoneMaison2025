@@ -26,7 +26,6 @@ class Tarifa {
     }
 }
 
-
 class Ticket {
     private $vehiculo;
     private $tarifa;
@@ -36,15 +35,13 @@ class Ticket {
     public function __construct(Vehiculo $vehiculo, Tarifa $tarifa) {
         $this->vehiculo = $vehiculo;
         $this->tarifa = $tarifa;
-        $this->horaIngreso = new DateTime(); // Valor por defecto si no lo marcas después
+        $this->horaIngreso = new DateTime();
     }
 
-    // ✅ Nuevo método para marcar ingreso manualmente
     public function marcarIngreso(DateTime $hora) {
         $this->horaIngreso = $hora;
     }
 
-    // ✅ Nuevo método para marcar salida manualmente
     public function marcarSalida(DateTime $hora) {
         $this->horaSalida = $hora;
     }
@@ -57,13 +54,4 @@ class Ticket {
         $horas = $diferencia->h + ($diferencia->i / 60);
         return $this->tarifa->getCostoPorHora() * $horas;
     }
-
-    public function imprimirTicket() {
-        echo "Ticket:\n";
-        echo "Vehículo: " . $this->vehiculo->getPlaca() . "<br>";
-        echo "Hora de Ingreso: " . $this->horaIngreso->format('Y-m-d H:i:s') . "<br>";
-        echo "Hora de Salida: " . ($this->horaSalida ? $this->horaSalida->format('Y-m-d H:i:s') : "No marcada") . "<br>";
-        echo "Costo Total: " . ($this->horaSalida ? $this->calcularCosto() : "No calculado") . "<br>";
-    }
 }
-
