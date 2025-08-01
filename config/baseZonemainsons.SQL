@@ -11,6 +11,7 @@ INSERT INTO tbl_mora (mor_estado)
 VALUES ('Pagado'),
 ('Pendiente'); 
 
+/* MODIFICACIÓN*/
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
     usu_tipo_documento ENUM ('Cedula de cidadania', 'Cedula de extrangeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)'),
@@ -47,7 +48,6 @@ CREATE TABLE IF NOT EXISTS zonas_comunes (
     duracion_maxima INT(11) DEFAULT 2,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 
 CREATE TABLE IF NOT EXISTS reservas (

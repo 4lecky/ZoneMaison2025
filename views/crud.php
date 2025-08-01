@@ -97,7 +97,7 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_apartamento_residencia ?></td>
             <td><?= $datos->usu_rol ?></td>
             <td><?= $datos->usu_estado ?></td>
-            <td><?= $datos->mor_estado ?></td>
+            <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 'mora-pagada' ?>"><?= $datos->mor_estado ?></td>
 
 
             <td class="contenedorBotones">

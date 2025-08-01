@@ -49,7 +49,7 @@ try {
 
 
     <form method="POST" action="../controller/ModificarUsuarioController.php" class="container_form_crud">
-        <h3> Aqui puede modificar su usuario</h3>
+        <h3 class="h3_crud_form"> Aqui puede modificar su usuario</h3>
         <fieldset class='fieldset_crud'>
             <legend class='legend_crud' > Modificar usuario </legend>
             <br>
@@ -87,8 +87,8 @@ try {
                         <select class="form-select" id="validationCustom04" name="estado">
 
                             <option value="<?= $datos->usu_estado ?>">Elija una opción</option>
-                            <option> Activo </option>
-                            <option> Inactivo </option>
+                            <option value="Activo" <?= $datos->usu_estado  == 'Activo' ? 'selected' : '' ?>> Activo </option>
+                            <option value="Inactivo" <?= $datos->usu_estado  == 'Inactivo' ? 'selected' : '' ?>> Inactivo </option>
 
                         </select>
 
@@ -104,10 +104,10 @@ try {
                         <select class="form-select" id="validationCustom04" name="rol">
 
                             <option value="<?= $datos->usu_rol ?>">Elija una opción</option>
-                            <option> Administrador </option>
-                            <option> Residente </option>
-                            <option> Propietario </option>
-                            <option> Vigilante </option>
+                            <option value="Administrador" <?= $datos->usu_rol  == 'Administrador' ? 'selected' : '' ?>> Administrador </option>
+                            <option value="Residente" <?= $datos->usu_rol  == 'Residente' ? 'selected' : '' ?>> Residente </option>
+                            <option value="Propietario" <?= $datos->usu_rol  == 'Propietario' ? 'selected' : '' ?>> Propietario </option>
+                            <option value="Vigilante" <?= $datos->usu_rol  == 'Vigilante' ? 'selected' : '' ?>> Vigilante </option>
 
                         </select>
 
@@ -119,8 +119,8 @@ try {
                         <select class="form-select" id="validationCustom04" name="mora">
 
                             <option value="">Elija una opción</option>
-                            <option value="1"> Pagado </option>
-                            <option value="2"> Pendiente </option>
+                            <option value="1" <?= $datos->usu_mora  == 1 ? 'selected' : '' ?>> Pagado </option>
+                            <option value="2" <?= $datos->usu_mora == 2 ? 'selected' : '' ?>> Pendiente </option>
                         </select>
                     </div>
 
