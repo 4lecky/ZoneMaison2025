@@ -438,6 +438,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
                                value="<?= htmlspecialchars($publicacion['paqu_Hora']) ?>" disabled>
                     </div>
 
+                    <div class="estado">
+                        <label>Estado de la Publicación</label>
+                        <div class="checkbox-container">
+                            <input type="radio" id="estadoPendiente" name="estado" value="1"
+                                   <?= $publicacion['paqu_estado'] == 1 ? 'checked' : '' ?>>
+                            <label for="estadoPendiente">Pendiente</label>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="radio" id="estadoEntregado" name="estado" value="0"
+                                   <?= $publicacion['paqu_estado'] == 0 ? 'checked' : '' ?>>
+                            <label for="estadoEntregado">Entregado</label>
+                        </div>
+
+                    </div>
+
                     <div class="btn-container">
                         <button type="submit" name="editar" class="enviar">Guardar Cambios</button>
                         <button type="button" class="eliminar" onclick="abrirModal()">Eliminar</button>

@@ -92,7 +92,7 @@ class EditPaquController {
             }
 
             // Actualizar en la base de datos
-            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora);
+            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora, $estado,);
             
             if ($actualizado) {
                 // Obtener los datos actualizados para devolver
