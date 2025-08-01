@@ -172,8 +172,8 @@ require_once './Layout/header.php';
         </div>
 
         <!-- ======================
-             SECCIÓN DE ÁREAS COMUNES
-             ====================== -->
+            SECCIÓN DE ÁREAS COMUNES
+            ====================== -->
         <div class="areas-section">
             <h2 class="section-title">Áreas Comunes</h2>
 
@@ -183,10 +183,9 @@ require_once './Layout/header.php';
                 <?php else: ?>
                     <?php foreach ($zonas as $zona): ?>
                         <div class="area-card">
-                            <a href=../views/zona-comun1.php
-                                <!-- <?php echo $zona['id']; ?> style="display: block;"> -->
-                                <img src="../assets/img/<?php echo $zona['imagen'] ?? 'default.jpg'; ?>"
-                                    alt="<?php echo htmlspecialchars($zona['nombre']); ?>">
+                            <a href="../views/zona-comun1.php">
+                            <img src="../assets/img/<?php echo $zona['imagen'] ?? 'default.jpg'; ?>"
+                                alt="<?php echo htmlspecialchars($zona['nombre']); ?>">
                             </a>
                             <div class="area-card-content">
                                 <h3><?php echo htmlspecialchars($zona['nombre']); ?></h3>
