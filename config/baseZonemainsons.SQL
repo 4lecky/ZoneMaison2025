@@ -332,3 +332,20 @@ VALUES (1, 'PuertaEntrada.jpg', 'imagen', '/archivos/PuertaEntrada.jpg',1),
 (3, 'RuidoExcesivo.mp3', 'video', '/archivos/RuidoExcesivo.mp3',3),
 (4, 'RevisiónLuces.pdf', 'documento', '/archivos/RevisiónLuces.pdf',4),
 (5, 'RetrasoMantenimiento.pdf', 'documento', '/archivos/RetrasoMantenimiento.pdf',5);
+
+
+INSERT INTO zonas_comunes (id, nombre, descripcion, capacidad, estado, imagen, hora_apertura, hora_cierre, duracion_maxima) 
+VALUES
+(1, 'Gimnasio', 'Zona equipada con máquinas de ejercicios.', 20, 'activo', 'gimnasio.jpg', '08:00:00', '22:00:00', 2),
+(2, 'Salón Comunal', 'Espacio para eventos y reuniones.', 50, 'activo', 'salon-comunal.jpg', '08:00:00', '20:00:00', 3),
+(3, 'Cancha de Vóley', 'Cancha de vóley para uso recreativo y deportivo.', 10, 'activo', 'voley.jpg', '08:00:00', '20:00:00', 2);
+
+
+INSERT INTO reservas (zona_id, apartamento, nombre_residente, fecha_reserva, hora_inicio, hora_fin, estado, observaciones)
+VALUES
+(1, 'Apt 101', 'Carlos Pérez', '2025-08-05', '09:00:00', '11:00:00', 'activa', 'Reserva para entrenamiento matutino en el gimnasio.'),
+(1, 'Apt 102', 'María López', '2025-08-06', '18:00:00', '20:00:00', 'activa', 'Reserva para sesión de pesas.'),
+(2, 'Apt 201', 'Juan Gómez', '2025-08-07', '10:00:00', '13:00:00', 'activa', 'Reunión familiar, con acceso a proyector.'),
+(2, 'Apt 202', 'Sofía Martínez', '2025-08-08', '14:00:00', '17:00:00', 'activa', 'Evento social en salón comunal.'),
+(3, 'Apt 301', 'Pedro Sánchez', '2025-08-09', '16:00:00', '18:00:00', 'activa', 'Partido de vóley con amigos.'),
+(3, 'Apt 302', 'Laura Rodríguez', '2025-08-10', '08:00:00', '10:00:00', 'activa', 'Práctica recreativa en la cancha de vóley.');

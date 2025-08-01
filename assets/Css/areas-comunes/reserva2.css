@@ -32,7 +32,7 @@
 }
 
 .reservas-title {
-    color: #B8860B;
+    color: #9D825D;
     font-size: 1.75rem;
     font-weight: 700;
     margin: 0;
@@ -205,8 +205,8 @@ textarea.form-control {
 
 .btn-primary {
     color: #fff;
-    background: linear-gradient(135deg, #D2B48C, #C19A6B);
-    border: 1px solid #D2B48C;
+    background: linear-gradient(135deg, #9D825D, #C19A6B);
+    border: 1px solid #9D825D;
     box-shadow: 0 0.25rem 0.5rem rgba(210, 180, 140, 0.3);
 }
 
@@ -266,7 +266,7 @@ textarea.form-control {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #8B7355;
+    color: #9D825D;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
     position: relative;
@@ -350,7 +350,7 @@ textarea.form-control {
     margin-bottom: 0.75rem;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #8B7355;
+    color: #9D825D;
     text-transform: uppercase;
     letter-spacing: 0.025rem;
 }
@@ -428,7 +428,7 @@ textarea.form-control {
 .detail-label {
     font-weight: 600;
     margin-right: 0.75rem;
-    color: #8B7355;
+    color: #9D825D;
     min-width: 130px;
     position: relative;
 }
@@ -450,7 +450,7 @@ textarea.form-control {
 
 /* Textos auxiliares */
 .text-muted {
-    color: #8B7355 !important;
+    color: #9D825D !important;
     font-style: italic;
     text-align: center;
     padding: 2rem;
