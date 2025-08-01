@@ -3,6 +3,11 @@ USE zonemaisons;
 
 /* Tablas */   
 
+CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
+    mor_nombre_usuarios VARCHAR(60),
+    mor_estado ENUM('Pendiente', 'Pagado'),
+    PRIMARY KEY (mor_id));                          
+
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
     usu_tipo_documento ENUM ('Cedula de cidadania', 'Cedula de extrangeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)'),
@@ -16,26 +21,16 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
 	usu_propiedades  Varchar(100) NOT null,  
     usu_rol ENUM ('Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario') DEFAULT 'Usuario',
     usu_estado ENUM ('Activo', 'Inactivo') DEFAULT 'Activo' NOT null,
+    usu_mora INT,
     request_password enum('0','1') NOT NULL DEFAULT '0',
     token_password varchar(200) DEFAULT NULL,
     expired_session varchar(40) DEFAULT NULL,
     PRIMARY KEY (usuario_cc),
+    FOREIGN KEY (usu_mora) REFERENCES tbl_mora (mor_id),
     UNIQUE (usu_correo),
     UNIQUE (usu_telefono),
     UNIQUE (usu_cedula)
 );                
-
-CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10),
-    mor_nombre_usuarios VARCHAR(60),
-    mor_estado ENUM('Pendiente', 'Pagado'),
-    PRIMARY KEY (mor_id));                          
-
-CREATE TABLE  if NOT EXISTS tbl_tiempo_mora (tiem_id INT AUTO_INCREMENT,
-    tiem_usuario_cc INT(10),
-    tiem_mor_id INT(10),
-    PRIMARY KEY (tiem_id),
-    FOREIGN KEY (tiem_usuario_cc) REFERENCES tbl_usuario(usuario_cc),
-    FOREIGN KEY (tiem_mor_id) REFERENCES tbl_mora(mor_id));  
 
 CREATE TABLE IF NOT EXISTS zonas_comunes (
     id INT(11) NOT NULL AUTO_INCREMENT,
@@ -115,44 +110,32 @@ CREATE TABLE if NOt EXISTS tbl_Visitante ( visi_id INT (10) AUTO_INCREMENT,
     visi_vis_id INT,
     PRIMARY KEY (visi_id),
     FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id));
+
+CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
+    alqu_observaciones VARCHAR (30000) NOT NULL,
+    alqu_precio FLOAT (2) NOT NULL,
+    alqu_vis_id INT (10) NOT NULL,
+    alqu_num_recibo INT (255) NOT NULL AUTO_INCREMENT,
+    alqu_placa VARCHAR (20) NOT NULL,
+    alqu_usuario_cedula INT (10) NOT NULL,
+    PRIMARY KEY (alqu_id),
+    FOREIGN KEY (alqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
+    FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
                                                                                                                                 
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
     parq_vehi_placa VARCHAR (6) NOT NULL,
-    parq_num_doc_propietario INT (20) NOT NULL,
-    parq_torre INT (30) NOT NULL,
-    parq_apto INT (30) NOT NULL,
     parq_nombre_propietario_vehi VARCHAR (255) NOT NULL,
     parq_tipo_doc_vehi VARCHAR (255) NOT NULL,
     parq_num_doc_vehi INT (20) NOT NULL,
-    parq_num_parqueadero INT (255) NOT NULL,
-    parq_fecha_ingreso DATE NULL,
-    parq_fecha_salida DATE,
     parq_vehi_estadiIngreso VARCHAR (90) NOT NULL,
     parq_vehi_alqu_id INT (30) NOT NULL,
     parq_usuario_cedula INT (10) NOT NULL,
+    parq_visita_id INT (30) NOT NULL, 
     PRIMARY KEY (parq_id),
-    FOREIGN KEY (parq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula));
-    -- FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
+    FOREIGN KEY (parq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
+    FOREIGN KEY (parq_visita_id) REFERENCES tbl_visita (vis_id),
+    FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
 
-CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
-    alqu_horaSalida TIME NOT NULL,
-    alqu_fechaSalida DATE NOT NULL,
-    alqu_observaciones VARCHAR (30000) NOT NULL,
-    alqu_impuesto FLOAT (2) NOT NULL,
-    alqu_precio FLOAT (2) NOT NULL,
-    alqu_fechaIngreso DATE NOT NULL,
-    alqu_horaIngreso TIME NOT NULL,
-    alqu_vis_id INT (10) NOT NULL,
-    alqu_num_parqueadero INT (255) NOT NULL,
-    alqu_torre  INT (30) NOT NULL,
-    alqu_apto  INT (30) NOT NULL,
-    alqu_tipo_doc_propietario VARCHAR (255) NOT NULL,
-    alqu_num_doc_propietario INT (20) NOT NULL,
-    alqu_nombre_propietario VARCHAR (255) NOT NULL,
-    alqu_num_recibo INT (255) NOT NULL,
-    alqu_placa VARCHAR (20) NOT NULL,
-    PRIMARY KEY (alqu_id),
-    FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
 
 CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     desg_parq_id INT (20) NOT NULL,

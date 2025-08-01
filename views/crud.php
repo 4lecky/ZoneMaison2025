@@ -60,6 +60,7 @@ require_once __DIR__ . "/Layout/header.php";
           <th scope="col">Apartamento</th>
           <th scope="col">Estado</th>
           <th scope="col">Rol</th>
+          <th scope="col">Pago administración</th>
           <th scope="col">Editar/Eliminar</th>
         </tr>
       </thead>
@@ -83,8 +84,10 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_correo ?></td>
             <td><?= $datos->usu_torre_residencia ?></td>
             <td><?= $datos->usu_apartamento_residencia ?></td>
-            <td><?= $datos->usu_estado ?></td>
             <td><?= $datos->usu_rol ?></td>
+            <td><?= $datos->usu_estado ?></td>
+            <td></td>
+
 
             <td class="contenedorBotones">
               <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="ri-quill-pen-fill" id="icon_crud"></i></a>
