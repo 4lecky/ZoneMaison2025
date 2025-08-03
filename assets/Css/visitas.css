@@ -3,7 +3,7 @@
   --primary-dark: #5a7961;
   --primary-light: #a3bdaa;
   --secondary-color: #f8f9fa;
-  --text-color: #333;
+  --text-color:#9D825D;
   --border-color: #ddd;
   --success-color: #28a745;
   --warning-color: #ffc107;
@@ -13,6 +13,8 @@
 }
 
 /* ----- Contenedor principal ----- */
+
+
 .principal-page {
   flex: 1;
   padding: 40px;
@@ -43,7 +45,7 @@
 .principal-page legend {
   font-weight: bold;
   font-size: 18px;
-  color: #444;
+  color:#9D825D;;
   padding: 0 10px;
 }
 
@@ -349,9 +351,138 @@
   background-color: var(--primary-dark);
 }
 
+
 h2 {
   font-size: 1.8rem;
-  color: #333;
+  color: #9D825D;
   margin-bottom: 20px;
   text-align: center;
+}
+
+h3{
+  color: #9D825D;
+}
+
+/* Boton Modal y Boton Registrar Vehiculo */
+
+.botones-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.boton.modal{
+  padding: 30px;
+  position: center;
+}
+
+.boton.modal label{
+  padding: 10px 15px;
+  background-color: #9D825D;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 300ms ease;
+
+}
+
+.boton.modal label:hover{
+  background-color: #bc8537;
+}
+
+.boton.vehiculo {
+  padding: 30px;
+  position: center;
+}
+
+.boton.vehiculo label {
+ padding: 10px 15px;
+  background-color: #9D825D;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 300ms ease;
+
+}
+
+.boton.vehiculo label:hover{
+  background-color: #bc8537;
+}
+
+
+/* Ventana Modal */
+
+#btn-modal{
+  display: none;
+}
+
+.container-modal{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  background-color: rgba(144, 148, 150, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+
+#btn-modal:checked  ~.container-modal{
+  display: flex;
+}
+.content-modal{
+  width: 100%;
+  max-width: 1000px;
+  padding: 30px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+
+}
+
+.content-modal h3{
+  margin-bottom: 15px;
+}
+.content-modal p{
+  padding: 15px;
+  border-top: 1px solid #a71d2a;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-modal .btn-cerrar{
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.content-modal .btn-cerrar label{
+  padding: 8px 20px;
+  background-color: #9D825D;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 300ms ease;
+
+}
+
+.content-modal .btn-cerrar label:hover{
+  background-color: #ce9c55 ;
+
+}
+
+.cerrar-modal{
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0; left: 0;
+  z-index: -1;
+}
+
+label{
+  color: #9D825D;
+
 }
