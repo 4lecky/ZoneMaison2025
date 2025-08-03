@@ -149,7 +149,7 @@ require_once "./Layout/header.php"
             <div class="contenedor-boton-vehiculo" onclick="window.location.href='parqueadero.php'">
                 <div class="boton vehiculo">
                 <label for="btn-Vehiculo">
-                    Registro de Vehiculos
+                    Registrar un Vehiculo
                 </label>
                 </div>
             </div>
