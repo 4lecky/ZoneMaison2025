@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../models/AuthModel.php';
 require_once __DIR__ . '/../config/db.php';
 session_start();
 
