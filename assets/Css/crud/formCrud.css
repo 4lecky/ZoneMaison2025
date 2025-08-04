@@ -32,7 +32,8 @@
 }
 
 .fieldset_crud {
-  border: 1px solid rgb(56, 97, 56);
+  /* border: 1px solid rgb(56, 97, 56); */
+  border: 1px solid #ccc;
   border-radius: 16px;
   padding: 24px 24px 30px 24px;
   background: #fafafa;
@@ -81,6 +82,15 @@
   margin-right: 20px;
 }
 
+.form-label{
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  font-size: 14px;
+  color: #333;
+
+}
+
 .select_crud_modificar{
     display: flex;
     flex-direction: column;
@@ -93,12 +103,6 @@
     margin-right: 20px;
     padding: 10px;
     width: 400px;
-}
-
-.form-label2{
-    margin-top: 10px;
-    text-align: center;
-
 }
 
 

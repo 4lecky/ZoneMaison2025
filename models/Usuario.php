@@ -46,5 +46,24 @@ class Usuario {
         }
         return false;
     }
+
+    public function cedulaDuplicada($cedula) {
+    $stmt = $this->pdo->prepare("SELECT 1 FROM tbl_usuario WHERE usu_cedula = ?");
+    $stmt->execute([$cedula]);
+    return $stmt->fetch() ? true : false;
+    }
+
+    public function telefonoDuplicado($telefono) {
+        $stmt = $this->pdo->prepare("SELECT 1 FROM tbl_usuario WHERE usu_telefono = ?");
+        $stmt->execute([$telefono]);
+        return $stmt->fetch() ? true : false;
+    }
+
+    public function correoDuplicado($email) {
+        $stmt = $this->pdo->prepare("SELECT 1 FROM tbl_usuario WHERE usu_correo = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch() ? true : false;
+    }
+
 }
 

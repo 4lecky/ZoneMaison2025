@@ -51,7 +51,7 @@ try {
     <form method="POST" action="../controller/ModificarUsuarioController.php" class="container_form_crud">
         <h3 class="h3_crud_form"> Aqui puede modificar su usuario</h3>
         <fieldset class='fieldset_crud'>
-            <legend class='legend_crud' > Modificar usuario </legend>
+            <legend class='legend_crud' > Información de usuario </legend>
             <br>
             <!-- Con esto guardamos el id del usuario y es enviado al controlador -->
             <input type="hidden" name="cc" value="<?= htmlspecialchars($_GET['cc']) ?>">
