@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS zonas_comunes (
     hora_cierre TIME DEFAULT '20:00:00',
     duracion_maxima INT(11) DEFAULT 2,
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 
 CREATE TABLE IF NOT EXISTS reservas (
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS reservas (
     PRIMARY KEY (id),
     KEY idx_zona_id (zona_id),
     CONSTRAINT fk_zona_reserva FOREIGN KEY (zona_id) REFERENCES zonas_comunes(id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 
 

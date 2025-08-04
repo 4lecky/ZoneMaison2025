@@ -1,30 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
     // ========================
-    // MODAL CONSULTA PQR
+    // MODAL CONSULTA PQR (el que pide la cédula)
     // ========================
-    const modal = document.getElementById("modal");
+    const modalConsulta = document.getElementById("modal");
     const openBtn = document.getElementById("openModal");
     const closeBtn = document.querySelector(".close");
     const formConsulta = document.getElementById("pqr-form");
     const resultadoDiv = document.getElementById("resultado-pqr");
 
-    if (openBtn && modal) {
+    if (openBtn && modalConsulta) {
         openBtn.addEventListener("click", () => {
-            modal.style.display = "flex";
+            modalConsulta.style.display = "flex";
             if (resultadoDiv) resultadoDiv.innerHTML = "";
         });
     }
 
-    if (closeBtn && modal) {
+    if (closeBtn && modalConsulta) {
         closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
+            modalConsulta.style.display = "none";
         });
     }
 
-    if (modal) {
+    if (modalConsulta) {
         window.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
+            if (event.target === modalConsulta) {
+                modalConsulta.style.display = "none";
             }
         });
     }
@@ -32,7 +32,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (formConsulta) {
         formConsulta.addEventListener("submit", function (e) {
             e.preventDefault();
-            const cedula = document.getElementById("cedula").value;
+            const cedulaInput = document.getElementById("cedula");
+            if (!cedulaInput) return;
+            const cedula = cedulaInput.value.trim();
+            if (!cedula) {
+                alert("Ingresa la cédula.");
+                return;
+            }
 
             resultadoDiv.innerHTML = "<p>Cargando...</p>";
 
@@ -40,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(res => res.text())
                 .then(html => {
                     resultadoDiv.innerHTML = html;
+                    inicializarTablaResultados();
                 })
                 .catch(() => {
                     resultadoDiv.innerHTML = "<p>Error al consultar.</p>";
@@ -48,9 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ========================
-    // VALIDACIÓN Y ENVÍO FORMULARIO PQR
+    // VALIDACIÓN Y ENVÍO FORMULARIO PRINCIPAL
     // ========================
-    const formulario = document.querySelector(".formulario-pqr");
+    const formulario = document.getElementById("formPQRS");
 
     if (formulario) {
         formulario.addEventListener("submit", function (e) {
@@ -64,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const tipoPqr = formulario.tipo_pqr.value;
             const asunto = formulario.asunto.value.trim();
             const mensaje = formulario.mensaje.value.trim();
-
             const respuestaChecks = formulario.querySelectorAll('input[name="respuesta[]"]:checked');
             const archivos = formulario.archivos.files;
 
@@ -81,7 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                alert("El correo electrónico no tiene un formato válido.");
+                alert("El correo electrónico no tiene un formato válido. Debe incluir '@' y un dominio válido (ejemplo: usuario@dominio.com)");
+                document.getElementById("email").focus();
                 return;
             }
 
@@ -94,13 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
                 for (let file of archivos) {
                     if (!allowedTypes.includes(file.type)) {
-                        alert('Solo se permiten archivos de tipo imagen (JPEG, PNG) o PDF.');
+                        alert('Solo se permiten archivos JPEG, PNG o PDF.');
                         return;
                     }
                 }
             }
 
-            // Enviar con fetch
             const datos = new FormData(formulario);
             fetch("../controller/pqrsController.php", {
                 method: "POST",
@@ -108,12 +114,14 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(res => res.text())
             .then(respuesta => {
-                if (respuesta.trim() === "OK") {
+                if (respuesta.trim() === "OK" || respuesta.includes("Actualizado")) {
                     const mensaje = document.getElementById("mensaje-exito");
                     if (mensaje) mensaje.style.display = "block";
                     formulario.reset();
+                    const hiddenId = formulario.querySelector('input[name="id"]');
+                    if (hiddenId) hiddenId.remove();
                 } else {
-                    alert("Ocurrió un error al registrar: " + respuesta);
+                    alert("Ocurrió un error al registrar/actualizar: " + respuesta);
                 }
             })
             .catch(error => {
@@ -122,13 +130,16 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-    
-    // DELEGACIÓN DE EVENTO PARA BOTÓN DE ELIMINAR DESDE LA TABLA
+
+    // ========================
+    // ELIMINAR DESDE RESULTADOS
+    // ========================
     document.addEventListener("click", function (e) {
         if (e.target && e.target.classList.contains("btn-eliminar")) {
             const id = e.target.dataset.id;
+            if (!id) return;
             if (confirm("¿Estás seguro de que deseas eliminar esta PQR?")) {
-                fetch("../controller/pqrsController.php?eliminar=" + id)
+                fetch("../controller/pqrsController.php?eliminar=" + encodeURIComponent(id))
                     .then(res => res.text())
                     .then(respuesta => {
                         if (respuesta.trim() === "OK") {
@@ -155,4 +166,89 @@ document.addEventListener("DOMContentLoaded", function () {
             faqItem.classList.toggle('active');
         });
     });
-});
+}); // FIN DOMContentLoaded
+
+/* =========================================================
+   FUNCIONES PARA RESULTADOS (tabla, editar)
+   ========================================================= */
+function inicializarTablaResultados() {
+    const tableEl = document.getElementById("tabla-resultado");
+    if (!tableEl) return;
+
+    if (typeof $ !== "undefined" && $.fn.DataTable && $.fn.DataTable.isDataTable(tableEl)) {
+        $(tableEl).DataTable().destroy();
+    }
+
+    if (typeof $ !== "undefined" && $.fn.DataTable) {
+        $(tableEl).DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50]
+        });
+    }
+
+    activarEditar();
+}
+
+function activarEditar() {
+    const modalEditar = document.getElementById("modalEditar");
+    const closeEditar = modalEditar ? modalEditar.querySelector(".close-editar") : null;
+    const formEditar = document.getElementById("form-editar");
+    if (!modalEditar || !formEditar) return;
+
+    document.querySelectorAll(".btn-editar").forEach(btn => {
+        btn.addEventListener("click", function () {
+            document.getElementById("edit-id").value = this.dataset.id;
+            document.getElementById("edit-nombres").value = this.dataset.nombres;
+            document.getElementById("edit-apellidos").value = this.dataset.apellidos;
+            document.getElementById("edit-identificacion").value = this.dataset.identificacion;
+            document.getElementById("edit-email").value = this.dataset.email;
+            document.getElementById("edit-telefono").value = this.dataset.telefono;
+            document.getElementById("edit-tipo").value = this.dataset.tipo;
+            document.getElementById("edit-asunto").value = this.dataset.asunto;
+            document.getElementById("edit-mensaje").value = this.dataset.mensaje;
+
+            const medios = (this.dataset.medio || "").split(",");
+            const chkCorreo = document.getElementById("edit-resp-correo");
+            const chkSms = document.getElementById("edit-resp-sms");
+            if (chkCorreo) chkCorreo.checked = medios.includes("correo");
+            if (chkSms) chkSms.checked = medios.includes("sms");
+
+            modalEditar.style.display = "flex";
+        });
+    });
+
+    if (closeEditar) {
+        closeEditar.addEventListener("click", () => {
+            modalEditar.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", e => {
+        if (e.target === modalEditar) modalEditar.style.display = "none";
+    });
+
+    formEditar.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const datos = new FormData(formEditar);
+
+        fetch("../controller/pqrsController.php", {
+            method: "POST",
+            body: datos
+        })
+        .then(res => res.text())
+        .then(respuesta => {
+            if (respuesta.includes("Actualizado") || respuesta.trim() === "OK") {
+                alert("PQR actualizada correctamente.");
+                modalEditar.style.display = "none";
+                const formConsulta = document.getElementById("pqr-form");
+                if (formConsulta) formConsulta.dispatchEvent(new Event("submit"));
+            } else {
+                alert("Error al actualizar: " + respuesta);
+            }
+        })
+        .catch(() => alert("Error de red al actualizar."));
+    });
+}
