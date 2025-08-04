@@ -58,6 +58,7 @@ require_once __DIR__ . "/Layout/header.php";
           <th scope="col">Correo</th>
           <th scope="col">Torre</th>
           <th scope="col">Apartamento</th>
+          <th scope="col">Parqueadero</th>
           <th scope="col">Estado</th>
           <th scope="col">Rol</th>
           <th scope="col">Pago administración</th>
@@ -79,12 +80,6 @@ require_once __DIR__ . "/Layout/header.php";
               ELSE 3
               END");
 
-              // FROM tbl_usuario ORDER BY CASE 
-              // WHEN usu_estado = 'Activo' THEN 1
-              // WHEN usu_estado = 'Inactivo' THEN 2
-              // ELSE 3
-              // END
-
         while ($datos = $stmt->fetch(PDO::FETCH_OBJ)) {
           // $claseFila = ($datos->usu_estado === "Inactivo") ? 'usuario-inactivo' : '';  
         ?>
@@ -95,6 +90,7 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_correo ?></td>
             <td><?= $datos->usu_torre_residencia ?></td>
             <td><?= $datos->usu_apartamento_residencia ?></td>
+            <td><?= $datos->usu_parqueadero_asignado ?></td>
             <td><?= $datos->usu_rol ?></td>
             <td><?= $datos->usu_estado ?></td>
             <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 'mora-pagada' ?>"><?= $datos->mor_estado ?></td>

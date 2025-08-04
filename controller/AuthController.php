@@ -21,11 +21,31 @@ if (isset($_POST['registrar'])) {
         'Password' => $_POST['Password'],
 
     ];
+
+    $errores = [];
+
+    if ($usuario->cedulaDuplicada($data['NumeroCedula'])) {
+        $errores[] = "La cédula ya está registrada.";
+    }
+    if ($usuario->telefonoDuplicado($data['NumeroTelefonico'])) {
+        $errores[] = "El número de teléfono ya está registrado.";
+    }
+    if ($usuario->correoDuplicado($data['Email'])) {
+        $errores[] = "El correo electrónico ya está registrado.";
+    }
+
+    if (!empty($errores)) {
+        $_SESSION['errorRegistro'] = implode("<br>", $errores) ;
+        header('Location: ../views/signUp.php');
+        exit;
+    } 
+    //Si pasa las verficaciones registra
     $usuario->registrar($data);
     header('Location: ../views/login.php ');
 
     exit;
 }
+
 
 // Login
 if (isset($_POST['login'])) {

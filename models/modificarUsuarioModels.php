@@ -51,7 +51,7 @@ try {
     <form method="POST" action="../controller/ModificarUsuarioController.php" class="container_form_crud">
         <h3 class="h3_crud_form"> Aqui puede modificar su usuario</h3>
         <fieldset class='fieldset_crud'>
-            <legend class='legend_crud' > Modificar usuario </legend>
+            <legend class='legend_crud' > Información de usuario </legend>
             <br>
             <!-- Con esto guardamos el id del usuario y es enviado al controlador -->
             <input type="hidden" name="cc" value="<?= htmlspecialchars($_GET['cc']) ?>">
@@ -81,6 +81,17 @@ try {
                     </div>
                 </div>
 
+                <div class="inputs_crud_modificar">
+                    <label for="validationCustomUsername" class="form-label">Parqueadero</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" id="validationCustomUsername" name="parqueadero" value="<?= $datos->usu_parqueadero_asignado ?>" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="columnaCrud">
+
                 <div class="select_crud_modificar">
 
                         <label for="validationCustom04" class="form-label">Estado</label>
@@ -91,40 +102,38 @@ try {
                             <option value="Inactivo" <?= $datos->usu_estado  == 'Inactivo' ? 'selected' : '' ?>> Inactivo </option>
 
                         </select>
+                </div>
 
-                 </div>
+                <div class="select_crud_modificar">
 
-            </div>
+                    <label for="validationCustom04" class="form-label">Rol</label>
+                    <select class="form-select" id="validationCustom04" name="rol">
 
-            <div class="columnaCrud">
+                        <option value="<?= $datos->usu_rol ?>">Elija una opción</option>
+                        <option value="Administrador" <?= $datos->usu_rol  == 'Administrador' ? 'selected' : '' ?>> Administrador </option>
+                        <option value="Residente" <?= $datos->usu_rol  == 'Residente' ? 'selected' : '' ?>> Residente </option>
+                        <option value="Propietario" <?= $datos->usu_rol  == 'Propietario' ? 'selected' : '' ?>> Propietario </option>
+                        <option value="Vigilante" <?= $datos->usu_rol  == 'Vigilante' ? 'selected' : '' ?>> Vigilante </option>
 
-                    <div class="select_crud_modificar">
+                    </select>
 
-                        <label for="validationCustom04" class="form-label">Rol</label>
-                        <select class="form-select" id="validationCustom04" name="rol">
-
-                            <option value="<?= $datos->usu_rol ?>">Elija una opción</option>
-                            <option value="Administrador" <?= $datos->usu_rol  == 'Administrador' ? 'selected' : '' ?>> Administrador </option>
-                            <option value="Residente" <?= $datos->usu_rol  == 'Residente' ? 'selected' : '' ?>> Residente </option>
-                            <option value="Propietario" <?= $datos->usu_rol  == 'Propietario' ? 'selected' : '' ?>> Propietario </option>
-                            <option value="Vigilante" <?= $datos->usu_rol  == 'Vigilante' ? 'selected' : '' ?>> Vigilante </option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="select_crud_modificar">
-
-                        <label for="validationCustom04" class="form-label">Pago de la administración</label>
-                        <select class="form-select" id="validationCustom04" name="mora">
-
-                            <option value="">Elija una opción</option>
-                            <option value="1" <?= $datos->usu_mora  == 1 ? 'selected' : '' ?>> Pagado </option>
-                            <option value="2" <?= $datos->usu_mora == 2 ? 'selected' : '' ?>> Pendiente </option>
-                        </select>
-                    </div>
+                </div>
 
             </div>
+
+            
+                <div class="select_crud_modificar">
+
+                    <label for="validationCustom04" class="form-label">Pago de la administración</label>
+                    <select class="form-select" id="validationCustom04" name="mora">
+
+                        <option value="">Elija una opción</option>
+                        <option value="1" <?= $datos->usu_mora  == 1 ? 'selected' : '' ?>> Pagado </option>
+                        <option value="2" <?= $datos->usu_mora == 2 ? 'selected' : '' ?>> Pendiente </option>
+                    </select>
+                </div>
+
+
         </fieldset>
 
                 <div class="container-btn-crud">
