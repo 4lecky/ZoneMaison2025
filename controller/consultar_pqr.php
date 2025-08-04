@@ -16,7 +16,6 @@ if (!$resultados) {
 }
 ?>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <table id="tabla-resultado" class="display">
     <thead>
         <tr>
@@ -29,7 +28,7 @@ if (!$resultados) {
             <th>Acciones</th>
         </tr>
     </thead>
-<tbody>
+    <tbody>
     <?php foreach ($resultados as $pqr): ?>
         <tr>
             <td><?= $pqr['id'] ?></td>
@@ -40,26 +39,76 @@ if (!$resultados) {
             <td><?= $pqr['fecha_creacion'] ?></td>
             <td>
                 <?php if ($pqr['estado'] === 'pendiente'): ?>
-                    <!-- BOTÓN QUE NECESITAS AQUÍ -->
                     <button class="btn-eliminar" data-id="<?= $pqr['id'] ?>">Eliminar</button>
+                    <button class="btn-editar"
+                        data-id="<?= $pqr['id'] ?>"
+                        data-nombres="<?= htmlspecialchars($pqr['nombres']) ?>"
+                        data-apellidos="<?= htmlspecialchars($pqr['apellidos']) ?>"
+                        data-identificacion="<?= $pqr['identificacion'] ?>"
+                        data-email="<?= $pqr['email'] ?>"
+                        data-telefono="<?= $pqr['telefono'] ?>"
+                        data-tipo="<?= $pqr['tipo_pqr'] ?>"
+                        data-asunto="<?= htmlspecialchars($pqr['asunto']) ?>"
+                        data-mensaje="<?= htmlspecialchars($pqr['mensaje']) ?>"
+                        data-medio="<?= $pqr['medio_respuesta'] ?>"
+                    >Editar</button>
                 <?php else: ?>
                     <span style="color: gray;">No disponible</span>
                 <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
-</tbody>
-
+    </tbody>
 </table>
 
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-    setTimeout(() => {
-        new DataTable("#tabla-resultado", {
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-            }
-        });
-    }, 100);
-</script>
+<!-- Modal de edición (se inyecta con el resultado, JS lo activará) -->
+<div id="modalEditar" class="modal" style="display:none;">
+  <div class="modal-content" style="width:90%;max-height:80vh;overflow-y:auto;">
+    <span class="close-editar">&times;</span>
+    <h2>Editar PQR</h2>
+    <form id="form-editar" enctype="multipart/form-data">
+      <input type="hidden" name="id" id="edit-id">
+
+      <label>Nombres:</label>
+      <input type="text" name="nombres" id="edit-nombres" required>
+
+      <label>Apellidos:</label>
+      <input type="text" name="apellidos" id="edit-apellidos" required>
+
+      <label>Identificación:</label>
+      <input type="text" name="identificacion" id="edit-identificacion" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" id="edit-email" required>
+
+      <label>Teléfono:</label>
+      <input type="text" name="telefono" id="edit-telefono" required>
+
+      <label>Tipo PQR:</label>
+      <select name="tipo_pqr" id="edit-tipo" required>
+        <option value="peticion">Petición</option>
+        <option value="queja">Queja</option>
+        <option value="reclamo">Reclamo</option>
+        <option value="sugerencia">Sugerencia</option>
+      </select>
+
+      <label>Asunto:</label>
+      <input type="text" name="asunto" id="edit-asunto" required>
+
+      <label>Mensaje:</label>
+      <textarea name="mensaje" id="edit-mensaje" required></textarea>
+
+      <label>¿Cómo quieres recibir respuesta?</label><br>
+      <label><input type="checkbox" name="respuesta[]" value="correo" id="edit-resp-correo"> Correo</label>
+      <label><input type="checkbox" name="respuesta[]" value="sms" id="edit-resp-sms"> SMS</label>
+
+      <br><br>
+      <label>Reemplazar archivo (opcional):</label>
+      <input type="file" name="archivos" id="edit-archivos">
+
+      <br><br>
+      <button type="submit" class="btn">Guardar Cambios</button>
+    </form>
+  </div>
+</div>
 

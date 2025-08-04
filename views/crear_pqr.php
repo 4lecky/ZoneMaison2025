@@ -1,9 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit();
-}
 
 require_once './Layout/header.php'
 ?>
@@ -23,6 +18,7 @@ require_once './Layout/header.php'
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
   <!-- iconos (RemixIcon+) -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
   <script src="../assets/js/pqrs.js" defer></script>
 </head>
 
@@ -34,76 +30,105 @@ require_once './Layout/header.php'
     <h1>PETICIONES, QUEJAS Y RECLAMOS</h1>
   </section>
 
-  <!-- CONTENIDO COMPLETO DEL CUERPO -->
-  <div class="formulario-container">
-    <h2 class="form-title">Formulario PQRS</h2>
+  <!-- CONTENIDO DEL CUERPO -->
+  <div class="principal-page">
+    <h2>Formulario PQRS</h2>
     <p class="form-subtitle">Por favor, diligencia la siguiente información para procesar tu solicitud.</p>
     <p class="campo-obligatorio">(*) Todos los campos son obligatorios</p>
-
-    <form class="formulario-pqr" method="POST" action="../controller/pqrsController.php" enctype="multipart/form-data">
-    <div id="mensaje-exito" style="display:none; background:#d4edda; color:#155724; padding:10px; margin-top:10px; border-radius:5px;">
-    Tu solicitud fue registrada correctamente. ¡Gracias por comunicarte con nosotros!
+  <form method="POST" action="../controller/pqrsController.php" enctype="multipart/form-data" id="formPQRS">
+    <div id="mensaje-exito">
+      Tu solicitud fue registrada correctamente. ¡Gracias por comunicarte con nosotros!
     </div>
 
-      <div class="campo-doble">
-        <input type="text" name="nombres" placeholder="Nombres *">
-      </div>
-      <div class="campo-doble">
-        <input type="text" name="apellidos" placeholder="Apellidos *">
-      </div>
-      <div class="campo-doble">
-        <input type="text" name="identificacion" placeholder="Número de identificación *">
-      </div>
-      <div class="campo-doble">
-        <input type="text" name="email" placeholder="Correo electrónico *">
-      </div>
-      <div class="campo-doble">
-        <input type="tel" name="telefono" placeholder="Teléfono de contacto *">
+
+    <!-- Información Personal -->
+    <fieldset>
+      <legend>Información Personal</legend>
+
+      <div class="input-group">
+        <div class="input-box">
+          <label for="nombres">Nombres</label>
+          <input type="text" name="nombres" id="nombres" class="form-control" placeholder="Nombres *">
+        </div>
+        <div class="input-box">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" name="apellidos" id="apellidos" class="form-control" placeholder="Apellidos *">
+        </div>
       </div>
 
-      <div class="campo-doble">
-        <select name="tipo_pqr">
-          <option value="">Selecciona el tipo de solicitud *</option>
-          <option value="peticion">Petición</option>
-          <option value="queja">Queja</option>
-          <option value="reclamo">Reclamo</option>
-          <option value="sugerencia">Sugerencia</option>
-        </select>
-      </div>
-      <div class="campo-doble">
-        <input type="text" name="asunto" placeholder="Asunto *">
-      </div>
-      <div class="campo-doble textarea-grande">
-        <textarea name="mensaje" placeholder="Describe tu solicitud con detalle *"></textarea>
+      <div class="input-group">
+        <div class="input-box">
+          <label for="identificacion">Número de Identificación</label>
+          <input type="text" name="identificacion" id="identificacion" class="form-control" placeholder="Número de identificación *">
+        </div>
+        <div class="input-box">
+          <label for="email">Correo Electrónico</label>
+          <input type="text" name="email" id="email" class="form-control" placeholder="Correo electrónico *">
+        </div>
       </div>
 
+      <div class="input-group">
+        <div class="input-box">
+          <label for="telefono">Teléfono de Contacto</label>
+          <input type="tel" name="telefono" id="telefono" class="form-control" placeholder="Teléfono de contacto *">
+        </div>
+      </div>
+    </fieldset>
 
-      <div class="archivo-row">
-        <label for="archivos">Documentos anexos (opcional)</label>
-        <input type="file" id="archivos" name="archivos" multiple>
+    <!-- Detalles de la Solicitud -->
+    <fieldset>
+      <legend>Detalles de la Solicitud</legend>
+
+      <div class="input-group">
+        <div class="input-box">
+          <label for="tipo_pqr">Tipo de Solicitud</label>
+          <select name="tipo_pqr" id="tipo_pqr" class="form-control">
+            <option value="" disabled selected>Selecciona el tipo de solicitud *</option>
+            <option value="peticion">Petición</option>
+            <option value="queja">Queja</option>
+            <option value="reclamo">Reclamo</option>
+            <option value="sugerencia">Sugerencia</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <label for="asunto">Asunto</label>
+          <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Asunto *">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-box textarea-grande">
+          <label for="mensaje">Descripción Detallada</label>
+          <textarea name="mensaje" id="mensaje" class="form-control" placeholder="Describe tu solicitud con detalle *"></textarea>
+        </div>
+      </div>
+
+      <div class="archivo-section">
+        <label for="archivos">Documentos Anexos (opcional)</label>
+        <input type="file" name="archivos" id="archivos" multiple>
       </div>
 
       <div class="medios-respuesta">
         <p>¿Cómo deseas recibir respuesta?</p>
-        <br>
         <div class="checkbox-opciones">
           <label class="checkbox-label">
+            <input type="checkbox" name="respuesta[]" value="correo">
             <span>Correo electrónico</span>
-            <input type="checkbox" name="respuesta[]" value="correo" />
           </label>
-
           <label class="checkbox-label">
+            <input type="checkbox" name="respuesta[]" value="sms">
             <span>SMS</span>
-            <input type="checkbox" name="respuesta[]" value="sms" />
           </label>
         </div>
       </div>
-      <div class="boton-envio">
-        <button type="submit">Enviar solicitud</button>
-      </div>
-    </form>
-  </div>
+    </fieldset>
 
+    <!-- Botón de envío -->
+    <div class="boton-envio">
+      <button type="submit">Enviar Solicitud</button>
+    </div>
+  </form>
+</div>
 
   <!-- SECCIÓN DE TESTIMONIOS -->
   <section class="testimonios">

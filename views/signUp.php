@@ -1,3 +1,11 @@
+<?php
+session_start();
+$errorRegistro = $_SESSION['errorRegistro'] ?? false;
+unset($_SESSION['errorRegistro']);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,11 +32,19 @@
         <i class="texto_superior2">Sera un gusto tenerte con nosotros</i>
 
     </div>
+
+    
     <div class="container_izquierdo">
 
         <form class="formulario_ingresosRe" id="formulario_ingresosRe" method="post" action="../controller/AuthController.php">
 
             <h2>Registro usuario</h2>
+
+            <?php if ($errorRegistro): ?>
+                <div style="color: red; margin-top: 10px; text-align: center; margin-bottom: 10px;">
+                    <?php echo $errorRegistro; ?>
+                </div>
+            <?php endif; ?>
 
             <div class="columnas">
 
@@ -45,7 +61,7 @@
                         Numero de documento
                     </label>
                     <i class="ri-hashtag"></i>
-                    <input type="number" placeholder="Ingrese su de cedula" class="campos" name="NumeroCedula" required>
+                    <input type="number" placeholder="Ingrese su de cedula" name="NumeroCedula" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
                 </div>
 
             </div>
@@ -71,7 +87,7 @@
                         Teléfono
                     </label>
                     <i class="ri-phone-fill"></i>
-                    <input type="tel" placeholder="Ingrese su número telefónico" class="campos" name="NumeroTelefonico" required>
+                    <input type="tel" placeholder="Ingrese su número telefónico" name="NumeroTelefonico" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
                 </div>
 
 
@@ -120,22 +136,6 @@
 
                 </div>
 
-                <!-- <div class="campo">
-
-                    <label for="Rol" class="titulo_campo">Rol</label>
-                    <i class="ri-group-fill"></i>
-                    <select class="campos_select" id="validationCustom04" name="Rol">
-
-                        <option>Elija una opción</option>
-                        <option> Administrador </option>
-                        <option> Residente </option>
-                        <option> Propietario </option>
-                        <option> Vigilante </option>
-
-                    </select>
-
-                </div> -->
-
             </div>
 
 
@@ -146,7 +146,7 @@
                     Correo electronico
                     </label>
                     <i class="ri-mail-star-fill"></i>
-                    <input type="email" placeholder="Defina una contraseña" class="campos" name="Email" required>
+                    <input type="email" placeholder="Defina su correo electronico" name="Email" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
                 </div>
 
 

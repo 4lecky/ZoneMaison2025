@@ -72,7 +72,7 @@ table.table.dataTable>:not(caption)>*>* {
 
 
 table#usuarios tr.usuario-inactivo td {
-  background-color: #f3dfdf !important;
+  background-color: #f0f0f0 !important;
   opacity: 1 !important;
   color: gray;
   /* Puedes agregar esto para asegurarte de que no haya transparencia: */

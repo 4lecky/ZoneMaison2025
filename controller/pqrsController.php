@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_dir($directorio)) {
             mkdir($directorio, 0777, true);
         }
-
+ 
         $archivoNombre = uniqid() . '_' . basename($_FILES['archivos']['name']);
         $rutaDestino = $directorio . $archivoNombre;
 
@@ -68,3 +68,4 @@ if (isset($_GET['eliminar'])) {
         exit;
     }
 }
+
