@@ -8,9 +8,6 @@ class EditPaquModel {
         $this->pdo = $pdo;
     }
 
-    /**
-     * Obtiene una publicación por ID
-     */
     public function obtenerPorId($id) {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM tbl_paquetes WHERE paqu_Id = ?");
@@ -23,38 +20,92 @@ class EditPaquModel {
     }
 
     /**
-     * Actualiza una publicación en la base de datos
+     * MÉTODO ACTUALIZAR COMPLETAMENTE CORREGIDO
      */
-    public function actualizar($id, $descripcion, $fecha, $hora, $estado) {
+    public function actualizar($id, $descripcion, $fecha, $hora, $estado, $image = null) {
         try {
-            $stmt = $this->pdo->prepare("UPDATE tbl_paquetes SET paqu_Descripcion = ?, paqu_FechaLlegada = ?, paqu_Hora = ?, paqu_estado = ? paqu_image = ?,WHERE paqu_Id = ?");
-            $stmt->execute([$descripcion, $fecha, $hora, $estado, $id, $image]);
+            if ($image !== null) {
+                // Si hay nueva imagen, eliminar la anterior
+                $stmt = $this->pdo->prepare("SELECT paqu_image FROM tbl_paquetes WHERE paqu_Id = ?");
+                $stmt->execute([$id]);
+                $publicacion = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($publicacion && !empty($publicacion['paqu_image'])) {
+                    $rutaAntigua = __DIR__ . '/../' . $publicacion['paqu_image'];
+                    if (file_exists($rutaAntigua)) {
+                        unlink($rutaAntigua);
+                    }
+                }
+
+                // CORRECCIÓN: Actualizar con nueva imagen - PARÁMETROS EN ORDEN CORRECTO
+                $stmt = $this->pdo->prepare("UPDATE tbl_paquetes 
+                    SET paqu_Descripcion = ?, paqu_FechaLlegada = ?, paqu_Hora = ?, paqu_image = ?, paqu_estado = ?
+                    WHERE paqu_Id = ?");
+                $stmt->execute([$descripcion, $fecha, $hora, $image, $estado, $id]);
+            } else {
+                // CORRECCIÓN: Actualizar sin tocar imagen - PARÁMETROS EN ORDEN CORRECTO
+                $stmt = $this->pdo->prepare("UPDATE tbl_paquetes 
+                    SET paqu_Descripcion = ?, paqu_FechaLlegada = ?, paqu_Hora = ?, paqu_estado = ?
+                    WHERE paqu_Id = ?");
+                $stmt->execute([$descripcion, $fecha, $hora, $estado, $id]);
+            }
+
             return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             error_log("Error al actualizar publicación: " . $e->getMessage());
             return false;
         }
     }
-
+   
     /**
-     * Elimina una publicación de la base de datos
+     * MÉTODO ELIMINAR MEJORADO
      */
     public function eliminar($id) {
         try {
-            // Primero obtener la publicación para verificar si existe
-            $publicacion = $this->obtenerPorId($id);
+            // Verificar si existe la publicación
+            $stmt = $this->pdo->prepare("SELECT paqu_image FROM tbl_paquetes WHERE paqu_Id = ?");
+            $stmt->execute([$id]);
+            $publicacion = $stmt->fetch(PDO::FETCH_ASSOC);
+
             if (!$publicacion) {
-                return false;
+                return ['success' => false, 'mensaje' => 'Publicación no encontrada.'];
+            }
+
+            // Eliminar imagen del servidor si existe
+            if (!empty($publicacion['paqu_image'])) {
+                $rutaImagen = __DIR__ . '/../' . $publicacion['paqu_image'];
+                if (file_exists($rutaImagen)) {
+                    unlink($rutaImagen);
+                }
             }
 
             // Eliminar la publicación de la base de datos
             $stmt = $this->pdo->prepare("DELETE FROM tbl_paquetes WHERE paqu_Id = ?");
             $stmt->execute([$id]);
-            
-            return $stmt->rowCount() > 0;
+
+            if ($stmt->rowCount() > 0) {
+                return ['success' => true, 'mensaje' => 'Publicación eliminada correctamente.'];
+            } else {
+                return ['success' => false, 'mensaje' => 'No se pudo eliminar la publicación.'];
+            }
+
         } catch (PDOException $e) {
             error_log("Error al eliminar publicación: " . $e->getMessage());
-            return false;
+            return ['success' => false, 'mensaje' => 'Error en el servidor.'];
+        }
+    }
+
+    /**
+     * MÉTODO ADICIONAL: Obtener roles activos (si es necesario)
+     */
+    public function obtenerRolesActivos() {
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM tbl_roles WHERE activo = 1");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error al obtener roles: " . $e->getMessage());
+            return [];
         }
     }
 }

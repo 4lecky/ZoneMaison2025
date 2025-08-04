@@ -9,19 +9,19 @@ class EditPaquController {
     }
 
     /**
-     * Obtiene una publicación para editar
+     * Obtiene una publicación por ID para editarla
      */
     public function editar($id) {
         try {
             $id = intval($id);
             if ($id <= 0) {
-                return false;
+                return null; // Cambio: retorna null para consistencia con la vista
             }
             
             return $this->model->obtenerPorId($id);
         } catch (Exception $e) {
             error_log("Error en editar: " . $e->getMessage());
-            return false;
+            return null;
         }
     }
 
@@ -35,13 +35,17 @@ class EditPaquController {
                 return ['success' => false, 'mensaje' => 'ID inválido'];
             }
             
-            $resultado = $this->model->eliminar($id);
-            
-            if ($resultado) {
-                return ['success' => true, 'mensaje' => 'Publicación eliminada correctamente'];
-            } else {
-                return ['success' => false, 'mensaje' => 'No se pudo eliminar la publicación o no existe'];
+            // Obtener la publicación antes de eliminarla para borrar la imagen
+            $publicacion = $this->model->obtenerPorId($id);
+            if ($publicacion && !empty($publicacion['paqu_image'])) {
+                $rutaImagen = __DIR__ . '/../' . $publicacion['paqu_image'];
+                if (file_exists($rutaImagen)) {
+                    unlink($rutaImagen);
+                }
             }
+            
+            $resultado = $this->model->eliminar($id);
+            return $resultado; // El modelo ya retorna el formato correcto
         } catch (Exception $e) {
             error_log("Error en eliminar: " . $e->getMessage());
             return ['success' => false, 'mensaje' => 'Error al eliminar la publicación'];
@@ -49,69 +53,49 @@ class EditPaquController {
     }
 
     /**
-     * Actualiza una publicación
+     * Actualiza una publicación - CORREGIDO
      */
     public function actualizar($postData) {
         try {
-            // Validar y obtener datos del POST
+            // Validar datos de entrada
             if (!isset($postData['id']) || !is_numeric($postData['id'])) {
                 return ['success' => false, 'mensaje' => 'ID inválido'];
             }
 
             $id = intval($postData['id']);
             $descripcion = isset($postData['descripcion']) ? trim($postData['descripcion']) : '';
-            
-            // Obtener fecha del formulario o usar la fecha actual si está vacía
-            $fecha = isset($postData['fecha']) && !empty($postData['fecha']) 
-                   ? trim($postData['fecha']) 
-                   : date('Y-m-d');
-            
-            // Obtener hora del formulario o usar la hora actual si está vacía
-            $hora = isset($postData['hora']) && !empty($postData['hora']) 
-                  ? trim($postData['hora']) 
-                  : date('H:i:s');
-
-            // Obtener estado del formulario (con valor por defecto de 'Pendiente')
-            $estado = isset($postData['estado']) ? trim($postData['estado']) : 'Pendiente';
-
-            // Validar ID
-            if ($id <= 0) {
-                return ['success' => false, 'mensaje' => 'ID inválido'];
-            }
+            $estado = isset($postData['estado']) ? trim($postData['estado']) : '';
+            $fecha = date('Y-m-d');
+            $hora = date('H:i:s');
+            $image = null; // Inicializar correctamente
 
             // Validar campos requeridos
-            if (empty($descripcion)) {
-                return ['success' => false, 'mensaje' => 'La descripción es requerida'];
+            if (empty($descripcion) || empty($estado)) {
+                return ['success' => false, 'mensaje' => 'Por favor, complete todos los campos requeridos.'];
             }
 
-            // Validar formato de fecha
-            if (!$this->validarFecha($fecha)) {
-                return ['success' => false, 'mensaje' => 'Formato de fecha inválido'];
+            // CORRECCIÓN: Procesar imagen nueva correctamente
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $resultado = $this->procesarImagen($_FILES['imagen']);
+                if (!$resultado['success']) {
+                    return $resultado;
+                }
+                $image = $resultado['ruta']; // ✅ CORRECCIÓN: Asignar la ruta a $image
             }
 
-            // Validar formato de hora si se proporciona
-            if (!empty($hora) && !$this->validarHora($hora)) {
-                return ['success' => false, 'mensaje' => 'Formato de hora inválido'];
-            }
-
-            // Validar estado (debe ser 'Pendiente' o 'Entregado')
-            if (!in_array($estado, ['Pendiente', 'Entregado'])) {
-                return ['success' => false, 'mensaje' => 'Estado inválido'];
-            }
-
-            // Actualizar en la base de datos
-            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora, $estado, $image ?? null);
+            // Actualizar en la base de datos - PASAR $image CORRECTAMENTE
+            $actualizado = $this->model->actualizar($id, $descripcion, $fecha, $hora, $estado, $image);
             
             if ($actualizado) {
-                // Obtener los datos actualizados para devolver
-                $publicacionActualizada = $this->model->obtenerPorId($id);
+                // Obtener los datos actualizados para mostrar
+                $publicacion = $this->model->obtenerPorId($id);
                 return [
                     'success' => true, 
                     'mensaje' => 'Publicación actualizada correctamente',
-                    'data' => $publicacionActualizada
+                    'data' => $publicacion
                 ];
             } else {
-                return ['success' => false, 'mensaje' => 'No se realizaron cambios en la publicación'];
+                return ['success' => false, 'mensaje' => 'No se realizaron cambios en la publicación.'];
             }
             
         } catch (Exception $e) {
@@ -121,18 +105,63 @@ class EditPaquController {
     }
 
     /**
-     * Valida el formato de fecha (YYYY-MM-DD)
+     * Procesa la imagen subida - MEJORADO
      */
-    private function validarFecha($fecha) {
-        $date = DateTime::createFromFormat('Y-m-d', $fecha);
-        return $date && $date->format('Y-m-d') === $fecha;
+    private function procesarImagen($archivo) {
+        // Validar tipo MIME
+        $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (!in_array($archivo['type'], $tiposPermitidos)) {
+            return ['success' => false, 'mensaje' => 'Tipo de archivo no permitido. Solo se permiten imágenes.'];
+        }
+
+        // MEJORA: Validar también la extensión real
+        $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($extension, $extensionesPermitidas)) {
+            return ['success' => false, 'mensaje' => 'Extensión de archivo no permitida.'];
+        }
+
+        // Validar tamaño (máximo 5MB)
+        $tamañoMaximo = 5 * 1024 * 1024; // 5MB en bytes
+        if ($archivo['size'] > $tamañoMaximo) {
+            return ['success' => false, 'mensaje' => 'El archivo es demasiado grande. Máximo 5MB.'];
+        }
+
+        // Crear directorio si no existe
+        $directorioDestino = __DIR__ . '/../uploads/muro/';
+        if (!is_dir($directorioDestino)) {
+            if (!mkdir($directorioDestino, 0755, true)) {
+                return ['success' => false, 'mensaje' => 'Error al crear directorio de destino.'];
+            }
+        }
+
+        // Generar nombre único y mover archivo
+        $nombreImagen = uniqid('img_') . '_' . time() . '.' . $extension;
+        $rutaDestino = 'uploads/muro/' . $nombreImagen;
+        $rutaCompleta = $directorioDestino . $nombreImagen;
+
+        if (move_uploaded_file($archivo['tmp_name'], $rutaCompleta)) {
+            return ['success' => true, 'ruta' => $rutaDestino];
+        } else {
+            return ['success' => false, 'mensaje' => 'Error al guardar la imagen.'];
+        }
     }
 
     /**
-     * Valida el formato de hora (HH:MM o HH:MM:SS)
+     * Elimina la imagen anterior de una publicación
      */
-    private function validarHora($hora) {
-        return preg_match('/^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/', $hora);
+    private function eliminarImagenAnterior($id) {
+        try {
+            $publicacion = $this->model->obtenerPorId($id);
+            if ($publicacion && !empty($publicacion['paqu_image'])) {
+                $rutaImagen = __DIR__ . '/../' . $publicacion['paqu_image'];
+                if (file_exists($rutaImagen)) {
+                    unlink($rutaImagen);
+                }
+            }
+        } catch (Exception $e) {
+            error_log("Error al eliminar imagen anterior: " . $e->getMessage());
+        }
     }
 
     /**
@@ -141,5 +170,17 @@ class EditPaquController {
     public function redirigir() {
         header("Location: ../views/novedades.php");
         exit;
+    }
+
+    /**
+     * Obtiene los roles activos
+     */
+    public function obtenerRoles() {
+        try {
+            return $this->model->obtenerRolesActivos();
+        } catch (Exception $e) {
+            error_log("Error al obtener roles: " . $e->getMessage());
+            return [];
+        }
     }
 }

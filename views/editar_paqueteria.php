@@ -29,14 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
     $mensaje = $resultado['mensaje'];
     if ($resultado['success'] && isset($resultado['data'])) {
         $publicacion = $resultado['data'];
-    } else {
-        // Si hubo error, mantener los datos del formulario para que el usuario no los pierda
-        $publicacion = [
-            'paqu_Id' => $_POST['id'],
-            'paqu_Descripcion' => $_POST['descripcion'],
-            'paqu_FechaLlegada' => $_POST['fecha'],
-            'paqu_Hora' => $_POST['hora']
-        ];
     }
 } elseif (isset($_GET['id'])) {
     $publicacion = $controller->editar(intval($_GET['id']));
@@ -250,6 +242,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
             transform: translateY(-2px);
         }
 
+       .current-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+       }
+
         /* Modal */
         .modal {
             display: none;
@@ -399,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
         <h2>Editar Paquetería</h2>
 
         <?php if ($mensaje): ?>
-            <div class="alert <?= (strpos($mensaje, 'Error') !== false || strpos($mensaje, 'no encontrada') !== false) ? 'alert-error' : 'alert-success' ?>">
+            <div class="alert <?= strpos($mensaje, 'Error') !== false ? 'alert-error' : 'alert-success' ?>">
                 <?= htmlspecialchars($mensaje) ?>
             </div>
         <?php endif; ?>
@@ -407,51 +406,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
         <?php if ($publicacion): ?>
             <form method="POST" enctype="multipart/form-data" class="editar-form">
                 <fieldset>
-                    <legend>Formulario de Paquetería</legend>
+                    <legend>Formulario de paquetería</legend>
 
                     <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['paqu_Id']) ?>">
 
-                    <div class="form-group">
-                        <label for="descripcion">Descripción *</label>
-                        <textarea id="descripcion" name="descripcion" class="form-control"
-                                  rows="5" required maxlength="1000"><?= htmlspecialchars($publicacion['paqu_Descripcion']) ?></textarea>
-                    </div>
+                    <label for="descripcion">Descripción *</label>
+                    <textarea id="descripcion" name="descripcion" class="form-control"
+                              rows="5" required maxlength="1000"><?= htmlspecialchars($publicacion['paqu_Descripcion']) ?></textarea>
 
-                    <div class="form-group">
-                        <label for="fecha">Fecha de Llegada *</label>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="fechaActual" onchange="toggleFechaActual()">
-                            <label for="fechaActual">Usar fecha actual</label>
-                        </div>
-                        <input type="date" id="fecha" name="fecha" class="form-control"
-                               value="<?= htmlspecialchars($publicacion['paqu_FechaLlegada']) ?>" required>
-                    </div>
+                    <label for="imagen">Reemplazar imagen (opcional)</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control">
 
-                    <div class="form-group">
-                        <label for="hora">Hora</label>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="horaActual" onchange="toggleHoraActual()" checked>
-                            <label for="horaActual">Actualizar a hora actual al guardar</label>
+                    <?php if (!empty($publicacion['paqu_image'])): ?>
+                        <div class="image-container">
+                            <label>Imagen actual:</label>
+                            <br>
+                            <img src="../<?= htmlspecialchars($publicacion['paqu_image']) ?>"
+                                 alt="Imagen actual" class="current-image">
                         </div>
-                     
-                        <input type="time" id="hora" name="hora" class="form-control"
-                               value="<?= htmlspecialchars($publicacion['paqu_Hora']) ?>" disabled>
-                    </div>
-                
+                    <?php endif; ?>
+
                    <div class="estado">
                         <label>Estado de la Publicación</label>
                         <div class="checkbox-container">
                             <input type="radio" id="estadoPendiente" name="estado" value="Pendiente"
-                                   <?= $publicacion['paqu_estado'] == 'Pendiente' ? 'checked' : '' ?>>
+                                <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Pendiente' ? 'checked' : '' ?>>
                             <label for="estadoPendiente">Pendiente</label>
                         </div>
                         <div class="checkbox-container">
                             <input type="radio" id="estadoEntregado" name="estado" value="Entregado"
-                                   <?= $publicacion['paqu_estado'] == 'Entregado' ? 'checked' : '' ?>>
+                                <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Entregado' ? 'checked' : '' ?>>
                             <label for="estadoEntregado">Entregado</label>
                         </div>
-                    </div>
-
                     </div>
 
                     <div class="btn-container">
@@ -486,11 +472,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
                 <input type="hidden" name="eliminar" value="1">
             </form>
 
-         <?php else: ?>
+        <?php else: ?>
             <fieldset>
-                <div class="alert alert-error">
-                    <p>No se pudo cargar la publicación. Verifique que el ID sea válido.</p>
-                </div>
                 <div class="btn-container">
                     <a href="novedades.php" class="cancelar">Volver</a>
                 </div>
@@ -500,38 +483,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
 </main>
 
 <script>
-function toggleFechaActual() {
-    const checkbox = document.getElementById('fechaActual');
-    const fechaInput = document.getElementById('fecha');
-    
-    if (checkbox.checked) {
-        const hoy = new Date();
-        const fechaFormateada = hoy.toISOString().split('T')[0];
-        fechaInput.value = fechaFormateada;
-        fechaInput.disabled = true;
-    } else {
-        fechaInput.disabled = false;
-    }
-}
-
-function toggleHoraActual() {
-    const checkbox = document.getElementById('horaActual');
-    const horaInput = document.getElementById('hora');
-    
-    if (checkbox.checked) {
-        // Limpiar el campo de hora para que el servidor use la hora actual
-        horaInput.value = '';
-        horaInput.disabled = true;
-    } else {
-        horaInput.disabled = false;
-        // Restaurar la hora original si hay una
-        const horaOriginal = '<?= htmlspecialchars($publicacion['paqu_Hora'] ?? '') ?>';
-        if (horaOriginal) {
-            horaInput.value = horaOriginal;
-        }
-    }
-}
-
 function abrirModal() {
     document.getElementById('modalEliminar').style.display = 'block';
 }
@@ -557,11 +508,6 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         cerrarModal();
     }
-});
-
-// Inicializar el estado del campo de hora al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    toggleHoraActual(); // Esto deshabilitará el campo de hora inicialmente
 });
 </script>
 

@@ -1,13 +1,40 @@
 <?php
 session_start();
+
+// Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
+
 require_once "../config/db.php";
 require_once "./Layout/header.php";
 
-$mensaje = $_GET['success'] ?? '';
+// Recuperar mensaje de éxito
+$mensaje = isset($_GET['success']) ? htmlspecialchars($_GET['success'], ENT_QUOTES, 'UTF-8') : '';
+
+// Obtener mensajes del muro
+$mensajes = [];
+try {
+    $stmt = $pdo->prepare("SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC");
+    $stmt->execute();
+    $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error al obtener mensajes del muro: " . $e->getMessage());
+}
+
+// Obtener paquetes
+$paquetes = [];
+$hay_paquetes = false;
+try {
+    $stmt = $pdo->prepare("SELECT * FROM tbl_paquetes WHERE paqu_estado IN ('Entregado', 'Pendiente') ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC");
+    $stmt->execute();
+    $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $hay_paquetes = count($paquetes) > 0;
+} catch (PDOException $e) {
+    error_log("Error al obtener paquetes: " . $e->getMessage());
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -21,51 +48,22 @@ $mensaje = $_GET['success'] ?? '';
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
     <link rel="stylesheet" href="../assets/Css/ComunicaciondeNovedades/novedades.css" />
-    <!-- Libreria de iconos RemixIcon-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <?php
-    // Mostrar mensaje de éxito si existe
-    if ($mensaje): ?>
-        <div class="alert alert-success"><?= htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8') ?></div>
+    <!-- Mostrar mensaje de éxito -->
+    <?php if (!empty($mensaje)): ?>
+        <div class="alert alert-success"><?= $mensaje ?></div>
     <?php endif; ?>
-
-    <?php
-    // Obtener mensajes del muro
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC");
-        $stmt->execute();
-        $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        $mensajes = [];
-        error_log("Error al obtener mensajes del muro: " . $e->getMessage());
-    }
-
-    // Obtener paquetes
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM tbl_paquetes WHERE paqu_estado IN ('Entregado', 'Pendiente') ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC");
-        $stmt->execute();
-        $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $hay_paquetes = count($paquetes) > 0;
-    } catch (PDOException $e) {
-        $paquetes = [];
-        $hay_paquetes = false;
-        error_log("Error al obtener paquetes: " . $e->getMessage());
-    }
-    ?>
 
     <main>
         <section class="principal-page">
             <h2>Bienvenido a ZONEMAISONS</h2>
-
-            <!-- Mantente al tanto -->
             <div class="code-loader">
                 <span>Mantente al tanto!!!</span>
             </div>
-
             <h3>Todo lo que pasa en tu comunidad, en un solo lugar.</h3>
         </section>
 
@@ -79,7 +77,7 @@ $mensaje = $_GET['success'] ?? '';
                     </a>
                 </div>
 
-                <?php if (count($mensajes) > 0): ?>
+                <?php if (!empty($mensajes)): ?>
                     <?php foreach ($mensajes as $muro): ?>
                         <div class="tarjeta">
                             <div class="tarjeta-interna">
@@ -123,104 +121,113 @@ $mensaje = $_GET['success'] ?? '';
                 <?php endif; ?>
             </div>
 
-            <!-- Paquetería - Solo mostrar si hay paquetes -->
+            <!-- Paquetería (solo mostrar si hay paquetes) -->
             <?php if ($hay_paquetes): ?>
-            <section class="paqueteria">
-                <div class="paqueteria-header">
-                    <h2>Paquetería</h2>
-                    <a href="paquetes.php" class="round-button add-button" title="Agregar paquete">
-                        <span>+</span>
-                    </a>
-                </div>
-
-                <?php
-                // Separar paquetes por estado
-                $paquetes_entregados = array_filter($paquetes, function($p) { return $p['paqu_estado'] === 'Entregado'; });
-                $paquetes_pendientes = array_filter($paquetes, function($p) { return $p['paqu_estado'] === 'Pendiente'; });
-                ?>
-
-                <!-- Paquetes Pendientes -->
-                <?php if (count($paquetes_pendientes) > 0): ?>
-                <div class="paquetes-seccion">
-                    <h3 class="subtitulo">Pendientes</h3>
-                    <?php foreach ($paquetes_pendientes as $paquete): ?>
-                    <div class="tarjeta paquete-entregado">
-                        <div class="tarjeta-interna">
-                            <div class="paquete-icono">📦</div>
-                          
-                            <div class="contenido">
-                                <div class="Asunto">
-                                    <?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?>
-                                </div>
-                                <div class="Descripcion">
-                                    <small><?= htmlspecialchars($paquete['paqu_Descripcion'], ENT_QUOTES, 'UTF-8') ?></small>
-                                </div>
-                                <div class="meta-paquete">
-                                    <small>Llego: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
-                                    <?php if (!empty($paquete['paqu_Hora'])): ?>
-                                        <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
-                                    <?php endif; ?>
-                                      <div class=imagen>
-                                <?php if (!empty($paquete['paqu_image'])): ?>
-                                    <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete">
-                                <?php endif; ?>
-                                </div>
-                                    <div class="btn-edit">
-                                     <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paqueteria">
-                                                <span>✎</span>
-                                            </a>
-                                </div>
-                            </div>
-                            </div>
-                                </div>
-                        </div>
+                <section class="paqueteria">
+                    <div class="paqueteria-header">
+                        <h2>Paquetería</h2>
+                        <a href="paquetes.php" class="round-button add-button" title="Agregar paquete">
+                            <span>+</span>
+                        </a>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php endif; ?>
 
-                <!-- Paquetes Entregados -->
-                <?php if (count($paquetes_entregados) > 0): ?>
-                <div class="paquetes-seccion">
-                    <h3 class="subtitulo">Entregados</h3>
-                    <?php foreach ($paquetes_entregados as $paquete): ?>
-                    <div class="tarjeta paquete-entregado">
-                        <div class="tarjeta-interna">
-                            <div class="paquete-icono">✅</div>
-                            <div class=imagen>
-                                <?php if (!empty($paquete['paqu_image'])): ?>
-                                    <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete">
-                                <?php endif; ?>
-                            <div class="contenido">
-                                <div class="Asunto">
-                                    <?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?>
+                    <?php
+                    // Separar paquetes por estado
+                    $paquetes_entregados = array_filter($paquetes, fn($p) => $p['paqu_estado'] === 'Entregado');
+                    $paquetes_pendientes = array_filter($paquetes, fn($p) => $p['paqu_estado'] === 'Pendiente');
+                    ?>
+
+                    <!-- Paquetes Pendientes -->
+                    <?php if (!empty($paquetes_pendientes)): ?>
+                        <div class="paquetes-seccion">
+                            <h3 class="subtitulo">Pendientes</h3>
+                            <?php foreach ($paquetes_pendientes as $paquete): ?>
+                                <div class="tarjeta paquete-entregado">
+                                    <div class="tarjeta-interna">
+                                        <div class="paquete-icono">📦</div>
+                                        <div class="contenido">
+                                            <div class="Asunto"><?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div class="Descripcion">
+                                                <small><?= htmlspecialchars($paquete['paqu_Descripcion'], ENT_QUOTES, 'UTF-8') ?></small>
+                                            </div>
+                                            <div class="meta-paquete">
+                                                <small>Llegó: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
+                                                <?php if (!empty($paquete['paqu_Hora'])): ?>
+                                                    <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
+                                                <?php endif; ?>
+                                                <div class="imagen">
+                                                    <?php if (!empty($paquete['paqu_image'])): ?>
+                                                        <div class="imagen-container">
+                                                            <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div class="btn-edit">
+                                                <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paqueteria">
+                                                    <span>✎</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="Descripcion">
-                                    <small><?= htmlspecialchars($paquete['paqu_Descripcion'], ENT_QUOTES, 'UTF-8') ?></small>
-                                </div>
-                                <div class="meta-paquete">
-                                    <small>Entregado: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
-                                    <?php if (!empty($paquete['paqu_Hora'])): ?>
-                                        <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php endif; ?>
-            </section>
+                    <?php endif; ?>
+
+                    <!-- Paquetes Entregados -->
+                    <?php if (!empty($paquetes_entregados)): ?>
+                        <div class="paquetes-seccion">
+                            <h3 class="subtitulo">Entregados</h3>
+                            <?php foreach ($paquetes_entregados as $paquete): ?>
+                                <div class="tarjeta paquete-entregado">
+                                    <div class="tarjeta-interna">
+                                        <div class="paquete-icono">✅</div>
+                                        <div class="contenido">
+                                            <div class="Asunto"><?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div class="Descripcion">
+                                                <small><?= htmlspecialchars($paquete['paqu_Descripcion'], ENT_QUOTES, 'UTF-8') ?></small>
+                                            </div>
+                                            <div class="meta-paquete">
+                                                <small>Entregado: <?= htmlspecialchars($paquete['paqu_FechaLlegada'] ?? 'No disponible', ENT_QUOTES, 'UTF-8') ?></small>
+                                                <?php if (!empty($paquete['paqu_Hora'])): ?>
+                                                    <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
+                                                <?php endif; ?>
+                                                <?php if (!empty($paquete['paqu_image'])): ?>
+                                                    <div class="imagen-container">
+                                                        <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="acciones-paquete">
+                                                <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paquetería">
+                                                    <span>✎</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </section>
             <?php endif; ?>
         </section>
     </main>
 
-    <script src="../assets/Js/novedades.js"></script>
+    <div id="imageModal" class="image-modal" style="display: none;">
+        <span class="image-modal-close">&times;</span>
+        <img class="image-modal-content" id="modalImage" alt="Imagen ampliada">
+        <div class="image-modal-caption" id="modalCaption"></div>
+        <div class="image-modal-controls">
+            <button class="image-modal-download" id="downloadBtn" title="Descargar imagen">
+                <i class="ri-download-line"></i>
+            </button>
+        </div>
+    </div>
 
-    <?php
-    require_once "./Layout/footer.php";
-    ?>
+    <script src="../assets/Js/novedades.js"></script>
+    <?php require_once "./Layout/footer.php"; ?>
 
 </body>
-
 </html>
