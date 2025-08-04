@@ -12,6 +12,7 @@ if (!empty($_POST['btn-confirmar'])) {
         $correo = $_POST["correo"];
         $torre = $_POST["torre"];
         $apartamento = $_POST["apartamento"];
+        $parqueadero = $_POST["parqueadero"];
         $estado = $_POST["estado"];
         $rol = $_POST["rol"];
         $mora = $_POST["mora"];
@@ -23,6 +24,7 @@ if (!empty($_POST['btn-confirmar'])) {
                 SET usu_correo = :correo,
                     usu_torre_residencia = :torre,
                     usu_apartamento_residencia = :apartamento,
+                    usu_parqueadero_asignado = :parqueadero,
                     usu_estado = :estado,
                     usu_rol = :rol,
                     usu_mora = :mora
@@ -34,6 +36,7 @@ if (!empty($_POST['btn-confirmar'])) {
             $stmt->bindParam(':correo', $correo);
             $stmt->bindParam(':torre', $torre);
             $stmt->bindParam(':apartamento', $apartamento);
+            $stmt->bindParam(':parqueadero', $parqueadero);
             $stmt->bindParam(':estado', $estado);
             $stmt->bindParam(':rol', $rol);
             $stmt->bindParam(':mora',$mora);
