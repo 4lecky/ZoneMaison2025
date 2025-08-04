@@ -1,15 +1,11 @@
-
-/* Formulario Registro de vehiculo */
-
-/* Agrupa ambos bloques lado a lado */
+/* ==================== Menú lateral ==================== */
 .contenedor-botones {
   display: flex;
   justify-content: center;
-  gap: 80px; /* Separación entre bloques */
-  flex-wrap: wrap; /* Opcional para adaptar en móviles */
+  gap: 80px;
+  flex-wrap: wrap;
 }
 
-/* Cada bloque de imagen + texto + botón */
 .bloque {
   display: flex;
   flex-direction: column;
@@ -18,34 +14,25 @@
   text-align: center;
 }
 
-/* Estilo de las imágenes */
 .img_parqueadero {
   width: 350px;
   height: 350px;
   margin: 50px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra ligera */
-  filter: brightness(1.1); /* Un poco más brillante al pasar el mouse */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .img_parqueadero:hover {
-  width: 350px;
-  height: 350px;
-  margin: 50px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 10px;
-  transform: scale(1.1); /* Efecto zoom */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra ligera */
-  filter: brightness(1.1); /* Un poco más brillante */
+  transform: scale(1.1);
 }
 
-/* Texto explicativo debajo de la imagen */
 .texto-hover-parqueadero {
-  margin: 10px 0;
+  margin: 10px 0 50px 0;
   font-weight: bold;
   font-size: 14px;
   color: #333;
-  margin-bottom: 50px;
   text-align: center;
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -53,8 +40,6 @@
   padding: 10px;
 }
 
-
-/* Botón */
 .menu-button {
   width: 100%;
   padding: 15px;
@@ -72,9 +57,46 @@
   background-color: #395b41;
 }
 
+/* ==================== Formularios Generales ==================== */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
+.input-box {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
 
-/* ----- Estructura General del Contenedor ----- */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.acciones button {
+  padding: 12px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background-color: #7b9a82;
+  color: white;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+}
+
+.acciones button:hover {
+  background-color: #5f7d68;
+  transform: scale(1.05);
+}
+
+/* ==================== Formulario Registro Vehículo ==================== */
 .formulario-container-registro {
   flex: 1;
   padding: 40px;
@@ -93,7 +115,6 @@
   font-size: 24px;
 }
 
-/* ----- Fieldsets ----- */
 .formulario-registro fieldset {
   border: 1px solid #ccc;
   padding: 25px;
@@ -109,7 +130,6 @@
   padding: 0 10px;
 }
 
-/* ----- Etiquetas e Inputs ----- */
 .formulario-registro label {
   margin-top: 10px;
   font-weight: bold;
@@ -123,18 +143,7 @@
 .formulario-registro input[type="date"],
 .formulario-registro input[type="time"],
 .formulario-registro textarea,
-.formulario-registro select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  box-sizing: border-box;
-  transition: border 0.3s ease;
-}
-
+.formulario-registro select,
 .listaDesplegable {
   width: 100%;
   padding: 10px;
@@ -153,63 +162,12 @@
   outline: none;
 }
 
-/* ----- Agrupación de Inputs ----- */
-.input-group {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.input-box {
-  flex: 1;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ----- Área de Observaciones u otros textos largos ----- */
 .formulario-registro textarea {
   resize: vertical;
   min-height: 80px;
 }
 
-/* ----- Botones del Formulario ----- */
-.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.acciones button {
-  padding: 12px 25px;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  background-color: #7b9a82;
-  color: white;
-  cursor: pointer;
-  border-radius: 100px;
-  transition: all 0.3s ease-in-out;
-}
-
-.acciones button:hover {
-  background-color: #5f7d68;
-  transform: scale(1.05);
-}
-
-
-
-
-
-
-
-
-
-/* Formulario cobro de tarifa */
-
-/* Recuadro general del contenedor */
+/* ==================== Formulario Cobro Tarifa ==================== */
 .formulario-container-cobro {
   flex: 1;
   padding: 40px;
@@ -220,7 +178,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Títulos principales del formulario */
 .formulario-container-cobro h2,
 .formulario-container-cobro h3 {
   text-align: center;
@@ -228,7 +185,6 @@
   margin-bottom: 20px;
 }
 
-/* Formulario principal */
 .formulario-container-cobro form {
   border: 1px solid #ccc;
   padding: 30px;
@@ -236,7 +192,6 @@
   background-color: #f9f9f9;
 }
 
-/* Fieldset con marco y espaciado */
 .formulario-container-cobro fieldset {
   border: 1px solid #ccc;
   padding: 20px;
@@ -244,20 +199,17 @@
   margin-bottom: 25px;
 }
 
-/* Estilo del legend (subtítulo del bloque) */
 .formulario-container-cobro legend {
   font-weight: bold;
   padding: 0 10px;
 }
 
-/* Estilos de los labels */
 .formulario-container-cobro label {
   font-weight: bold;
   margin-top: 10px;
   display: block;
 }
 
-/* Inputs y textarea */
 .formulario-container-cobro input[type="text"],
 .formulario-container-cobro input[type="email"],
 .formulario-container-cobro input[type="date"],
@@ -274,61 +226,13 @@
   box-sizing: border-box;
 }
 
-/* Textarea adaptable */
 .formulario-container-cobro textarea.auto-ajustable {
   resize: vertical;
   min-height: 100px;
 }
 
-/* Agrupación en columnas */
-.input-group {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.input-box {
-  flex: 1;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Botones de acción */
-.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.acciones button {
-  padding: 12px 25px;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  background-color: #7b9a82;
-  color: white;
-  cursor: pointer;
-  border-radius: 100px;
-  transition: all 0.3s ease-in-out;
-}
-
-.acciones button:hover {
-  background-color: #5f7d68;
-  transform: scale(1.05);
-}
-
-
-
-
-
-
-
-
-
-/* ----- Contenedor del Formulario de Reportes ----- */
-.formulario-reporte {
+/* ==================== Formulario Consulta Parqueadero ==================== */
+.formulario-container-Consulta {
   flex: 1;
   padding: 40px;
   max-width: 1100px;
@@ -339,43 +243,39 @@
   margin-bottom: 40px;
 }
 
-.formulario-reporte h2 {
+.formulario-container-Consulta h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #333;
   font-size: 24px;
 }
 
-/* ----- Fieldset y Legend ----- */
-.formulario-reporte fieldset {
+.formulario-consulta fieldset {
   border: 1px solid #ccc;
-  padding: 30px;
+  padding: 25px;
   border-radius: 15px;
   margin-bottom: 30px;
   background-color: #f9f9f9;
 }
 
-.formulario-reporte legend {
+.formulario-consulta legend {
   font-weight: bold;
   font-size: 18px;
   color: #444;
   padding: 0 10px;
-  margin-bottom: 20px;
 }
 
-/* ----- Etiquetas e Inputs ----- */
-.formulario-reporte label {
-  display: block;
+.formulario-consulta label {
   margin-top: 10px;
   font-weight: bold;
+  display: block;
   font-size: 14px;
   color: #333;
 }
 
-.formulario-reporte input[type="text"],
-.formulario-reporte input[type="email"],
-.formulario-reporte input[type="date"],
-.formulario-reporte textarea {
+.formulario-consulta input[type="text"],
+.formulario-consulta textarea,
+.formulario-consulta select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -387,136 +287,40 @@
   transition: border 0.3s ease;
 }
 
-.formulario-reporte input:focus,
-.formulario-reporte textarea:focus {
+.formulario-consulta input:focus,
+.formulario-consulta textarea:focus,
+.formulario-consulta select:focus {
   border-color: #7b9a82;
   outline: none;
 }
 
-/* ----- Agrupación de Inputs ----- */
-.input-group {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.input-box {
-  flex: 1;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ----- Textarea Estilo ----- */
-.formulario-reporte textarea {
+.formulario-consulta textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
 }
 
-/* ----- Botones ----- */
-.acciones {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.acciones button {
-  padding: 12px 25px;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  background-color: #7b9a82;
-  color: white;
-  cursor: pointer;
-  border-radius: 100px;
-  transition: all 0.3s ease-in-out;
-}
-
-.acciones button:hover {
-  background-color: #5f7d68;
-  transform: scale(1.05);
-}
-
-
-
-
-
-
-
-
-/* Formulario Consulta Parqueadero */
-.formulario-registro select,
-.formulario-container-consulta select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  box-sizing: border-box;
-  transition: border 0.3s ease;
-}
-
-
-.formulario-container-consulta {
+/* ==================== CRUD Consulta Parqueadero ==================== */
+.crud-container-consulta {
   background-color: #fff;
   border-radius: 15px;
   padding: 30px;
   margin: 20px auto;
-  max-width: 800px;
+  max-width: 1000px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   font-family: Arial, sans-serif;
 }
 
-
-.table-card h3 {
-  margin-bottom: 15px;
-}
-
-.consulta-filtros {
-  margin-bottom: 20px;
-}
-
-.tabla-responsive {
-  overflow-x: auto;
-}
-
-.tabla-parqueaderos {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.tabla-parqueaderos th,
-.tabla-parqueaderos td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.empty-state {
+.crud-container-consulta h2 {
   text-align: center;
-  margin-top: 20px;
-  color: #888;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
 }
 
-.acciones-tabla {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.btn-editar {
-  padding: 10px 20px;
-  background-color: #7b9a82;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.btn-editar:hover {
-  background-color: #5f7d68;
+.crud-container-consulta .table-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #f9f9f9;
 }
 

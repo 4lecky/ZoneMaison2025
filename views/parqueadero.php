@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
+require_once "./layout/header.php"
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,16 +49,28 @@
         <button class="menu-button" onclick="mostrarFormulario('formularioCobro')">COBRO TARIFAS</button>
       </div>
 
+      <!-- Tercer bloque: Consulta de Parqueadero -->
+      <div class="bloque">
+        <img src="../assets/img/ConsultaParqueadero.png" alt="Icono Consulta Parqueadero" class="img_parqueadero" />
+        <p class="texto-hover-parqueadero">
+          Consulta fácilmente el estado actual de los parqueaderos. Verifica disponibilidad, ocupación y observaciones 
+          relacionadas para una mejor organización y control.
+        </p>
+        <button class="menu-button" onclick="mostrarFormulario('formularioConsulta')">CONSULTA PARQUEADERO</button>
+      </div>
+
+
     </div>
   </aside>
 
 
-  <!-- Formulario Consulta Parqueadero -->
-  <div class="contenedorConsulta">
-    <main id="formularioConsulta" style="display: block;">
-      <div class="formulario-container-consulta">
+  <!-- Formulario Consulta de registro de vehiculo -->
+  <!-- CRUD Consulta de Parqueaderos -->
+  <div class="contenedorCrudConsulta">
+    <main id="crudConsultaParqueadero" style="display: block;">
+      <div class="crud-container-consulta">
 
-        <h2>CONSULTA DE PARQUEADERO</h2>
+        <h2>CONSULTA DE PARQUEADEROS</h2>
 
         <section class="table-card">
           <h3>Consulta de Parqueaderos</h3>
@@ -95,12 +117,65 @@
   </div>
 
 
+
   <!-- Formulario Registro de Vehiculos-->
   <main id="formularioRegistro" style="display: none;">
     <div class="formulario-container-registro">
 
       <h2>REGISTRO DE VEHÍCULOS</h2>
       <form action="../controller/recibirDatosRegistroParqueadero.php" method="POST" class="formulario-registro">
+
+
+
+        <fieldset>
+
+          <legend>Formulario Datos Personales Residente/Propietario</legend>
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Email" required />
+
+          <div class="input-group">
+            <div class="input-box">
+              <label>Tipo Doc</label>
+              <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+                <option value="">-- Selecciona un tipo --</option>
+                <option value="CC">Cédula de Ciudadanía (CC)</option>
+                <option value="CE">Cédula de Extranjería (CE)</option>
+                <option value="PA">Pasaporte (PA)</option>
+              </select>
+            </div>
+            <div class="input-box">
+              <label>Número Documento</label>
+              <input type="text" name="numero_doc" placeholder="Número Documento" required />
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <label>Nombre Completo Residente/Propietario</label>
+          <input type="text" name="nombre" placeholder="Nombre Completo" required />
+
+
+          <div class="input-group">
+            <div class="input-box">
+              <label>Num. Torre</label>
+              <input type="text" name="torre" placeholder="Num. Torre" required />
+            </div>
+            <div class="input-box">
+              <label>Num. Apto</label>
+              <input type="text" name="apto" placeholder="Num. Apto" required />
+            </div>
+          </div>
+
+        </fieldset>
+
+
+
+
+
 
         <fieldset>
           <legend>Datos del Vehículo y Propietario</legend>
@@ -135,12 +210,29 @@
             </div>
           </div>
 
+
           <label>Estado de Ingreso</label>
-          <select name="estado" required>
-            <option value="">Seleccione el Estado</option>
-            <option value="ocupado">Ocupado</option>
-            <option value="disponible">Disponible</option>
+          <select class="listaDesplegable" type="text" name="estado" id="estado" required>
+            <option value="">Seleccione el Estado de Ingreso del Vehiculo</option>
+            <option value="buenas_Condiciones">Buenas Condiciones</option>
+            <option value="malas_condiciones">Malas condiciones</option>
           </select>
+
+
+          <div class="input-group">
+            <div class="input-box">
+              <label>Fecha de Ingreso:
+                <input type="date" name="fecha_ingreso" placeholder="dd/mm/aaaa" required />
+              </label>
+            </div>
+            <div class="input-box">
+              <label>Fecha de Salida:
+                <input type="date" name="fecha_salida" placeholder="dd/mm/aaaa" required />
+              </label>
+            </div>
+          </div>
+
+
 
           <!-- Llaves foráneas -->
           <input type="hidden" name="usuario_cedula" value="<?php echo $_SESSION['usu_cedula'] ?? ''; ?>">
@@ -169,6 +261,50 @@
 
         <label>Número de Recibo</label>
         <input type="text" name="numRecibo" required>
+
+
+      
+        <div class="input-group">
+          <div class="input-box">
+            <label>Tipo Doc</label>
+            <select type="text" name="tipo_doc" placeholder="Tipo Doc" required>
+              <option value="">-- Selecciona un tipo --</option>
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+              <option value="PA">Pasaporte (PA)</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label>Número Documento</label>
+            <input type="text" name="num_doc" placeholder="Número Documento" required>
+          </div>
+        </div>
+
+
+
+
+
+        <label>Nombre Completo Residente/Propietario</label>
+        <input type="text" name="nombre_residente" placeholder="Nombre completo residente/propietario" required>
+
+
+        <div class="input-group">
+          <div class="input-box">
+            <label>Num. Torre</label>
+            <input type="text" name="torre" placeholder="Num. Torre" required>
+          </div>
+          <div class="input-box">
+            <label>Num. Apto</label>
+            <input type="text" name="apartamento" placeholder="Num. Apto" required>
+          </div>
+        </div>
+
+
+
+
+
+
+
 
         <div class="input-group">
           <div class="input-box">
@@ -218,6 +354,59 @@
       </form>
     </div>
   </main>
+
+  <!-- Formulario Consulta de Parqueaderos--> 
+    <main id="formularioConsulta" style="display: none;">
+    <div class="formulario-container-Consulta">
+
+      <h2>CONSULTA DE PARQUEADEROS</h2>
+      <form action="#" method="POST" class="formulario-consulta">
+
+        <fieldset>
+          <legend>Formulario Parqueadero Propietario</legend>
+
+          <div class="input-group">
+            <div class="input-box">
+              <label>Tipo de Vehículo</label>
+              <select name="tipo_vehiculo" required>
+                <option value="">-- Selecciona un tipo --</option>
+                <option value="Carro">Carro</option>
+                <option value="Moto">Moto</option>
+              </select>
+            </div>
+            <div class="input-box">
+              <label>Placa</label>
+              <input type="text" name="placa" placeholder="Ej: ABC123" required />
+            </div>
+          </div>
+
+
+
+            <label>Observaciones / Estado de Salida</label>
+            <textarea name="observaciones" required></textarea>
+
+
+            <div class="input-box">
+              <label>Estado</label>
+              <select name="estado">
+                <option value="">-- Seleccione el estado --</option>
+                <option value="ocupado">Ocupado</option>
+                <option value="disponible">Disponible</option>
+                <option value="mantenimiento">En Mantenimiento</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="acciones">
+          <button type="submit">Consultar</button>
+          <button type="reset">Limpiar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+
 
   <div id="zonaConsultaFinal"></div>
 
