@@ -28,11 +28,11 @@
     flex-wrap: wrap;
     gap: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(210, 180, 140, 0.2);
+    border-bottom: 2px solid #ccc;
 }
 
 .reservas-title {
-    color: #9D825D;
+    color: #7b9a82;
     font-size: 1.75rem;
     font-weight: 700;
     margin: 0;
@@ -52,14 +52,14 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #8B7355;
+    color: #7b9a82;
     text-decoration: none;
     font-weight: 500;
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
-    border: 1px solid #D2B48C;
-    background: linear-gradient(135deg, rgba(210, 180, 140, 0.05), rgba(210, 180, 140, 0.1));
+    border: 1px solid #7b9a82;
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
@@ -80,19 +80,19 @@
 }
 
 .btn-icon:hover {
-    background: linear-gradient(135deg, rgba(210, 180, 140, 0.15), rgba(210, 180, 140, 0.25));
+    background: transparent;
     transform: translateY(-2px);
     box-shadow: 0 0.5rem 1rem rgba(210, 180, 140, 0.3);
-    color: #6B5B3D;
+    color: #7b9a82;
 }
 
 /* Formulario */
 #reservaForm {
     margin-top: 1.5rem;
-    background: linear-gradient(135deg, rgba(250, 248, 245, 0.5), rgba(255, 255, 255, 0.8));
+    background:#f9f9f9;
     padding: 2rem;
     border-radius: 0.75rem;
-    border: 1px solid rgba(210, 180, 140, 0.15);
+    border: 1px solid #ccc;
 }
 
 .form-group {
@@ -104,7 +104,7 @@
     display: block;
     margin-bottom: 0.75rem;
     font-weight: 600;
-    color: #8B7355;
+    color: #000000;
     font-size: 0.95rem;
     letter-spacing: 0.025rem;
 }
@@ -149,7 +149,7 @@ textarea.form-control {
     gap: 1rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(210, 180, 140, 0.2);
+    border-top: 1px solid #ccc;
 }
 
 .btn {
@@ -162,7 +162,7 @@ textarea.form-control {
     cursor: pointer;
     user-select: none;
     padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
@@ -171,10 +171,13 @@ textarea.form-control {
     overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
-    font-size: 0.9rem;
-    text-decoration: none;
+    color: white;
+    background-color: #9d825d;
+    box-shadow: 0 0.25rem 0.5rem rgba(157, 130, 93, 0.3);
+    z-index: 1;
 }
 
+/* Efecto de deslizamiento */
 .btn::before {
     content: '';
     position: absolute;
@@ -182,39 +185,46 @@ textarea.form-control {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: rgba(255, 255, 255, 0.1);
     transition: left 0.5s;
+    z-index: 0;
 }
 
 .btn:hover::before {
     left: 100%;
 }
 
+/* Trae el contenido por encima del ::before */
+.btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Botón Limpiar */
 .btn-secondary {
-    color: #fff;
-    background: linear-gradient(135deg, #8B7D6B, #6c757d);
-    border: 1px solid #6c757d;
+    background-color: #9d825d;
+    color: white;
 }
 
 .btn-secondary:hover {
-    background: linear-gradient(135deg, #5a6268, #545b62);
+    background-color: #8c714f;
     transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(108, 117, 125, 0.3);
-    color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(157, 130, 93, 0.3);
+    color: white;
 }
 
+/* Botón Guardar */
 .btn-primary {
-    color: #fff;
-    background: linear-gradient(135deg, #9D825D, #C19A6B);
-    border: 1px solid #9D825D;
-    box-shadow: 0 0.25rem 0.5rem rgba(210, 180, 140, 0.3);
+    background-color: #9d825d;
+    color: white;
+    box-shadow: 0 0.25rem 0.5rem rgba(157, 130, 93, 0.3);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #C19A6B, #B59263);
+    background-color: #8c714f;
     transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(210, 180, 140, 0.4);
-    color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(157, 130, 93, 0.4);
+    color: white;
 }
 
 /* Alertas */
@@ -255,7 +265,7 @@ textarea.form-control {
    ====================== */
 .areas-section {
     margin-top: 3rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(250, 248, 245, 0.8));
+    background: #fff;
     border-radius: 0.75rem;
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
     padding: 2rem;
@@ -266,7 +276,7 @@ textarea.form-control {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #9D825D;
+    color: #7b9a82;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
     position: relative;
@@ -280,7 +290,7 @@ textarea.form-control {
     left: 0;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #D2B48C, #C19A6B);
+    background: #7b9a82;
     border-radius: 2px;
 }
 
@@ -292,12 +302,12 @@ textarea.form-control {
 
 /* Tarjetas de áreas */
 .area-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(250, 248, 245, 0.9));
+    background: transparent;
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
     transition: all 0.4s ease;
-    border: 1px solid rgba(210, 180, 140, 0.2);
+    border: 1px solid #9D825D;
     position: relative;
 }
 
@@ -308,7 +318,7 @@ textarea.form-control {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #D2B48C, #C19A6B, #D2B48C);
+    background:transparent;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -320,7 +330,7 @@ textarea.form-control {
 .area-card:hover {
     transform: translateY(-0.5rem);
     box-shadow: 0 0.75rem 1.5rem rgba(210, 180, 140, 0.25);
-    border-color: #D2B48C;
+    border-color: #9;
 }
 
 .area-card a {
@@ -357,7 +367,7 @@ textarea.form-control {
 
 .area-card-content p {
     margin-bottom: 1rem;
-    color: #6B5B3D;
+    color: #9D825D;
     line-height: 1.6;
     font-size: 0.95rem;
 }
@@ -407,9 +417,9 @@ textarea.form-control {
 /* Detalles de áreas */
 .area-details {
     margin-top: 1.25rem;
-    border-top: 1px solid rgba(210, 180, 140, 0.3);
+    border-top: 1px solid #ccc;
     padding-top: 1.25rem;
-    background: rgba(250, 248, 245, 0.3);
+    background: transparent;
     border-radius: 0.5rem;
     padding: 1.25rem;
 }
@@ -440,12 +450,12 @@ textarea.form-control {
 }
 
 .detail-value {
-    color: #5D4E37;
+    color: #9D825D;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.7);
+    background: transparent;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-    border: 1px solid rgba(210, 180, 140, 0.2);
+    border: 1px solid #9D825D;
 }
 
 /* Textos auxiliares */
