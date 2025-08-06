@@ -106,6 +106,12 @@ require_once __DIR__ . "/Layout/header.php";
       </tbody>
     </table>
 
+        <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
+    <form action="" method="POST" enctype="multipart/form-data">
+      <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" required>
+      <button type="submit">Subir archivo</button>
+    </form>
+
 
 
   </main>
