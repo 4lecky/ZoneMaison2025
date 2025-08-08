@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS reservas (
 
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
-    paqu_TipoDoc enum('C.C', 'T.I') NOT NULL,
+    paqu_TipoDoc enum ('Cedula de cidadania', 'Cedula de extrangeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)') NOT NULL,
     paqu_usuario_cedula INTEGER (10) NOT null, 
     paqu_Destinatario VARCHAR (60) NOT null,
     paqu_Asunto text NOT null,
     paqu_FechaLlegada DATE NOT null,
     paqu_Hora time NOT null,
-    paqu_image VARCHAR (255) NOT null,
+    paqu_image NULL (255) NOT null,
     paqu_Descripcion text NOT null, 
     paqu_estado enum('Entregado','Pendiente') NOT NULL,
     PRIMARY KEY (Paqu_Id),
@@ -97,8 +97,6 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_salida TIME,
     vis_fecha_entrada DATE,
     vis_fecha_salida DATE,
-    vis_torre_visitada integer(10),
-    vis_Apto_visitado integer(10),
     PRIMARY KEY (vis_id));
 
 

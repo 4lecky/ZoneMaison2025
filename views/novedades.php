@@ -87,13 +87,20 @@ try {
                                 <div class="contenido">
                                     <div class="Asunto">
                                         <?= htmlspecialchars($muro['muro_Asunto'], ENT_QUOTES, 'UTF-8') ?>
-                                        <div class="meta-info">
-                                            <span class="hora"><?= htmlspecialchars($muro['muro_Hora'], ENT_QUOTES, 'UTF-8') ?></span>
-                                            <span class="fecha"><?= htmlspecialchars($muro['muro_Fecha'], ENT_QUOTES, 'UTF-8') ?></span>
-                                        </div>
                                     </div>
                                     <div class="Descripcion">
                                         <p class="texto-muro"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'], ENT_QUOTES, 'UTF-8')) ?></p>
+                                        
+                                        <?php
+                                        if (!isset($_SESSION['fecha_envio'])) {
+                                            $_SESSION['fecha_envio'] = date('d/m/Y');
+                                            $_SESSION['hora_envio'] = time('H:i');
+                                        }
+                                        ?>
+                                        <div class="meta-paquete">
+                                            <small>Enviado a las: <?= $_SESSION['fecha_envio'] ?> - <?= $_SESSION['hora_envio'] ?></small>
+                                        </div>
+
                                         <div class="acciones">
                                             <button class="animated-button btn-vermas" type="button">
                                                 <svg viewBox="0 0 24 24" class="arr-2">
@@ -109,7 +116,8 @@ try {
                                                 <span>✎</span>
                                             </a>
                                         </div>
-                                    </div>
+                                        </div>
+                        
                                 </div>
                             </div>
                         </div>
@@ -144,7 +152,13 @@ try {
                             <?php foreach ($paquetes_pendientes as $paquete): ?>
                                 <div class="tarjeta paquete-entregado">
                                     <div class="tarjeta-interna">
-                                        <div class="paquete-icono">📦</div>
+                                     <div class="imagen">
+                                                    <?php if (!empty($paquete['paqu_image'])): ?>
+                                                        <div class="imagen-container">
+                                                            <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
+                                                        </div>
+                                                    <?php endif; ?>
+
                                         <div class="contenido">
                                             <div class="Asunto"><?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?></div>
                                             <div class="Descripcion">
@@ -155,12 +169,7 @@ try {
                                                 <?php if (!empty($paquete['paqu_Hora'])): ?>
                                                     <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
                                                 <?php endif; ?>
-                                                <div class="imagen">
-                                                    <?php if (!empty($paquete['paqu_image'])): ?>
-                                                        <div class="imagen-container">
-                                                            <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
-                                                        </div>
-                                                    <?php endif; ?>
+                                               
                                                 </div>
                                             </div>
                                             <div class="btn-edit">

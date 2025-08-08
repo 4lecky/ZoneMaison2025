@@ -85,18 +85,6 @@ require_once "./Layout/header.php"
 
                     <div class="input-group">
                         <div class="input-box">
-                            <label for="torreVisitada">Número de Torre</label>
-                            <input type="number" class="form-control" name="torreVisitada" id="torreVisitada" placeholder="Ej: Torre 3" data-validate="telefono" min="1" required>
-                        </div>
-
-                        <div class="input-box">
-                            <label for="aptoVisitado">Número de Apartamento</label>
-                            <input type="number" class="form-control" name="aptoVisitado" id="aptoVisitado" placeholder="Ej: 302" data-validate="telefono" min="1" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="input-box">
                             <label for="fechaEntrada">Fecha de Entrada</label>
                             <input type="date" class="form-control" name="fechaEntrada" id="fechaEntrada" data-validate="date" required>
                         </div>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
+// require_once __DIR__ . '/../config/db.php';
 
 class RegistrarVisitaModel {
 
@@ -24,7 +24,7 @@ class RegistrarVisitaModel {
                     visi_email,
                     visi_telefono,
                     visi_usuario_cedula
-                ) VALUES (?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?)
             ");
             $stmtVisitante->execute([
                 $datos['tipo_doc'],
@@ -47,7 +47,7 @@ class RegistrarVisitaModel {
                     vis_hora_salida,
                     vis_torre_visitada,
                     vis_Apto_visitado               
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
             $stmtVisita->execute([
                 $idVisitante,
@@ -55,8 +55,6 @@ class RegistrarVisitaModel {
                 $datos['horaEntrada'],
                 $datos['fechaSalida'],
                 $datos['horaSalida'],
-                $datos['torreVisitada'],
-                $datos['aptoVisitado']
         
             ]);
 
