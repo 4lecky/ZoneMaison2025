@@ -55,8 +55,6 @@ class RegistrarVisitaModel {
                 $datos['horaEntrada'],
                 $datos['fechaSalida'],
                 $datos['horaSalida'],
-                $datos['torreVisitada'],
-                $datos['aptoVisitado']
         
             ]);
 

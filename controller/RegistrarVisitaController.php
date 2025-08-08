@@ -21,8 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'horaEntrada'   => $_POST['horaEntrada']   ?? null,
         'fechaSalida'   => $_POST['fechaSalida']   ?? null,
         'horaSalida'    => $_POST['horaSalida']    ?? null,
-        'torreVisitada' => $_POST['torreVisitada'] ?? null,
-        'aptoVisitado'  => $_POST['aptoVisitado']  ?? null,
         'usuario'       => $_POST['usuario']       ?? null
     ];
 
