@@ -128,6 +128,7 @@ CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT
     PRIMARY KEY (alqu_id),
     FOREIGN KEY (alqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
     FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
+
                                                                                                                                 
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
     parq_vehi_placa VARCHAR (6) NOT NULL,
@@ -142,6 +143,16 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
     FOREIGN KEY (parq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
     FOREIGN KEY (parq_visita_id) REFERENCES tbl_visita (vis_id),
     FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
+
+
+CREATE TABLE IF NOT EXISTS tbl_consultaParqueadero (consulParq_id INT (50) NOT NULL AUTO_INCREMENT,
+    consulParq_tipoVehiculo VARCHAR (255) NOT NULL,
+    consulParq_placa VARCHAR (10) NOT NULL,
+    consulParq_observaciones VARCHAR (30000) NOT NULL, 
+    consulParq_estadoSalida VARCHAR (90) NOT NULL,
+    consulParq_usuario_cedula INT (10) NOT NULL,
+    PRIMARY KEY (consulParq_id),
+    FOREIGN KEY (consulParq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula));
 
 
 CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,

@@ -49,14 +49,14 @@ require_once "./layout/header.php"
         <button class="menu-button" onclick="mostrarFormulario('formularioCobro')">COBRO TARIFAS</button>
       </div>
 
-      <!-- Tercer bloque: Consulta de Parqueadero -->
+      <!-- Tercer bloque:Parqueadero Propietario -->
       <div class="bloque">
         <img src="../assets/img/ConsultaParqueadero.png" alt="Icono Consulta Parqueadero" class="img_parqueadero" />
         <p class="texto-hover-parqueadero">
           Consulta fácilmente el estado actual de los parqueaderos. Verifica disponibilidad, ocupación y observaciones 
-          relacionadas para una mejor organización y control.
+          relacionadas para una mejor organización y control, solo para propietarios.
         </p>
-        <button class="menu-button" onclick="mostrarFormulario('formularioConsulta')">CONSULTA PARQUEADERO</button>
+        <button class="menu-button" onclick="mostrarFormulario('formularioPropietario')">CONSULTA PARQUEADERO PROPIETARIOS</button>
       </div>
 
 
@@ -66,23 +66,24 @@ require_once "./layout/header.php"
 
   <!-- Formulario Consulta de registro de vehiculo -->
   <!-- CRUD Consulta de Parqueaderos -->
-  <div class="contenedorCrudConsulta">
+  <div class="crud-container-consulta">
     <main id="crudConsultaParqueadero" style="display: block;">
-      <div class="crud-container-consulta">
 
         <h2>CONSULTA DE PARQUEADEROS</h2>
 
         <section class="table-card">
           <h3>Consulta de Parqueaderos</h3>
 
-          <div class="consulta-filtros">
-            <label for="filtroParqueadero">Filtrar:</label>
-            <select class="filtro-parqueadero" id="filtroParqueadero">
-              <option value="todos">Todos los registros</option>
-              <option value="ocupados">Parqueaderos ocupados</option>
-              <option value="disponibles">Parqueaderos disponibles</option>
-              <option value="reservados">Reservados</option>
-            </select>
+          <div class="input-group">
+            <div class="input-box">
+              <label>Filtrar:</label>
+              <select name="filtro-parqueadero" required>
+                <option value="todos">Todos los registros</option>
+                <option value="ocupados">Parqueaderos ocupados</option>
+                <option value="disponibles">Parqueaderos disponibles</option>
+                <option value="reservados">Reservados</option>
+              </select>
+            </div>
           </div>
 
           <div class="tabla-responsive">
@@ -111,8 +112,6 @@ require_once "./layout/header.php"
             <button type="button" id="btnEditarParqueadero" class="btn-editar">Editar Registro</button>
           </div>
         </section>
-
-      </div>
     </main>
   </div>
 
@@ -355,56 +354,49 @@ require_once "./layout/header.php"
     </div>
   </main>
 
-  <!-- Formulario Consulta de Parqueaderos--> 
-    <main id="formularioConsulta" style="display: none;">
-    <div class="formulario-container-Consulta">
 
-      <h2>CONSULTA DE PARQUEADEROS</h2>
-      <form action="#" method="POST" class="formulario-consulta">
 
-        <fieldset>
-          <legend>Formulario Parqueadero Propietario</legend>
 
-          <div class="input-group">
-            <div class="input-box">
-              <label>Tipo de Vehículo</label>
-              <select name="tipo_vehiculo" required>
-                <option value="">-- Selecciona un tipo --</option>
-                <option value="Carro">Carro</option>
-                <option value="Moto">Moto</option>
-              </select>
-            </div>
-            <div class="input-box">
-              <label>Placa</label>
-              <input type="text" name="placa" placeholder="Ej: ABC123" required />
-            </div>
+<!-- Formulario Propietarios Consulta de Parqueaderos--> 
+<main id="formularioPropietario" style="display: none;">
+  <div class="formulario-container-Propietario">
+    <h2>CONSULTA DE PARQUEADEROS PROPIETARIOS</h2>
+    <form action="#" method="POST" class="formulario-Propietario">
+      <fieldset>
+        <legend>Formulario Parqueadero Propietario</legend>
+        <div class="input-group">
+          <div class="input-box">
+            <label>Tipo de Vehículo</label>
+            <select name="tipo_vehiculo" required>
+              <option value="">-- Selecciona un tipo --</option>
+              <option value="Carro">Carro</option>
+              <option value="Moto">Moto</option>
+            </select>
           </div>
-
-
-
-            <label>Observaciones / Estado de Salida</label>
-            <textarea name="observaciones" required></textarea>
-
-
-            <div class="input-box">
-              <label>Estado</label>
-              <select name="estado">
-                <option value="">-- Seleccione el estado --</option>
-                <option value="ocupado">Ocupado</option>
-                <option value="disponible">Disponible</option>
-                <option value="mantenimiento">En Mantenimiento</option>
-              </select>
-            </div>
+          <div class="input-box">
+            <label>Placa</label>
+            <input type="text" name="placa" placeholder="Ej: ABC123" required />
           </div>
-        </fieldset>
-
-        <div class="acciones">
-          <button type="submit">Consultar</button>
-          <button type="reset">Limpiar</button>
         </div>
-      </form>
-    </div>
-  </main>
+        <label>Observaciones / Estado de Salida</label>
+        <textarea name="observaciones" required></textarea>
+        <div class="input-box">
+          <label>Estado</label>
+          <select name="estado">
+            <option value="">-- Seleccione el estado --</option>
+            <option value="ocupado">Ocupado</option>
+            <option value="disponible">Disponible</option>
+            <option value="mantenimiento">En Mantenimiento</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="acciones">
+        <button type="submit">Consultar</button>
+        <button type="reset">Limpiar</button>
+      </div>
+    </form>
+  </div>
+</main>
 
 
 
