@@ -97,8 +97,6 @@ CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_salida TIME,
     vis_fecha_entrada DATE,
     vis_fecha_salida DATE,
-    vis_torre_visitada integer(10),
-    vis_Apto_visitado integer(10),
     PRIMARY KEY (vis_id));
 
 

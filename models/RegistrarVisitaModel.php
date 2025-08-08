@@ -44,10 +44,8 @@ class RegistrarVisitaModel {
                     vis_fecha_entrada,
                     vis_hora_entrada,
                     vis_fecha_salida,
-                    vis_hora_salida,
-                    vis_torre_visitada,
-                    vis_Apto_visitado               
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    vis_hora_salida,          
+                ) VALUES (?, ?, ?, ?, ?,)
             ");
             $stmtVisita->execute([
                 $idVisitante,
@@ -55,8 +53,6 @@ class RegistrarVisitaModel {
                 $datos['horaEntrada'],
                 $datos['fechaSalida'],
                 $datos['horaSalida'],
-                $datos['torreVisitada'],
-                $datos['aptoVisitado']
         
             ]);
 
