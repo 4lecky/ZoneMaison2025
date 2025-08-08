@@ -27,7 +27,6 @@ require_once "./Layout/header.php";
     <section class="principal-page">
       <h2>Muro</h2>
 
-
       <!--  Aquí comienza el formulario -->
       <form action="../controller/muroController.php" method="POST" enctype="multipart/form-data" class="muro">
         <fieldset>
@@ -59,18 +58,26 @@ require_once "./Layout/header.php";
             <?php endforeach; ?>
           </select>
 
-
           <!-- Asunto -->
           <label>Asunto</label>
           <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto" required />
 
-          <!-- Fecha -->
-          <label>Fecha</label>
-          <input type="date" class="form-control" id="fecha" name="fecha" required />
+          <!-- Campos para fecha y hora del evento -->
+          <div class="fecha-hora-container" style="display: flex; gap: 15px; margin: 15px 0;">
+            <div style="flex: 1;">
+              <label for="fechaEvento">Fecha del evento:</label>
+              <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+            </div>
+            <div style="flex: 1;">
+              <label for="horaEvento">Hora del evento:</label>
+              <input type="time" class="form-control" id="horaEvento" name="horaEvento">
+            </div>
+          </div>
 
-          <!-- Hora -->
-          <label>Hora</label>
-          <input type="time" class="form-control" id="hora" name="hora" required />
+          <!-- Botón para insertar fecha y hora -->
+          <button type="button" class="btn btn-primary" onclick="insertarFechaHora()" style="margin-bottom: 10px;">
+          Insertar Fecha y Hora en el Texto
+          </button>
 
           <!-- Imagen -->
           <div class="imagen">
@@ -91,25 +98,23 @@ require_once "./Layout/header.php";
           </div>
 
           <!-- Descripción -->
-          <label>Descripción</label>
+          <label for="descripcion">Descripción</label>
           <textarea class="form-control" rows="10" placeholder="Descripción..." id="descripcion" name="descripcion" required>
-Estimados residentes, Les informamos 
+
+Se llavara a cabo
 
 Para cualquier pregunta o inconveniente, por favor, contacten a la administración.
-
 Agradecemos su comprensión y cooperación.
 Atentamente, [Nombre del Responsable].
-Administración del Conjunto Residencial [Nombre conjunto residencial].
-        </textarea>
+Administración del Conjunto Residencial [Nombre conjunto residencial].</textarea>
 
           <!-- Botones -->
-          <div style="display: flex; justify-content: center; gap: 10px;">
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
             <button type="submit" class="enviar">Enviar</button>
-            <button type="reset" class="cancelar">Cancelar</button>
+            <button type="reset" class="cancelar" onclick="resetearFormulario()">Cancelar</button>
           </div>
         </fieldset>
       </form>
-
 
     </section>
   </main>
@@ -117,6 +122,80 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].
   <?php require_once "./Layout/footer.php"; ?>
 
   <script src="../assets/Js/muro.js"></script>
+
+  <script>
+    // Establecer fecha y hora actuales por defecto al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      const ahora = new Date();
+      
+      // Establecer fecha actual
+      document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
+      
+      // Establecer hora actual
+      document.getElementById('horaEvento').value = ahora.toTimeString().slice(0, 5);
+    });
+
+    function insertarFechaHora() {
+      const fecha = document.getElementById('fechaEvento').value;
+      const hora = document.getElementById('horaEvento').value;
+      const textarea = document.getElementById('descripcion');
+      
+      if (!fecha || !hora) {
+        alert('Por favor, selecciona una fecha y una hora para el evento.');
+        return;
+      }
+      
+      try {
+        // Convertir fecha a formato legible en español
+        const fechaObj = new Date(fecha + 'T00:00:00');
+        const fechaTexto = fechaObj.toLocaleDateString('es-CO', {
+          weekday: 'long',
+          year: 'numeric', 
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        // Convertir hora a formato 12 horas
+        const [horas, minutos] = hora.split(':');
+        const fechaHora = new Date();
+        fechaHora.setHours(parseInt(horas), parseInt(minutos));
+        const horaTexto = fechaHora.toLocaleTimeString('es-CO', {
+          hour: 'numeric',
+          minute: '2-digit', 
+          hour12: true
+        });
+        
+        // Crear el texto con formato deseado
+        const textoFechaHora = `Estimados residentes, Les informamos que el día ${fechaTexto} a las ${horaTexto} ` ;
+        
+        // Insertar al inicio del textarea
+        textarea.value = textoFechaHora + textarea.value;
+        
+        // Posicionar cursor al final del texto insertado
+        const nuevaPos = textoFechaHora.length;
+        textarea.setSelectionRange(nuevaPos, nuevaPos);
+        textarea.focus();
+        
+      } catch (error) {
+        alert('Error al formatear la fecha y hora. Por favor, verifica que sean válidas.');
+        console.error('Error:', error);
+      }
+    } 
+
+    function resetearFormulario() {
+      // Restablecer el textarea al texto original
+      const textarea = document.getElementById('descripcion');
+      textarea.value = `Para cualquier pregunta o inconveniente, por favor, contacten a la administración.
+Agradecemos su comprensión y cooperación.
+Atentamente, [Nombre del Responsable].
+Administración del Conjunto Residencial [Nombre conjunto residencial].`;
+      
+      // Restablecer fecha y hora a valores actuales
+      const ahora = new Date();
+      document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
+      document.getElementById('horaEvento').value = ahora.toTimeString().slice(0, 5);
+    }
+  </script>
 
 </body>
 

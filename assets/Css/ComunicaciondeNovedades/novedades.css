@@ -163,6 +163,14 @@
   font-size: 30px;
 }
 
+.imagen {
+  display: flex;
+}
+
+img.paquete-imagen {
+margin: 10px;
+}
+
 .contenido {
   flex-grow: 1;
 }
