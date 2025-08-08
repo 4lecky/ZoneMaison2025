@@ -1,12 +1,13 @@
 <?php
 
-require_once '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../models/ImportarExcelModel.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class ExcelController {
+class ImportarExcelController {
+
     public function importar() {
         global $pdo; // Usamos la conexión PDO definida en config
 
@@ -16,7 +17,7 @@ class ExcelController {
             $hoja = $spreadsheet->getActiveSheet();
             $filas = $hoja->toArray();
 
-            $usuario = new Usuario($pdo);
+            $ExcelModel = new Excel($pdo);
 
             for ($i = 1; $i < count($filas); $i++) {
                 $fila = $filas[$i];
@@ -33,9 +34,18 @@ class ExcelController {
                 $propiedades = trim($fila[9]);
 
 
-                // Solo insertar si hay datos válidos
-                if ($nombre && $correo && $telefono) {
-                    $usuario->insertar($nombre, $correo, $telefono);
+                // Solo insertar si hay datos válidos (Completarlo)
+                if ($cedula && $tipoDocumento && $nombre && $telefono && $correo && $contraseña && $apartamento && $torre && $parqueadero && $propiedades) {
+                    $ExcelModel->insertar($cedula, 
+                    $tipoDocumento, 
+                    $nombre, 
+                    $telefono, 
+                    $correo, 
+                    $contraseña, 
+                    $apartamento, 
+                    $torre, 
+                    $parqueadero, 
+                    $propiedades);
                 }
             }
 

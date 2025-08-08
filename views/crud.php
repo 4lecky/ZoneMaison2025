@@ -107,7 +107,7 @@ require_once __DIR__ . "/Layout/header.php";
     </table>
 
         <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
       <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" required>
       <button type="submit">Subir archivo</button>
     </form>
@@ -142,7 +142,6 @@ require_once __DIR__ . "/Layout/header.php";
 
   <!-- Links de JavaScript -->
   <script src="../assets/Js/crud/tableCrud.js"></script>
-  <script src="../assets/Js/header.js"></script>
 
 
   <?php

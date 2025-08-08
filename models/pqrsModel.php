@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
+// require_once __DIR__ . '/../config/db.php';
 
 class PqrsModel {
     private $pdo;
@@ -9,7 +9,7 @@ class PqrsModel {
     }
 
     public function registrar($data): mixed {
-        $sql = "INSERT INTO tbl_pqrs (nombres, apellidos, identificacion, email, telefono, tipo_pqr, asunto, mensaje, archivos, medio_respuesta) 
+        $sql = "INSERT INTO tbl_pqrs (nombres, apellidos, identificacion, email, telefono, tipo_pqr, asunto, mensaje, archivos, medio_respuesta)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
 
@@ -38,12 +38,12 @@ class PqrsModel {
     }
 
     public function actualizar($id, $data): bool {
-        $sql = "UPDATE tbl_pqrs SET nombres = ?, apellidos = ?, identificacion = ?, email = ?, telefono = ?, tipo_pqr = ?, asunto = ?, mensaje = ?, archivos = ?, medio_respuesta = ? 
+        $sql = "UPDATE tbl_pqrs SET nombres = ?, apellidos = ?, identificacion = ?, email = ?, telefono = ?, tipo_pqr = ?, asunto = ?, mensaje = ?, archivos = ?, medio_respuesta = ?
                 WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         $medioRespuesta = is_array($data['medio_respuesta']) ? $data['medio_respuesta'] : [$data['medio_respuesta']];
         $medioRespuestaString = implode(',', $medioRespuesta);
-        
+
         $params = [
             $data['nombres'], $data['apellidos'], $data['identificacion'], $data['email'],
             $data['telefono'], $data['tipo_pqr'], $data['asunto'], $data['mensaje'],
