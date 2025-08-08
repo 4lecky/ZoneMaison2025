@@ -52,7 +52,7 @@ if (isset($_POST['login'])) {
     $user = $usuario->login($_POST['Email'], $_POST['Password']);
     if ($user) {
         $_SESSION['usuario'] = $user;
-        header('Location: ../views/home.php');
+        header('Location: ../views/novedades.php');
     } else {
         // echo "Credenciales incorrectas.";
         $_SESSION['errorLogin'] = true;
