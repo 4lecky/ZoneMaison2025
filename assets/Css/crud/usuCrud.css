@@ -47,4 +47,25 @@
   border-radius: 2px; /* Bordes redondeados de la linea inferior */
 }
 
+.containerExcelImport{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
 
+
+.btn_excel{
+  background-color: #7b9a82;
+  color: white;
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn_excel:hover{
+  background-color: #67816d;
+  font-weight: 700;
+
+}

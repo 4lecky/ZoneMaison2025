@@ -16,9 +16,5 @@ class EliminarUsuarioModels{
         return $stmt->execute([$cc]);
     }
 
-    // public function ordenar($cc){
-    //     $stmt = $this->pdo->prepare("SELECT * FROM tbl_usuario ORDER BY 
-    //         CASE WHEN usu_estado = 'Inactivo' THEN 1 ELSE 0 END, usu_nombre_completo ASC");
-    // }
 
 }

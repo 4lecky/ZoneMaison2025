@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 require_once __DIR__ . "/Layout/header.php";
@@ -59,8 +59,8 @@ require_once __DIR__ . "/Layout/header.php";
           <th scope="col">Torre</th>
           <th scope="col">Apartamento</th>
           <th scope="col">Parqueadero</th>
-          <th scope="col">Estado</th>
           <th scope="col">Rol</th>
+          <th scope="col">Estado</th>
           <th scope="col">Pago administración</th>
           <th scope="col">Editar/Eliminar</th>
         </tr>
@@ -68,7 +68,7 @@ require_once __DIR__ . "/Layout/header.php";
 
       <tbody>
 
-   
+
         <?php
         require_once '../config/db.php';
         $stmt = $pdo->query("SELECT usu.*, mor.*
@@ -106,11 +106,13 @@ require_once __DIR__ . "/Layout/header.php";
       </tbody>
     </table>
 
-        <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
-    <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
-      <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" required>
-      <button type="submit">Subir archivo</button>
-    </form>
+    <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
+    <div class="containerExcelImport">
+      <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
+        <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" class="input_excel" placeholder="Seleccione archivo" required>
+        <button type="submit" class="btn_excel">Subir excel</button>
+      </form>
+    </div>
 
 
 
