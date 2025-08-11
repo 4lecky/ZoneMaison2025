@@ -12,12 +12,12 @@ class ImportarExcelController {
         global $pdo; // Usamos la conexión PDO definida en config
 
         if (isset($_FILES['archivoExcel']['tmp_name'])) {
-            $archivo = $_FILES['archivoExcel']['tmp_name'];
+            $archivo = $_FILES['archivoExcel']['tmp_name'];     
             $spreadsheet = IOFactory::load($archivo);
             $hoja = $spreadsheet->getActiveSheet();
             $filas = $hoja->toArray();
 
-            $ExcelModel = new Excel($pdo);
+            $ExcelModel = new ImportarExcelModel($pdo);
 
             for ($i = 1; $i < count($filas); $i++) {
                 $fila = $filas[$i];
@@ -36,6 +36,12 @@ class ImportarExcelController {
 
                 // Solo insertar si hay datos válidos (Completarlo)
                 if ($cedula && $tipoDocumento && $nombre && $telefono && $correo && $contraseña && $apartamento && $torre && $parqueadero && $propiedades) {
+
+                    if ($ExcelModel->existeUsuario($cedula, $telefono, $correo)) {
+                        echo "El usuario con cédula $cedula, teléfono $telefono o correo $correo ya existe.<br>";
+                        continue; // Saltar a la siguiente fila del Excel
+                    }
+
                     $ExcelModel->insertar($cedula, 
                     $tipoDocumento, 
                     $nombre, 

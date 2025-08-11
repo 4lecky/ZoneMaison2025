@@ -74,8 +74,8 @@ unset($_SESSION['errorRegistro']);
                     <select class="campos_select" id="validationCustom04" name="TipoDocumento">
 
                         <option>Elija una opción</option>
-                        <option> Cedula de cidadania </option>
-                        <option> Cedula de extrangeria </option>
+                        <option> Cedula de ciudadania </option>
+                        <option> Cedula de extranjeria </option>
                         <option> Pasaporte </option>
                         <option> Permiso especial de permanencia (PEP) </option>
 
