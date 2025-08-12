@@ -14,7 +14,7 @@ VALUES ('Pagado'),
 /* MODIFICACIÓN*/
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_cedula INT (255) NOT null, 
-    usu_tipo_documento ENUM ('Cedula de ciudadania', 'Cedula de extrangeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)'),
+    usu_tipo_documento ENUM ('Cedula de ciudadania', 'Cedula de extranjeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)'),
     usu_nombre_completo Varchar(60) NOT null,
     usu_telefono BIGINT (10) NOT NULL,
     usu_correo Varchar(50) NOT null,
