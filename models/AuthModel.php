@@ -42,7 +42,8 @@ class Usuario
 
     public function login($email, $password)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM tbl_usuario WHERE usu_correo = ? ");
+        // Solo puede ingresar si es un usuario activo
+        $stmt = $this->pdo->prepare("SELECT * FROM tbl_usuario WHERE usu_correo = ? AND usu_estado = 'Activo' ");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
         if ($user && password_verify($password, $user['usu_password'])) {

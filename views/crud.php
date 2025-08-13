@@ -46,7 +46,7 @@ require_once __DIR__ . "/Layout/header.php";
         </div>
         <?php unset($_SESSION['mensaje']); ?>
       <?php endif; ?>
-      <!-- Aquí iría el resto del contenido de la tabla de usuarios -->
+
     </div>
 
     <table id="usuarios" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -106,12 +106,23 @@ require_once __DIR__ . "/Layout/header.php";
       </tbody>
     </table>
 
+
+
     <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
     <div class="containerExcelImport">
       <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
         <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" class="input_excel" placeholder="Seleccione archivo" required>
         <button type="submit" class="btn_excel">Subir excel</button>
       </form>
+    </div>
+
+    <div class="containerMsjExcel">
+      <?php if (isset($_SESSION['mensaje_excel'])): ?>
+        <div class="mensaje <?= $_SESSION['mensaje_excel']['tipo']; ?>">
+          <?= $_SESSION['mensaje_excel']['texto']; ?>
+        </div>
+      <?php unset($_SESSION['mensaje_excel']); ?>
+      <?php endif; ?>
     </div>
 
 
