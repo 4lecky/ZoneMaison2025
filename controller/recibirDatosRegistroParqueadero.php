@@ -3,21 +3,35 @@ $pdo = require_once '../config/db.php';
 require_once '../models/guardarDatosRegistroParqueadero.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Captura de datos
-    $placa               = $_POST['placa'] ?? '';
-    $nombrePropietarioVehi = $_POST['nombre_propietario_vehiculo'] ?? '';
-    $tipoDocVehi         = $_POST['tipo_doc_vehiculo'] ?? '';
-    $numDocVehi          = $_POST['numero_doc_vehiculo'] ?? '';
-    $estadoIngreso       = $_POST['estado'] ?? '';
-    $alquId              = $_POST['alqu_id'] ?? '';
-    $usuarioCedula       = $_POST['usuario_cedula'] ?? '';
-    $visitaId            = $_POST['visita_id'] ?? '';
+    // ===== Campos que van a tbl_parqueadero =====
+    $placa               = $_POST['parq_vehi_placa']            ?? '';
+    $nombrePropietarioVehi = $_POST['parq_nombre_propietario_vehi'] ?? '';
+    $tipoDocVehi         = $_POST['parq_tipo_doc_vehi']         ?? '';
+    $numDocVehi          = $_POST['parq_num_doc_vehi']          ?? '';
+    $estadoIngreso       = $_POST['parq_vehi_estadiIngreso']     ?? '';
+    $alquId              = $_POST['parq_vehi_alqu_id']          ?? '';
+    $usuarioCedula       = $_POST['parq_usuario_cedula']        ?? '';
+    $visitaId            = $_POST['parq_visita_id']             ?? '';
 
-    // Validación básica
-    if (empty($placa) || empty($nombrePropietarioVehi) || empty($usuarioCedula) || empty($visitaId) || empty($alquId)) {
-        echo "<script>alert('⚠️ Faltan datos obligatorios.'); history.back();</script>";
+    // // ===== Campos UI (no se guardan aquí) =====
+    // $email         = $_POST['email']        ?? null;
+    // $tipoDocRes    = $_POST['tipo_doc']     ?? null;
+    // $numDocRes     = $_POST['numero_doc']   ?? null;
+    // $nombreRes     = $_POST['nombre']       ?? null;
+    // $torre         = $_POST['torre']        ?? null;
+    // $apto          = $_POST['apto']         ?? null;
+    // $parqueaderoUi = $_POST['parqueadero']  ?? null;
+    // $fIngreso      = $_POST['fecha_ingreso']?? null;
+    // $fSalida       = $_POST['fecha_salida'] ?? null;
+    // // (Si luego quieres usar estos para autorelleno o registrar en otras tablas, aquí ya los tienes.)
+
+    // Validación mínima de obligatorios (BD)
+    if (empty($placa) || empty($nombrePropietarioVehi) || empty($tipoDocVehi) || 
+        empty($numDocVehi) || empty($estadoIngreso) || empty($usuarioCedula)) {
+        echo "<script>alert('⚠️ Faltan datos obligatorios de BD.'); history.back();</script>";
         exit;
     }
+
 
     try {
         $registro = new guardarDatosRegistroParqueadero($pdo);

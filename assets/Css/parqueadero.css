@@ -98,15 +98,18 @@
 
 /* ==================== Formulario Registro Vehículo ==================== */
 .formulario-container-registro {
+  flex-direction: column;
+  align-items: center;
   flex: 1;
   padding: 40px;
   max-width: 1100px;
-  margin: auto;
+  margin: 20px auto; /* centrado horizontal como los otros formularios */
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
+  box-sizing: border-box;
 }
+
 
 .formulario-container-registro h2 {
   text-align: center;
@@ -157,7 +160,8 @@
 }
 
 .formulario-registro input:focus,
-.formulario-registro textarea:focus {
+.formulario-registro textarea:focus,
+.formulario-registro select:focus {
   border-color: #7b9a82;
   outline: none;
 }
@@ -232,7 +236,6 @@
 }
 
 /* ==================== CRUD ==================== */
-
 #crudConsultaParqueadero,
 .crud-container-consulta {
   display: block;
@@ -244,16 +247,6 @@
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.crud-container-consulta {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 30px;
-  margin: 0;
-  max-width: 100%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
 }
 
 .crud-container-consulta h2 {
@@ -268,25 +261,7 @@
   padding: 20px;
   border-radius: 15px;
   background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-
-
-.input-group {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-
-
-.input-box {
-  flex: 1;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-}
-
 
 .tabla-parqueaderos {
   width: 100%;
@@ -344,7 +319,7 @@
   font-weight: 600;
 }
 
-/* ==================== FORMULARIO PROPIETARIO ==================== */
+/* ==================== Formulario Propietario ==================== */
 .formulario-container-Propietario {
   flex: 1;
   padding: 40px;
@@ -412,103 +387,3 @@
   gap: 20px;
   margin-top: 20px;
 }
-
-
-
-
-
-
-
-/* ==================== Formulario Consulta Parqueadero ====================
-.formulario-container-Consulta {
-  flex: 1;
-  padding: 40px;
-  max-width: 1100px;
-  margin: auto;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-}
-
-.formulario-container-Consulta h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 24px;
-}
-
-.formulario-consulta fieldset {
-  border: 1px solid #ccc;
-  padding: 25px;
-  border-radius: 15px;
-  margin-bottom: 30px;
-  background-color: #f9f9f9;
-}
-
-.formulario-consulta legend {
-  font-weight: bold;
-  font-size: 18px;
-  color: #444;
-  padding: 0 10px;
-}
-
-.formulario-consulta label {
-  margin-top: 10px;
-  font-weight: bold;
-  display: block;
-  font-size: 14px;
-  color: #333;
-}
-
-.formulario-consulta input[type="text"],
-.formulario-consulta textarea,
-.formulario-consulta select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  box-sizing: border-box;
-  transition: border 0.3s ease;
-}
-
-.formulario-consulta input:focus,
-.formulario-consulta textarea:focus,
-.formulario-consulta select:focus {
-  border-color: #7b9a82;
-  outline: none;
-}
-
-.formulario-consulta textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-==================== CRUD Consulta Parqueadero ====================
-.crud-container-consulta {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 30px;
-  margin: 20px auto;
-  max-width: 1000px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
-}
-
-.crud-container-consulta h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 24px;
-}
-
-.crud-container-consulta .table-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: #f9f9f9;
-}
- */
