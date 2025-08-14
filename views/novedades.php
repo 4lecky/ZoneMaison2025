@@ -19,6 +19,14 @@ try {
     $stmt = $pdo->prepare("SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC");
     $stmt->execute();
     $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Debug: Mostrar los datos obtenidos
+    echo "<!-- Debug: Mensajes obtenidos: " . count($mensajes) . " -->";
+    if (!empty($mensajes)) {
+        echo "<!-- Debug: Primer mensaje: ";
+        echo "Asunto: " . $mensajes[0]['muro_Asunto'] . ", ";
+        echo "EnviaHora: " . ($mensajes[0]['muro_EnviaHora'] ?? 'NULL') . " -->";
+    }
 } catch (PDOException $e) {
     error_log("Error al obtener mensajes del muro: " . $e->getMessage());
 }
@@ -91,14 +99,12 @@ try {
                                     <div class="Descripcion">
                                         <p class="texto-muro"><?= nl2br(htmlspecialchars($muro['muro_Descripcion'], ENT_QUOTES, 'UTF-8')) ?></p>
                                         
-                                        <?php
-                                        if (!isset($_SESSION['fecha_envio'])) {
-                                            $_SESSION['fecha_envio'] = date('d/m/Y');
-                                            $_SESSION['hora_envio'] = time('H:i');
-                                        }
-                                        ?>
-                                        <div class="meta-paquete">
-                                            <small>Enviado a las: <?= $_SESSION['fecha_envio'] ?> - <?= $_SESSION['hora_envio'] ?></small>
+                                        <div class="meta-info">
+                                            <small>Fecha: <?= htmlspecialchars($muro['muro_Fecha'], ENT_QUOTES, 'UTF-8') ?></small>
+                                            
+                                            <?php if (!empty($muro['muro_EnviaHora'])): ?>
+                                                <small> - Enviado a las: <?= htmlspecialchars($muro['muro_EnviaHora'], ENT_QUOTES, 'UTF-8') ?></small>
+                                            <?php endif; ?>
                                         </div>
 
                                         <div class="acciones">
@@ -116,8 +122,7 @@ try {
                                                 <span>✎</span>
                                             </a>
                                         </div>
-                                        </div>
-                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,7 +196,12 @@ try {
                             <?php foreach ($paquetes_entregados as $paquete): ?>
                                 <div class="tarjeta paquete-entregado">
                                     <div class="tarjeta-interna">
-                                        <div class="paquete-icono">✅</div>
+                                   <?php if (!empty($paquete['paqu_image'])): ?>
+                                                    <div class="imagen-container">
+                                                        <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
+                                                    </div>
+                                                <?php endif; ?>
+                                                
                                         <div class="contenido">
                                             <div class="Asunto"><?= htmlspecialchars($paquete['paqu_Asunto'], ENT_QUOTES, 'UTF-8') ?></div>
                                             <div class="Descripcion">
@@ -202,16 +212,7 @@ try {
                                                 <?php if (!empty($paquete['paqu_Hora'])): ?>
                                                     <small> - <?= htmlspecialchars($paquete['paqu_Hora'], ENT_QUOTES, 'UTF-8') ?></small>
                                                 <?php endif; ?>
-                                                <?php if (!empty($paquete['paqu_image'])): ?>
-                                                    <div class="imagen-container">
-                                                        <img src="../<?= htmlspecialchars($paquete['paqu_image'], ENT_QUOTES, 'UTF-8') ?>" alt="Imagen del paquete" class="paquete-imagen">
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="acciones-paquete">
-                                                <a href="editar_paqueteria.php?id=<?= htmlspecialchars($paquete['paqu_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar paquetería">
-                                                    <span>✎</span>
-                                                </a>
+                                                 </div>
                                             </div>
                                         </div>
                                     </div>

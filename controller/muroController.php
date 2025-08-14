@@ -5,23 +5,22 @@ require_once '../models/muroModel.php';
 
 $muroModel = new muroModel($pdo);
 
-$destinatario = $_POST['destinatario'] ?? '';  // El rol seleccionado
-$asunto = $_POST['asunto'] ?? '';
-$fecha = $_POST['fecha'] ?? '';
-$hora = $_POST['hora'] ?? '';
-$descripcion = $_POST['descripcion'] ?? '';
-$usu_cedula = $_SESSION['usu_cedula'] ?? null;
+$destinatario = $_POST['destinatario'] ?? '';  // Rol seleccionado
+$asunto       = $_POST['asunto'] ?? '';
+$descripcion  = $_POST['descripcion'] ?? '';
+$usu_cedula   = $_SESSION['usu_cedula'] ?? null;
+
+// Asignar automáticamente la fecha y hora actual
+$fecha     = date('Y-m-d');
+$hora      = date('H:i:s');
+$EnviaHora = date('H:i:s');
 
 // Validación básica
 if (empty($destinatario)) {
     die("Error: No se seleccionó ningún destinatario.");
 }
 
-// if (!$usu_cedula) {
-//     die("Error: Usuario no autenticado o no definido.");
-// }
-
-// Subida de imagen
+// Subida de imagen obligatoria
 if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_ERR_OK) {
     $directorio = '../uploads/';
     if (!is_dir($directorio)) {
@@ -29,7 +28,7 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
     }
 
     $archivoNombre = uniqid() . '_' . basename($_FILES['zone-images']['name']);
-    $rutaDestino = $directorio . $archivoNombre;
+    $rutaDestino   = $directorio . $archivoNombre;
 
     if (!move_uploaded_file($_FILES['zone-images']['tmp_name'], $rutaDestino)) {
         die("Error: No se pudo guardar el archivo.");
@@ -42,25 +41,26 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
 
 // Consultar usuarios con el rol seleccionado
 $query = "SELECT usu_cedula FROM tbl_usuario WHERE usu_rol = :rol AND usu_estado = 'Activo'";
-$stmt = $pdo->prepare($query);
+$stmt  = $pdo->prepare($query);
 $stmt->execute(['rol' => $destinatario]);
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Guardar en la base de datos para cada destinatario (enviando a múltiples usuarios)
+// Guardar el muro para cada destinatario
 foreach ($usuarios as $usuarios) {
-    // Guardar mensaje en la base de datos
     $muroModel->insertarMuro(
-        $usuarios['usu_cedula'],  // Este es el usuario destinatario
+        $usuarios['usu_cedula'],  // Destinatario
         $asunto,
         $fecha,
         $hora,
         $rutaRelativaBD,
         $descripcion,
-        $usu_cedula  // El usuario que está enviando el mensaje
+        $EnviaHora,
+        $usu_cedula  // Remitente
     );
 }
 
-// Redirigir después de guardar los datos
+// Redirigir al listado
 header("Location: ../views/novedades.php");
 exit;
 ?>
+

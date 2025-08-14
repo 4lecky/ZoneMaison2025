@@ -36,12 +36,12 @@ require_once "./Layout/header.php";
           <label for="destinatario">Selecciona el rol destinatario</label>
           <?php
           // Los roles que queremos permitir
-          $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante'];
+          $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario'];
 
           // Consulta para obtener roles activos
           $query = "SELECT DISTINCT usu_rol
                     FROM tbl_usuario 
-                    WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante') AND usu_estado = 'Activo'
+                    WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante','Usuario') AND usu_estado = 'Activo'
                     ORDER BY usu_rol";
 
           $stmt = $pdo->prepare($query);
@@ -101,7 +101,7 @@ require_once "./Layout/header.php";
           <label for="descripcion">Descripción</label>
           <textarea class="form-control" rows="10" placeholder="Descripción..." id="descripcion" name="descripcion" required>
 
-Se llavara a cabo
+Se llevara a cabo
 
 Para cualquier pregunta o inconveniente, por favor, contacten a la administración.
 Agradecemos su comprensión y cooperación.
