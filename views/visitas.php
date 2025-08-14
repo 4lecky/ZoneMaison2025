@@ -147,7 +147,7 @@ require_once "./Layout/header.php"
 
            <!-- Ventana Modal -->
 
-            <input type="checkbox" name="" id="btn-modal">
+            <input type="checkbox" name="" id="btn-modal" class="btn btn-primary" />
         <div class="container-modal">
             <div class="content-modal">
                 <h3>Consulta de Visitantes</h3>
