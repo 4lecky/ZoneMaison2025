@@ -12,6 +12,10 @@ class Vehiculo {
     public function getPlaca() {
         return $this->placa;
     }
+
+    public function getTipo() {
+        return $this->tipo;
+    }
 }
 
 class Tarifa {
@@ -53,5 +57,10 @@ class Ticket {
         $diferencia = $this->horaSalida->diff($this->horaIngreso);
         $horas = $diferencia->h + ($diferencia->i / 60);
         return $this->tarifa->getCostoPorHora() * $horas;
+    }
+
+    // obtener tipo de vehículo
+    public function getTipoVehiculo() {
+        return $this->vehiculo->getTipo();
     }
 }
