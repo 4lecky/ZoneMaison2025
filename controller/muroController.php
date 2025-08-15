@@ -15,12 +15,13 @@ $fecha     = date('Y-m-d');
 $hora      = date('H:i:s');
 $EnviaHora = date('H:i:s');
 
-// Validación básica
-if (empty($destinatario)) {
-    die("Error: No se seleccionó ningún destinatario.");
+// Validar destinatario
+$rolesValidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario', 'Todos'];
+if (empty($destinatario) || !in_array($destinatario, $rolesValidos)) {
+    die("Error: Rol destinatario no válido.");
 }
 
-// Subida de imagen obligatoria
+// Subida de imagen (obligatoria)
 if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_ERR_OK) {
     $directorio = '../uploads/';
     if (!is_dir($directorio)) {
@@ -39,28 +40,21 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
     die("Error: No se recibió o subió correctamente la imagen.");
 }
 
-// Consultar usuarios con el rol seleccionado
-$query = "SELECT usu_cedula FROM tbl_usuario WHERE usu_rol = :rol AND usu_estado = 'Activo'";
-$stmt  = $pdo->prepare($query);
-$stmt->execute(['rol' => $destinatario]);
-$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Insertar solo una vez en el muro con el rol como destinatario
+$exito = $muroModel->insertarMuro(
+    $destinatario,  // Rol del destinatario
+    $asunto,
+    $fecha,
+    $hora,
+    $rutaRelativaBD,
+    $descripcion,
+    $EnviaHora,
+    $usu_cedula  // Remitente
+);
 
-// Guardar el muro para cada destinatario
-foreach ($usuarios as $usuarios) {
-    $muroModel->insertarMuro(
-        $usuarios['usu_cedula'],  // Destinatario
-        $asunto,
-        $fecha,
-        $hora,
-        $rutaRelativaBD,
-        $descripcion,
-        $EnviaHora,
-        $usu_cedula  // Remitente
-    );
+if ($exito) {
+    header("Location: ../views/novedades.php?success=Publicación enviada exitosamente.");
+} else {
+    die("Error: No se pudo guardar la publicación.");
 }
-
-// Redirigir al listado
-header("Location: ../views/novedades.php");
 exit;
-?>
-

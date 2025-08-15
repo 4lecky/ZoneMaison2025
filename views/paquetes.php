@@ -60,7 +60,7 @@ Ha llegado un paquete para usted.
           <label>Hora</label>
           <input type="time" class="form-control" name="hora" id="hora" />
 
-          <label><i class="fas fa-images"></i> Imágenes</label>
+          <label></i> Imágenes</label>
           <input type="file" name="zone-images" accept="image/*" />
 
           <label>Descripción</label>

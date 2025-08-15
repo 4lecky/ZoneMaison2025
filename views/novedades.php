@@ -43,6 +43,27 @@ try {
     error_log("Error al obtener paquetes: " . $e->getMessage());
 }
 
+// roles
+$rol_usuario = $_SESSION['usuario']['usu_rol'];
+
+if ($rol_usuario === 'Administrador') {
+    // Administrador ve todas las publicaciones
+    $query = "SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+} else {
+    // Los demás usuarios solo ven publicaciones dirigidas a su rol o a "Todos"
+    $query = "SELECT * FROM tbl_muro 
+              WHERE muro_Destinatario = :rol 
+                 OR muro_Destinatario = 'Todos'
+              ORDER BY muro_Fecha DESC, muro_Hora DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['rol' => $rol_usuario]);
+}
+
+$mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>

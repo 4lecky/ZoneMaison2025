@@ -80,22 +80,8 @@ require_once "./Layout/header.php";
           </button>
 
           <!-- Imagen -->
-          <div class="imagen">
-            <label><i class="fas fa-images"></i> Imágenes</label>
-            <div class="image-upload-container">
-              <div class="image-upload-box">
-                <input type="file" id="zone-images" name="zone-images" accept="image/*" class="hidden-upload" required>
-                <label for="zone-images" class="upload-label">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                  <span>Arrastra imágenes aquí o haz clic para seleccionar</span>
-                  <span class="upload-hint">Máximo 5 imágenes (JPEG/PNG, 5MB max cada una)</span>
-                </label>
-              </div>
-              <div id="image-preview" class="image-preview-grid">
-                <!-- Preview JS -->
-              </div>
-            </div>
-          </div>
+         <label></i> Imágenes</label>
+          <input type="file" name="zone-images" accept="image/*" />
 
           <!-- Descripción -->
           <label for="descripcion">Descripción</label>
