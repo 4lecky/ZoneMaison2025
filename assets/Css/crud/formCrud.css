@@ -108,10 +108,7 @@
 
 .container-btn-crud{
     display: flex;
-
     justify-content: center;
-    margin-bottom: 20px;
-
 }
 
 .btn-form-crud{

@@ -1,0 +1,89 @@
+.form_perfil_usuario{
+    /* background-color: bisque; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fieldset_perfil_usuario{
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 24px 24px 30px 24px;
+  background: #fafafa;
+  margin: 24px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1000px;
+}
+
+.legend_perfil_usuario{
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: rgb(56, 97, 56);
+  padding: 0 12px;
+  margin-left: 16px;
+  margin-bottom: 0;
+  border-radius: 4px;
+  width: auto;
+}
+
+
+.columnas_perfilUsu{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+/* Contenedores Input y Selecte */
+.inputs_perfilUsu{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.select_perfilUsu{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input */
+
+.form_control_perfilUsu {
+  width: 400px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+  margin-right: 20px;
+}
+
+/* Select */
+
+.campos_select_perfilUsu{
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    padding: 10px;
+    width: 400px;
+}
+
+/*Botones*/
+
+.container_bnt_perfilUsu{
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn_perfilUsu{
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 10px;
+}

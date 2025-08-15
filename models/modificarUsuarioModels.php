@@ -133,14 +133,14 @@ try {
                     </select>
                 </div>
 
-
-        </fieldset>
-
                 <div class="container-btn-crud">
                     <button type="submit" class="btn btn-form-crud " name="btn-confirmar" value="ok"> Confirmar </button>
                     <button type="button" class="btn btn-form-crud " onclick="window.location.href='../views/crud.php';"> Cancelar </button>
-
                 </div>
+
+        </fieldset>
+
+
 
 
     </form>
