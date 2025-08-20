@@ -1,8 +1,42 @@
+.title_perfilUsu{
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8B7355;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.title_perfilUsu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px; /* Distancia entre texto y línea */
+  width: 100px;   /* Largo de la línea */
+  height: 3px;   /* Grosor de la línea */
+  background-color: #C19A6B; 
+  border-radius: 2px; /* Bordes redondeados de la linea inferior */
+}
+
+/**/
+
 .form_perfil_usuario{
     /* background-color: bisque; */
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/*Labels*/
+
+.label_perfilUsu{
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  font-size: 14px;
+  color: #333;
 }
 
 .fieldset_perfil_usuario{
@@ -35,6 +69,7 @@
     display: flex;
     margin-bottom: 10px;
 }
+
 
 /* Contenedores Input y Selecte */
 .inputs_perfilUsu{
@@ -79,11 +114,18 @@
 
 .container_bnt_perfilUsu{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .btn_perfilUsu{
-    margin-left: 50px;
-    margin-right: 50px;
     padding: 10px;
+    background-color: #7b9a82;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    margin-right: 60px;
 }
