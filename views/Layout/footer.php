@@ -40,7 +40,7 @@
                                 <li><i class="ri-whatsapp-fill"></i></li>
                                 <li><i class="ri-facebook-circle-fill"></i></li>
                                 <li><i class="ri-twitter-x-line"></i></li>
-                                <li><i class="ri-instagram-fill"></i></i></li>
+                                <li><i class="ri-instagram-fill"></i></li>
                                 <li><i class="ri-github-fill"></i></li>
                             </ul>
     

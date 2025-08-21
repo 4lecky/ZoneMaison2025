@@ -49,9 +49,18 @@ class AuthController {
 
     public function login() {
         $user = $this->usuario->login($_POST['Email'], $_POST['Password']);
+
         if ($user) {
-            $_SESSION['usuario'] = $user;
+            // $_SESSION['usuario'] = $user;
+            $_SESSION['usuario'] = [
+                'id' => $user['id'],
+                'nombre' => $user['nombre'],
+                'email' => $user['email'],
+                'rol' => $user['rol'],
+            ];
+
             header('Location: views/novedades.php');
+            exit;
         } else {
             $_SESSION['errorLogin'] = true;
             header('Location: views/login.php');

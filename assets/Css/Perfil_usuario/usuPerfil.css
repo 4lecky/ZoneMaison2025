@@ -1,38 +1,45 @@
-
-
-.body_crud{
-  flex: 1;
-  padding: 40px;
-  width: 1100px;
-  margin: auto;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-}
-
-.h3_crud_form{
+.title_perfilUsu{
   display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8B7355;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
   position: relative;
-  padding-bottom: 0.8rem;
-  margin-bottom: 30px;
-  color: #9D825D;
-  font-size: 24px;
+  padding-bottom: 0.5rem;
 }
 
-.h3_crud_form::after {
+.title_perfilUsu::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 2px; /* Distancia entre texto y línea */
-  width: 150px;   /* Largo de la línea */
+  width: 100px;   /* Largo de la línea */
   height: 3px;   /* Grosor de la línea */
-  background-color: #d6b17d; 
+  background-color: #C19A6B; 
   border-radius: 2px; /* Bordes redondeados de la linea inferior */
 }
 
-.fieldset_crud {
-  /* border: 1px solid rgb(56, 97, 56); */
+/**/
+
+.form_perfil_usuario{
+    /* background-color: bisque; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Labels*/
+
+.label_perfilUsu{
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.fieldset_perfil_usuario{
   border: 1px solid #ccc;
   border-radius: 16px;
   padding: 24px 24px 30px 24px;
@@ -43,11 +50,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  width: 1000px;
 }
 
-
- .legend_crud {
+.legend_perfil_usuario{
   font-weight: bold;
   font-size: 1.3rem;
   color: rgb(56, 97, 56);
@@ -59,17 +65,28 @@
 }
 
 
-.columnaCrud{
+.columnas_perfilUsu{
     display: flex;
+    margin-bottom: 10px;
 }
 
-.inputs_crud_modificar{
+
+/* Contenedores Input y Selecte */
+.inputs_perfilUsu{
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
 }
 
+.select_perfilUsu{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-.form-control {
+/* Input */
+
+.form_control_perfilUsu {
   width: 400px;
   padding: 10px;
   margin-top: 5px;
@@ -82,21 +99,9 @@
   margin-right: 20px;
 }
 
-.form-label{
-  margin-top: 10px;
-  font-weight: bold;
-  display: block;
-  font-size: 14px;
-  color: #333;
+/* Select */
 
-}
-
-.select_crud_modificar{
-    display: flex;
-    flex-direction: column;
-}
-
-.form-select{
+.campos_select_perfilUsu{
     border-radius: 10px;
     background-color: white;
     border: 1px solid #ccc;
@@ -105,24 +110,22 @@
     width: 400px;
 }
 
+/*Botones*/
 
-.container-btn-crud{
+.container_bnt_perfilUsu{
     display: flex;
     justify-content: center;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.btn-form-crud{
-    margin-top: 20px;
+.btn_perfilUsu{
+    padding: 10px;
+    background-color: #7b9a82;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
     font-size: 15px;
-    border: #7b9a82;
-    padding: 8px;
-    color: white;
-    background: #637a68;
-    border-radius: 10px;
-    margin-right: 10px;
-}
-
-.btn:hover {
-    font-weight: 600;
-    background: #637a68 ;
+    font-weight: 700;
+    margin-right: 60px;
 }

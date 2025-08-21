@@ -1,8 +1,16 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['usuario'])) {
   header("Location: login.php");
   exit();
+}
+
+$rol = $_SESSION['usuario']['rol'] ?? '';
+
+if (!in_array($rol, ['Administrador','Vigilante'], true)) {
+  header('HTTP/1.1 403 Forbidden');
+  exit('No tienes permiso para ver esta página.');
 }
 
 require_once __DIR__ . "/Layout/header.php";
@@ -62,7 +70,9 @@ require_once __DIR__ . "/Layout/header.php";
           <th scope="col">Rol</th>
           <th scope="col">Estado</th>
           <th scope="col">Pago administración</th>
-          <th scope="col">Editar/Eliminar</th>
+          <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
+            <th scope="col">Editar/Eliminar</th>
+          <?php endif;?>
         </tr>
       </thead>
 
@@ -96,10 +106,12 @@ require_once __DIR__ . "/Layout/header.php";
             <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 'mora-pagada' ?>"><?= $datos->mor_estado ?></td>
 
 
+            <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
             <td class="contenedorBotones">
               <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="ri-quill-pen-fill" id="icon_crud"></i></a>
               <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="ri-delete-bin-2-fill" id="icon_crud"></i></a>
             </td>
+            <?php endif;?>
           </tr>
         <?php  }
         ?>

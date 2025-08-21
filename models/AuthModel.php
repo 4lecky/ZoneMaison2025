@@ -43,10 +43,16 @@ class Usuario
     public function login($email, $password)
     {
         // Solo puede ingresar si es un usuario activo
-        $stmt = $this->pdo->prepare("SELECT * FROM tbl_usuario WHERE usu_correo = ? AND usu_estado = 'Activo' ");
+        $stmt = $this->pdo->prepare("SELECT usuario_cc AS id, 
+        usu_nombre_completo AS nombre,
+        usu_correo AS email,
+        usu_password AS contraseña,
+        usu_rol AS rol
+        FROM tbl_usuario WHERE usu_correo = ? AND usu_estado = 'Activo' LIMIT 1");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
-        if ($user && password_verify($password, $user['usu_password'])) {
+        if ($user && password_verify($password, $user['contraseña'])) {
+            unset($user['contraseña']); // No guardar nunca el hash en sesión
             return $user;
         }
         return false;

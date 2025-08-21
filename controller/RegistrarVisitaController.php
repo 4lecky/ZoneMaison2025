@@ -37,7 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-/* Acceso por GET o sin el botón correcto: redirigimos a la vista */
-header('Location: /Zonemaison2025/views/visitas.php');
-exit;
-

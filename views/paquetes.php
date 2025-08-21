@@ -10,6 +10,28 @@ require_once "./Layout/header.php";
 // Obtener los usuarios
 $stmt = $pdo->query("SELECT usu_nombre_completo, usu_cedula FROM tbl_usuario");
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// // cedula
+// $_SESSION['usuario'] = [
+//     'cedula' => $usuario['cedula'],
+//     'nombre' => $usuario['nombre'],
+// ];
+
+// if ($_SESSION['usuario']['cedula'] === 'vigilante') {
+//     // El vigilante ve todas las publicaciones
+//     $query = "SELECT * FROM tbl_paquetes ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
+//     $stmt = $pdo->prepare($query);
+//     $stmt->execute();
+// } else {
+//     // Los demás usuarios solo ven publicaciones asociadas a su cédula
+//     $query = "SELECT * FROM tbl_paquetes 
+//               WHERE paqu_usuario_cedula = :cedula 
+//               ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
+//     $stmt = $pdo->prepare($query);
+//     $stmt->execute(['cedula' => $_SESSION['usuario']['cedula']]);
+// }
+
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +82,7 @@ Ha llegado un paquete para usted.
           <label>Hora</label>
           <input type="time" class="form-control" name="hora" id="hora" />
 
-          <label><i class="fas fa-images"></i> Imágenes</label>
+          <label></i> Imágenes</label>
           <input type="file" name="zone-images" accept="image/*" />
 
           <label>Descripción</label>

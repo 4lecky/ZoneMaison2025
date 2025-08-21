@@ -66,8 +66,6 @@ CREATE TABLE IF NOT EXISTS reservas (
     CONSTRAINT fk_zona_reserva FOREIGN KEY (zona_id) REFERENCES zonas_comunes(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
-
 CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
     paqu_TipoDoc enum ('Cedula de cidadania', 'Cedula de extranjeria', 'Pasaporte', 'Permiso especial de permanencia (PEP)') NOT NULL,
     paqu_usuario_cedula INTEGER (10) NOT null, 
@@ -81,17 +79,18 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
     PRIMARY KEY (Paqu_Id),
     FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
-CREATE TABLE IF NOT EXISTS tbl_muro (muro_Id INT AUTO_INCREMENT,
-    muro_Destinatario VARCHAR (60) NOT null,
-    muro_Asunto text NOT null,
-    muro_Fecha DATE NOT null,
-    muro_Hora time NOT null,
-    muro_EnviaHora time NOT null,
-    muro_image VARCHAR (255) NOT null,
-    muro_Descripcion text NOT null, 
+CREATE TABLE IF NOT EXISTS tbl_muro (
+    muro_Id INT AUTO_INCREMENT PRIMARY KEY,
+    muro_Destinatario ENUM('Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario', 'Todos'),
+    muro_Asunto TEXT NOT NULL,
+    muro_Fecha DATE NOT NULL,
+    muro_Hora TIME NOT NULL,
+    muro_EnviaHora TIME NOT NULL,
+    muro_image VARCHAR(255) DEFAULT NULL,
+    muro_Descripcion TEXT NOT NULL, 
     muro_usuario_cedula INT,
-    PRIMARY KEY (muro_id),
     FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
+
 
 CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
     vis_hora_entrada TIME,

@@ -20,6 +20,8 @@ require_once "./Layout/header.php"
     <link rel="stylesheet" href="../assets/Css/visitas.css" />
     <!-- Libreria de iconos RemixIcon-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
@@ -124,98 +126,25 @@ require_once "./Layout/header.php"
             </form>
         </div>
 
-            <!-- Boton Consultar y Boton Registrar Vehiculo-->
-
+        <!-- Botones principales -->
         <div class="botones-container">
-        
-            <div class="contenedor-boton-modal">
-                <div class="boton modal">
-                <label for="btn-modal">
-                    Consultar Visitas
-                </label>
-                </div>
-            </div>
 
-            <div class="contenedor-boton-vehiculo" onclick="window.location.href='parqueadero.php'">
-                <div class="boton vehiculo">
-                <label for="btn-Vehiculo">
-                    Registrar un Vehiculo
-                </label>
-                </div>
+        <!-- Botón Consultar Visitas -->
+        <div class="contenedor-boton-consulta" onclick="window.location.href='visita_crud.php'">
+            <div class="boton consulta">
+                Consultar Visitas
             </div>
         </div>
 
-           <!-- Ventana Modal -->
-
-        <!-- INPUT oculto (controla el modal) -->
-        <input type="checkbox" id="btn-modal" hidden />
-
-        <!-- BOTÓN VISIBLE (etiqueta que activa el checkbox) -->
-        <label for="btn-modal" class="btn btn-primary">Abrir Modal</label>        <div class="container-modal">
-            <div class="content-modal">
-                <h3>Consulta de Visitantes</h3>
-
-                <section class="table-card">
-        
-                        <div class="consulta-filtros">
-                            <label for="filtroVisitas">Filtrar:</label>
-                            <select class="filtro-visitas" id="filtroVisitas">
-                                <option value="todos">Todos los visitantes</option>
-                                <option value="hoy">Visitas de hoy</option>
-                                <option value="pendientes">Pendientes de salida</option>
-                                <option value="completadas">Completadas</option>
-                            </select>
-                        </div>
-
-                        <div class="tabla-responsive">
-                            <table class="tabla-visitas">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Hora Entrada</th>
-                                        <th scope="col">Hora Salida</th>
-                                        <th scope="col">Fecha Entrada</th>
-                                        <th scope="col">Fecha Salida</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tablaCuerpo">
-                                    <?php require_once '../config/db.php';
-                                        $stmt = $pdo->query("SELECT * FROM tbl_visitas ORDER BY fecha_entrada DESC");
-
-                                        while ($datos = $stmt->fetch(PDO::FETCH_OBJ)) { ?>                                    
-                                    <!-- Aquí se insertarán filas dinámicamente -->
-                                     <tr>
-                                        <td><?= $datos->vis_hora_entrada ?></td>
-                                        <td><?= $datos->vis_hora_salida ?></td>
-                                        <td><?= $datos->vis_fecha_entrada ?></td>
-                                        <td><?= $datos->vis_fecha_salida ?></td>
-                                        <td>
-                                            <a href="" class="btn btn-small btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="" class="btn btn-small btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                        </td>
-                                     </tr>
-                                     <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="empty-state" id="estadoVacio">
-                            <i class="fa-solid fa-circle-info"></i>
-                            No hay visitas programadas próximamente
-                        </div>
-
-                        <div class="acciones-tabla">
-                            <button type="button" id="btnEditar" class="btn-editar">Editar Visita</button>
-                        </div>
-                </section>
-                    
-                    <div class="btn-cerrar">
-                        <label for="btn-modal">Cerrar</label>
-                    </div>
+        <!-- Botón Registrar Vehículo -->
+        <div class="contenedor-boton-vehiculo" onclick="window.location.href='parqueadero.php'">
+            <div class="boton vehiculo">
+                Registrar un Vehiculo
+            </div>
         </div>
-            <label for="btn-modal" class="cerrar-modal"></label>
-        </div>
+
+    </div>
+
 
            
     </main>
