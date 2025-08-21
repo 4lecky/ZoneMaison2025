@@ -93,7 +93,7 @@
 
                     <div class="inputs_perfilUsu">
                         <label for="validationCustom01" class="label_perfilUsu"> Propiedades </label>
-                        <input type="text" class="form_control_perfilUsu" name="Propiedades" required>
+                        <input type="text" class="form_control_perfilUsu" name="Apartamento" required>
                     </div>
 
                 </div>
