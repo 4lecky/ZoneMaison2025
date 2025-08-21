@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
     FOREIGN KEY (paqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 CREATE TABLE IF NOT EXISTS tbl_muro (
-    muro_id INT AUTO_INCREMENT PRIMARY KEY,
+    muro_Id INT AUTO_INCREMENT PRIMARY KEY,
     muro_Destinatario ENUM('Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario', 'Todos'),
     muro_Asunto TEXT NOT NULL,
     muro_Fecha DATE NOT NULL,

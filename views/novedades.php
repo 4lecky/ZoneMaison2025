@@ -139,7 +139,7 @@ $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
                                                 </svg>
                                             </button>
-                                            <a href="editar_publicacion.php?id=<?= htmlspecialchars($muro['muro_id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar publicación">
+                                            <a href="editar_publicacion.php?id=<?= htmlspecialchars($muro['muro_Id'], ENT_QUOTES, 'UTF-8') ?>" class="round-button edit-button" title="Editar publicación">
                                                 <span>✎</span>
                                             </a>
                                         </div>

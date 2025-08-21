@@ -378,7 +378,7 @@ $roles = $controller->obtenerRoles();
                 <fieldset>
                     <legend>Formulario de Muro</legend>
 
-                    <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['muro_id']) ?>">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['muro_Id']) ?>">
 
                     <label for="destinatario">Selecciona el rol destinatario *</label>
                     <select class="form-control" id="destinatario" name="destinatario" required>
