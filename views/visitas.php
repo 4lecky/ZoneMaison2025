@@ -28,11 +28,18 @@ require_once "./Layout/header.php"
 
 <body>
 
+
     <!-- Registro de Visitas -->
     <main class="container mt-4">
-        <h2>REGISTRO DE VISITAS</h2>
-
         <div class="principal-page">
+            <h2>REGISTRO DE VISITAS</h2>
+
+            <!-- Botón Consultar Residente -->
+        <div class="boton-residente">
+            <button onclick="window.location.href='crud.php'">
+                Consultar Residente
+            </button>
+        </div>
 
             <form method="POST" action="../controller/RegistrarVisitaController.php" id="formVisitante">
                 <fieldset>

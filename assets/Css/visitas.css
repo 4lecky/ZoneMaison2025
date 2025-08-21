@@ -14,7 +14,6 @@
 
 /* ----- Contenedor principal ----- */
 
-
 .principal-page {
   flex: 1;
   padding: 40px;
@@ -27,10 +26,33 @@
 }
 
 .principal-page h2 {
-  text-align: center;
+  text-align: left;
   margin-bottom: 30px;
-  color: #333;
+  color: #9D825D;
   font-size: 24px;
+}
+
+/* Botón Consultar Residente */
+.boton-residente {
+  text-align: right;      /* lo manda a la derecha */
+  margin-bottom: 20px;    /* separación con el formulario */
+}
+
+.boton-residente button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.boton-residente button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
 /* ----- Fieldsets y leyendas ----- */

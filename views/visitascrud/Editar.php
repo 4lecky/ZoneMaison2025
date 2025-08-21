@@ -1,58 +1,59 @@
 <?php
+require_once __DIR__ . "/../../controller/EditCrudVisiControl.php";
 
+$control = new EditCrudVisiControl();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Guardar cambios
+    $data = [
+        'id' => $_POST['id'],
+        'fecha_entrada' => $_POST['fecha_entrada'],
+        'fecha_salida'  => $_POST['fecha_salida'],
+        'hora_entrada'  => $_POST['hora_entrada'],
+        'hora_salida'   => $_POST['hora_salida'],
+    ];
+
+    if ($control->actualizar($data)) {
+        header("Location: /zonemaison2025/views/visitas.php?mensaje=Visita actualizada correctamente");
+    exit();
+
+    } else {
+        echo "Error al actualizar";
+    }
+}
+
+// Cargar datos para editar
+$id = $_GET['id'];
+$datos = $control->editar($id);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificar Usuario</title>
-    <link rel="stylesheet" href="../assets/Css/globals.css" />
+    <title>Editar Visita</title>
     <link rel="stylesheet" href="../../assets/css/visitas.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-
-
 </head>
-
 <body>
-     
 <div class="form-container">
-    <h2>Datos de la Visita</h2>
+    <h2>Editar Visita</h2>
+    <form method="POST">
+        <input type="hidden" name="id" value="<?= $datos->vis_id ?>">
 
-    <form action="procesar_editar.php" method="POST">
-        <fieldset>
-            <legend>Información de la Visita</legend>
+        <label>Fecha Entrada</label>
+        <input type="date" name="fecha_entrada" value="<?= $datos->vis_fecha_entrada ?>">
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="fecha_entrada">Fecha de Entrada</label>
-                    <input type="date" id="fecha_entrada" name="fecha_entrada">
-                </div>
-                <div class="form-group">
-                    <label for="fecha_salida">Fecha de Salida</label>
-                    <input type="date" id="fecha_salida" name="fecha_salida">
-                </div>
-            </div>
+        <label>Fecha Salida</label>
+        <input type="date" name="fecha_salida" value="<?= $datos->vis_fecha_salida ?>">
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="hora_entrada">Hora de Entrada</label>
-                    <input type="time" id="hora_entrada" name="hora_entrada">
-                </div>
-                <div class="form-group">
-                    <label for="hora_salida">Hora de Salida</label>
-                    <input type="time" id="hora_salida" name="hora_salida">
-                </div>
-            </div>
-        </fieldset>
+        <label>Hora Entrada</label>
+        <input type="time" name="hora_entrada" value="<?= $datos->vis_hora_entrada ?>">
 
-        <div class="btn-container">
-            <button type="submit" class="btn btn-confirmar">Confirmar</button>
-            <a href="listado.php" class="btn btn-cancelar">Cancelar</a>
-        </div>
+        <label>Hora Salida</label>
+        <input type="time" name="hora_salida" value="<?= $datos->vis_hora_salida ?>">
+
+        <button type="submit">Confirmar</button>
+        <a href="visitas.php">Cancelar</a>
     </form>
 </div>
 </body>
