@@ -19,6 +19,7 @@ require_once "./layout/header.php"
   <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
   <link rel="stylesheet" href="../assets/Css/parqueadero.css" />
+  <link rel="stylesheet" href="../assets/Css/mapaParqueadero.css" />
   <!-- Libreria de iconos RemixIcon-->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -323,8 +324,21 @@ require_once "./layout/header.php"
             <input type="text" name="placa" placeholder="Ej: ABC123" required />
           </div>
         </div>
-        <label>Observaciones / Estado de Salida</label>
+        <label>Observaciones / Estado del Vehículo</label>
         <textarea name="observaciones" required></textarea>
+        <div class="input-box">
+          <label>Estado de Ingreso</label>
+          <!-- BD: parq_vehi_estadiIngreso -->
+          <select class="listaDesplegable" name="parq_vehi_estadiIngreso" id="estado" required>
+            <option value="">Seleccione el Estado de Ingreso del Vehiculo</option>
+            <option value="buenas_Condiciones">Buenas Condiciones</option>
+            <option value="malas_condiciones">Malas condiciones</option>
+          </select>
+        </div>
+
+          <h2>Mapa de Parqueaderos</h2>
+          <div id="parkingMap"></div>
+
         <div class="input-box">
           <label>Estado</label>
           <select name="estado">
@@ -334,6 +348,8 @@ require_once "./layout/header.php"
             <option value="mantenimiento">En Mantenimiento</option>
           </select>
         </div>
+
+
       </fieldset>
       <div class="acciones">
         <button type="submit">Consultar</button>
@@ -344,13 +360,14 @@ require_once "./layout/header.php"
 </main>
 
 
-
   <div id="zonaConsultaFinal"></div>
 
   <?php require_once "./Layout/footer.php" ?>
 
+
   <script src="../assets/Js/parqueadero.js"></script>
   <script src="../assets/Js/ticketparqueadero.js"></script>
+  <script src="../assets/Js/mapaParqueadero.js"></script>
 
 </body>
 </html>
