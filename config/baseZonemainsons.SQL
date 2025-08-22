@@ -92,27 +92,28 @@ CREATE TABLE IF NOT EXISTS tbl_muro (
     FOREIGN KEY (muro_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)); 
 
 
-CREATE TABLE tbl_visita ( vis_id INT AUTO_INCREMENT,
-    vis_hora_entrada TIME,
-    vis_hora_salida TIME,
-    vis_fecha_entrada DATE,
-    vis_fecha_salida DATE,
-    PRIMARY KEY (vis_id));
-
-
-
 CREATE TABLE IF NOT EXISTS tbl_Visitante (
     visi_id INT(10) AUTO_INCREMENT,
     visi_nombre VARCHAR(100) NOT NULL,
     visi_documento VARCHAR(20) NOT NULL,
-    visi_Tipo_documento ENUM('C.C', 'T.I', 'C.E') NOT NULL,
+    visi_tipo_documento ENUM('C.C', 'T.I', 'C.E') NOT NULL,
     visi_telefono BIGINT(20) NOT NULL,
     visi_email VARCHAR(100) NOT NULL,
-    visi_usuario_cedula INT(10),
-    visi_vis_id INT,
+    visi_usuario_cedula INT(10),  -- Relación con el residente
     PRIMARY KEY (visi_id),
-    FOREIGN KEY (visi_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
-    FOREIGN KEY (visi_vis_id) REFERENCES tbl_visita (vis_id)
+    FOREIGN KEY (visi_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)
+);
+
+
+CREATE TABLE IF NOT EXISTS tbl_visita (
+    vis_id INT AUTO_INCREMENT,
+    vis_hora_entrada TIME,
+    vis_hora_salida TIME,
+    vis_fecha_entrada DATE,
+    vis_fecha_salida DATE,
+    vis_visi_id INT(10), -- Relación con el visitante
+    PRIMARY KEY (vis_id),
+    FOREIGN KEY (vis_visi_id) REFERENCES tbl_Visitante (visi_id)
 );
 
 CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,

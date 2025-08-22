@@ -9,22 +9,24 @@ class EditCrudVisiModel {
         $this->pdo = $GLOBALS['pdo'];
     }
 
-    // Obtener visita por id
+    // Obtener solo la visita por ID
     public function obtenerVisita($id) {
-        $sql = "SELECT * FROM tbl_visita WHERE vis_id = :id";
+        $sql = "SELECT vis_id, vis_fecha_entrada, vis_fecha_salida, vis_hora_entrada, vis_hora_salida
+                FROM tbl_visita 
+                WHERE vis_id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    // Actualizar visita
+    // Actualizar solo la visita
     public function actualizarVisita($data) {
         $sql = "UPDATE tbl_visita 
                 SET vis_fecha_entrada = :fecha_entrada,
-                    vis_fecha_salida = :fecha_salida,
-                    vis_hora_entrada = :hora_entrada,
-                    vis_hora_salida = :hora_salida
+                    vis_fecha_salida  = :fecha_salida,
+                    vis_hora_entrada  = :hora_entrada,
+                    vis_hora_salida   = :hora_salida
                 WHERE vis_id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
