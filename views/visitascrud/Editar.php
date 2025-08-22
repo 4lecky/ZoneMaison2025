@@ -69,7 +69,7 @@ $datos = $control->editar($id);
             </div>
         </div>
 
-        <button type="submit">Confirmar</button>
+        <button type="submit" onclick = "">Confirmar</button>
         <a href="visitas.php">Cancelar</a>
     </form>
 </div>
