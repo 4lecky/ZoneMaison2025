@@ -19,6 +19,11 @@
     width: 100%;
 }
 
+.boton-addpaquete {
+  text-align: -moz-right;
+  margin-right: 260px;
+}
+
   h2 {
     text-align: center;
     margin: 20px 0;

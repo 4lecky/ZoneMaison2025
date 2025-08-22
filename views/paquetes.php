@@ -11,26 +11,19 @@ require_once "./Layout/header.php";
 $stmt = $pdo->query("SELECT usu_nombre_completo, usu_cedula FROM tbl_usuario");
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// // Verificar si el usuario está logueado y tiene un número de documento
+// if (isset($_SESSION['usuario']['cedula'])) {
+//     $usuario_cedula = $_SESSION['usuario']['cedula'];
 
-// // cedula
-// $_SESSION['usuario'] = [
-//     'cedula' => $usuario['cedula'],
-//     'nombre' => $usuario['nombre'],
-// ];
+//     // Consultar los paquetes que corresponden a este número de documento
+//     $query = "SELECT * FROM tbl_paquetes WHERE paqu_usuario_cedula = :cedula ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
+    
+//     // Ejecutar la consulta
+//     $stmt = $pdo->prepare($query);
+//     $stmt->execute(['cedula' => $usuario_cedula]);
 
-// if ($_SESSION['usuario']['cedula'] === 'vigilante') {
-//     // El vigilante ve todas las publicaciones
-//     $query = "SELECT * FROM tbl_paquetes ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
-//     $stmt = $pdo->prepare($query);
-//     $stmt->execute();
-// } else {
-//     // Los demás usuarios solo ven publicaciones asociadas a su cédula
-//     $query = "SELECT * FROM tbl_paquetes 
-//               WHERE paqu_usuario_cedula = :cedula 
-//               ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
-//     $stmt = $pdo->prepare($query);
-//     $stmt->execute(['cedula' => $_SESSION['usuario']['cedula']]);
-// }
+//     // Obtener los paquetes
+//     $paquetes = $stmt->fetchAll();}
 
 ?>
 
@@ -98,7 +91,7 @@ Ha llegado un paquete para usted.
 
         <div style="display: flex; justify-content: center; gap: 10px;">
           <button type="submit" class="Enviar">Enviar</button>
-          <button type="reset" class="Cancelar">Cancelar</button>
+          <button type="button" class="Cancelar" onclick="window.location.href='novedades.php';">Cancelar</button>
         </div>
       </form>
     </section>

@@ -1,5 +1,3 @@
-console.log("📦 JavaScript cargado correctamente");
-
 document.addEventListener('DOMContentLoaded', () => {
   const hoy = new Date();
   const fechaInput = document.getElementById("fecha");
@@ -43,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.querySelector('form');
 
   enviarBtn.addEventListener('click', function (e) {
+    e.preventDefault(); // Evitar el envío del formulario
+
     const tipo_doc = document.querySelector('[name="tipo_doc"]').value;
     const numero_doc = numeroDocInput.value.trim();
     const destinatario = destinatarioInput.value;
@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const descripcion = document.querySelector('[name="descripcion"]').value.trim();
     const estado = document.querySelector('[name="estado"]').value;
 
+    // Validación básica
     if (!tipo_doc) return alert('Por favor seleccione el tipo de documento.');
     if (!numero_doc || isNaN(numero_doc)) return alert('Número de documento inválido.');
     if (!destinatario) return alert('Selecciona un destinatario válido.');
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!descripcion) return alert('Incluye una descripción.');
     if (!estado) return alert('Selecciona el estado.');
 
-    formulario.submit();
-  });
+    formulario.submit(); 
 });
+
+  });
