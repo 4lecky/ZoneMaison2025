@@ -95,6 +95,18 @@ $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <h3>Todo lo que pasa en tu comunidad, en un solo lugar.</h3>
         </section>
+    <div class="boton-addpaquete">
+  <button class="animated-button btn-vermas" type="button" onclick="window.location.href='paquetes.php';">
+    <svg viewBox="0 0 24 24" class="arr-2">
+      <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+    </svg>
+    <span class="text">Crear Paquetes</span>
+    <span class="circle"></span>
+    <svg viewBox="0 0 24 24" class="arr-1">
+      <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+    </svg>
+  </button>
+</div>
 
         <section class="second-page">
             <!-- Muro -->
@@ -160,9 +172,9 @@ $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <section class="paqueteria">
                     <div class="paqueteria-header">
                         <h2>Paquetería</h2>
-                        <a href="paquetes.php" class="round-button add-button" title="Agregar paquete">
+                        <!-- <a href="paquetes.php" class="round-button add-button" title="Agregar paquete">
                             <span>+</span>
-                        </a>
+                        </a> -->
                     </div>
 
                     <?php
