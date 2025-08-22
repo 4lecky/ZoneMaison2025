@@ -18,21 +18,21 @@ $rol = $_SESSION['usuario']['rol'] ?? '';
 
         <div class="contenedor_btn_header">
 
-            <button class="btns_header" onclick="window.location.href='logout.php'"> <i class="ri-logout-box-r-line"></i> Cerrar sesión</button>
-            <button class="btns_header" onclick="window.location.href='perfil_usuario.php'"><i class="ri-user-3-fill"></i> Mi cuenta </button>
+            <button class="btns_header" onclick="window.location.href='../views/logout.php'"> <i class="ri-logout-box-r-line"></i> Cerrar sesión</button>
+            <button class="btns_header" onclick="window.location.href='../controller/perfilUsuarioController.php'"><i class="ri-user-3-fill"></i> Mi cuenta </button>
 
         </div>
 
     </header>
     <nav class="nav_expanded" id="main_nav"> 
-        <a href="./novedades.php" class="nav-link"> Notificaciones </a>
-        <a href="./reserva2.php" class="nav-link">Reservas</a>
-        <a href="./visitas.php" class="nav-link"> visitas </a>
-        <a href="./parqueadero.php" class="nav-link"> Parqueaderos </a>
+        <a href="../views/novedades.php" class="nav-link"> Notificaciones </a>
+        <a href="../views/reserva2.php" class="nav-link">Reservas</a>
+        <a href="../views/visitas.php" class="nav-link"> visitas </a>
+        <a href="../views/parqueadero.php" class="nav-link"> Parqueaderos </a>
         <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
-            <a href="./crud.php" class="nav-link"> Usuarios </a>
+            <a href="../views/crud.php" class="nav-link"> Usuarios </a>
         <?php endif;?>
-        <a href="./pqrs.php" class="nav-link"> PQRS </a>
+        <a href="../views/pqrs.php" class="nav-link"> PQRS </a>
 
 
     </nav>

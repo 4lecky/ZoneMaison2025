@@ -42,12 +42,14 @@ class Perfil {
             $data ['Correo'],
             $data ['Apartamento'],
             $data ['Torre'],
-            $data ['Apartamento'],
+            $data ['Propiedades'],
             $id
         ]); 
     }
 
     public function eliminar($id){
+        $stmt = $this->pdo->prepare("UPDATE tbl_usuario SET usu_estado = 'Inactivo' WHERE usuario_cc = ?");
+        return $stmt->execute([$id]);
 
     }
 

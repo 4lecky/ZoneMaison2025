@@ -1,12 +1,47 @@
+.etiquetaPerfil{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Mensajes   */
+.mt-2 {
+  margin-top: 1.5rem !important;
+  display: flex;
+  justify-content: center;
+}
+
+.fs-5 {
+  font-size: 1.25rem !important;
+  width: 350px;
+  text-align: center;
+}
+
+
+
+/* Titulos */
+.containerTitulo{
+  margin-top: 10px;
+  background:#fafafa; 
+  border: #ccc 1px;
+  border-radius: 16px;
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .title_perfilUsu{
   display: inline-block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #8B7355;
-  text-transform: uppercase;
+  color: #9B825D;
   letter-spacing: 0.05rem;
   position: relative;
   padding-bottom: 0.5rem;
+  margin-top: 5px;
 }
 
 .title_perfilUsu::after {
@@ -16,17 +51,21 @@
   bottom: 2px; /* Distancia entre texto y línea */
   width: 100px;   /* Largo de la línea */
   height: 3px;   /* Grosor de la línea */
-  background-color: #C19A6B; 
+  background-color: #9B825D; 
   border-radius: 2px; /* Bordes redondeados de la linea inferior */
 }
 
-/**/
+/* Form  */
 
 .form_perfil_usuario{
     /* background-color: bisque; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #7b9a82;
+    border-radius: 0px 0px 50px 50px;
+    width: 70rem;
+    margin-top: -30px;
 }
 
 /*Labels*/
@@ -44,7 +83,7 @@
   border-radius: 16px;
   padding: 24px 24px 30px 24px;
   background: #fafafa;
-  margin: 24px 0;
+  margin: 15px 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -121,7 +160,7 @@
 
 .btn_perfilUsu{
     padding: 10px;
-    background-color: #7b9a82;
+    background-color: #9B825D;
     border: none;
     border-radius: 20px;
     color: #ffffff;
