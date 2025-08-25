@@ -31,12 +31,12 @@ $datos = $control->editar($id);
 <head>
     <meta charset="UTF-8">
     <title>Editar Visita</title>
-    <link rel="stylesheet" href="../../assets/css/visitas.css">
+    <link rel="stylesheet" href="../../assets/css/visitas/editar.css">
 </head>
 <body>
 <div class="form-container">
     <h2>Editar Visita</h2>
-    <form method="POST">
+    <form method="POST" action="../controller/EditCrudVisiControl.php">
 
         <input type="hidden" name="id" value="<?= $datos->vis_id ?>">
 
@@ -69,8 +69,8 @@ $datos = $control->editar($id);
             </div>
         </div>
 
-        <button type="submit" onclick = "">Confirmar</button>
-        <a href="visitas.php">Cancelar</a>
+        <button type="button" class="boton confirmar">Confirmar</button>
+        <a href="" class="boton cancelar">Cancelar</a>    
     </form>
 </div>
 </body>

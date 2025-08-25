@@ -45,7 +45,7 @@ $stmt = $pdo->query($sql);
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-    <link rel="stylesheet" href="../assets/Css/visitas.css" />
+    <link rel="stylesheet" href="../assets/Css/visitas/visitas.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>

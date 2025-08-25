@@ -17,7 +17,7 @@ require_once "./Layout/header.php"
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-    <link rel="stylesheet" href="../assets/Css/visitas.css" />
+    <link rel="stylesheet" href="../assets/Css/visitas/visitas.css" />
     <!-- Libreria de iconos RemixIcon-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
