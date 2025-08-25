@@ -45,11 +45,18 @@ $stmt = $pdo->query($sql);
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
-    <link rel="stylesheet" href="../assets/Css/visitas.css" />
+    <link rel="stylesheet" href="../assets/Css/visitas/visitas.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+            <?php if (isset($_GET['msg'])): ?>
+            <?php if ($_GET['msg'] == 'eliminado'): ?>
+                <div class="alert alert-success">✅ Registro eliminado correctamente.</div>
+            <?php elseif ($_GET['msg'] == 'error'): ?>
+                <div class="alert alert-danger">❌ No se pudo eliminar el registro.</div>
+            <?php endif; ?>
+            <?php endif; ?>
 
 <section class="table-card">
     <div class="tabla-responsive">
@@ -98,6 +105,7 @@ $stmt = $pdo->query($sql);
         </table>
     </div>
 </section>
+
 
 <?php require_once "./Layout/footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

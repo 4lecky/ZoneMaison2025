@@ -37,4 +37,11 @@ class EditCrudVisiModel {
             ':id'            => $data['id']
         ]);
     }
+
+    // ✅ Eliminar visita
+    public function eliminarVisita($id) {
+        $sql = "DELETE FROM tbl_visita WHERE vis_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([ ':id' => $id ]);
+    }
 }

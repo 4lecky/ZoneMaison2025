@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS zonas_comunes (
     hora_apertura TIME DEFAULT '08:00:00',
     hora_cierre TIME DEFAULT '20:00:00',
     duracion_maxima INT(11) DEFAULT 2,
+    terminos_y_condiciones TEXT DEFAULT NULL,
     PRIMARY KEY (id)
 );
 
@@ -349,13 +350,11 @@ VALUES (1, 'PuertaEntrada.jpg', 'imagen', '/archivos/PuertaEntrada.jpg',1),
 (4, 'RevisiónLuces.pdf', 'documento', '/archivos/RevisiónLuces.pdf',4),
 (5, 'RetrasoMantenimiento.pdf', 'documento', '/archivos/RetrasoMantenimiento.pdf',5);
 
-
-INSERT INTO zonas_comunes (id, nombre, descripcion, capacidad, estado, imagen, hora_apertura, hora_cierre, duracion_maxima) 
+INSERT INTO zonas_comunes (id, nombre, descripcion, capacidad, estado, imagen, hora_apertura, hora_cierre, duracion_maxima, terminos_y_condiciones) 
 VALUES
-(1, 'Gimnasio', 'Zona equipada con máquinas de ejercicios.', 20, 'activo', 'gimnasio.jpg', '08:00:00', '22:00:00', 2),
-(2, 'Salón Comunal', 'Espacio para eventos y reuniones.', 50, 'activo', 'salon-comunal.jpg', '08:00:00', '20:00:00', 3),
-(3, 'Cancha de Vóley', 'Cancha de vóley para uso recreativo y deportivo.', 10, 'activo', 'voley.jpg', '08:00:00', '20:00:00', 2);
-
+(1, 'Gimnasio', 'Zona equipada con máquinas de ejercicios.', 20, 'activo', 'gimnasio.jpg', '08:00:00', '22:00:00', 2, 'Uso exclusivo para residentes.'),
+(2, 'Salón Comunal', 'Espacio para eventos y reuniones.', 50, 'activo', 'salon-comunal.jpg', '08:00:00', '20:00:00', 3, 'Reserva previa requerida.'),
+(3, 'Cancha de Vóley', 'Cancha de vóley para uso recreativo y deportivo.', 10, 'activo', 'voley.jpg', '08:00:00', '20:00:00', 2, 'Acceso gratuito para residentes.');
 
 INSERT INTO reservas (zona_id, apartamento, nombre_residente, fecha_reserva, hora_inicio, hora_fin, estado, observaciones)
 VALUES
@@ -365,3 +364,11 @@ VALUES
 (2, 'Apt 202', 'Sofía Martínez', '2025-08-08', '14:00:00', '17:00:00', 'activa', 'Evento social en salón comunal.'),
 (3, 'Apt 301', 'Pedro Sánchez', '2025-08-09', '16:00:00', '18:00:00', 'activa', 'Partido de vóley con amigos.'),
 (3, 'Apt 302', 'Laura Rodríguez', '2025-08-10', '08:00:00', '10:00:00', 'activa', 'Práctica recreativa en la cancha de vóley.');
+
+INSERT INTO tbl_usuario (usu_cedula, usu_tipo_documento, usu_nombre_completo, usu_telefono, usu_correo, usu_password, usu_apartamento_residencia, usu_torre_residencia, usu_parqueadero_asignado, usu_propiedades, usu_rol, usu_estado, usu_mora, request_password, token_password, expired_session
+) VALUES (
+    123456789, 'Cedula de ciudadania', 'Miguel', 3025939177, 'miguel@gmail.com', '$2y$10$GZrVvv2EK2JcbHwo7m1ufey5o9/.t4lyFHAqdpE5WAsl56CtbDnci', 'Apto 102', 'Torre 1', 'P1', 'Propiedad 1', 'Administrador', 'Activo', 1, 
+    '0', 
+    NULL, 
+    NULL
+);
