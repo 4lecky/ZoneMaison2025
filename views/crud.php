@@ -36,6 +36,7 @@ require_once __DIR__ . "/Layout/header.php";
   <link rel="stylesheet" href="../assets/Css/crud/tbl_crud.css">
   <!-- Libreria de iconos RemixIcon-->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <title>Usuarios</title>
 
 </head>
 

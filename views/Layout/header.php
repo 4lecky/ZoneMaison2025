@@ -9,7 +9,7 @@ $rol = $_SESSION['usuario']['rol'] ?? '';
 <div id="ColorHeader"> 
     <header>
         <div class="logo-ZM">
-            <img class="Logo" src="../assets/img/LogoZM.png" alt="Imagen Logo">
+            <img class="Logo" src="../assets/img/LogoZM.png" alt="Imagen Logo" onclick="window.location.href='../views/novedades.php'">
         </div>
 
         <div class="Titulo">
