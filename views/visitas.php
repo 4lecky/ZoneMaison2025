@@ -65,19 +65,19 @@ require_once "./Layout/header.php"
 
                         <div class="input-box">
                             <label for="numero_doc">Número de Documento</label>
-                            <input type="text" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required>
+                            <input type="number" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required>
                         </div>
                         </div>
 
                         <div class="input-group">
                         <div class="input-box">
                             <label for="correo">Correo Electrónico</label>
-                            <input type="email" class="form-control" name="correo" id="correo" placeholder="correo@ejemplo.com">
+                            <input type="email" class="form-control" name="correo" id="email" placeholder="correo@ejemplo.com">
                         </div>
 
                         <div class="input-box">
                             <label for="telefono">Teléfono</label>
-                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Número de teléfono">
+                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Número de teléfono">
                         </div>
                         </div>
 
