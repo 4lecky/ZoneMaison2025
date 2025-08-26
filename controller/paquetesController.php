@@ -7,8 +7,7 @@ $paquetesModel = new paquetesModel($pdo);
 
 // Obtener datos del formulario
 $tipoDoc = $_POST['tipo_doc'] ?? '';
-$numeroDoc = $_POST['numero_doc'] ?? '';
-$cedulaDestinatario = $_POST['paqu_usuario_cedula'] ?? '';
+$paqu_usuario_cedula = $_POST['paqu_usuario_cedula'] ?? '';
 $nombreDestinatario = $_POST['paqu_Destinatario'] ?? '';
 $asunto = $_POST['asunto'] ?? '';
 $fecha = $_POST['fecha'] ?? '';
@@ -17,12 +16,12 @@ $descripcion = $_POST['descripcion'] ?? '';
 $estado = $_POST['estado'] ?? '';
 
 // Validación básica
-if (!$tipoDoc || !$numeroDoc || !$cedulaDestinatario) {
+if (!$tipoDoc || !$paqu_usuario_cedula || !$nombreDestinatario || !$asunto || !$fecha || !$hora || !$estado) {
     die("Faltan datos obligatorios.");
 }
 
 // Validar que el número de documento sea numérico y de longitud apropiada
-if (!is_numeric($numeroDoc) || strlen($numeroDoc) < 9) {
+if (!is_numeric($paqu_usuario_cedula) || strlen($paqu_usuario_cedula) < 9) {
     die("Número de documento inválido.");
 }
 
@@ -51,8 +50,25 @@ if (isset($_FILES['zone-images']) && $_FILES['zone-images']['error'] === UPLOAD_
     $rutaRelativaBD = 'uploads/' . $archivoNombre;
 }
 
+// Insertar el paquete en la base de datos
+$insertado = $paquetesModel->insertarPaquete(
+    $tipoDoc,
+    $paqu_usuario_cedula,
+    $nombreDestinatario,
+    $asunto,
+    $fecha,
+    $hora,
+    $rutaRelativaBD,
+    $descripcion,
+    $estado
+);
 
-// Redirigir a novedades.php después de la inserción
-header("Location: ../views/novedades.php");
-exit;
+if ($insertado) {
+    // Redirigir a novedades.php después de la inserción exitosa
+    header("Location: ../views/novedades.php");
+    exit;
+} else {
+    // Si hubo un error al insertar
+    die("Hubo un error al insertar el paquete.");
+}
 ?>
