@@ -531,3 +531,19 @@ select:focus {
         flex-direction: column;
     }
 }
+
+/* 🔴 Borde rojo en inputs con error */
+.campo-error {
+  border: 2px solid #e74c3c !important;
+  background-color: #fdecea;
+  border-radius: 4px;
+}
+
+/* 🔴 Mensaje debajo del campo */
+.error-msg {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #e74c3c;
+  font-style: italic;
+}

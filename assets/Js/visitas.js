@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Expresiones regulares */
   const emailRegex    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const telefonoRegex = /^\d+$/;
+  const telefonoRegex = /^\d{7,10}$/;   // solo números de 7 a 10 dígitos
   const dateRegex     = /^\d{4}-\d{2}-\d{2}$/;
   const horaRegex     = /^\d{2}:\d{2}$/;
 
@@ -18,6 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
     hora: horaRegex
   };
 
+  /* ---------- Funciones para ayudas contextuales ---------- */
+  function mostrarError(campo, mensaje) {
+    campo.classList.add('campo-error');
+
+    // Si ya hay un mensaje, lo borra primero
+    let existente = campo.parentElement.querySelector('.error-msg');
+    if (existente) existente.remove();
+
+    // Crear nuevo mensaje
+    const span = document.createElement('span');
+    span.className = 'error-msg';
+    span.textContent = mensaje;
+    campo.parentElement.appendChild(span);
+  }
+
+  function limpiarError(campo) {
+    campo.classList.remove('campo-error');
+    let existente = campo.parentElement.querySelector('.error-msg');
+    if (existente) existente.remove();
+  }
+
   /* ---------- Validación ---------- */
   function validarFormulario(form) {
     const campos        = Array.from(form.querySelectorAll('input, select, textarea'));
@@ -25,46 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let primerError     = null;
 
     campos.forEach(campo => {
-      campo.classList.remove('campo-error');
+      limpiarError(campo);  // limpiar mensajes previos
       const tipoEsperado = campo.getAttribute('data-validate');
       const valor        = campo.value.trim();
 
       // 1. Select sin opción válida
-      if (
-        campo.tagName === 'SELECT' &&
-        (valor === '' || campo.selectedIndex === 0)
-      ) {
+      if (campo.tagName === 'SELECT' && (valor === '' || campo.selectedIndex === 0)) {
         camposError.push(campo);
+        mostrarError(campo, 'Debes seleccionar una opción');
         if (!primerError) primerError = campo;
       }
       // 2. Campo vacío
       else if (valor === '') {
         camposError.push(campo);
+        mostrarError(campo, 'Este campo es obligatorio');
         if (!primerError) primerError = campo;
       }
       // 3. Formato incorrecto
       else if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
         camposError.push(campo);
+        mostrarError(campo, `Formato inválido (${tipoEsperado})`);
         if (!primerError) primerError = campo;
       }
     });
 
-    if (camposError.length) {
-      camposError.forEach(c => c.classList.add('campo-error'));
-      if (primerError) primerError.focus();
-    }
-
+    if (primerError) primerError.focus();
     return camposError;
-  }
-
-  function mostrarMensajeValidacion(campos) {
-    if (campos.length === 1) {
-      const campo = campos[0];
-      const label = campo.labels?.[0]?.innerText || campo.placeholder || campo.name || 'un campo';
-      alert(`Falta llenar: ${label}`);
-    } else {
-      alert('Faltan llenar varios campos');
-    }
   }
 
   /* ---------- Acciones de botones ---------- */
@@ -72,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (accion === 'limpiar') {
       if (confirm('¿Seguro que deseas limpiar todos los campos?')) {
         formVisitante.reset();
+        // limpiar mensajes de error
+        formVisitante.querySelectorAll('.error-msg').forEach(e => e.remove());
+        formVisitante.querySelectorAll('.campo-error').forEach(c => c.classList.remove('campo-error'));
       }
       return;
     }
@@ -79,8 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Registrar o editar: primero validar
     const errores = validarFormulario(formVisitante);
     if (errores.length) {
-      mostrarMensajeValidacion(errores);
-      return;
+      return; // ya se mostraron los mensajes
     }
 
     if (accion === 'registrar') {
@@ -90,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (accion === 'editar') {
       if (confirm('¿Seguro que quieres editar una visita?')) {
         alert('Visita editada correctamente');
-        // Aquí iría tu lógica de edición (AJAX, recarga de tabla, etc.)
       }
     }
   }
@@ -117,47 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-async function cargarTablaVisitas() {
-    const cuerpoTabla = document.getElementById('tablavisitasCuerpo');
-    const estadoVacio = document.getElementById('estadoVaciovisitas');
-    cuerpoTabla.innerHTML = ''; // Limpiar antes de cargar
-
-    try {
-        const response = await fetch('/ZoneMaison2025/controller/RegistrarVisitaController.php?accion=consultar');
-        const registros = await response.json();
-
-        if (!Array.isArray(registros) || registros.length === 0 || registros.error) {
-            estadoVacio.style.display = 'block';
-            return;
-        }
-
-        estadoVacio.style.display = 'none';
-
-        registros.forEach((reg, index) => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                 <td>${index + 1}</td>
-                <td contenteditable="true" data-campo="Hora Entrada" data-id="${reg.parq_id}">${reg.vis_hora_entrada}</td>
-                <td contenteditable="true" data-campo="Hora Salida" data-id="${reg.parq_id}">${reg.vis_hora_salida}</td>
-                <td contenteditable="true" data-campo="Fecha Entrada" data-id="${reg.parq_id}">${reg.vis_fecha_entrada}</td>
-                <td contenteditable="true" data-campo="Fecha Salida" data-id="${reg.parq_id}">${reg.vis_fecha_salida}</td>
-                <td contenteditable="true" data-campo="Torre" data-id="${reg.parq_id}">${reg.vis_torre_visitada}</td>
-                <td contenteditable="true" data-campo="Apartamento" data-id="${reg.parq_id}">${reg.vis_Apto_visitado}</td>
-
-                <td>
-            `;
-            cuerpoTabla.appendChild(fila);
-        });
-
-    } catch (error) {
-        console.error("Error al cargar visitas:", error);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    cargarTablaVisitas();
-});
-
-
+  /* Validación en tiempo real (mientras escribe) */
+  formVisitante.querySelectorAll('input, select, textarea').forEach(campo => {
+    campo.addEventListener('input', () => {
+      limpiarError(campo);
+      const tipoEsperado = campo.getAttribute('data-validate');
+      const valor = campo.value.trim();
+      if (valor === '') return;
+      if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
+        mostrarError(campo, `Formato inválido (${tipoEsperado})`);
+      }
+    });
+  });
 
 });
