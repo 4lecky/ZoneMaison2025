@@ -20,8 +20,9 @@
 }
 
 .boton-addpaquete {
-  text-align: -moz-right;
-  margin-right: 260px;
+    margin-right: 260px;
+    display: flex;
+    justify-content: flex-end;
 }
 
   h2 {
