@@ -117,17 +117,32 @@ CREATE TABLE IF NOT EXISTS tbl_visita (
     FOREIGN KEY (vis_visi_id) REFERENCES tbl_Visitante (visi_id)
 );
 
-CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT(20) NOT NULL AUTO_INCREMENT,
-    alqu_observaciones VARCHAR (30000) NOT NULL,
+CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT AUTO_INCREMENT,
+    alqu_observaciones TEXT NOT NULL,
     alqu_precio FLOAT (2) NOT NULL,
-    alqu_vis_id INT (10) NOT NULL,
-    alqu_num_recibo INT (255) NOT NULL,
+    alqu_vis_id INT,
+    alqu_num_recibo BIGINT NOT NULL,
     alqu_placa VARCHAR (20) NOT NULL,
-    alqu_usuario_cedula INT (10) NOT NULL,
+    alqu_usuario_cedula INT (10),
     UNIQUE (alqu_num_recibo),
     PRIMARY KEY (alqu_id),
     FOREIGN KEY (alqu_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
     FOREIGN KEY (alqu_vis_id) REFERENCES tbl_visita (vis_id));
+    
+
+CREATE TABLE IF NOT EXISTS tbl_consultaParqueadero (consulParq_id INT (50) NOT NULL AUTO_INCREMENT,
+    consulParq_tipoVehiculo ENUM('Carro', 'Moto') NOT NULL,
+    consulParq_placa VARCHAR (10) NOT NULL,
+    consulParq_observaciones VARCHAR (30000) NOT NULL, 
+    consulParq_estadoIngreso ENUM('buenas_Condiciones', 'malas_Condiciones') NOT NULL,
+    consulParq_usuario_cedula INT (10),
+    consulParq_numeroParqueadero INT NOT NULL,
+    consulParq_estado ENUM('disponible', 'ocupado', 'mantenimiento') DEFAULT 'disponible',
+    consulParq_fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (consulParq_numeroParqueadero),
+    PRIMARY KEY (consulParq_id),
+    FOREIGN KEY (consulParq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula));
+
 
                                                                                                                                 
 CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREMENT,
@@ -135,27 +150,16 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
     parq_nombre_propietario_vehi VARCHAR (255) NOT NULL,
     parq_tipo_doc_vehi VARCHAR (255) NOT NULL,
     parq_num_doc_vehi INT (20) NOT NULL,
-    parq_vehi_estadiIngreso ENUM('buenas_Condiciones', 'malas_Condiciones') NOT NULL,
-    parq_vehi_alqu_id INT (30) NOT NULL,
-    parq_usuario_cedula INT (10) NOT NULL,
-    parq_visita_id INT (30) NOT NULL, 
+    parq_vehi_estadoIngreso ENUM('buenas_Condiciones', 'malas_Condiciones') NOT NULL,
+    parq_vehi_alqu_id INT (30),
+    parq_usuario_cedula INT (10),
+    parq_visita_id INT (30),
+    parq_consulParq_numeroParqueadero INT (45),
     PRIMARY KEY (parq_id),
     FOREIGN KEY (parq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula),
     FOREIGN KEY (parq_visita_id) REFERENCES tbl_visita (vis_id),
-    FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id));
-
-
-CREATE TABLE IF NOT EXISTS tbl_consultaParqueadero (consulParq_id INT (50) NOT NULL AUTO_INCREMENT,
-    consulParq_tipoVehiculo ENUM('Carro', 'Moto') NOT NULL,
-    consulParq_placa VARCHAR (10) NOT NULL,
-    consulParq_observaciones VARCHAR (30000) NOT NULL, 
-    consulParq_estadoSalida ENUM('buenas_Condiciones', 'malas_Condiciones') NOT NULL,
-    consulParq_usuario_cedula INT (10) NOT NULL,
-    consulParq_numeroParqueadero INT NOT NULL,
-    consulParq_estado ENUM('disponible', 'ocupado', 'mantenimiento') DEFAULT 'disponible',
-    consulParq_fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (consulParq_id),
-    FOREIGN KEY (consulParq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula));
+    FOREIGN KEY (parq_vehi_alqu_id) REFERENCES tbl_alquiler (alqu_id),
+    FOREIGN KEY (parq_consulParq_numeroParqueadero) REFERENCES tbl_consultaParqueadero (consulParq_numeroParqueadero));
 
 
 CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
@@ -163,8 +167,9 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
     desg_alqu_id INT (20) NOT NULL,
     PRIMARY KEY (desg_id),
     FOREIGN KEY (desg_parq_id) REFERENCES tbl_parqueadero (parq_id),
-    FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));                           
+    FOREIGN KEY (desg_alqu_id) REFERENCES tbl_alquiler (alqu_id));
 
+    
 
 CREATE TABLE IF NOT EXISTS tbl_pqrs (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -184,6 +189,7 @@ CREATE TABLE IF NOT EXISTS tbl_pqrs (
     CONSTRAINT fk_usuario_pqr FOREIGN KEY (usuario_cc) REFERENCES tbl_usuario(usuario_cc)
     ON DELETE SET NULL ON UPDATE CASCADE
 );
+
 
 -- ON DELETE SET NULL: Si se elimina un usuario en 'tbl_usuario', el campo 'usuario_cc' en 'pqrs' quedará en NULL,
 --                     evitando la pérdida del historial de PQRs pero indicando que ya no está asociado a un usuario activo.

@@ -45,6 +45,7 @@ class Usuario
         // Solo puede ingresar si es un usuario activo
         $stmt = $this->pdo->prepare("SELECT usuario_cc AS id, 
         usu_nombre_completo AS nombre,
+        usu_cedula AS cedula,
         usu_correo AS email,
         usu_password AS contraseña,
         usu_rol AS rol

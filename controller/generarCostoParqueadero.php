@@ -6,19 +6,17 @@ require_once '../models/logicaCalculoParqueadero.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $placa       = $_POST['placa'] ?? '';
-    $tipo        = $_POST['tipo'] ?? ''; // ← agregado
+    $tipo        = $_POST['tipo'] ?? '';
     $horaIngreso = $_POST['hora_ingreso'] ?? '';
     $horaSalida  = $_POST['hora_salida'] ?? '';
-    $costoPorHora = 5000; // Tarifa fija
+    $costoPorHora = 5000; // tarifa fija
 
-    // Validación
     if (empty($placa) || empty($tipo) || empty($horaIngreso) || empty($horaSalida)) {
         echo json_encode(['error' => '⚠️ Faltan datos requeridos.']);
         exit;
     }
 
     try {
-        // Crear objetos usando tipo recibido
         $vehiculo = new Vehiculo($placa, $tipo);
         $tarifa = new Tarifa($costoPorHora);
         $ticket = new Ticket($vehiculo, $tarifa);
@@ -29,9 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $costo = $ticket->calcularCosto();
 
         echo json_encode([
-            'costo'       => number_format($costo, 0, ',', '.'),
-            'costo_neto'  => $costo,
-            'tipo'        => $tipo // ← opcional si quieres devolverlo
+            'costo' => number_format($costo, 0, ',', '.'),
+            'costo_neto' => $costo
         ]);
     } catch (Exception $e) {
         echo json_encode(['error' => '❌ Error al calcular el costo: ' . $e->getMessage()]);

@@ -1,5 +1,4 @@
 <?php
-
 class Vehiculo {
     private $placa;
     private $tipo;
@@ -59,7 +58,6 @@ class Ticket {
         return $this->tarifa->getCostoPorHora() * $horas;
     }
 
-    // obtener tipo de vehículo
     public function getTipoVehiculo() {
         return $this->vehiculo->getTipo();
     }

@@ -54,6 +54,7 @@ class AuthController {
             // $_SESSION['usuario'] = $user;
             $_SESSION['usuario'] = [
                 'id' => $user['id'],
+                'cedula'=> $user['cedula'],
                 'nombre' => $user['nombre'],
                 'email' => $user['email'],
                 'rol' => $user['rol'],

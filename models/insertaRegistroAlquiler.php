@@ -34,9 +34,8 @@ class insertaRegistroAlquiler {
         try {
             return $stmt->execute();
         } catch (PDOException $e) {
-            echo "❌ Error al insertar alquiler: " . $e->getMessage();
+            error_log("❌ Error al insertar alquiler: " . $e->getMessage());
             return false;
         }
     }
 }
-
