@@ -31,18 +31,6 @@ try {
     error_log("Error al obtener mensajes del muro: " . $e->getMessage());
 }
 
-// Obtener paquetes
-$paquetes = [];
-$hay_paquetes = false;
-try {
-    $stmt = $pdo->prepare("SELECT * FROM tbl_paquetes WHERE paqu_estado IN ('Entregado', 'Pendiente') ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC");
-    $stmt->execute();
-    $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $hay_paquetes = count($paquetes) > 0;
-} catch (PDOException $e) {
-    error_log("Error al obtener paquetes: " . $e->getMessage());
-}
-
 // roles
 $rol_usuario = $_SESSION['usuario']['rol'];
 
@@ -51,6 +39,7 @@ if ($rol_usuario === 'Administrador') {
     $query = "SELECT * FROM tbl_muro ORDER BY muro_Fecha DESC, muro_Hora DESC";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
+
 } else {
     // Los demás usuarios solo ven publicaciones dirigidas a su rol o a "Todos"
     $query = "SELECT * FROM tbl_muro 
@@ -62,6 +51,49 @@ if ($rol_usuario === 'Administrador') {
 }
 
 $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Obtener paquetes generales
+$paquetes = [];
+$hay_paquetes = false;
+
+try {
+    $stmt = $pdo->prepare("SELECT * FROM tbl_paquetes WHERE paqu_estado IN ('Entregado', 'Pendiente') ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC");
+    $stmt->execute();
+    $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $hay_paquetes = count($paquetes) > 0;
+} catch (PDOException $e) {
+    error_log("Error al obtener paquetes: " . $e->getMessage());
+}
+
+// Verificar si el usuario está logueado
+if (isset($_SESSION['usuario']['cedula'])) {
+    $usuario_cedula = $_SESSION['usuario']['cedula'];
+
+    // Comprobar el rol del usuario (Administrador o Vigilante)
+    $usuario_rol = $_SESSION['usuario']['rol']; // Asumimos que el rol está en la sesión
+
+    if ($usuario_rol == 'Administrador' || $usuario_rol == 'Vigilante') {
+        // Si es Administrador o Vigilante, mostrar todos los paquetes
+        $query = "SELECT * FROM tbl_paquetes WHERE paqu_estado IN ('Entregado', 'Pendiente') ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
+    } else {
+        // Si es usuario regular, mostrar solo los paquetes de su cédula
+        $query = "SELECT * FROM tbl_paquetes WHERE paqu_usuario_cedula = :cedula ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
+    }
+
+    // Ejecutar la consulta
+    $stmt = $pdo->prepare($query);
+
+    // Si es un usuario regular, pasamos la cédula
+    if ($usuario_rol != 'Administrador' && $usuario_rol != 'Vigilante') {
+        $stmt->execute(['cedula' => $usuario_cedula]);
+    } else {
+        $stmt->execute();
+    }
+
+    // Obtener los paquetes
+    $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $hay_paquetes = count($paquetes) > 0;
+}
 
 
 ?>

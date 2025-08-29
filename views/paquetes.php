@@ -11,20 +11,6 @@ require_once "./Layout/header.php";
 $stmt = $pdo->query("SELECT usu_nombre_completo, usu_cedula FROM tbl_usuario");
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// // Verificar si el usuario está logueado y tiene un número de documento
-// if (isset($_SESSION['usuario']['cedula'])) {
-//     $usuario_cedula = $_SESSION['usuario']['cedula'];
-
-//     // Consultar los paquetes que corresponden a este número de documento
-//     $query = "SELECT * FROM tbl_paquetes WHERE paqu_usuario_cedula = :cedula ORDER BY paqu_FechaLlegada DESC, paqu_Hora DESC";
-    
-//     // Ejecutar la consulta
-//     $stmt = $pdo->prepare($query);
-//     $stmt->execute(['cedula' => $usuario_cedula]);
-
-//     // Obtener los paquetes
-//     $paquetes = $stmt->fetchAll();}
-
 ?>
 
 <!DOCTYPE html>
