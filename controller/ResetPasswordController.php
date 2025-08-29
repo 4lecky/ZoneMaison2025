@@ -17,7 +17,7 @@ if (isset($_POST['send'])):
         if (count($Usuario) > 0) {
             $token_ = bin2hex(random_bytes(32));
 
-            if (updateUser($pdo, $token_, TIEMPO_VIDA, $Usuario[0]->usuario_cc)); {
+            if (updateUser($pdo, $token_, TIEMPO_VIDA, $Usuario[0]->usuario_cc)) {
                 EnviarCorreoResetPassword(
                     $Usuario[0]->usu_correo,
                     $Usuario[0]->usu_nombre_completo,
@@ -30,12 +30,11 @@ if (isset($_POST['send'])):
         } else {
             $_SESSION['response'] = 'Información no valida';
             $_SESSION['response_type'] = 'danger';
-            // header("location:../view/reset_contrasenha.php?message=no_found");
         }
     } else {
         $_SESSION['response'] = 'Email incorrecto';
         $_SESSION['response_type'] = 'warning';
-        // header("location:../view/reset_contrasenha.php?message=error");
+
     }
     header("location:../views/reset_contrasenha.php");
     exit();
@@ -58,12 +57,12 @@ if (isset($_POST['save'])):
             $_SESSION['response_type'] = 'success';
             
         } else {
-            // echo "no existe el usuario";
+
             $_SESSION['response'] = 'No existe usuario';
             $_SESSION['response_type'] = 'danger';
         }
     } else {
-        // echo "Ingrese su correo electrónico";
+
         $_SESSION['response'] = 'Email incorrecto';
         $_SESSION['response_type'] = 'warning';
     }
@@ -87,8 +86,9 @@ function ConsultaUsuarioPorEmail($pdo, $email)
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     } catch (\Throwable $th) {
         //throw $th;
-
-        echo $th->getMessage();
+        // echo $th->getMessage();
+        $_SESSION['error_msg'] = $th->getMessage();
+        return [];
     } finally {
         $stmt = null;
     }
@@ -110,8 +110,9 @@ function ConsultaUsuarioPorId($pdo, $id)
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     } catch (\Throwable $th) {
         //throw $th;
-
-        echo $th->getMessage();
+        // echo $th->getMessage();
+        $_SESSION['error_msg'] = $th->getMessage();
+        return [];
     } finally {
         $stmt = null;
     }
@@ -135,7 +136,9 @@ function updateUser($pdo, $token, $tiempo_vida, $user_cc)
         return $stmt->execute();
     } catch (\Throwable $th) {
         //throw $th;
-        echo $th->getMessage();
+        // echo $th->getMessage();
+        $_SESSION['error_msg'] = $th->getMessage();
+        return false; // o false, según el caso
     }
 }
 
@@ -154,7 +157,9 @@ function updateUserID($pdo, $new_password, $user_id)
         $stmt->execute();
     } catch (\Throwable $th) {
         //throw $th;
-        echo $th->getMessage();
+        // echo $th->getMessage();
+        $_SESSION['error_msg'] = $th->getMessage();
+        return false; // o false, según el caso
     }
 }
 
@@ -167,7 +172,8 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
 
     try {
         //Server REAL
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;        //Enable verbose debug output
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;        //Enable verbose debug output
+        $mail->SMTPDebug = 0;  
         $mail->isSMTP();                              //Send using SMTP
         $mail->Host       = HOST;                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                     //Enable SMTP authentication
@@ -183,14 +189,26 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Reseteo de password';
-        $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b> 
-        <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' .$userid . '&&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
+        $mail->Body = "
+        <p>Hola,</p>
+        <p>Has solicitado un <strong>reseteo de contraseña</strong> para tu cuenta.</p>
+        <p>Haz clic en el siguiente enlace para cambiar tu contraseña:</p>
+        <p>
+            <a href=\"http://localhost/zonemaison2025/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
+        </p>
+        <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico.</p>
+        <br>
+        <p>Saludos,<br>El equipo de ZoneMaison2025</p>
+         ";
+        // $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b>
+        // <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' .$userid . '&&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
 
 
         $mail->send();
-        echo 'Se ha enviado un correo con las instrucciones para recuperar contraseña';       
+        return true;      
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error_msg'] = "No se pudo enviar el correo: {$mail->ErrorInfo}";
+            return false;
         }
 
         //Pruebas con mailTrap
@@ -205,7 +223,7 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
 
     //     //Recipients
     //     $mail->setFrom('from@example.com', 'ZoneMaison');
-    //     $mail->addAddress($Correo, $NombreReceptor);     //Add a recipient
+    //     $mail->addAddress($Correo, $NombreReceptor);     //Add a recipient   
 
     //     //Content
     //     $mail->isHTML(true);                                  //Set email format to HTML

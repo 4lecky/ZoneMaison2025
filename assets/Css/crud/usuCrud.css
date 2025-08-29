@@ -36,17 +36,6 @@
 
 }
 
-#tituloCrud::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 2px; /* Distancia entre texto y línea */
-  width: 100px;   /* Largo de la línea */
-  height: 3px;   /* Grosor de la línea */
-  background-color: #C19A6B; 
-  border-radius: 2px; /* Bordes redondeados de la linea inferior */
-}
-
 .containerExcelImport{
   display: flex;
   justify-content: center;
@@ -105,4 +94,12 @@
   width:  900px;
   display: flex;
   justify-content: center;
+}
+
+body{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
