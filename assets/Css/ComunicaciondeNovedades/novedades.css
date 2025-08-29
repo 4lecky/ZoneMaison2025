@@ -33,16 +33,6 @@
     position: relative;
   }
   
-  h2:after {
-    content: '';
-    display: block;
-    width: 70px;
-    height: 3px;
-    background-color: #7b9a82;
-    margin: 10px auto ;
-  }
-  
-
   /* Mantente al tanto */ 
   .code-loader {
     color: #7b9a82;
