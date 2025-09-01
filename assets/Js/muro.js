@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   enviarBtn.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const destinatario = document.getElementById('destinatario').value; // Asegúrate que exista el id="destinatario" en el select
+    const destinatario = document.getElementById('destinatario').value;
     const asunto = document.getElementById('asunto').value.trim();
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;

@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
             --success-color: #28a745;
             --warning-color: #ffc107;
             --danger-color: #dc3545;
-            --shadow: 0 2px 15px rgba(0,0,0,0.1);
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
 
@@ -242,12 +243,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
             transform: translateY(-2px);
         }
 
-       .current-image {
-    max-width: 50%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-       }
+        .current-image {
+            max-width: 50%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
         /* Modal */
         .modal {
@@ -263,8 +264,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-content {
@@ -283,6 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
                 transform: translateY(-50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -371,7 +378,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
                 align-items: center;
             }
 
-            .enviar, .cancelar, .eliminar {
+            .enviar,
+            .cancelar,
+            .eliminar {
                 width: 100%;
                 text-align: center;
             }
@@ -380,11 +389,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
                 margin: 10% auto;
                 width: 95%;
             }
-            
+
             .modal-footer {
                 flex-direction: column;
             }
-            
+
             .btn-modal-cancelar,
             .btn-modal-eliminar {
                 width: 100%;
@@ -392,126 +401,128 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
         }
     </style>
 </head>
+
 <body>
-<main>
-    <section class="principal-page">
-        <h2>Editar Paquetería</h2>
+    <main>
+        <section class="principal-page">
+            <h2>Editar Paquetería</h2>
 
-        <?php if ($mensaje): ?>
-            <div class="alert <?= strpos($mensaje, 'Error') !== false ? 'alert-error' : 'alert-success' ?>">
-                <?= htmlspecialchars($mensaje) ?>
-            </div>
-        <?php endif; ?>
+            <?php if ($mensaje): ?>
+                <div class="alert <?= strpos($mensaje, 'Error') !== false ? 'alert-error' : 'alert-success' ?>">
+                    <?= htmlspecialchars($mensaje) ?>
+                </div>
+            <?php endif; ?>
 
-        <?php if ($publicacion): ?>
-            <form method="POST" enctype="multipart/form-data" class="editar-form">
-                <fieldset>
-                    <legend>Formulario de paquetería</legend>
+            <?php if ($publicacion): ?>
+                <form method="POST" enctype="multipart/form-data" class="editar-form">
+                    <fieldset>
+                        <legend>Formulario de paquetería</legend>
 
-                    <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['paqu_Id']) ?>">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['paqu_Id']) ?>">
 
-                    <label for="descripcion">Descripción *</label>
-                    <textarea id="descripcion" name="descripcion" class="form-control"
-                              rows="5" required maxlength="1000"><?= htmlspecialchars($publicacion['paqu_Descripcion']) ?></textarea>
+                        <label for="descripcion">Descripción *</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control"
+                            rows="5" required maxlength="1000"><?= htmlspecialchars($publicacion['paqu_Descripcion']) ?></textarea>
 
-                    <label for="imagen">Reemplazar imagen (opcional)</label>
-                    <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control">
+                        <label for="imagen">Reemplazar imagen (opcional)</label>
+                        <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control">
 
-                    <?php if (!empty($publicacion['paqu_image'])): ?>
-                        <div class="image-container">
-                            <label>Imagen actual:</label>
-                            <br>
-                            <img src="../<?= htmlspecialchars($publicacion['paqu_image']) ?>"
-                                 alt="Imagen actual" class="current-image">
+                        <?php if (!empty($publicacion['paqu_image'])): ?>
+                            <div class="image-container">
+                                <label>Imagen actual:</label>
+                                <br>
+                                <img src="../<?= htmlspecialchars($publicacion['paqu_image']) ?>"
+                                    alt="Imagen actual" class="current-image">
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="estado">
+                            <label>Estado de la Publicación *</label>
+                            <div class="checkbox-container">
+                                <input type="radio" id="estadoPendiente" name="estado" value="Pendiente"
+                                    <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Pendiente' ? 'checked' : '' ?>>
+                                <label for="estadoPendiente">Pendiente</label>
+                            </div>
+                            <div class="checkbox-container">
+                                <input type="radio" id="estadoEntregado" name="estado" value="Entregado"
+                                    <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Entregado' ? 'checked' : '' ?>>
+                                <label for="estadoEntregado">Entregado</label>
+                            </div>
                         </div>
-                    <?php endif; ?>
 
-                   <div class="estado">
-                        <label>Estado de la Publicación</label>
-                        <div class="checkbox-container">
-                            <input type="radio" id="estadoPendiente" name="estado" value="Pendiente"
-                                <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Pendiente' ? 'checked' : '' ?>>
-                            <label for="estadoPendiente">Pendiente</label>
+                        <div class="btn-container">
+                            <button type="submit" name="editar" class="enviar">Guardar Cambios</button>
+                            <button type="button" class="eliminar" onclick="abrirModal()">Eliminar</button>
+                            <a href="novedades.php" class="cancelar">Volver</a>
                         </div>
-                        <div class="checkbox-container">
-                            <input type="radio" id="estadoEntregado" name="estado" value="Entregado"
-                                <?= ($publicacion['paqu_estado'] ?? 'Pendiente') == 'Entregado' ? 'checked' : '' ?>>
-                            <label for="estadoEntregado">Entregado</label>
+                    </fieldset>
+                </form>
+
+                <!-- Modal de confirmación para eliminar -->
+                <div id="modalEliminar" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Confirmar eliminación</h3>
+                            <span class="close" onclick="cerrarModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que deseas eliminar esta publicación?</p>
+                            <p><strong>Esta acción no se puede deshacer.</strong></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-modal-cancelar" onclick="cerrarModal()">Cancelar</button>
+                            <button class="btn-modal-eliminar" onclick="eliminarPublicacion()">Eliminar</button>
                         </div>
                     </div>
+                </div>
 
+                <!-- Formulario oculto para eliminación -->
+                <form id="formEliminar" method="POST" style="display: none;">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['paqu_Id']) ?>">
+                    <input type="hidden" name="eliminar" value="1">
+                </form>
+
+            <?php else: ?>
+                <fieldset>
                     <div class="btn-container">
-                        <button type="submit" name="editar" class="enviar">Guardar Cambios</button>
-                        <button type="button" class="eliminar" onclick="abrirModal()">Eliminar</button>
                         <a href="novedades.php" class="cancelar">Volver</a>
                     </div>
                 </fieldset>
-            </form>
+            <?php endif; ?>
+        </section>
+    </main>
 
-            <!-- Modal de confirmación para eliminar -->
-            <div id="modalEliminar" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Confirmar eliminación</h3>
-                        <span class="close" onclick="cerrarModal()">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Estás seguro de que deseas eliminar esta publicación?</p>
-                        <p><strong>Esta acción no se puede deshacer.</strong></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn-modal-cancelar" onclick="cerrarModal()">Cancelar</button>
-                        <button class="btn-modal-eliminar" onclick="eliminarPublicacion()">Eliminar</button>
-                    </div>
-                </div>
-            </div>
+    <script>
+        function abrirModal() {
+            document.getElementById('modalEliminar').style.display = 'block';
+        }
 
-            <!-- Formulario oculto para eliminación -->
-            <form id="formEliminar" method="POST" style="display: none;">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($publicacion['paqu_Id']) ?>">
-                <input type="hidden" name="eliminar" value="1">
-            </form>
+        function cerrarModal() {
+            document.getElementById('modalEliminar').style.display = 'none';
+        }
 
-        <?php else: ?>
-            <fieldset>
-                <div class="btn-container">
-                    <a href="novedades.php" class="cancelar">Volver</a>
-                </div>
-            </fieldset>
-        <?php endif; ?>
-    </section>
-</main>
+        function eliminarPublicacion() {
+            document.getElementById('formEliminar').submit();
+        }
 
-<script>
-function abrirModal() {
-    document.getElementById('modalEliminar').style.display = 'block';
-}
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalEliminar');
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
 
-function cerrarModal() {
-    document.getElementById('modalEliminar').style.display = 'none';
-}
+        // Cerrar modal con la tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModal();
+            }
+        });
+    </script>
 
-function eliminarPublicacion() {
-    document.getElementById('formEliminar').submit();
-}
-
-// Cerrar modal al hacer clic fuera de él
-window.onclick = function(event) {
-    const modal = document.getElementById('modalEliminar');
-    if (event.target === modal) {
-        cerrarModal();
-    }
-}
-
-// Cerrar modal con la tecla Escape
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        cerrarModal();
-    }
-});
-</script>
-
-<?php require_once "./Layout/footer.php"; ?>
+    <?php require_once "./Layout/footer.php"; ?>
 
 </body>
+
 </html>

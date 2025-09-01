@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 $pdo = require_once "../config/db.php";
 require_once "./Layout/header.php";
@@ -33,15 +33,15 @@ require_once "./Layout/header.php";
           <legend>Formulario de Muro</legend>
 
           <!-- Destinatario -->
-          <label for="destinatario">Selecciona el rol destinatario</label>
+          <label for="destinatario">Selecciona el rol destinatario *</label>
           <?php
           // Los roles que queremos permitir
-          $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante', 'Usuario'];
+          $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante'];
 
           // Consulta para obtener roles activos
           $query = "SELECT DISTINCT usu_rol
                     FROM tbl_usuario 
-                    WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante','Usuario') AND usu_estado = 'Activo'
+                    WHERE usu_rol IN ('Administrador', 'Residente', 'Propietario', 'Vigilante') AND usu_estado = 'Activo'
                     ORDER BY usu_rol";
 
           $stmt = $pdo->prepare($query);
@@ -50,7 +50,7 @@ require_once "./Layout/header.php";
           ?>
 
           <select class="form-control" id="destinatario" name="destinatario" required>
-            <option value="" selected disabled>Seleccione un Rol</option>
+            <option value="" selected disabled>Seleccione un Rol *</option>
             <?php foreach ($roles as $role): ?>
               <option value="<?= htmlspecialchars($role['usu_rol']) ?>">
                 <?= htmlspecialchars($role['usu_rol']) ?>
@@ -59,32 +59,32 @@ require_once "./Layout/header.php";
           </select>
 
           <!-- Asunto -->
-          <label>Asunto</label>
+          <label>Asunto *</label>
           <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto" required />
 
           <!-- Campos para fecha y hora del evento -->
           <div class="fecha-hora-container" style="display: flex; gap: 15px; margin: 15px 0;">
             <div style="flex: 1;">
-              <label for="fechaEvento">Fecha del evento:</label>
-              <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+              <label for="fechaEvento">Fecha del evento: *</label>
+              <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" required>
             </div>
             <div style="flex: 1;">
-              <label for="horaEvento">Hora del evento:</label>
-              <input type="time" class="form-control" id="horaEvento" name="horaEvento">
+              <label for="horaEvento">Hora del evento: *</label>
+              <input type="time" class="form-control" id="horaEvento" name="horaEvento" required>
             </div>
           </div>
 
           <!-- Botón para insertar fecha y hora -->
-          <button type="button" class="btn btn-primary" onclick="insertarFechaHora()" style="margin-bottom: 10px;">
-          Insertar Fecha y Hora en el Texto
+          <button type="button" class="btn btn-primary" onclick="insertarFechaHora()" style="margin-bottom: 10px;" required>
+            Insertar Fecha y Hora en el Texto *
           </button>
 
           <!-- Imagen -->
-         <label></i> Imágenes</label>
-          <input type="file" name="zone-images" accept="image/*" />
+          <label></i> Imágenes *</label>
+          <input type="file" name="zone-images" accept="image/*" required />
 
           <!-- Descripción -->
-          <label for="descripcion">Descripción</label>
+          <label for="descripcion">Descripción *</label>
           <textarea class="form-control" rows="10" placeholder="Descripción..." id="descripcion" name="descripcion" required>
 
 Se llevara a cabo
@@ -97,7 +97,7 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].</textare
           <!-- Botones -->
           <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
             <button type="submit" class="enviar">Enviar</button>
-            <button type="reset" class="cancelar" onclick="resetearFormulario()">Cancelar</button>
+            <button type="button" class="Cancelar" onclick="window.location.href='novedades.php';">Cancelar</button>
           </div>
         </fieldset>
       </form>
@@ -113,10 +113,10 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].</textare
     // Establecer fecha y hora actuales por defecto al cargar la página
     document.addEventListener('DOMContentLoaded', function() {
       const ahora = new Date();
-      
+
       // Establecer fecha actual
       document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
-      
+
       // Establecer hora actual
       document.getElementById('horaEvento').value = ahora.toTimeString().slice(0, 5);
     });
@@ -125,48 +125,48 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].</textare
       const fecha = document.getElementById('fechaEvento').value;
       const hora = document.getElementById('horaEvento').value;
       const textarea = document.getElementById('descripcion');
-      
+
       if (!fecha || !hora) {
         alert('Por favor, selecciona una fecha y una hora para el evento.');
         return;
       }
-      
+
       try {
         // Convertir fecha a formato legible en español
         const fechaObj = new Date(fecha + 'T00:00:00');
         const fechaTexto = fechaObj.toLocaleDateString('es-CO', {
           weekday: 'long',
-          year: 'numeric', 
+          year: 'numeric',
           month: 'long',
           day: 'numeric'
         });
-        
+
         // Convertir hora a formato 12 horas
         const [horas, minutos] = hora.split(':');
         const fechaHora = new Date();
         fechaHora.setHours(parseInt(horas), parseInt(minutos));
         const horaTexto = fechaHora.toLocaleTimeString('es-CO', {
           hour: 'numeric',
-          minute: '2-digit', 
+          minute: '2-digit',
           hour12: true
         });
-        
+
         // Crear el texto con formato deseado
-        const textoFechaHora = `Estimados residentes, Les informamos que el día ${fechaTexto} a las ${horaTexto} ` ;
-        
+        const textoFechaHora = `Estimados residentes, Les informamos que el día ${fechaTexto} a las ${horaTexto} `;
+
         // Insertar al inicio del textarea
         textarea.value = textoFechaHora + textarea.value;
-        
+
         // Posicionar cursor al final del texto insertado
         const nuevaPos = textoFechaHora.length;
         textarea.setSelectionRange(nuevaPos, nuevaPos);
         textarea.focus();
-        
+
       } catch (error) {
         alert('Error al formatear la fecha y hora. Por favor, verifica que sean válidas.');
         console.error('Error:', error);
       }
-    } 
+    }
 
     function resetearFormulario() {
       // Restablecer el textarea al texto original
@@ -175,7 +175,7 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].</textare
 Agradecemos su comprensión y cooperación.
 Atentamente, [Nombre del Responsable].
 Administración del Conjunto Residencial [Nombre conjunto residencial].`;
-      
+
       // Restablecer fecha y hora a valores actuales
       const ahora = new Date();
       document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
