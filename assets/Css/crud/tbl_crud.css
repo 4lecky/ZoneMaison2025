@@ -81,11 +81,14 @@ table#usuarios tr.usuario-inactivo td {
 table#usuarios td.mora-pendiente {
   font-weight: 700;
   color: rgb(176, 112, 112);
-  /* Puedes agregar esto para asegurarte de que no haya transparencia: */
 }
 
 table#usuarios td.mora-pagada {
   font-weight: 700;
   color: rgb(112, 176, 112);
-  /* Puedes agregar esto para asegurarte de que no haya transparencia: */
+}
+
+table#usuarios td.mora-noAplica {
+  font-weight: 700;
+  color: rgb(97, 97, 97);
 }

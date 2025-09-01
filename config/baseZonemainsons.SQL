@@ -4,12 +4,13 @@ USE zonemaisons;
 /* Tablas */   
 
 CREATE TABLE if NOT EXISTS tbl_mora (mor_id INT(10) AUTO_INCREMENT,
-    mor_estado ENUM('Pendiente', 'Pagado'),
+    mor_estado ENUM('Pendiente', 'Pagado','No aplica'),
     PRIMARY KEY (mor_id));  
 
 INSERT INTO tbl_mora (mor_estado)
 VALUES ('Pagado'),
-('Pendiente'); 
+('Pendiente'),
+('No aplica'); 
 
 /* MODIFICACIÓN*/
 CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,

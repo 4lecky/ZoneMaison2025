@@ -104,7 +104,11 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_parqueadero_asignado ?></td>
             <td><?= $datos->usu_rol ?></td>
             <td><?= $datos->usu_estado ?></td>
-            <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 'mora-pagada' ?>"><?= $datos->mor_estado ?></td>
+            <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 
+            (($datos->mor_estado === "Pagado")? 'mora-pagada' : 'mora-noAplica')
+            ?>">
+              <?= $datos->mor_estado ?> 
+            </td>
 
 
             <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
@@ -118,8 +122,6 @@ require_once __DIR__ . "/Layout/header.php";
         ?>
       </tbody>
     </table>
-
-
 
     <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
     <div class="containerExcelImport">

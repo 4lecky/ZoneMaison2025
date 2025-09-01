@@ -130,6 +130,7 @@ try {
                         <option value="">Elija una opción</option>
                         <option value="1" <?= $datos->usu_mora  == 1 ? 'selected' : '' ?>> Pagado </option>
                         <option value="2" <?= $datos->usu_mora == 2 ? 'selected' : '' ?>> Pendiente </option>
+                        <option value="3" <?= $datos->usu_mora == 3 ? 'selected' : '' ?>> No aplica </option>
                     </select>
                 </div>
 
