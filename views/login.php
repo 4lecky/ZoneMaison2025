@@ -31,7 +31,7 @@ unset($_SESSION['errorLogin']);
 
         <img src="../assets/img/conjuntos.webp" alt="Imagen" class="conjunto">
         <h3 class="texto_superior">¡Bienvenido de nuevo!</h3>
-        <i class="texto_superior2">Es un gusto tenerlo aqui</i>
+        <i class="texto_superior2">Es un gusto tenerlo aquí</i>
 
     </div>
 
@@ -41,7 +41,7 @@ unset($_SESSION['errorLogin']);
 
         <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/zonemaison2025/index.php?controller=Auth&action=login">
 
-            <h2>Inicie sesión aqui</h2>
+            <h2>Inicie sesión aquí</h2>
 
             <div class="container_mensajes_update">
 

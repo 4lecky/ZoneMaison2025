@@ -107,9 +107,8 @@ require_once __DIR__ . "/Layout/header.php";
             <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 
             (($datos->mor_estado === "Pagado")? 'mora-pagada' : 'mora-noAplica')
             ?>">
-              <?= $datos->mor_estado ?> 
+              <?= $datos->mor_estado ?>
             </td>
-
 
             <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
             <td class="contenedorBotones">
