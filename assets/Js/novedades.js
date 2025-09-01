@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btn.addEventListener('click', () => {
             const isExpanded = p.classList.contains('expanded');
-            
+
             if (isExpanded) {
                 p.classList.remove('expanded');
                 btn.querySelector('.text').textContent = 'Ver más';
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Edit button confirmation
     const editButtons = document.querySelectorAll('.edit-button');
     editButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const confirmed = confirm('¿Estás seguro de que quieres editar esta publicación?');
             if (!confirmed) {
                 e.preventDefault();
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Image modal functionality
     initializeImageModal();
-    
+
     // Add loading effect to images
     addImageLoadingEffect();
 });
@@ -58,30 +58,30 @@ function initializeImageModal() {
     const modalCaption = document.getElementById('modalCaption');
     const closeBtn = document.querySelector('.image-modal-close');
     const downloadBtn = document.getElementById('downloadBtn');
-    
+
     // Make all images clickable
     const images = document.querySelectorAll('.tarjeta img');
-    
-    images.forEach(function(img) {
-        img.addEventListener('click', function() {
+
+    images.forEach(function (img) {
+        img.addEventListener('click', function () {
             openImageModal(this);
         });
-        
+
         // Add attributes to indicate it's clickable
         img.style.cursor = 'pointer';
         img.title = 'Clic para ampliar';
     });
-    
+
     // Function to open modal
     function openImageModal(img) {
         if (!modal || !modalImg || !modalCaption) return;
-        
+
         modal.style.display = 'block';
         modalImg.src = img.src;
-        
+
         // Create caption with information
         let caption = img.alt || 'Imagen';
-        
+
         // Look for additional information from context
         const tarjeta = img.closest('.tarjeta');
         if (tarjeta) {
@@ -90,73 +90,73 @@ function initializeImageModal() {
                 caption = asunto.textContent.trim();
             }
         }
-        
+
         modalCaption.textContent = caption;
-        
+
         // Configure download button
         if (downloadBtn) {
-            downloadBtn.onclick = function() {
+            downloadBtn.onclick = function () {
                 downloadImage(img.src, caption);
             };
         }
-        
+
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
     }
-    
+
     // Function to close modal
     function closeImageModal() {
         if (!modal) return;
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        
+
         // Reset zoom
         if (modalImg) {
             modalImg.style.transform = 'translate(-50%, -50%) scale(1)';
         }
     }
-    
+
     // Event listeners to close modal
     if (closeBtn) {
         closeBtn.addEventListener('click', closeImageModal);
     }
-    
+
     // Close when clicking outside the image
     if (modal) {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeImageModal();
             }
         });
     }
-    
+
     // Close with Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal && modal.style.display === 'block') {
             closeImageModal();
         }
     });
-    
+
     // Function to download image
     function downloadImage(imageSrc, fileName) {
         // Create temporary link
         const link = document.createElement('a');
         link.href = imageSrc;
         link.download = fileName.replace(/[^a-z0-9]/gi, '_') + '.jpg';
-        
+
         // Simulate click to download
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     }
-    
+
     // Keyboard navigation (optional)
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (modal && modal.style.display === 'block' && modalImg) {
             const currentImg = modalImg.src;
             const allImages = Array.from(images);
             const currentIndex = allImages.findIndex(img => img.src === currentImg);
-            
+
             if (e.key === 'ArrowLeft' && currentIndex > 0) {
                 // Previous image
                 openImageModal(allImages[currentIndex - 1]);
@@ -166,15 +166,15 @@ function initializeImageModal() {
             }
         }
     });
-    
+
     // Zoom with mouse wheel (optional)
     if (modalImg) {
-        modalImg.addEventListener('wheel', function(e) {
+        modalImg.addEventListener('wheel', function (e) {
             e.preventDefault();
-            
+
             const scale = modalImg.style.transform.match(/scale\(([^)]*)\)/);
             let currentScale = scale ? parseFloat(scale[1]) : 1;
-            
+
             if (e.deltaY < 0) {
                 // Zoom in
                 currentScale = Math.min(currentScale * 1.1, 3);
@@ -182,7 +182,7 @@ function initializeImageModal() {
                 // Zoom out
                 currentScale = Math.max(currentScale * 0.9, 0.5);
             }
-            
+
             modalImg.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
         });
     }
@@ -191,11 +191,11 @@ function initializeImageModal() {
 // Function to add loading effect to images
 function addImageLoadingEffect() {
     const images = document.querySelectorAll('.tarjeta img');
-    
-    images.forEach(function(img) {
+
+    images.forEach(function (img) {
         // Skip if image is already loaded
         if (img.complete) return;
-        
+
         // Create loading overlay
         const loadingOverlay = document.createElement('div');
         loadingOverlay.className = 'image-loading-overlay';
@@ -213,7 +213,7 @@ function addImageLoadingEffect() {
             border-radius: 8px;
             z-index: 10;
         `;
-        
+
         // Create spinner
         const spinner = loadingOverlay.querySelector('.loading-spinner');
         spinner.style.cssText = `
@@ -224,7 +224,7 @@ function addImageLoadingEffect() {
             border-radius: 50%;
             animation: spin 1s linear infinite;
         `;
-        
+
         // Add spinner animation
         if (!document.querySelector('#spinner-style')) {
             const style = document.createElement('style');
@@ -237,16 +237,16 @@ function addImageLoadingEffect() {
             `;
             document.head.appendChild(style);
         }
-        
+
         // Insert overlay
         const parent = img.parentNode;
         if (parent) {
             parent.style.position = 'relative';
             parent.appendChild(loadingOverlay);
         }
-        
+
         // Hide overlay when image loads
-        img.addEventListener('load', function() {
+        img.addEventListener('load', function () {
             setTimeout(() => {
                 loadingOverlay.style.opacity = '0';
                 loadingOverlay.style.transition = 'opacity 0.3s ease';
@@ -257,9 +257,9 @@ function addImageLoadingEffect() {
                 }, 300);
             }, 100);
         });
-        
+
         // Handle error case
-        img.addEventListener('error', function() {
+        img.addEventListener('error', function () {
             if (loadingOverlay.parentNode) {
                 loadingOverlay.innerHTML = '<div style="color: #666; font-size: 12px;">Error al cargar</div>';
                 setTimeout(() => {

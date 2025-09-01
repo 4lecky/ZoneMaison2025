@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const hoy = new Date();
   const fechaInput = document.getElementById("fecha");
   const horaInput = document.getElementById("hora");
-  
+
   const numeroDocInput = document.getElementById('numero_doc');
   const destinatarioInput = document.getElementById('paqu_Destinatario');
-  const inputCedulaOculta = document.getElementById('cedula_oculta');  
+  const inputCedulaOculta = document.getElementById('cedula_oculta');
 
   // Buscar nombre desde backend usando AJAX
   numeroDocInput.addEventListener('input', function () {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!descripcion) return alert('Incluye una descripción.');
     if (!estado) return alert('Selecciona el estado.');
 
-    formulario.submit(); 
-});
-
+    formulario.submit();
   });
+
+});
