@@ -6,7 +6,18 @@ class guardarDatosRegistroParqueadero {
         $this->db = $conexion;
     }
 
-    public function insertarRegistroVehiculo($placa, $nombrePropietarioVehi, $tipoDocVehi, $numDocVehi, $estadoIngreso, $alquId, $usuarioCedula, $visitaId, $fechaIngreso = null, $fechaSalida = null, $observaciones = null) {
+    public function insertarRegistroVehiculo(
+        $placa,
+        $nombrePropietarioVehi,
+        $tipoDocVehi,
+        $numDocVehi,
+        $estadoIngreso,
+        $alquId,
+        $numeroParqueadero,
+        $fechaEntrada = null,
+        $fechaSalida = null,
+        $horaEntrada = null
+    ) {
         $sql = "INSERT INTO tbl_parqueadero (
                     parq_vehi_placa,
                     parq_nombre_propietario_vehi,
@@ -14,11 +25,10 @@ class guardarDatosRegistroParqueadero {
                     parq_num_doc_vehi,
                     parq_vehi_estadoIngreso,
                     parq_vehi_alqu_id,
-                    parq_usuario_cedula,
-                    parq_visita_id,
-                    parq_fecha_ingreso,
+                    parq_numeroParqueadero,
+                    parq_fecha_entrada,
                     parq_fecha_salida,
-                    parq_observaciones
+                    parq_hora_entrada
                 ) VALUES (
                     :placa,
                     :nombrePropVehiculo,
@@ -26,11 +36,10 @@ class guardarDatosRegistroParqueadero {
                     :numDocVehiculo,
                     :estadoIngreso,
                     :alquId,
-                    :usuarioCedula,
-                    :visitaId,
-                    :fechaIngreso,
+                    :numeroParqueadero,
+                    :fechaEntrada,
                     :fechaSalida,
-                    :observaciones
+                    :horaEntrada
                 )";
 
         $stmt = $this->db->prepare($sql);
@@ -42,11 +51,10 @@ class guardarDatosRegistroParqueadero {
         $stmt->bindParam(':numDocVehiculo', $numDocVehi);
         $stmt->bindParam(':estadoIngreso', $estadoIngreso);
         $stmt->bindParam(':alquId', $alquId);
-        $stmt->bindParam(':usuarioCedula', $usuarioCedula);
-        $stmt->bindParam(':visitaId', $visitaId);
-        $stmt->bindParam(':fechaIngreso', $fechaIngreso);
+        $stmt->bindParam(':numeroParqueadero', $numeroParqueadero);
+        $stmt->bindParam(':fechaEntrada', $fechaEntrada);
         $stmt->bindParam(':fechaSalida', $fechaSalida);
-        $stmt->bindParam(':observaciones', $observaciones);
+        $stmt->bindParam(':horaEntrada', $horaEntrada);
 
         try {
             return $stmt->execute();

@@ -1,48 +1,52 @@
 document.getElementById('enviarBtn').addEventListener('click', function (e) {
     e.preventDefault(); // Previene envío inmediato del formulario
 
-    const formulario = document.querySelector('#formularioCobro form');
+    const formulario = document.querySelector(".formulario-Cobro");
 
-    // Captura de valores del formulario
-    const nombre = formulario.querySelector('input[name="nombre_residente"]').value;
-    const placa = formulario.querySelector('input[name="placa"]').value;
-    const parqueadero = formulario.querySelector('input[name="num_parqueadero"]').value;
-    const tipoVehiculo = formulario.querySelector('select[name="tipo"]').value; // Nombre corregido
-    const ingresoFecha = formulario.querySelector('input[name="fecha_ingreso"]').value;
-    const salidaFecha = formulario.querySelector('input[name="fecha_salida"]').value;
-    const ingresoHora = formulario.querySelector('input[name="hora_ingreso"]').value;
-    const salidaHora = formulario.querySelector('input[name="hora_salida"]').value;
+    // Obtenemos los valores clave del formulario
+    const placa = formulario.querySelector('input[name="alqu_placa"]').value;
+    const tipoDoc = formulario.querySelector('select[name="alqu_tipo_doc_vehi"]').value;
+    const numDoc = formulario.querySelector('input[name="alqu_num_doc_vehi"]').value;
+    const nombre = formulario.querySelector('input[name="alqu_nombre_propietario"]').value;
+    const torre = formulario.querySelector('input[name="alqu_torre"]').value;
+    const apartamento = formulario.querySelector('input[name="alqu_apartamento"]').value;
+    const numParqueadero = formulario.querySelector('input[name="alqu_numeroParqueadero"]').value;
+    const estadoSalida = formulario.querySelector('textarea[name="alqu_estadoSalida"]').value;
+    const fechaSalida = formulario.querySelector('input[name="alqu_fecha_salida"]').value;
+    const horaSalida = formulario.querySelector('input[name="alqu_hora_salida"]').value;
 
-    // Validación rápida antes de enviar
-    if (!placa || !tipoVehiculo || !ingresoFecha || !salidaFecha || !ingresoHora || !salidaHora) {
-        Swal.fire("Campos incompletos", "Por favor completa todos los campos requeridos.", "warning");
+    if (!nombre || !fechaSalida || !horaSalida) {
+        alert("Por favor, completa los campos obligatorios.");
         return;
     }
 
-    // Concatenamos fecha y hora en formato válido
-    const ingreso = `${ingresoFecha} ${ingresoHora}`;
-    const salida = `${salidaFecha} ${salidaHora}`;
+    // Concatenamos fecha y hora de salida
+    const salida = `${fechaSalida} ${horaSalida}`;
 
-    // Preparamos los datos a enviar al controlador PHP
+    // Preparamos datos a enviar al PHP
     const datos = new URLSearchParams();
     datos.append('placa', placa);
-    datos.append('tipo', tipoVehiculo);
-    datos.append('hora_ingreso', ingreso);
     datos.append('hora_salida', salida);
 
-    fetch('/ZoneMaison2025/controller/generarCostoParqueadero.php', {
+
+    fetch('../controller/generarCostoParqueadero.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: datos
     })
-    .then(res => res.json())
+    .then(res => res.text())  // <- primero como texto para ver qué devuelve
+    .then(text => {
+        console.log(text); // mira la respuesta real
+        return JSON.parse(text); // luego parsea
+    })
+
     .then(data => {
-        if (!data.costo_neto) {
-            Swal.fire("Error", "El cálculo del costo no devolvió un valor válido.", "error");
+        if (data.error) {
+            Swal.fire("Error", data.error, "error");
             return;
         }
 
-        // Asignar el costo recibido al input oculto
+        // Asignar costo recibido al input oculto
         formulario.querySelector('#campoCosto').value = data.costo_neto;
 
         // Mostrar el recibo con SweetAlert
@@ -65,9 +69,8 @@ document.getElementById('enviarBtn').addEventListener('click', function (e) {
                     <hr style="border: none; border-top: 1px dashed #aaa;">
                     <p><strong>Nombre:</strong> ${nombre}</p>
                     <p><strong>Placa:</strong> ${placa}</p>
-                    <p><strong>Tipo:</strong> ${tipoVehiculo}</p>
-                    <p><strong>Parqueadero:</strong> ${parqueadero}</p>
-                    <p><strong>Ingreso:</strong> ${ingreso}</p>
+                    <p><strong>Parqueadero:</strong> ${numParqueadero}</p>
+                    <p><strong>Ingreso:</strong> ${data.hora_ingreso}</p>
                     <p><strong>Salida:</strong> ${salida}</p>
                     <p><strong>Total Pagado:</strong> $${data.costo} COP</p>
                     <hr style="border: none; border-top: 1px dashed #aaa;">
@@ -82,13 +85,16 @@ document.getElementById('enviarBtn').addEventListener('click', function (e) {
         }).then((result) => {
             if (result.isConfirmed) {
                 if (formulario.checkValidity()) {
-                    formulario.action = '/ZoneMaison2025/controller/recibirDatosAlquiler.php';
+                    formulario.action = '../controller/recibirDatosAlquiler.php';
                     formulario.submit();
                 } else {
                     formulario.reportValidity();
                 }
             }
         });
+
+
+
     })
     .catch(error => {
         console.error("Error al calcular el costo:", error);

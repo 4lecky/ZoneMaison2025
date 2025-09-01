@@ -224,98 +224,98 @@ require_once "./Layout/header.php"
 
 
 
-  <!-- Formulario Cobro de Tarifas -->
-<div id="formularioCobro" style="display:block;" class="formulario-container">
-  <h2>COBRO TARIFAS</h2>
-  <form>
-    <fieldset>
-      <legend>Datos del Residente y Vehículo</legend>
+<!-- Formulario Cobro de Tarifas -->
+<main id="formularioCobro" style="display:block;">
+  <div class="formulario-container">
+    <h2>COBRO TARIFAS</h2>
+    <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-Cobro">
+      <fieldset>
+        <legend>Datos del Residente y Vehículo</legend>
 
-      <div class="input-box">
-        <label for="num_recibo">Número de Recibo*</label>
-        <input type="text" name="num_recibo" id="alqu_num_recibo" required>
+        <div class="input-box">
+          <label for="num_recibo">Número de Recibo*</label>
+          <input type="text" name="alqu_num_recibo" id="num_recibo" required>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label for="tipo_doc">Tipo Doc*</label>
+            <select name="alqu_tipo_doc_vehi" id="tipo_doc" required>
+              <option value="">-- Selecciona un tipo --</option>
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="TI">Tarjeta de Identidad (TI)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label for="num_doc">Número Documento*</label>
+            <input type="text" name="alqu_num_doc_vehi" id="num_doc" required>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label for="nombre_residente">Nombre Completo Residente/Propietario*</label>
+          <input type="text" name="alqu_nombre_propietario" id="nombre_residente" required>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label for="num_torre">Num. Torre*:</label>
+            <input type="text" name="alqu_torre" id="num_torre" required>
+          </div>
+          <div class="input-box">
+            <label for="num_apto">Num. Apto*</label>
+            <input type="text" name="alqu_apartamento" id="num_apto" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label for="placa">Placa*</label>
+            <input type="text" name="alqu_placa" id="placa" required>
+          </div>
+          <div class="input-box">
+            <label for="num_parqueadero">Num. Parqueadero*</label>
+            <input type="number" name="alqu_numeroParqueadero" id="num_parqueadero">
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label for="observaciones">Observaciones / Estado de Salida*</label>
+          <textarea name="alqu_estadoSalida" id="observaciones" rows="2" required></textarea>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label for="fecha_ingreso">Fecha de Ingreso*</label>
+            <input type="date" name="alqu_fecha_entrada" id="fecha_ingreso" required>
+          </div>
+          <div class="input-box">
+            <label for="fecha_salida">Fecha de Salida*</label>
+            <input type="date" name="alqu_fecha_salida" id="fecha_salida" required>
+          </div>
+        </div>
+
+  
+          <div class="input-box">
+            <label for="hora_salida">Hora de Salida*</label>
+            <input type="time" name="alqu_hora_salida" id="hora_salida" required>
+          </div>
+
+
+        <input type="hidden" name="costo" id="campoCosto">
+        <!-- <input type="hidden" name="alqu_precio" id="campoCosto"> -->
+
+
+      </fieldset>
+
+      <div class="form-buttons">
+        <button type="reset">Limpiar</button>
+        <button type="submit" id="enviarBtn">Enviar Información</button>
       </div>
-
-      <div class="input-group">
-        <div class="input-box">
-          <label for="tipo_doc">Tipo Doc*</label>
-          <select name="tipo_doc" id="tipo_doc" required>
-            <option value="">-- Selecciona un tipo --</option>
-            <option value="CC">Cédula de Ciudadanía (CC)</option>
-            <option value="TI">Tarjeta de Identidad (TI)</option>
-            <option value="CE">Cédula de Extranjería (CE)</option>
-          </select>
-        </div>
-        <div class="input-box">
-          <label for="num_doc">Número Documento*</label>
-          <input type="text" name="num_doc" id="num_doc" required>
-        </div>
-      </div>
-
-      <div class="input-box">
-        <label for="nombre_residente">Nombre Completo Residente/Propietario*</label>
-        <input type="text" name="nombre_residente" id="nombre_residente" required>
-      </div>
-
-      <div class="input-group">
-        <div class="input-box">
-          <label for="num_torre">Num. Torre*:</label>
-          <input type="text" name="num_torre" id="num_torre">
-        </div>
-        <div class="input-box">
-          <label for="num_apto">Num. Apto*</label>
-          <input type="text" name="num_apto" id="num_apto">
-        </div>
-      </div>
-
-      <div class="input-group">
-        <div class="input-box">
-          <label for="placa">Placa*</label>
-          <input type="text" name="placa" id="placa">
-        </div>
-        <div class="input-box">
-          <label for="num_parqueadero">Num. Parqueadero*</label>
-          <input type="text" name="num_parqueadero" id="num_parqueadero">
-        </div>
-      </div>
-
-      <div class="input-box">
-        <label for="observaciones">Observaciones / Estado de Salida*</label>
-        <textarea name="observaciones" id="observaciones" rows="2"></textarea>
-      </div>
-
-      <div class="input-group">
-        <div class="input-box">
-          <label for="fecha_ingreso">Fecha de Ingreso*</label>
-          <input type="date" name="fecha_ingreso" id="fecha_ingreso" required>
-        </div>
-        <div class="input-box">
-          <label for="fecha_salida">Fecha de Salida*</label>
-          <input type="date" name="fecha_salida" id="fecha_salida" required>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <div class="input-box">
-          <label for="hora_ingreso">Hora de Ingreso*</label>
-          <input type="time" name="hora_ingreso" id="hora_ingreso" required>
-        </div>
-        <div class="input-box">
-          <label for="hora_salida">Hora de Salida*</label>
-          <input type="time" name="hora_salida" id="hora_salida" required>
-        </div>
-      </div>
-
-      <input type="hidden" name="costo" id="campoCosto">
-
-    </fieldset>
-
-    <div class="form-buttons">
-      <button type="reset">Limpiar</button>
-      <button type="submit" id="enviarBtn">Enviar Información</button>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+</main>
 
   <?php require_once "./Layout/footer.php" ?>
 

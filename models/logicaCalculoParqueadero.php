@@ -38,7 +38,6 @@ class Ticket {
     public function __construct(Vehiculo $vehiculo, Tarifa $tarifa) {
         $this->vehiculo = $vehiculo;
         $this->tarifa = $tarifa;
-        $this->horaIngreso = new DateTime();
     }
 
     public function marcarIngreso(DateTime $hora) {
@@ -53,8 +52,20 @@ class Ticket {
         if (!$this->horaSalida) {
             throw new Exception("La hora de salida no ha sido marcada.");
         }
+
+        if (!$this->horaIngreso) {
+            throw new Exception("La hora de ingreso no ha sido marcada.");
+        }
+
+        // Diferencia entre ingreso y salida
         $diferencia = $this->horaSalida->diff($this->horaIngreso);
-        $horas = $diferencia->h + ($diferencia->i / 60);
+
+        // Horas totales = días * 24 + horas + minutos/60
+        $horas = ($diferencia->days * 24) + $diferencia->h + ($diferencia->i / 60);
+
+        // Redondeamos hacia arriba para cobrar hora completa si hay fracción
+        $horas = ceil($horas);
+
         return $this->tarifa->getCostoPorHora() * $horas;
     }
 
@@ -62,3 +73,4 @@ class Ticket {
         return $this->vehiculo->getTipo();
     }
 }
+

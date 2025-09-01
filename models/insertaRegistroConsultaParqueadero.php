@@ -8,25 +8,19 @@ class insertaRegistroConsultaParqueadero {
     }
 
     // Método para insertar datos en la tabla
-    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $observaciones, $estadoIngreso, $usuarioCedula, $numeroParqueadero, $estado) {
+    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $observaciones, $numeroParqueadero, $estado) {
         $sql = "INSERT INTO tbl_consultaParqueadero (
                     consulParq_tipoVehiculo,
                     consulParq_placa,
                     consulParq_observaciones,
-                    consulParq_estadoIngreso,
-                    consulParq_usuario_cedula,
                     consulParq_numeroParqueadero,
-                    consulParq_estado,
-                    consulParq_fecha
+                    consulParq_estado
                 ) VALUES (
                     :tipoVehiculo,
                     :placa,
                     :observaciones,
-                    :estadoIngreso,
-                    :usuarioCedula,
                     :numeroParqueadero,
-                    :estado,
-                    NOW()
+                    :estado
                 )";
 
         $stmt = $this->db->prepare($sql);
@@ -35,8 +29,6 @@ class insertaRegistroConsultaParqueadero {
         $stmt->bindParam(':tipoVehiculo', $tipoVehiculo, PDO::PARAM_STR);
         $stmt->bindParam(':placa', $placa, PDO::PARAM_STR);
         $stmt->bindParam(':observaciones', $observaciones, PDO::PARAM_STR);
-        $stmt->bindParam(':estadoIngreso', $estadoIngreso, PDO::PARAM_STR);
-        $stmt->bindParam(':usuarioCedula', $usuarioCedula, PDO::PARAM_STR);
         $stmt->bindParam(':numeroParqueadero', $numeroParqueadero, PDO::PARAM_INT);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
 
@@ -49,4 +41,3 @@ class insertaRegistroConsultaParqueadero {
         }
     }
 }
-
