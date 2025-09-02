@@ -1,8 +1,22 @@
 <?php
 // views/ModuloReservas/reservas/CrearReserva.php
-require_once __DIR__ . '/bootstrap.php';
+
+// Incluye los controladores necesarios
+require_once __DIR__ . '/../config/db.php'; // retorna $pdo
+require_once __DIR__ . '/../controller/ReservaController.php';
+require_once __DIR__ . '/../controller/ZonaController.php';
+
+$zonaCtrl     = new ZonaController($pdo);
+$reservaCtrl  = new ReservaController($pdo);
+
+
+// Instanciar controladores
+$zonaCtrl    = new ZonaController();
+$reservaCtrl = new ReservaController();
+
 
 // Controladores
+
 $zonaCtrl     = new ZonaController();
 $reservaCtrl  = new ReservaController();
 

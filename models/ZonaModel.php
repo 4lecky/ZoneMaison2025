@@ -2,20 +2,14 @@
 // models/ZonaModel.php
 // Modelo oficial de Zonas Comunes (BD: zonemaisons)
 
-require_once __DIR__ . '/../config/db.php';
-
 class ZonaModel {
-    private $pdo;
+    private PDO $pdo;
     private string $tableZonas    = 'zonas_comunes';
     private string $tableReservas = 'reservas';
 
-    public function __construct() {
-        try {
-            $this->pdo = getConnection(); // Debe conectar a la BD 'zonemaisons'
-        } catch (Exception $e) {
-            error_log("Error conexión BD ZonaModel: " . $e->getMessage());
-            throw new Exception("Error de conexión a la base de datos");
-        }
+    // ✅ Inyección de PDO desde el controlador
+    public function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
     }
 
     /** =========================
@@ -163,7 +157,6 @@ class ZonaModel {
             return (int)$stmt->fetchColumn() > 0;
         } catch (PDOException $e) {
             error_log("ZonaModel::existeNombre => " . $e->getMessage());
-            // Mejor devolver false para no bloquear por error de consulta
             return false;
         }
     }
