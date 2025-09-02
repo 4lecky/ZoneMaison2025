@@ -132,7 +132,7 @@ unset($_SESSION['errorRegistro']);
                         Propiedades
                     </label>
                     <i class="ri-home-6-fill"></i>
-                    <input type="text" placeholder="Ingrese su propiedad" class="campos" name="Propiedades" required>
+                    <input type="text" placeholder="Ej: Apto 12 Torre 2 / Sin propiedades" class="campos" name="Propiedades" required>
 
                 </div>
 

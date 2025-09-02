@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 
 $rol = $_SESSION['usuario']['rol'] ?? '';
 
-if (!in_array($rol, ['Administrador','Vigilante'], true)) {
+if (!in_array($rol, ['Administrador', 'Vigilante'], true)) {
   header('HTTP/1.1 403 Forbidden');
   exit('No tienes permiso para ver esta página.');
 }
@@ -71,9 +71,9 @@ require_once __DIR__ . "/Layout/header.php";
           <th scope="col">Rol</th>
           <th scope="col">Estado</th>
           <th scope="col">Pago administración</th>
-          <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
+          <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'): ?>
             <th scope="col">Editar/Eliminar</th>
-          <?php endif;?>
+          <?php endif; ?>
         </tr>
       </thead>
 
@@ -104,18 +104,17 @@ require_once __DIR__ . "/Layout/header.php";
             <td><?= $datos->usu_parqueadero_asignado ?></td>
             <td><?= $datos->usu_rol ?></td>
             <td><?= $datos->usu_estado ?></td>
-            <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : 
-            (($datos->mor_estado === "Pagado")? 'mora-pagada' : 'mora-noAplica')
-            ?>">
+            <td class="<?= ($datos->mor_estado === "Pendiente") ? 'mora-pendiente' : (($datos->mor_estado === "Pagado") ? 'mora-pagada' : 'mora-noAplica')
+                        ?>">
               <?= $datos->mor_estado ?>
             </td>
 
-            <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'):?>
-            <td class="contenedorBotones">
-              <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="ri-quill-pen-fill" id="icon_crud"></i></a>
-              <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="ri-delete-bin-2-fill" id="icon_crud"></i></a>
-            </td>
-            <?php endif;?>
+            <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'): ?>
+              <td class="contenedorBotones">
+                <a href="../models/modificarUsuarioModels.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-warning"><i class="ri-quill-pen-fill" id="icon_crud"></i></a>
+                <a href="../controller/EliminarUsuarioController.php?cc=<?= $datos->usuario_cc ?>" class="btn btn-small btn-danger"><i class="ri-delete-bin-2-fill" id="icon_crud"></i></a>
+              </td>
+            <?php endif; ?>
           </tr>
         <?php  }
         ?>
@@ -123,19 +122,23 @@ require_once __DIR__ . "/Layout/header.php";
     </table>
 
     <!-- El 'enctype="multipart/form-data"' es para la subida de archivos-->
-    <div class="containerExcelImport">
-      <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
-        <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" class="input_excel" placeholder="Seleccione archivo" required>
-        <button type="submit" class="btn_excel">Subir excel</button>
-      </form>
-    </div>
+
+    <?php if (($_SESSION['usuario']['rol'] ?? '') === 'Administrador'): ?>
+      <div class="containerExcelImport">
+        <form action="../index.php?controller=ImportarExcel&action=importar " method="POST" enctype="multipart/form-data">
+          <input type="file" name='archivoExcel' acceptaccept=".xls,.xlsx" class="input_excel" placeholder="Seleccione archivo" required>
+          <button type="submit" class="btn_excel">Subir excel</button>
+        </form>
+      </div>
+    <?php endif; ?>
+
 
     <div class="containerMsjExcel">
       <?php if (isset($_SESSION['mensaje_excel'])): ?>
         <div class="mensaje <?= $_SESSION['mensaje_excel']['tipo']; ?>">
           <?= $_SESSION['mensaje_excel']['texto']; ?>
         </div>
-      <?php unset($_SESSION['mensaje_excel']); ?>
+        <?php unset($_SESSION['mensaje_excel']); ?>
       <?php endif; ?>
     </div>
 

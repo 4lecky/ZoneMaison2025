@@ -22,7 +22,7 @@
 
 /* Titulos */
 .containerTitulo{
-  margin-top: 10px;
+  margin-top: 30px;
   background:#fafafa; 
   border: #ccc 1px;
   border-radius: 16px;
@@ -90,6 +90,7 @@
   justify-content: center;
   align-items: center;
   width: 1000px;
+  margin-bottom: 50px;
 }
 
 .legend_perfil_usuario{
