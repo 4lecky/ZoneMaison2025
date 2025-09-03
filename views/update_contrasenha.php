@@ -56,7 +56,7 @@ if (count($data) > 0):
 
       <h4>Cambio de contraseña</h4>
 
-      <form method="POST" action="../controller/ResetPasswordController.php">
+      <form method="POST" action="../controller/ResetPasswordController.php" id="form_update_password">
 
         <div class="col-md-25 container-input-update">
           <label for="password" class="form-label" placeholder="Correo electronico">Nueva contraseña</label>
@@ -95,8 +95,8 @@ if (count($data) > 0):
     </div>
 
 
-
-
+    <!-- JavaScript -->
+    <script src="../assets/Js/updatePassword.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
