@@ -60,7 +60,15 @@ require_once "./Layout/header.php"
           ¡Agiliza el proceso y mantén un control claro y transparente para todos!
         </p>
         <button class="menu-button" onclick="mostrarFormulario('formularioCobro')">COBRO TARIFAS</button>
-    </div>
+      </div>
+
+
+      <!-- Botón Consultar Parqueaderos -->
+      <div class="bloque" onclick="window.location.href='parqueadero_crud.php'">
+          <div class="boton consulta">
+              Consultar Parqueaderos
+          </div>
+      </div>
 
     </div>
   </aside>
@@ -72,7 +80,7 @@ require_once "./Layout/header.php"
 
 
 <!-- Formulario Registro de Vehiculos -->
-<main id="formularioRegistro" style="display: block;">
+<main id="formularioRegistro" style="display: none;">
   <div class="formulario-container">
     <h2>REGISTRO DE VEHÍCULOS</h2>
 
@@ -157,7 +165,7 @@ require_once "./Layout/header.php"
 
 
 <!-- Formulario Propietarios Consulta de Parqueaderos--> 
-<main id="formularioPropietario" style="display: block;">
+<main id="formularioPropietario" style="display: none;">
   <div class="formulario-container">
     <h2>CONSULTA DE PARQUEADEROS PROPIETARIOS</h2>
     <form action="../controller/recibirDatosConsultaParqueadero.php" method="POST" class="formulario-Propietario">
@@ -225,7 +233,7 @@ require_once "./Layout/header.php"
 
 
 <!-- Formulario Cobro de Tarifas -->
-<main id="formularioCobro" style="display:block;">
+<main id="formularioCobro" style="display:none;">
   <div class="formulario-container">
     <h2>COBRO TARIFAS</h2>
     <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-Cobro">

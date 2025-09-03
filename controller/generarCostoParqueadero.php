@@ -8,7 +8,7 @@ require_once '../config/db.php'; // archivo con $pdo o conexión PDO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $placa = $_POST['placa'] ?? '';
     $horaSalida = $_POST['hora_salida'] ?? '';
-    $costoPorHora = 5000; // tarifa fija
+    $costoPorHora = 5000; // tarifa fija (puedes parametrizarlo luego)
 
     if (empty($placa) || empty($horaSalida)) {
         echo json_encode(['error' => '⚠️ Faltan datos requeridos.']);
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Obtener datos del alquiler
         $stmtAlquiler = $pdo->prepare("
-            SELECT alqu_fecha_entrada, alqu_precio
+            SELECT alqu_fecha_entrada
             FROM tbl_alquiler
             WHERE alqu_placa = :placa
             ORDER BY alqu_id DESC
@@ -43,10 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtParqueadero->execute(['placa' => $placa]);
         $parqueaderoDB = $stmtParqueadero->fetch(PDO::FETCH_ASSOC);
 
-        $horaIngreso = $alquilerDB['alqu_fecha_entrada'] . ' ' . ($parqueaderoDB['parq_hora_entrada'] ?? '00:00');
+        if (!$parqueaderoDB || empty($parqueaderoDB['parq_hora_entrada'])) {
+            echo json_encode(['error' => '⚠️ No se encontró hora de entrada en parqueadero.']);
+            exit;
+        }
 
-        // Calcular costo
-        $vehiculo = new Vehiculo($placa, ''); // tipo no es necesario aquí
+        // Unimos fecha + hora para el ingreso
+        $horaIngreso = $alquilerDB['alqu_fecha_entrada'] . ' ' . $parqueaderoDB['parq_hora_entrada'];
+
+        // Calcular costo con el modelo
+        $vehiculo = new Vehiculo($placa, ''); // el tipo no lo necesitamos aquí
         $tarifa = new Tarifa($costoPorHora);
         $ticket = new Ticket($vehiculo, $tarifa);
 
@@ -54,14 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ticket->marcarSalida(new DateTime($horaSalida));
 
         $costo = $ticket->calcularCosto();
+        $horas = $ticket->calcularHoras();
 
         echo json_encode([
             'costo' => number_format($costo, 0, ',', '.'),
-            'costo_neto' => $costo
+            'costo_neto' => $costo,
+            'horas' => $horas
         ]);
     } catch (Exception $e) {
         echo json_encode(['error' => '❌ Error al calcular el costo: ' . $e->getMessage()]);
     }
 }
-
-

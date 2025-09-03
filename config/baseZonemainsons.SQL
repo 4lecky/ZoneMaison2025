@@ -119,19 +119,19 @@ CREATE TABLE IF NOT EXISTS tbl_visita (
 );
 
 CREATE TABLE IF NOT EXISTS tbl_alquiler (alqu_id INT AUTO_INCREMENT,
-    alqu_num_recibo BIGINT NOT NULL,
+    alqu_num_recibo BIGINT,
     alqu_tipo_doc_vehi VARCHAR (255) NOT NULL,
     alqu_num_doc_vehi VARCHAR (20) NOT NULL,
     alqu_nombre_propietario VARCHAR (255) NOT NULL,
-	alqu_torre Varchar(100) NOT null,
-    alqu_apartamento  Varchar(100) NOT null,
+	alqu_torre Varchar(100),
+    alqu_apartamento  Varchar(100),
     alqu_placa VARCHAR (20) NOT NULL,
     alqu_numeroParqueadero INT (100),
     alqu_estadoSalida TEXT NOT NULL,
     alqu_fecha_entrada DATE,
     alqu_fecha_salida DATE,
     alqu_hora_salida TIME,
-    alqu_precio FLOAT (2) NOT NULL,
+    alqu_precio FLOAT (2),
     -- alqu_usuario_cedula INT (10),
     UNIQUE (alqu_num_recibo),
     PRIMARY KEY (alqu_id)

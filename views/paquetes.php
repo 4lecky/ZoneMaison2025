@@ -35,39 +35,39 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <fieldset>
           <legend>Formulario de Paquetes</legend>
 
-          <label>Tipo de Documento</label>
+          <label>Tipo de Documento<span class="asterisco">*</span></label>
           <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-            <option value="">Seleccione el Tipo de Documento *</option>
+            <option value="">Seleccione el Tipo de Documento</option>
             <option> Cedula de cidadania </option>
             <option> Cedula de extrangeria </option>
             <option> Pasaporte </option>
             <option> Permiso especial de permanencia (PEP) </option>
           </select>
 
-          <label>Número Documento *</label>
+          <label>Número Documento<span class="asterisco">*</span></label>
           <input type="text" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required />
           <input type="hidden" name="paqu_usuario_cedula" id="cedula_oculta">
 
-          <label>Destinatario *</label>
+          <label>Destinatario<span class="asterisco">*</span></label>
           <input type="text" name="paqu_Destinatario" id="paqu_Destinatario" class="form-control" placeholder="Nombre del destinatario" readonly required />
 
-          <label>Asunto *</label>
+          <label>Asunto<span class="asterisco">*</span></label>
           <textarea class="form-control" rows="1" placeholder="asunto" id="asunto" name="asunto" required>Ha llegado un paquete para usted.
           </textarea>
 
-          <label>Fecha *</label>
+          <label>Fecha<span class="asterisco">*</span></label>
           <input type="date" class="form-control" name="fecha" id="fecha" />
 
-          <label>Hora *</label>
+          <label>Hora<span class="asterisco">*</span></label>
           <input type="time" class="form-control" name="hora" id="hora" />
 
-          <label></i> Imágenes *</label>
+          <label></i>Adjuntar Imágene<span class="asterisco">*</span></label>
           <input type="file" name="zone-images" accept="image/*" />
 
-          <label>Descripción *</label>
+          <label>Descripción<span class="asterisco">*</span></label>
           <input type="text" class="form-control" name="descripcion" placeholder="Descripción del paquete" />
 
-          <label>Estado *</label>
+          <label>Estado<span class="asterisco">*</span></label>
           <select name="estado" id="estado" required>
             <option value="">Seleccione estado</option>
             <option value="Pendiente">Pendiente</option>

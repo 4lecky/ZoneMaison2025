@@ -48,24 +48,18 @@ class Ticket {
         $this->horaSalida = $hora;
     }
 
-    public function calcularCosto() {
-        if (!$this->horaSalida) {
-            throw new Exception("La hora de salida no ha sido marcada.");
+    public function calcularHoras() {
+        if (!$this->horaSalida || !$this->horaIngreso) {
+            throw new Exception("Faltan horas de ingreso/salida.");
         }
 
-        if (!$this->horaIngreso) {
-            throw new Exception("La hora de ingreso no ha sido marcada.");
-        }
-
-        // Diferencia entre ingreso y salida
         $diferencia = $this->horaSalida->diff($this->horaIngreso);
-
-        // Horas totales = días * 24 + horas + minutos/60
         $horas = ($diferencia->days * 24) + $diferencia->h + ($diferencia->i / 60);
+        return ceil($horas);
+    }
 
-        // Redondeamos hacia arriba para cobrar hora completa si hay fracción
-        $horas = ceil($horas);
-
+    public function calcularCosto() {
+        $horas = $this->calcularHoras();
         return $this->tarifa->getCostoPorHora() * $horas;
     }
 
@@ -73,4 +67,3 @@ class Ticket {
         return $this->vehiculo->getTipo();
     }
 }
-

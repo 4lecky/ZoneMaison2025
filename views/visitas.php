@@ -45,81 +45,79 @@ require_once "./Layout/header.php"
                 <fieldset>
                     <legend>Datos del Visitante</legend>
 
-                        <div class="input-group">
+                    <div class="input-group">
                         <div class="input-box" style="width: 100%;">
-                            <label for="nombre">Nombre del Visitante</label>
+                            <label for="nombre">Nombre Completo del Visitante <span class="requerido">*</span></label>
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre completo" required>
                         </div>
-                        </div>
+                    </div>
 
-                        <div class="input-group">
+                    <div class="input-group">
                         <div class="input-box">
-                            <label for="tipo_doc">Tipo de Documento</label>
+                            <label for="tipo_doc">Tipo de Documento <span class="requerido">*</span></label>
                             <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-                            <option selected disabled>Seleccione el Tipo de Documento</option>
-                            <option value="C.C.">C.C.</option>
-                            <option value="T.I.">T.I.</option>
-                            <option value="C.E.">C.E.</option>
+                                <option selected disabled>Seleccione el Tipo de Documento</option>
+                                <option value="C.C.">C.C.</option>
+                                <option value="T.I.">T.I.</option>
+                                <option value="C.E.">C.E.</option>
                             </select>
                         </div>
 
                         <div class="input-box">
-                            <label for="numero_doc">Número de Documento</label>
+                            <label for="numero_doc">Número de Documento <span class="requerido">*</span></label>
                             <input type="number" class="form-control" name="numero_doc" id="numero_doc" placeholder="Número Documento" required>
                         </div>
-                        </div>
+                    </div>
 
-                        <div class="input-group">
+                    <div class="input-group">
                         <div class="input-box">
-                            <label for="correo">Correo Electrónico</label>
-                            <input type="email" class="form-control" name="correo" id="email" placeholder="correo@ejemplo.com">
+                            <label for="correo">Correo Electrónico <span class="requerido">*</span></label>
+                            <input type="email" class="form-control" name="correo" id="email" placeholder="correo@ejemplo.com" required>
                         </div>
 
                         <div class="input-box">
-                            <label for="telefono">Teléfono</label>
-                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Número de teléfono">
+                            <label for="telefono">Teléfono <span class="requerido">*</span></label>
+                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Número de teléfono" required>
                         </div>
-                        </div>
+                    </div>
 
-                        <div class="input-group">
+                    <div class="input-group">
                         <div class="input-box" style="width: 100%;">
-                            <label for="usuario">Cédula del Residente</label>
+                            <label for="usuario">Cédula del Residente <span class="requerido">*</span></label>
                             <input type="number" class="form-control" name="usuario" id="usuario" placeholder="Ej: 1234567890" data-validate="telefono" min="1" required>
                         </div>
-                        </div>
+                    </div>
 
                 </fieldset>
-
 
                 <fieldset>
                     <legend>Datos de la Visita</legend>
 
                     <div class="input-group">
                         <div class="input-box">
-                            <label for="fechaEntrada">Fecha de Entrada</label>
+                            <label for="fechaEntrada">Fecha de Entrada <span class="requerido">*</span></label>
                             <input type="date" class="form-control" name="fechaEntrada" id="fechaEntrada" data-validate="date" required>
                         </div>
 
                         <div class="input-box">
-                            <label for="fechaSalida">Fecha de Salida</label>
+                            <label for="fechaSalida">Fecha de Salida <span class="requerido">*</span></label>
                             <input type="date" class="form-control" name="fechaSalida" id="fechaSalida" data-validate="date" required>
                         </div>
                     </div>
 
                     <div class="input-group">
                         <div class="input-box">
-                            <label for="horaEntrada">Hora de Entrada</label>
+                            <label for="horaEntrada">Hora de Entrada <span class="requerido">*</span></label>
                             <input type="time" class="form-control" name="horaEntrada" id="horaEntrada" data-validate="hora" required>
                         </div>
 
                         <div class="input-box">
-                            <label for="horaSalida">Hora de Salida</label>
+                            <label for="horaSalida">Hora de Salida <span class="requerido">*</span></label>
                             <input type="time" class="form-control" name="horaSalida" id="horaSalida" data-validate="hora" required>
                         </div>
                     </div>
-
-
                 </fieldset>
+
 
                 <!-- Botones -->
                 <div class="input-group" style="justify-content: center;">
