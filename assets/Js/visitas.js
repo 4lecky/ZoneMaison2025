@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const formVisitante = document.getElementById('formVisitante');
+  const formVisitante = document.getElementById('formVisitante') || document.querySelector('form'); 
 
   const btnRegistrar = document.getElementById('btnRegistrar');
   const btnLimpiar   = document.getElementById('btnLimpiar');
-  const btnEditar    = document.getElementById('btnEditar');  // puede crearse dinámicamente
+  const btnEditar    = document.getElementById('btnEditar');
+  const btnConfirmar = document.querySelector('.boton.confirmar'); // 👈 para editar.php
 
   /* Expresiones regulares */
   const emailRegex    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const telefonoRegex = /^\d{7,10}$/;   // solo números de 7 a 10 dígitos
+  const telefonoRegex = /^\d{7,10}$/;
   const dateRegex     = /^\d{4}-\d{2}-\d{2}$/;
   const horaRegex     = /^\d{2}:\d{2}$/;
 
@@ -18,15 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     hora: horaRegex
   };
 
-  /* ---------- Funciones para ayudas contextuales ---------- */
   function mostrarError(campo, mensaje) {
     campo.classList.add('campo-error');
-
-    // Si ya hay un mensaje, lo borra primero
     let existente = campo.parentElement.querySelector('.error-msg');
     if (existente) existente.remove();
 
-    // Crear nuevo mensaje
     const span = document.createElement('span');
     span.className = 'error-msg';
     span.textContent = mensaje;
@@ -39,30 +36,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (existente) existente.remove();
   }
 
-  /* ---------- Validación ---------- */
   function validarFormulario(form) {
     const campos        = Array.from(form.querySelectorAll('input, select, textarea'));
     const camposError   = [];
     let primerError     = null;
 
     campos.forEach(campo => {
-      limpiarError(campo);  // limpiar mensajes previos
+      limpiarError(campo);
       const tipoEsperado = campo.getAttribute('data-validate');
       const valor        = campo.value.trim();
 
-      // 1. Select sin opción válida
       if (campo.tagName === 'SELECT' && (valor === '' || campo.selectedIndex === 0)) {
         camposError.push(campo);
         mostrarError(campo, 'Debes seleccionar una opción');
         if (!primerError) primerError = campo;
       }
-      // 2. Campo vacío
       else if (valor === '') {
         camposError.push(campo);
         mostrarError(campo, 'Este campo es obligatorio');
         if (!primerError) primerError = campo;
       }
-      // 3. Formato incorrecto
       else if (tipoEsperado && camposTipo[tipoEsperado] && !camposTipo[tipoEsperado].test(valor)) {
         camposError.push(campo);
         mostrarError(campo, `Formato inválido (${tipoEsperado})`);
@@ -74,36 +67,36 @@ document.addEventListener('DOMContentLoaded', () => {
     return camposError;
   }
 
-  /* ---------- Acciones de botones ---------- */
   function manejarClick(accion) {
     if (accion === 'limpiar') {
       if (confirm('¿Seguro que deseas limpiar todos los campos?')) {
         formVisitante.reset();
-        // limpiar mensajes de error
         formVisitante.querySelectorAll('.error-msg').forEach(e => e.remove());
         formVisitante.querySelectorAll('.campo-error').forEach(c => c.classList.remove('campo-error'));
       }
       return;
     }
 
-    // Registrar o editar: primero validar
     const errores = validarFormulario(formVisitante);
-    if (errores.length) {
-      return; // ya se mostraron los mensajes
-    }
+    if (errores.length) return;
 
     if (accion === 'registrar') {
       if (confirm('Confirma que todos los datos estén correctos antes de registrar.')) {
-        formVisitante.submit();            // ← ¡envío real!
+        formVisitante.submit();
       }
-    } else if (accion === 'editar') {
+    } 
+    else if (accion === 'editar') {
       if (confirm('¿Seguro que quieres editar una visita?')) {
-        alert('Visita editada correctamente');
+        formVisitante.submit();
+      }
+    } 
+    else if (accion === 'confirmar') {   // 👈 nuevo para editar.php
+      if (confirm('¿Deseas confirmar los cambios de esta visita?')) {
+        formVisitante.submit();
       }
     }
   }
 
-  /* ---------- Listeners ---------- */
   if (btnLimpiar) {
     btnLimpiar.addEventListener('click', e => {
       e.preventDefault();
@@ -125,7 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Validación en tiempo real (mientras escribe) */
+  if (btnConfirmar) {   // 👈 ahora el botón de editar.php funciona
+    btnConfirmar.addEventListener('click', e => {
+      e.preventDefault();
+      manejarClick('confirmar');
+    });
+  }
+
   formVisitante.querySelectorAll('input, select, textarea').forEach(campo => {
     campo.addEventListener('input', () => {
       limpiarError(campo);
@@ -137,5 +136,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
 });

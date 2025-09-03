@@ -36,7 +36,7 @@ $datos = $control->editar($id);
 <body>
 <div class="form-container">
     <h2>Editar Visita</h2>
-    <form method="POST" action="../controller/EditCrudVisiControl.php">
+    <form method="POST">
 
         <input type="hidden" name="id" value="<?= $datos->vis_id ?>">
 
@@ -69,7 +69,7 @@ $datos = $control->editar($id);
             </div>
         </div>
 
-        <button type="button" class="boton confirmar">Confirmar</button>
+        <button type="submit" class="boton confirmar">Confirmar</button>
         <a href="" class="boton cancelar">Cancelar</a>    
     </form>
 </div>

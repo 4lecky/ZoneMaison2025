@@ -33,7 +33,7 @@ require_once "./Layout/header.php";
           <legend>Formulario de Muro</legend>
 
           <!-- Destinatario -->
-          <label for="destinatario">Selecciona el rol destinatario *</label>
+          <label for="destinatario">Selecciona el rol destinatario<span class="asterisco">*</span></label>
           <?php
           // Los roles que queremos permitir
           $rolesPermitidos = ['Administrador', 'Residente', 'Propietario', 'Vigilante'];
@@ -65,11 +65,11 @@ require_once "./Layout/header.php";
           <!-- Campos para fecha y hora del evento -->
           <div class="fecha-hora-container" style="display: flex; gap: 15px; margin: 15px 0;">
             <div style="flex: 1;">
-              <label for="fechaEvento">Fecha del evento: *</label>
+              <label for="fechaEvento">Fecha del evento<span class="asterisco">*</span></label>
               <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" required>
             </div>
             <div style="flex: 1;">
-              <label for="horaEvento">Hora del evento: *</label>
+              <label for="horaEvento">Hora del evento<span class="asterisco">*</span></label>
               <input type="time" class="form-control" id="horaEvento" name="horaEvento" required>
             </div>
           </div>
@@ -80,11 +80,11 @@ require_once "./Layout/header.php";
           </button>
 
           <!-- Imagen -->
-          <label></i> Imágenes *</label>
+          <label></i>Adjuntar Imágenes<span class="asterisco">*</span></label>
           <input type="file" name="zone-images" accept="image/*" required />
 
           <!-- Descripción -->
-          <label for="descripcion">Descripción *</label>
+          <label for="descripcion">Descripción<span class="asterisco">*</span></label>
           <textarea class="form-control" rows="10" placeholder="Descripción..." id="descripcion" name="descripcion" required>
 
 Se llevara a cabo
