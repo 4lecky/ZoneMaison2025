@@ -1,9 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../models/insertaRegistroAlquiler.php';
+require_once __DIR__ . '/../models/logicaCalculoParqueadero.php';
 
-// Crear la conexión
-// $conexion = (new pdo())->getConexion();
 $model = new insertaRegistroAlquiler($pdo);
 
 // Recibir datos del formulario
@@ -20,25 +19,50 @@ $fechaEntrada    = $_POST['alqu_fecha_entrada'] ?? null;
 $fechaSalida     = $_POST['alqu_fecha_salida'] ?? null;
 $horaSalida      = $_POST['alqu_hora_salida'] ?? null;
 
-// Opcionales
-$precio          = $_POST['alqu_precio'] ?? null;
-$usuarioCedula   = $_POST['alqu_usuario_cedula'] ?? null;
-$visitaId        = $_POST['alqu_vis_id'] ?? null;
+// Calcular precio
+try {
+    $vehiculo = new Vehiculo($placa, ''); 
+    $tarifa = new Tarifa(5000); // Tarifa fija
+    $ticket = new Ticket($vehiculo, $tarifa);
+
+    $ticket->marcarIngreso(new DateTime($fechaEntrada));
+    $ticket->marcarSalida(new DateTime("$fechaSalida $horaSalida"));
+
+    $horas = $ticket->calcularHoras();
+    $precio = $ticket->calcularCosto();
+
+} catch (Exception $e) {
+    echo json_encode(['error' => "❌ Error en el cálculo: " . $e->getMessage()]);
+    exit;
+}
 
 // Insertar en la base de datos
-// $modelo = new insertaRegistroAlquiler($conexion);
 $resultado = $model->insertarAlquiler(
     $numRecibo, $tipoDoc, $numDoc, $nombrePropietario,
     $torre, $apartamento, $placa, $numParqueadero,
     $estadoSalida, $fechaEntrada, $fechaSalida, $horaSalida,
-    $precio, $usuarioCedula, $visitaId
+    $precio, null, null
 );
 
-// Redirigir o mostrar mensaje
 if ($resultado) {
-    echo "✅ Registro insertado correctamente.";
-    // header("Location: ../view/exito.php");
+    echo json_encode([
+        'success' => true,
+        'alquiler' => [
+            'nombre' => $nombrePropietario,
+            'placa' => $placa,
+            'numParqueadero' => $numParqueadero,
+            'horaIngreso' => $fechaEntrada,
+            'fechaSalida' => $fechaSalida,
+            'horaSalida' => $horaSalida
+        ],
+        'calculo' => [
+            'horas' => $horas,
+            'costo' => number_format($precio, 0, ',', '.'),
+            'costo_neto' => $precio
+        ]
+    ]);
 } else {
-    echo "❌ Error al insertar registro.";
-    // header("Location: ../view/error.php");
+    // Para depurar mejor mostramos el error de PDO
+    $errorInfo = $pdo->errorInfo();
+    echo json_encode(['error' => '❌ Error al insertar registro: ' . $errorInfo[2]]);
 }

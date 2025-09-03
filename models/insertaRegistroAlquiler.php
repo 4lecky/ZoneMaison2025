@@ -10,7 +10,7 @@ class insertaRegistroAlquiler {
         $numRecibo, $tipoDoc, $numDoc, $nombrePropietario,
         $torre, $apartamento, $placa, $numParqueadero,
         $estadoSalida, $fechaEntrada, $fechaSalida, $horaSalida, 
-        $precio = null, $usuarioCedula = null, $visitaId = null
+        $precio = null
     ) {
         $sql = "INSERT INTO tbl_alquiler (
                     alqu_num_recibo,
@@ -25,9 +25,7 @@ class insertaRegistroAlquiler {
                     alqu_fecha_entrada,
                     alqu_fecha_salida,
                     alqu_hora_salida,
-                    alqu_precio,
-                    alqu_usuario_cedula,
-                    alqu_vis_id
+                    alqu_precio
                 ) VALUES (
                     :recibo,
                     :tipoDoc,
@@ -41,28 +39,25 @@ class insertaRegistroAlquiler {
                     :fechaEntrada,
                     :fechaSalida,
                     :horaSalida,
-                    :precio,
-                    :usuarioCedula,
-                    :visitaId
+                    :precio
                 )";
 
         $stmt = $this->db->prepare($sql);
 
-        $stmt->bindParam(':recibo', $numRecibo);
-        $stmt->bindParam(':tipoDoc', $tipoDoc);
-        $stmt->bindParam(':numDoc', $numDoc);
-        $stmt->bindParam(':nombrePropietario', $nombrePropietario);
-        $stmt->bindParam(':torre', $torre);
-        $stmt->bindParam(':apartamento', $apartamento);
-        $stmt->bindParam(':placa', $placa);
-        $stmt->bindParam(':numParqueadero', $numParqueadero);
-        $stmt->bindParam(':estadoSalida', $estadoSalida);
-        $stmt->bindParam(':fechaEntrada', $fechaEntrada);
-        $stmt->bindParam(':fechaSalida', $fechaSalida);
-        $stmt->bindParam(':horaSalida', $horaSalida);
-        $stmt->bindParam(':precio', $precio);
-        $stmt->bindParam(':usuarioCedula', $usuarioCedula);
-        $stmt->bindParam(':visitaId', $visitaId);
+        // Vincular parámetros (manejo de NULL correctamente)
+        $stmt->bindValue(':recibo', $numRecibo ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':tipoDoc', $tipoDoc);
+        $stmt->bindValue(':numDoc', $numDoc);
+        $stmt->bindValue(':nombrePropietario', $nombrePropietario);
+        $stmt->bindValue(':torre', $torre ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':apartamento', $apartamento ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':placa', $placa);
+        $stmt->bindValue(':numParqueadero', $numParqueadero ?: null, PDO::PARAM_NULL | PDO::PARAM_INT);
+        $stmt->bindValue(':estadoSalida', $estadoSalida);
+        $stmt->bindValue(':fechaEntrada', $fechaEntrada ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':fechaSalida', $fechaSalida ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':horaSalida', $horaSalida ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindValue(':precio', $precio ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
 
         try {
             return $stmt->execute();
