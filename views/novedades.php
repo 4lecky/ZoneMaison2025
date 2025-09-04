@@ -46,7 +46,7 @@ if ($rol_usuario === 'Administrador' || $rol_usuario === 'Vigilante') {
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 } else {
-    // Los demás usuarios solo ven publicaciones dirigidas a su rol o a "Todos"
+    // Los demás usuarios solo ven publicaciones dirigidas a su rol
     $query = "SELECT * FROM tbl_muro 
               WHERE muro_Destinatario = :rol 
                  OR muro_Destinatario = 'Todos'
@@ -95,7 +95,7 @@ if (isset($_SESSION['usuario']['cedula'])) {
         $stmt->execute();
     }
 
-    // Obtener los paquetes
+    // Obtener los paquetes especificos
     $paquetes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $hay_paquetes = count($paquetes) > 0;
 }

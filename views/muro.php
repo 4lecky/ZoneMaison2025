@@ -50,7 +50,7 @@ require_once "./Layout/header.php";
           ?>
 
           <select class="form-control" id="destinatario" name="destinatario" required>
-            <option value="" selected disabled>Seleccione un Rol *</option>
+            <option value="" selected disabled>Seleccione un Rol</option>
             <?php foreach ($roles as $role): ?>
               <option value="<?= htmlspecialchars($role['usu_rol']) ?>">
                 <?= htmlspecialchars($role['usu_rol']) ?>
@@ -59,7 +59,7 @@ require_once "./Layout/header.php";
           </select>
 
           <!-- Asunto -->
-          <label>Asunto *</label>
+          <label>Asunto<span class="asterisco">*</span></label>
           <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto" required />
 
           <!-- Campos para fecha y hora del evento -->
@@ -76,7 +76,7 @@ require_once "./Layout/header.php";
 
           <!-- Botón para insertar fecha y hora -->
           <button type="button" class="btn btn-primary" onclick="insertarFechaHora()" style="margin-bottom: 10px;" required>
-            Insertar Fecha y Hora en el Texto *
+            Insertar Fecha y Hora en el Texto<span class="asterisco">*</span>
           </button>
 
           <!-- Imagen -->
@@ -108,80 +108,6 @@ Administración del Conjunto Residencial [Nombre conjunto residencial].</textare
   <?php require_once "./Layout/footer.php"; ?>
 
   <script src="../assets/Js/muro.js"></script>
-
-  <script>
-    // Establecer fecha y hora actuales por defecto al cargar la página
-    document.addEventListener('DOMContentLoaded', function() {
-      const ahora = new Date();
-
-      // Establecer fecha actual
-      document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
-
-      // Establecer hora actual
-      document.getElementById('horaEvento').value = ahora.toTimeString().slice(0, 5);
-    });
-
-    function insertarFechaHora() {
-      const fecha = document.getElementById('fechaEvento').value;
-      const hora = document.getElementById('horaEvento').value;
-      const textarea = document.getElementById('descripcion');
-
-      if (!fecha || !hora) {
-        alert('Por favor, selecciona una fecha y una hora para el evento.');
-        return;
-      }
-
-      try {
-        // Convertir fecha a formato legible en español
-        const fechaObj = new Date(fecha + 'T00:00:00');
-        const fechaTexto = fechaObj.toLocaleDateString('es-CO', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-
-        // Convertir hora a formato 12 horas
-        const [horas, minutos] = hora.split(':');
-        const fechaHora = new Date();
-        fechaHora.setHours(parseInt(horas), parseInt(minutos));
-        const horaTexto = fechaHora.toLocaleTimeString('es-CO', {
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true
-        });
-
-        // Crear el texto con formato deseado
-        const textoFechaHora = `Estimados residentes, Les informamos que el día ${fechaTexto} a las ${horaTexto} `;
-
-        // Insertar al inicio del textarea
-        textarea.value = textoFechaHora + textarea.value;
-
-        // Posicionar cursor al final del texto insertado
-        const nuevaPos = textoFechaHora.length;
-        textarea.setSelectionRange(nuevaPos, nuevaPos);
-        textarea.focus();
-
-      } catch (error) {
-        alert('Error al formatear la fecha y hora. Por favor, verifica que sean válidas.');
-        console.error('Error:', error);
-      }
-    }
-
-    function resetearFormulario() {
-      // Restablecer el textarea al texto original
-      const textarea = document.getElementById('descripcion');
-      textarea.value = `Para cualquier pregunta o inconveniente, por favor, contacten a la administración.
-Agradecemos su comprensión y cooperación.
-Atentamente, [Nombre del Responsable].
-Administración del Conjunto Residencial [Nombre conjunto residencial].`;
-
-      // Restablecer fecha y hora a valores actuales
-      const ahora = new Date();
-      document.getElementById('fechaEvento').value = ahora.toISOString().split('T')[0];
-      document.getElementById('horaEvento').value = ahora.toTimeString().slice(0, 5);
-    }
-  </script>
 
 </body>
 
