@@ -194,7 +194,7 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
         <p>Has solicitado un <strong>reseteo de contraseña</strong> para tu cuenta.</p>
         <p>Haz clic en el siguiente enlace para cambiar tu contraseña:</p>
         <p>
-            <a href=\"/index/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
+            <a href=\"https://midnightblue-shark-959252.hostingersite.com/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
         </p>
         <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico.</p>
         <br>
