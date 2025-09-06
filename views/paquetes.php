@@ -61,7 +61,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <label>Hora<span class="asterisco">*</span></label>
           <input type="time" class="form-control" name="hora" id="hora" />
 
-          <label></i>Adjuntar Imágene<span class="asterisco">*</span></label>
+          <label></i>Adjuntar Imágenes<span class="asterisco">*</span></label>
           <input type="file" name="zone-images" accept="image/*" />
 
           <label>Descripción<span class="asterisco">*</span></label>
