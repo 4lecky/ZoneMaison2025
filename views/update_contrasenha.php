@@ -66,7 +66,7 @@ if (count($data) > 0):
 
         <div class="col-md-25 container-input-update">
           <label for="password" class="form-label">Confirmación de contraseña</label>
-          <input type="password" class="form-control_update" id="password" name="new_password" placeholder="Confirmación de contraseña" required>
+          <input type="password" class="form-control_update" id="password2" name="new_password" placeholder="Confirmación de contraseña" required>
           <i class="ri-lock-password-fill"></i>
           <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
         </div>

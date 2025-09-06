@@ -194,15 +194,13 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
         <p>Has solicitado un <strong>reseteo de contraseña</strong> para tu cuenta.</p>
         <p>Haz clic en el siguiente enlace para cambiar tu contraseña:</p>
         <p>
-            <a href=\"http://localhost/zonemaison2025/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
+            <a href=\"/index/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
         </p>
         <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico.</p>
         <br>
         <p>Saludos,<br>El equipo de ZoneMaison2025</p>
          ";
-        // $mail->Body    = 'Usted a solicitado un reseteo de contraseña <b>
-        // <a href="http://localhost/zonemaison2025/views/update_contrasenha.php?id=' .$userid . '&&token=' . $token_User . '">Cambiar Contraseña</a> </b>';
-
+        // <a href=\"http://localhost/zonemaison2025/views/update_contrasenha.php?id=$userid&&token=$token_User\" style=\"background-color:#007bff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;\">Cambiar Contraseña</a>
 
         $mail->send();
         return true;      
@@ -210,6 +208,7 @@ function EnviarCorreoResetPassword($Correo, $NombreReceptor, $userid, $token_Use
             $_SESSION['error_msg'] = "No se pudo enviar el correo: {$mail->ErrorInfo}";
             return false;
         }
+
 
         //Pruebas con mailTrap
     //     $mail->SMTPDebug = SMTP::DEBUG_SERVER;

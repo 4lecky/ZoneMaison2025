@@ -12,7 +12,7 @@ window.addEventListener("DOMContentLoaded",()  => {
         }
     
         const password = this.password.value;
-        let expresionRegularPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+        let expresionRegularPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,15}$/gm;
     
         if (expresionRegularPassword.test(password)==false) {
             alert("La contraseña debe tener al entre 8 y 10 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos");
