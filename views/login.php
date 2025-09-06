@@ -39,7 +39,9 @@ unset($_SESSION['errorLogin']);
 
         <!-- <img src="./assets/img/LogoZM.png" alt="" class="logo_zm"> -->
 
-        <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/zonemaison2025/index.php?controller=Auth&action=login">
+        <!-- <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/zonemaison2025/index.php?controller=Auth&action=login"> -->
+            <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/index.php?controller=auth&action=login">
+
 
             <h2>Inicie sesión aquí</h2>
 

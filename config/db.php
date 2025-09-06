@@ -14,7 +14,7 @@
 
 // Conexión hosting
 $host = "localhost";
-$dbname = "u413625843_zonemaisons";
+$db = "u413625843_zonemaisons";
 $user = "u413625843_LunaSalas";
 $pass = "ZoneMaison2025*";
 $charset = 'utf8mb4';
