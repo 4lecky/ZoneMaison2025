@@ -36,8 +36,8 @@ unset($_SESSION['errorRegistro']);
     
     <div class="container_izquierdo">
 
-        <form class="formulario_ingresosRe" id="formulario_ingresosRe" method="post" action="/zonemaison2025/index.php?controller=Auth&action=registrar">
-
+        <form method="post" action="/index.php?controller=auth&action=registrar">
+        <!-- <form class="formulario_ingresosRe" id="formulario_ingresosRe" method="post" action="/zonemaison2025/index.php?controller=Auth&action=registrar"> -->
             <h2>Registro usuario</h2>
 
             <?php if ($errorRegistro): ?>

@@ -5,10 +5,18 @@
 // $conexion->set_charset("utf8");
 
 // conexion local
-$host = 'localhost';
-$db   = 'zonemaisons';
-$user = 'root';
-$pass = '';
+// $host = 'localhost';
+// $db   = 'zonemaisons';
+// $user = 'root';
+// $pass = '';
+// $charset = 'utf8mb4';
+
+
+// Conexión hosting
+$host = "localhost";
+$dbname = "u413625843_zonemaisons";
+$user = "u413625843_LunaSalas";
+$pass = "ZoneMaison2025*";
 $charset = 'utf8mb4';
 
 $options = [
