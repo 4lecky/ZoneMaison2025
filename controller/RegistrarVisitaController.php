@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($ok === true) {
         /* Ruta absoluta: evita 404 y problemas con “..” */
-        header('Location: /Zonemaison2025/views/visitas.php');
+        header('Location: ../views/visitas.php');
         exit;
     }
 

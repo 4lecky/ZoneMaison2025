@@ -13,7 +13,7 @@ $filtro = $_GET['filtro'] ?? 'todos';
 
 // Construir consulta SQL con filtros
 $sql = "SELECT   vi.* , v.*
-        FROM tbl_visitante vi
+        FROM tbl_Visitante vi
         INNER JOIN tbl_visita v ON vi.visi_id = v.vis_visi_id;";
 
 switch ($filtro) {
