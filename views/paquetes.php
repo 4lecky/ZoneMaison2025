@@ -83,7 +83,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
   </main>
 
-  <script src="../assets/js/paquetes.js"></script>
+  <script src="../assets/Js/paquetes.js"></script>
 
   <?php require_once "./Layout/footer.php"; ?>
 </body>
