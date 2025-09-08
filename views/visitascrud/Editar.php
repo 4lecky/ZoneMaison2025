@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     if ($control->actualizar($data)) {
-        header("Location: /zonemaison2025/views/visitas.php?mensaje=Visita actualizada correctamente");
+        header("Location: ../../views/visitas.php?mensaje=Visita actualizada correctamente");
         exit();
     } else {
         echo "Error al actualizar";
@@ -31,7 +31,7 @@ $datos = $control->editar($id);
 <head>
     <meta charset="UTF-8">
     <title>Editar Visita</title>
-    <link rel="stylesheet" href="../../assets/css/visitas/editar.css">
+    <link rel="stylesheet" href="../../assets/Css/visitas/editar.css">
 </head>
 <body>
 <div class="form-container">
