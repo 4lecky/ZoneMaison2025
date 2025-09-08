@@ -17,17 +17,21 @@ $rol = $_SESSION['usuario']['rol'] ?? '';
         </div>
 
         <div class="contenedor_btn_header">
-
-            <button class="btns_header" onclick="window.location.href='../views/logout.php'"> <i class="ri-logout-box-r-line"></i> Cerrar sesión</button>
-            <button class="btns_header" onclick="window.location.href='../controller/perfilUsuarioController.php'"><i class="ri-user-3-fill"></i> Mi cuenta </button>
-
+            <button class="btns_header" onclick="window.location.href='../views/logout.php'">
+                <i class="ri-logout-box-r-line"></i>
+                <span class="btns_texto"> Cerrar sesión </span>
+            </button>
+            <button class="btns_header" onclick="window.location.href='../controller/perfilUsuarioController.php'">
+                <i class="ri-user-3-fill"></i>
+                <span class="btns_texto"> Mi cuenta </span>
+            </button>
         </div>
 
     </header>
     <nav class="nav_expanded" id="main_nav"> 
         <a href="../views/novedades.php" class="nav-link"> Notificaciones </a>
         <a href="../views/CrearReserva.php" class="nav-link"> Reservas </a>
-        <a href="../views/visitas.php" class="nav-link"> visitas </a>
+        <a href="../views/visitas.php" class="nav-link"> Visitas </a>
         <a href="../views/parqueadero.php" class="nav-link"> Parqueaderos </a>
         <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
             <a href="../views/crud.php" class="nav-link"> Usuarios </a>

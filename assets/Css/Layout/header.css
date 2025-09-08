@@ -124,6 +124,24 @@ header .LogoT {
 
 /* Responsive */
 
+@media (max-width: 1600px) {
+
+    .contenedor_btn_header {
+    width: 30%;
+    margin-right: 20px;
+
+  }
+
+  .btns_header {
+
+    font-size: 15px;
+    padding: 7px, 10px;
+
+  }
+
+  
+}
+
 @media (max-width: 1200px) {
 
   header {
@@ -135,6 +153,29 @@ header .LogoT {
     margin-top: 20px;
     width: 200px;
     height: 50px;
+  }
+
+  .contenedor_btn_header {
+    width: 30%;
+    margin-right: 30px;
+
+  }
+
+  .btns_header {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+  }
+
+  
+  .btns_header i {
+    font-size: 20px;
+
+  }
+
+  .btns_texto{
+    display: none;
   }
 
   header .logo-ZM,
@@ -204,6 +245,16 @@ header .LogoT {
     display: none;
   }
 
+  .contenedor_btn_header {
+    width: 40%;
+    margin-right: 100px;
+
+  }
+
+  .btns_texto{
+    display: none;
+  }
+
 
   header .menu {
     justify-content: center;
@@ -242,6 +293,16 @@ header .LogoT {
 
   header .LogoT {
     width: 200px;
+  }
+
+  .contenedor_btn_header {
+    width: 40%;
+    margin-right: 30px;
+
+  }
+
+   .btns_texto{
+    display: none;
   }
 
   header .IconoMenu {
