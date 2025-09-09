@@ -68,7 +68,7 @@ if ($usuario['rol'] !== 'Administrador') {
                         <div class="formulario-reserva">
                             <h5 class="mb-4 formulario-titulo">Nueva Zona Común</h5>
                             
-                            <form action="/index.php?controller=Reservas&action=crearZona" method="POST" id="formCrearZona" enctype="multipart/form-data">
+                            <form action="../controller/reservasController.php?action=crearZona" method="POST" id="formCrearZona" enctype="multipart/form-data">
                                 <!-- Información Básica -->
                                 <div class="row">
                                     <div class="col-md-8 mb-3">

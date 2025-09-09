@@ -54,31 +54,44 @@ $zonas = $stmt->fetchAll();
                             <a href="../views/misReservas.php" class="btn btn-custom">MIS RESERVAS</a>
                             <a href="../views/todasReservas.php" class="btn btn-custom">TODAS LAS RESERVAS</a>
                         </div>
+
+                        <!-- Mensajes de respuesta -->
+                        <?php if (isset($_SESSION['response'])): ?>
+                            <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show" role="alert">
+                                <?php echo $_SESSION['response']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+                        <?php endif; ?>
                         
                         <!-- Formulario de Nueva Reserva -->
                         <div class="formulario-reserva">
                             <h5 class="mb-4 formulario-titulo">Nueva Reserva</h5>
                             
-                            <form action="/index.php?controller=Reservas&action=crearReserva" method="POST">
+                            <form action="../controller/reservasController.php?action=crearReserva" method="POST" id="formReserva">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Tipo de Documento</label>
                                         <select class="form-select" name="tipo_documento" required>
                                             <option value="">Seleccionar...</option>
-                                            <option value="CC">Cédula de Ciudadanía</option>
-                                            <option value="CE">Cédula de Extranjería</option>
-                                            <option value="PP">Pasaporte</option>
+                                            <option value="Cedula de ciudadania">Cédula de Ciudadanía</option>
+                                            <option value="Cedula de extranjeria">Cédula de Extranjería</option>
+                                            <option value="Pasaporte">Pasaporte</option>
+                                            <option value="Permiso especial de permanencia (PEP)">PEP</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Número de Documento</label>
-                                        <input type="text" class="form-control" name="numero_documento" placeholder="Ingrese el número" required>
+                                        <label class="form-label">Número de Documento <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="numero_documento" 
+                                               placeholder="Ingrese el número de documento" required
+                                               id="input-documento">
+                                        <div class="form-text" id="info-usuario"></div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Zona Común</label>
+                                        <label class="form-label">Zona Común <span class="text-danger">*</span></label>
                                         <select class="form-select" name="zona_id" required>
                                             <option value="">Seleccionar zona...</option>
                                             <?php if (!empty($zonas)): ?>
@@ -96,18 +109,19 @@ $zonas = $stmt->fetchAll();
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Fecha</label>
-                                        <input type="date" class="form-control" name="fecha_reserva" min="<?php echo date('Y-m-d'); ?>" required>
+                                        <label class="form-label">Fecha <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" name="fecha_reserva" 
+                                               min="<?php echo date('Y-m-d'); ?>" required>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Hora de Inicio</label>
+                                        <label class="form-label">Hora de Inicio <span class="text-danger">*</span></label>
                                         <input type="time" class="form-control" name="hora_inicio" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Hora de Fin</label>
+                                        <label class="form-label">Hora de Fin <span class="text-danger">*</span></label>
                                         <input type="time" class="form-control" name="hora_fin" required>
                                     </div>
                                 </div>
@@ -117,7 +131,7 @@ $zonas = $stmt->fetchAll();
                                 <input type="hidden" name="nombre_residente" id="nombre_residente">
                                 
                                 <div class="text-end mt-4">
-                                    <button type="submit" class="btn btn-reservar">
+                                    <button type="submit" class="btn btn-reservar" id="btn-confirmar">
                                         CONFIRMAR RESERVA
                                     </button>
                                 </div>
@@ -279,6 +293,7 @@ $zonas = $stmt->fetchAll();
     <script>
         // Variables globales del calendario
         let fechaActual = new Date();
+        let usuarioEncontrado = false;
         const meses = [
             'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -394,6 +409,71 @@ $zonas = $stmt->fetchAll();
             }
         }
 
+        // Búsqueda automática de usuario por cédula (MEJORADA)
+        document.querySelector('input[name="numero_documento"]').addEventListener('input', async function() {
+            const cedula = this.value.trim();
+            const infoDiv = document.getElementById('info-usuario');
+            const btnConfirmar = document.getElementById('btn-confirmar');
+            
+            if (cedula.length >= 7) { // Validar que tenga al menos 7 dígitos
+                try {
+                    // Mostrar indicador de carga
+                    infoDiv.innerHTML = '<small class="text-info">Buscando usuario...</small>';
+                    
+                    const response = await fetch(`../controller/reservasController.php?action=buscarUsuario&cedula=${cedula}`);
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        
+                        if (result.success && result.data) {
+                            // Llenar automáticamente los campos ocultos
+                            document.getElementById('apartamento').value = result.data.apartamento;
+                            document.getElementById('nombre_residente').value = result.data.nombre;
+                            
+                            // Mostrar información al usuario
+                            this.style.borderColor = '#28a745';
+                            infoDiv.innerHTML = `<small class="text-success">✓ Usuario encontrado: <strong>${result.data.nombre}</strong> - ${result.data.apartamento}</small>`;
+                            usuarioEncontrado = true;
+                            btnConfirmar.disabled = false;
+                        } else {
+                            // Usuario no encontrado
+                            document.getElementById('apartamento').value = '';
+                            document.getElementById('nombre_residente').value = '';
+                            this.style.borderColor = '#dc3545';
+                            infoDiv.innerHTML = '<small class="text-danger">✗ Usuario no encontrado en el sistema</small>';
+                            usuarioEncontrado = false;
+                            btnConfirmar.disabled = true;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error buscando usuario:', error);
+                    this.style.borderColor = '#ffc107';
+                    infoDiv.innerHTML = '<small class="text-warning">⚠ Error al buscar usuario</small>';
+                    usuarioEncontrado = false;
+                    btnConfirmar.disabled = true;
+                }
+            } else {
+                // Limpiar campos si no hay suficientes dígitos
+                document.getElementById('apartamento').value = '';
+                document.getElementById('nombre_residente').value = '';
+                this.style.borderColor = '';
+                infoDiv.innerHTML = '';
+                usuarioEncontrado = false;
+                btnConfirmar.disabled = false;
+            }
+        });
+
+        // Validación del formulario antes de enviar
+        document.getElementById('formReserva').addEventListener('submit', function(e) {
+            const cedula = document.querySelector('input[name="numero_documento"]').value.trim();
+            
+            if (cedula.length >= 7 && !usuarioEncontrado) {
+                e.preventDefault();
+                alert('Debe esperar a que se verifique el usuario antes de enviar el formulario.');
+                return false;
+            }
+        });
+
         // Event listeners del calendario
         document.getElementById('mes-anterior').addEventListener('click', function() {
             fechaActual.setMonth(fechaActual.getMonth() - 1);
@@ -417,17 +497,6 @@ $zonas = $stmt->fetchAll();
             const modal = new bootstrap.Modal(document.getElementById('modalTerminos'));
             modal.show();
         }
-
-        // Búsqueda de usuario por cédula (simulada)
-        document.querySelector('input[name="numero_documento"]').addEventListener('input', function() {
-            const cedula = this.value.trim();
-            if (cedula.length >= 6) {
-                // Aquí iría la búsqueda real del usuario
-                // Por ahora simulamos
-                document.getElementById('apartamento').value = 'Apt 101';
-                document.getElementById('nombre_residente').value = 'Usuario Test';
-            }
-        });
 
         // Validación de horarios según zona seleccionada
         document.querySelector('select[name="zona_id"]').addEventListener('change', function() {
