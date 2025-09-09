@@ -129,10 +129,49 @@ $zonas = $stmt->fetchAll();
                                 <h5 class="mb-0">Calendario de Reservas</h5>
                             </div>
                             <div class="card-body">
-                                <div class="demo-content">
-                                    <div class="text-center">
-                                        <i class="ri-calendar-2-line calendario-icono"></i>
-                                        <p class="mt-2">Aquí irá el calendario interactivo...</p>
+                                <!-- Calendario integrado -->
+                                <div class="calendario-content">
+                                    <div class="zona-selector-calendario mb-3">
+                                        <label for="zona-select-calendario" class="form-label">Seleccionar zona para ver reservas:</label>
+                                        <select id="zona-select-calendario" class="form-select">
+                                            <option value="">Seleccionar zona...</option>
+                                            <?php if (!empty($zonas)): ?>
+                                                <?php foreach ($zonas as $zona): ?>
+                                                    <option value="<?php echo $zona['zona_id']; ?>">
+                                                        <?php echo htmlspecialchars($zona['zona_nombre']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="calendario-navegacion d-flex justify-content-between align-items-center mb-3">
+                                        <button class="btn btn-outline-secondary btn-sm" id="mes-anterior">
+                                            <i class="ri-arrow-left-line"></i> Anterior
+                                        </button>
+                                        <h6 class="mes-actual-titulo mb-0" id="mes-actual-titulo"></h6>
+                                        <button class="btn btn-outline-secondary btn-sm" id="mes-siguiente">
+                                            Siguiente <i class="ri-arrow-right-line"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="calendario-grid-container">
+                                        <div class="calendario-grid" id="calendario-grid">
+                                            <!-- El calendario se genera dinámicamente -->
+                                        </div>
+                                    </div>
+
+                                    <div class="calendario-leyenda mt-3">
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <div class="leyenda-item d-flex align-items-center">
+                                                <div class="leyenda-color leyenda-hoy"></div>
+                                                <span class="ms-2 small">Hoy</span>
+                                            </div>
+                                            <div class="leyenda-item d-flex align-items-center">
+                                                <div class="leyenda-color leyenda-reserva"></div>
+                                                <span class="ms-2 small">Reservas</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -238,6 +277,138 @@ $zonas = $stmt->fetchAll();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Variables globales del calendario
+        let fechaActual = new Date();
+        const meses = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+        const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+
+        // Función para cargar reservas desde el controlador
+        async function cargarReservasZona(zonaId) {
+            if (!zonaId) return [];
+            
+            try {
+                const response = await fetch(`../controller/reservasController.php?action=getReservasPorZona&zona_id=${zonaId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    return result.data || [];
+                } else {
+                    console.error('Error del servidor:', result.error);
+                    return [];
+                }
+                
+            } catch (error) {
+                console.error('Error cargando reservas:', error);
+                return [];
+            }
+        }
+
+        // Función actualizada para generar calendario
+        async function generarCalendario() {
+            const año = fechaActual.getFullYear();
+            const mes = fechaActual.getMonth();
+            
+            // Actualizar título
+            document.getElementById('mes-actual-titulo').textContent = `${meses[mes]} ${año}`;
+            
+            const primerDia = new Date(año, mes, 1);
+            const ultimoDia = new Date(año, mes + 1, 0);
+            const diasEnMes = ultimoDia.getDate();
+            
+            // Ajustar para que lunes sea el primer día
+            let primerDiaSemana = primerDia.getDay();
+            primerDiaSemana = primerDiaSemana === 0 ? 6 : primerDiaSemana - 1;
+            
+            const grid = document.getElementById('calendario-grid');
+            
+            // Mostrar indicador de carga
+            grid.innerHTML = '<div style="grid-column: span 7; text-align: center; padding: 20px; color: #6c757d;">Cargando reservas...</div>';
+            
+            // Cargar reservas de la zona seleccionada
+            const zonaSeleccionada = document.getElementById('zona-select-calendario').value;
+            const reservasZona = await cargarReservasZona(zonaSeleccionada);
+            
+            // Limpiar grid y regenerar
+            grid.innerHTML = '';
+            
+            // Headers de días
+            diasSemana.forEach(dia => {
+                const header = document.createElement('div');
+                header.className = 'calendario-dia-header';
+                header.textContent = dia;
+                grid.appendChild(header);
+            });
+            
+            // Días del mes anterior
+            const mesAnterior = new Date(año, mes - 1, 0).getDate();
+            for (let i = primerDiaSemana - 1; i >= 0; i--) {
+                const dia = document.createElement('div');
+                dia.className = 'calendario-dia calendario-otro-mes';
+                dia.innerHTML = `<div class="calendario-numero">${mesAnterior - i}</div>`;
+                grid.appendChild(dia);
+            }
+            
+            // Días del mes actual
+            const hoy = new Date();
+            for (let dia = 1; dia <= diasEnMes; dia++) {
+                const diaElement = document.createElement('div');
+                diaElement.className = 'calendario-dia';
+                
+                // Marcar día actual
+                if (año === hoy.getFullYear() && mes === hoy.getMonth() && dia === hoy.getDate()) {
+                    diaElement.classList.add('calendario-hoy');
+                }
+                
+                const fechaDia = `${año}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                
+                let contenido = `<div class="calendario-numero">${dia}</div>`;
+                
+                // Agregar reservas reales de la base de datos
+                if (reservasZona.length > 0) {
+                    const reservasDia = reservasZona.filter(r => r.fecha === fechaDia);
+                    reservasDia.forEach(reserva => {
+                        const tooltipText = `${reserva.residente} (${reserva.apartamento}) - ${reserva.hora_inicio} a ${reserva.hora_fin}`;
+                        contenido += `<div class="calendario-reserva" title="${tooltipText}">${reserva.hora_inicio}</div>`;
+                    });
+                }
+                
+                diaElement.innerHTML = contenido;
+                grid.appendChild(diaElement);
+            }
+            
+            // Días del siguiente mes
+            const diasRestantes = 42 - (primerDiaSemana + diasEnMes);
+            for (let dia = 1; dia <= diasRestantes; dia++) {
+                const diaElement = document.createElement('div');
+                diaElement.className = 'calendario-dia calendario-otro-mes';
+                diaElement.innerHTML = `<div class="calendario-numero">${dia}</div>`;
+                grid.appendChild(diaElement);
+            }
+        }
+
+        // Event listeners del calendario
+        document.getElementById('mes-anterior').addEventListener('click', function() {
+            fechaActual.setMonth(fechaActual.getMonth() - 1);
+            generarCalendario();
+        });
+
+        document.getElementById('mes-siguiente').addEventListener('click', function() {
+            fechaActual.setMonth(fechaActual.getMonth() + 1);
+            generarCalendario();
+        });
+
+        document.getElementById('zona-select-calendario').addEventListener('change', function() {
+            generarCalendario();
+        });
+
         // Función para mostrar términos dinámicos
         function mostrarTerminos(zonaId, nombreZona, terminos) {
             document.getElementById('modalTerminosLabel').textContent = 'Términos y Condiciones - ' + nombreZona;
@@ -246,7 +417,7 @@ $zonas = $stmt->fetchAll();
             const modal = new bootstrap.Modal(document.getElementById('modalTerminos'));
             modal.show();
         }
-                
+
         // Búsqueda de usuario por cédula (simulada)
         document.querySelector('input[name="numero_documento"]').addEventListener('input', function() {
             const cedula = this.value.trim();
@@ -273,6 +444,11 @@ $zonas = $stmt->fetchAll();
                 horaFin.min = apertura;
                 horaFin.max = cierre;
             }
+        });
+
+        // Inicializar calendario al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            generarCalendario();
         });
     </script>
 </body>
