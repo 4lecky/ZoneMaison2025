@@ -5,19 +5,19 @@
 // $conexion->set_charset("utf8");
 
 // conexion local
-$host = 'localhost';
-$db   = 'zonemaisons';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+// $host = 'localhost';
+// $db   = 'zonemaisons';
+// $user = 'root';
+// $pass = '';
+// $charset = 'utf8mb4';
 
 
 // Conexión hosting
 // $host = "localhost";
-// $db = "u413625843_zonemaisons";
-// $user = "u413625843_LunaSalas";
-// $pass = "ZoneMaison2025*";
-// $charset = 'utf8mb4';
+$db = "u413625843_zonemaisons";
+$user = "u413625843_LunaSalas";
+$pass = "ZoneMaison2025*";
+$charset = 'utf8mb4';
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
