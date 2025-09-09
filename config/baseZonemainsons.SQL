@@ -37,35 +37,48 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     UNIQUE (usu_cedula)
 );                
 
-CREATE TABLE IF NOT EXISTS zonas_comunes (
-    id INT(11) NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    capacidad INT(11) DEFAULT NULL,
-    estado ENUM('activo','inactivo','mantenimiento') DEFAULT 'activo',
-    imagen VARCHAR(255) DEFAULT NULL,
-    hora_apertura TIME DEFAULT '08:00:00',
-    hora_cierre TIME DEFAULT '20:00:00',
-    duracion_maxima INT(11) DEFAULT 2,
-    terminos_y_condiciones TEXT DEFAULT NULL,
-    PRIMARY KEY (id)
+
+-- MÓDULO DE RESERVAS Y ZONAS COMUNES ACTUALIZADO
+CREATE TABLE IF NOT EXISTS tbl_zonas (
+    zona_id INT(11) NOT NULL AUTO_INCREMENT,
+    zona_nombre VARCHAR(100) NOT NULL,
+    zona_descripcion TEXT DEFAULT NULL,
+    zona_capacidad INT(11) DEFAULT NULL,
+    zona_estado ENUM('activo','inactivo','mantenimiento') DEFAULT 'activo',
+    zona_imagen VARCHAR(255) DEFAULT NULL,
+    zona_hora_apertura TIME DEFAULT '08:00:00',
+    zona_hora_cierre TIME DEFAULT '20:00:00',
+    zona_duracion_maxima INT(11) DEFAULT 2,
+    zona_terminos_condiciones TEXT DEFAULT NULL,
+    zona_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    zona_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (zona_id),
+    KEY idx_zona_estado (zona_estado),
+    KEY idx_zona_nombre (zona_nombre)
 );
 
-
-CREATE TABLE IF NOT EXISTS reservas (
-    id INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS tbl_reservas (
+    reserva_id INT(11) NOT NULL AUTO_INCREMENT,
     zona_id INT(11) NOT NULL,
-    apartamento VARCHAR(50) NOT NULL,
-    nombre_residente VARCHAR(100) NOT NULL,
-    fecha_reserva DATE NOT NULL,
-    hora_inicio TIME NOT NULL,
-    hora_fin TIME NOT NULL,
-    estado ENUM('activa','cancelada','completada') DEFAULT 'activa',
-    observaciones TEXT,
-    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
+    usuario_id INT(11) NOT NULL,
+    reserva_apartamento VARCHAR(50) NOT NULL,
+    reserva_nombre_residente VARCHAR(100) NOT NULL,
+    reserva_fecha DATE NOT NULL,
+    reserva_hora_inicio TIME NOT NULL,
+    reserva_hora_fin TIME NOT NULL,
+    reserva_estado ENUM('activa','cancelada','completada') DEFAULT 'activa',
+    reserva_observaciones TEXT DEFAULT NULL,
+    reserva_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reserva_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (reserva_id),
     KEY idx_zona_id (zona_id),
-    CONSTRAINT fk_zona_reserva FOREIGN KEY (zona_id) REFERENCES zonas_comunes(id) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY idx_usuario_id (usuario_id),
+    KEY idx_reserva_fecha (reserva_fecha),
+    KEY idx_reserva_estado (reserva_estado),
+    KEY idx_reserva_fecha_estado (reserva_fecha, reserva_estado),
+    KEY idx_zona_fecha_hora (zona_id, reserva_fecha, reserva_hora_inicio),
+    CONSTRAINT fk_reserva_zona FOREIGN KEY (zona_id) REFERENCES tbl_zonas(zona_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_reserva_usuario FOREIGN KEY (usuario_id) REFERENCES tbl_usuario(usuario_cc) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tbl_paquetes (paqu_Id INT AUTO_INCREMENT,
