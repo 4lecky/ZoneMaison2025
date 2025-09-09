@@ -30,7 +30,7 @@ $rol = $_SESSION['usuario']['rol'] ?? '';
     </header>
     <nav class="nav_expanded" id="main_nav"> 
         <a href="../views/novedades.php" class="nav-link"> Notificaciones </a>
-        <a href="../views/CrearReserva.php" class="nav-link"> Reservas </a>
+        <a href="../views/reservas.php" class="nav-link"> Reservas </a>
         <a href="../views/visitas.php" class="nav-link"> Visitas </a>
         <a href="../views/parqueadero.php" class="nav-link"> Parqueaderos </a>
         <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
