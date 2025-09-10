@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (
         empty($_POST['consulParq_tipoVehiculo']) ||
         empty($_POST['consulParq_placa']) ||
+        empty($_POST['consulParq_observaciones']) ||
         empty($_POST['consulParq_numeroParqueadero']) ||
         empty($_POST['consulParq_estado'])
     ) {
@@ -38,8 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<script>alert('❌ Error al registrar la consulta de parqueadero.'); history.back();</script>";
         }
     } catch (PDOException $e) {
-        error_log("❌ Error al insertar consulta de parqueadero: " . $e->getMessage());
-        echo "<script>alert('❌ Error en base de datos. Revisa el log para más detalles.'); history.back();</script>";
+        // error_log("❌ Error al insertar consulta de parqueadero: " . $e->getMessage());
+        // echo "<script>alert('❌ Error en base de datos. Revisa el log para más detalles.'); history.back();</script>";
+        echo "<pre>❌ Error SQL:\n" . $e->getMessage() . "</pre>";
+        exit; // Detener ejecución para ver el error exacto
     }
 }
 

@@ -1,9 +1,11 @@
 <?php
-class guardarDatosRegistroParqueadero {
-    private $db;
+require_once __DIR__ . '/../config/db.php';
 
-    public function __construct($conexion) {
-        $this->db = $conexion;
+class guardarDatosRegistroParqueadero {
+    private $pdo;
+
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     public function insertarRegistroVehiculo(
@@ -12,7 +14,6 @@ class guardarDatosRegistroParqueadero {
         $tipoDocVehi,
         $numDocVehi,
         $estadoIngreso,
-        $alquId,
         $numeroParqueadero,
         $fechaEntrada = null,
         $fechaSalida = null,
@@ -24,7 +25,6 @@ class guardarDatosRegistroParqueadero {
                     parq_tipo_doc_vehi,
                     parq_num_doc_vehi,
                     parq_vehi_estadoIngreso,
-                    parq_vehi_alqu_id,
                     parq_numeroParqueadero,
                     parq_fecha_entrada,
                     parq_fecha_salida,
@@ -35,14 +35,13 @@ class guardarDatosRegistroParqueadero {
                     :tipoDocVehiculo,
                     :numDocVehiculo,
                     :estadoIngreso,
-                    :alquId,
                     :numeroParqueadero,
                     :fechaEntrada,
                     :fechaSalida,
                     :horaEntrada
                 )";
 
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
 
         // Bind de parámetros
         $stmt->bindParam(':placa', $placa);
@@ -50,7 +49,6 @@ class guardarDatosRegistroParqueadero {
         $stmt->bindParam(':tipoDocVehiculo', $tipoDocVehi);
         $stmt->bindParam(':numDocVehiculo', $numDocVehi);
         $stmt->bindParam(':estadoIngreso', $estadoIngreso);
-        $stmt->bindParam(':alquId', $alquId);
         $stmt->bindParam(':numeroParqueadero', $numeroParqueadero);
         $stmt->bindParam(':fechaEntrada', $fechaEntrada);
         $stmt->bindParam(':fechaSalida', $fechaSalida);
@@ -59,7 +57,7 @@ class guardarDatosRegistroParqueadero {
         try {
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("❌ Error al insertar parqueadero: " . $e->getMessage());
+            error_log(" Error al insertar parqueadero: " . $e->getMessage());
             return false;
         }
     }

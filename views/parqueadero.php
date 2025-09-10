@@ -91,7 +91,7 @@ require_once "./Layout/header.php"
         <div class="input-group">
           <div class="input-box">
             <label>Tipo Doc Propietario Vehículo*</label>
-            <select name="parq_tipo_doc_vehi" required>
+            <select name="tipoDocVehiculo" required>
               <option value="">-- Selecciona un tipo --</option>
               <option value="CC">Cédula de Ciudadanía (CC)</option>
               <option value="CE">Cédula de Extranjería (CE)</option>
@@ -101,43 +101,43 @@ require_once "./Layout/header.php"
 
           <div class="input-box">
             <label>Número Documento Propietario Vehículo*</label>
-            <input type="text" name="parq_num_doc_vehi" required />
+            <input type="text" name="numDocVehiculo" required />
           </div>
         </div>
 
         <div class="input-box">
           <label>Nombre Propietario Vehículo*</label>
-          <input type="text" name="parq_nombre_propietario_vehi" required />
+          <input type="text" name="nombrePropVehiculo" required />
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label>Placa*</label>
-            <input type="text" name="parq_vehi_placa" required />
+            <input type="text" name="placa" required />
           </div>
 
           <div class="input-box">
             <label>N° Parqueadero*</label>
-            <input type="number" name="parq_numeroParqueadero" required />
+            <input type="number" name="numeroParqueadero" required />
           </div>
         </div>
 
 
         <div class="input-box">
           <label>Observaciones/Estado de Entrada*</label>
-          <textarea name="parq_vehi_estadoIngreso" id="estado"></textarea>
+          <textarea name="estadoIngreso" id="estado"></textarea>
         </div>
 
 
         <div class="input-group">
           <div class="input-box">
             <label>Fecha de Ingreso*
-              <input type="date" name="parq_fecha_entrada" />
+              <input type="date" name="fechaEntrada" />
             </label>
           </div>
           <div class="input-box">
             <label>Fecha de Salida*
-              <input type="date" name="parq_fecha_salida" />
+              <input type="date" name="fechaSalida" />
             </label>
           </div>
         </div>
@@ -145,7 +145,7 @@ require_once "./Layout/header.php"
 
         <div class="input-box">
           <label>Hora de Ingreso*</label>
-          <input type="time" name="parq_hora_entrada" />
+          <input type="time" name="horaEntrada" />
         </div>
 
 

@@ -7,16 +7,15 @@ require_once '../models/guardarDatosRegistroParqueadero.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // ===== Campos del formulario =====
-    $placa                  = $_POST['parq_vehi_placa'] ?? '';
-    $nombrePropietarioVehi  = $_POST['parq_nombre_propietario_vehi'] ?? '';
-    $tipoDocVehi            = $_POST['parq_tipo_doc_vehi'] ?? '';
-    $numDocVehi             = $_POST['parq_num_doc_vehi'] ?? '';
-    $estadoIngreso          = $_POST['parq_vehi_estadoIngreso'] ?? '';
-    $alquId                 = $_POST['parq_vehi_alqu_id'] ?? null; 
-    $numeroParqueadero      = $_POST['parq_numeroParqueadero'] ?? null;
-    $fechaEntrada           = $_POST['parq_fecha_entrada'] ?? null;
-    $fechaSalida            = $_POST['parq_fecha_salida'] ?? null;
-    $horaEntrada            = $_POST['parq_hora_entrada'] ?? null;
+    $placa                  = $_POST['placa'] ?? '';
+    $nombrePropietarioVehi  = $_POST['nombrePropVehiculo'] ?? '';
+    $tipoDocVehi            = $_POST['tipoDocVehiculo'] ?? '';
+    $numDocVehi             = $_POST['numDocVehiculo'] ?? '';
+    $estadoIngreso          = $_POST['estadoIngreso'] ?? '';
+    $numeroParqueadero      = $_POST['numeroParqueadero'] ?? null;
+    $fechaEntrada           = $_POST['fechaEntrada'] ?? null;
+    $fechaSalida            = $_POST['fechaSalida'] ?? null;
+    $horaEntrada            = $_POST['horaEntrada'] ?? null;
 
     // ===== Validación mínima =====
     if (empty($placa) || empty($nombrePropietarioVehi) || empty($tipoDocVehi) || 
@@ -33,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $tipoDocVehi,
             $numDocVehi,
             $estadoIngreso,
-            $alquId,
             $numeroParqueadero,
             $fechaEntrada,
             $fechaSalida,
