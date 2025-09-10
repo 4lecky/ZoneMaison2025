@@ -15,7 +15,7 @@
 .img_fondo_reset {
     width: 100%;
     opacity: 50%;
-    height: 50cqmax;
+    height: 100vh;
     border-radius: 0% 50% 50% 0%;
 
 }
