@@ -11,20 +11,22 @@ class insertaRegistroConsultaParqueadero {
     }
 
     // Método para insertar datos en la tabla
-    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $observaciones, $numeroParqueadero, $estado) {
+    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $observaciones, $numeroParqueadero, $estado, $consulParqId) {
         //ATRIBUTOS DE LAS TABLAS EN MYSQL
         $sql = "INSERT INTO tbl_consultaParqueadero (
                     consulParq_tipoVehiculo,
                     consulParq_placa,
                     consulParq_observaciones,
                     consulParq_numeroParqueadero,   
-                    consulParq_estado
+                    consulParq_estado,
+                    consulParq_parq_id
                 ) VALUES (
                     :consulParq_tipoVehiculo,
                     :consulParq_placa,
                     :consulParq_observaciones,
                     :consulParq_numeroParqueadero,
-                    :consulParq_estado
+                    :consulParq_estado,
+                    :consulParq_parq_id
                 )";
                 //NAMES DE LOS FORMULARIOS
 
@@ -36,6 +38,15 @@ class insertaRegistroConsultaParqueadero {
         $stmt->bindParam(':consulParq_observaciones', $observaciones, PDO::PARAM_STR);
         $stmt->bindParam(':consulParq_numeroParqueadero', $numeroParqueadero, PDO::PARAM_INT);
         $stmt->bindParam(':consulParq_estado', $estado, PDO::PARAM_STR);
+        // $stmt->bindParam(':consulParq_parq_id', $consulParqId, PDO::PARAM_STR);
+
+                // Asignar FK opcional
+        $stmt->bindValue(':consulParq_parq_id', 
+            $consulParqId !== null ? $consulParqId : null, 
+            $consulParqId !== null ? PDO::PARAM_INT : PDO::PARAM_NULL
+        );
+
+        
 
         // Manejo de errores con log
         try {

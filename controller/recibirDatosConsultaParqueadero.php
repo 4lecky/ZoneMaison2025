@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $observaciones     = $_POST['consulParq_observaciones'] ?? "";
     $numeroParqueadero = $_POST['consulParq_numeroParqueadero'];
     $estado            = $_POST['consulParq_estado'];
+    $consulParqId      = $_POST['consulParq_parq_id'] ?? null;
 
     try {
         // Crear objeto modelo e insertar
@@ -32,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $placa,
             $observaciones,
             $numeroParqueadero,
-            $estado
+            $estado,
+            $consulParqId
         )) {
             echo "<script>alert('✅ Consulta de parqueadero registrada correctamente.'); window.location.href = '../views/parqueadero.php';</script>";
         } else {
