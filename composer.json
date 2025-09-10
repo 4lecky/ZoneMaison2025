@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "4lecky\\ZoneMaison2025\\": "src/"
+            "ZoneMaison2025\\": "src/"
         }
     },
     "authors": [
@@ -14,7 +14,15 @@
         }
     ],
     "require": {
-        "phpmailer/phpmailer": "^6.10",
-        "phpoffice/phpspreadsheet": "1.23"
+        "php": ">=7.4",
+        "phpmailer/phpmailer": "^6.10"
+    },
+    "require-dev": {
+        "twilio/sdk": "^7.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo 'PHPMailer instalado correctamente para ZoneMaison2025'"
+        ]
     }
 }

@@ -193,21 +193,52 @@ CREATE TABLE IF NOT EXISTS tbl_Designacion (desg_id INT (20) NOT NULL,
 
 CREATE TABLE IF NOT EXISTS tbl_pqrs (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_cc INT NULL,
+    usuario_cc INT NULL,   -- FK hacia tbl_usuario
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
     identificacion VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
-    tipo_pqr ENUM('peticion', 'queja', 'reclamo', 'sugerencia') NOT NULL,
+    tipo_pqr ENUM('peticion','queja','reclamo','sugerencia') NOT NULL,
     asunto VARCHAR(255) NOT NULL,
     mensaje TEXT NOT NULL,
-    archivos TEXT, -- puedes guardar los nombres o rutas de archivos
-    medio_respuesta SET('correo', 'sms'),
+    archivos TEXT,
+    respuesta TEXT NULL,
+    fecha_respuesta DATETIME NULL,
+    respondido_por INT NULL,
+    notificacion_enviada ENUM('no','correo') DEFAULT 'no',
+    medio_respuesta ENUM('correo') NOT NULL DEFAULT 'correo',
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM('pendiente', 'en_proceso', 'resuelto') DEFAULT 'pendiente',
-    CONSTRAINT fk_usuario_pqr FOREIGN KEY (usuario_cc) REFERENCES tbl_usuario(usuario_cc)
-    ON DELETE SET NULL ON UPDATE CASCADE
+    estado ENUM('pendiente','en_proceso','resuelto') DEFAULT 'pendiente',
+    adjuntos_respuesta TEXT NULL COMMENT 'JSON con información de archivos adjuntos de la respuesta del administrador',
+
+    FOREIGN KEY (usuario_cc) REFERENCES tbl_usuario(usuario_cc)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+
+    INDEX idx_estado (estado),
+    INDEX idx_fecha_creacion (fecha_creacion),
+    INDEX idx_usuario_cc (usuario_cc)
+);
+
+
+/* TABLA LOG NOTIFICACIONES */
+CREATE TABLE IF NOT EXISTS tbl_log_notificaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pqrs_id INT NULL,
+    tipo_notificacion ENUM('correo') NOT NULL,
+    destinatario VARCHAR(100) NOT NULL,
+    asunto VARCHAR(255) NULL,
+    mensaje TEXT NOT NULL,
+    estado ENUM('enviado','error','pendiente') DEFAULT 'pendiente',
+    error TEXT NULL,
+    fecha_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    INDEX idx_pqrs_id (pqrs_id),
+    INDEX idx_tipo_fecha (tipo_notificacion, fecha_envio),
+    INDEX idx_estado (estado),
+    
+    FOREIGN KEY (pqrs_id) REFERENCES tbl_pqrs(id) 
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
