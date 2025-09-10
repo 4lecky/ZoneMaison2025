@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once './Layout/header.php'
 ?>
 
@@ -9,9 +8,16 @@ require_once './Layout/header.php'
   <div class="alerta-exito">¡Registro eliminado exitosamente!</div>
 <?php elseif (isset($_GET['error']) && $_GET['error'] === 'eliminando'): ?>
   <div class="alerta-error">Ocurrió un error al intentar eliminar el registro.</div>
+<?php elseif (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+  <div class="alerta-exito">
+    <i class="ri-check-circle-fill"></i>
+    ¡PQRS enviada exitosamente! 
+    <?php if (isset($_GET['radicado'])): ?>
+      Su número de radicado es: <strong><?= htmlspecialchars($_GET['radicado']) ?></strong>
+    <?php endif; ?>
+    <br>Puede hacer seguimiento desde 'Mis PQRS'.
+  </div>
 <?php endif; ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -30,7 +36,6 @@ require_once './Layout/header.php'
     <!-- Font Awesome 6 (CDN) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-
     <!-- DataTables y jQuery -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -41,29 +46,27 @@ require_once './Layout/header.php'
 </head>
 <body> 
 
-
 <div class="pqrs-intro">
-  <h2>📋 Módulo de PQRS</h2>
+  <h2>📋PQRS</h2>
 
   <p>
-    Nuestro sistema de PQRS (Peticiones, Quejas, Reclamos y Sugerencias) está diseñado para fortalecer la comunicación entre 
+    El módulo de <strong>PQRS</strong> facilita la comunicación entre 
     <strong>residentes, propietarios, vigilantes</strong> y la 
-    <strong>administración del conjunto</strong>.
+    <strong>administración</strong>.
   </p>
 
   <p>
-    Desde este módulo puedes reportar cualquier situación que requiera atención: fallos en zonas comunes, reportes de seguridad, o sugerencias para mejorar la convivencia. Todo desde un mismo lugar, de forma rápida, ordenada y centralizada.
+    Aquí puedes reportar fallas, temas de seguridad o dar sugerencias de forma rápida y centralizada.
   </p>
 
   <p>
-    ✅ Para hacerlo, simplemente haz clic en <strong>“Crear PQR”</strong>, llena el formulario con tu información y describe el caso. Podrás elegir cómo deseas recibir actualizaciones: por <strong>correo electrónico, mensaje SMS o ambos</strong>.
+    ✅ Haz clic en <strong>"Crear PQR"</strong>, completa el formulario y recibirás respuesta por <strong>correo electrónico</strong> al igual que en esta plataforma.
   </p>
 
   <p>
-    🔍 Si ya enviaste una solicitud y deseas consultar su avance, haz clic en <strong>“Estado de mi PQR”</strong>. Solo necesitas tu número de cédula, y te mostraremos en qué etapa se encuentra tu PQR. Además, recibirás notificaciones en el medio que seleccionaste durante el registro.
+    🔍 Para consultar el estado o respuesta de tus solicitudes, entra en <strong>"Mis PQRS"</strong> y revisa su avance.
   </p>
 </div>
-
 
 
     <!-- Fondo con mensaje y opciones -->
@@ -81,9 +84,9 @@ require_once './Layout/header.php'
 
       <!-- Segunda fila: Estado y Preguntas -->
       <div class="fila-secundaria">
-        <div class="opcion" id="openModal">
+        <div class="opcion" onclick="location.href='mis_pqrs.php'">
           <img src="../assets/img/estado_pqr.png" alt="Estado de mi PQR">
-          <p>Estado de mi PQR</p>
+          <p>Mis PQRS</p>
         </div>
 
         <div class="opcion" onclick="location.href='#dudas'">
@@ -95,35 +98,6 @@ require_once './Layout/header.php'
     </div>
   </div>
 </div>
-
-
-
-
-<!-- Modal para consultar PQR por cédula -->
-<div id="modal" class="modal" style="display: none;">
-    <div class="modal-content" style="width: 90%; max-height: 80vh; overflow-y: auto;">
-        <span class="close">&times;</span>
-        <h2>Consultar Estado de PQR</h2>
-        <br>
-        <form id="pqr-form">
-            <label for="cedula">Número de cédula:</label>
-            <input type="text" id="cedula" name="cedula" required>
-            <br><br>
-            <button type="submit" class="btn">Consultar</button>
-        </form>
-
-        <div id="resultado-pqr">
-            <!-- Aquí se mostrará el resultado -->
-        </div>
-    </div>
-</div>
-
-
-
-    <div class="texto-container">
-        Con nuestro sistema PQRS, puedes enviar peticiones, quejas, reclamos y sugerencias de manera rápida y sencilla. 
-        ¡Tu opinión ayuda a mejorar nuestra gestión en pro a la comunidad !
-    </div>
 
     <div class="inquietudes-container" id="dudas">
         <h2>¿Tienes inquietudes sobre tus PQR?</h2>
@@ -160,7 +134,7 @@ require_once './Layout/header.php'
                 📌 ¿Puedo modificar o cancelar una PQR enviada? <span class="arrow">▼</span>
             </button>
             <div class="faq-answer">
-                Sí, puedes modificar o cancelar tu PQR dentro de los primeros 20 minutos después de haberla registrado, siempre y cuando su estado aún sea “pendiente”. Pasado ese tiempo o si ya está en proceso, no se permiten cambios.
+                Sí, puedes modificar o cancelar tu PQR dentro de los primeros 20 minutos después de haberla registrado, siempre y cuando su estado aún sea "pendiente". Pasado ese tiempo o si ya está en proceso, no se permiten cambios.
             </div>
         </div>
 
@@ -169,18 +143,14 @@ require_once './Layout/header.php'
                 📌 ¿Cómo me notifican sobre la respuesta a mi PQR? <span class="arrow">▼</span>
             </button>
             <div class="faq-answer">
-                Recibirás una notificación por correo electrónico y también podrás ver el estado desde la plataforma.
+                Recibirás una notificación por correo electrónico y también podrás ver el estado actualizado desde la plataforma en tiempo real.
             </div>
         </div>
     </div>
     
-    
-
 </body>
 
 <?php
-
     require_once './Layout/footer.php'
-    ?>
+?>
 </html>
-

@@ -65,6 +65,15 @@ $zonas = $stmt->fetchAll();
                             <a href="../views/crearZona.php" class="btn btn-custom">CREAR ZONA</a>
                         </div>
 
+                        <!-- Mensajes de respuesta -->
+                        <?php if (isset($_SESSION['response'])): ?>
+                            <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show" role="alert">
+                                <?php echo $_SESSION['response']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+                        <?php endif; ?>
+
                         <?php if (empty($zonas)): ?>
                             <!-- Mensaje cuando no hay zonas -->
                             <div class="alert alert-info text-center">
@@ -269,7 +278,9 @@ $zonas = $stmt->fetchAll();
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <?php require_once "./Layout/footer.php"; ?>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -320,7 +331,21 @@ $zonas = $stmt->fetchAll();
                             columns: ':not(:last-child)'
                         }
                     }
-                ]
+                ],
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último", 
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
             });
             <?php endif; ?>
         });
@@ -398,11 +423,13 @@ $zonas = $stmt->fetchAll();
             window.location.href = `../views/editarZona.php?id=${zonaId}`;
         }
 
-        // Función para confirmar eliminación
+        // Función para confirmar eliminación - CORREGIDA
         function confirmarEliminacion(id, nombre) {
             document.getElementById('modal-zona-nombre').textContent = nombre;
+            
+            // CORRECCIÓN: Cambiar la URL para que apunte al controlador correcto
             document.getElementById('btn-confirmar-eliminacion').href = 
-                `/index.php?controller=Reservas&action=eliminarZona&id=${id}`;
+                `../controller/reservasController.php?action=eliminarZona&id=${id}`;
             
             new bootstrap.Modal(document.getElementById('modalConfirmarEliminacion')).show();
         }

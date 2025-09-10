@@ -21,6 +21,29 @@ if ($usuario['rol'] !== 'Administrador') {
     header('Location: ../views/reservas.php');
     exit;
 }
+
+// Verificar que se haya proporcionado un ID
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    $_SESSION['response'] = "Error: ID de zona no válido.";
+    $_SESSION['response_type'] = 'danger';
+    header('Location: ../views/zonas.php');
+    exit;
+}
+
+$zona_id = (int)$_GET['id'];
+
+// Consultar los datos de la zona a editar
+$sql = "SELECT * FROM tbl_zonas WHERE zona_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$zona_id]);
+$zona = $stmt->fetch();
+
+if (!$zona) {
+    $_SESSION['response'] = "Error: La zona no existe.";
+    $_SESSION['response_type'] = 'danger';
+    header('Location: ../views/zonas.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +52,7 @@ if ($usuario['rol'] !== 'Administrador') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZONEMAISONS - Crear Zona</title>
+    <title>ZONEMAISONS - Editar Zona</title>
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
@@ -46,13 +69,13 @@ if ($usuario['rol'] !== 'Administrador') {
                     <div class="contenedor-principal">
                         <!-- Título -->
                         <div class="titulo-seccion">
-                            <h3 class="mb-0">CREAR ZONA</h3>
+                            <h3 class="mb-0">EDITAR ZONA</h3>
                         </div>
                         
                         <!-- Botones de navegación alineados a la derecha -->
                         <div class="botones-navegacion">
-                            <a href="../views/reservas.php" class="btn btn-custom">RESERVAR</a>
-                            <a href="../views/zonas.php" class="btn btn-custom">ZONAS COMUNES</a>
+                            <a href="../views/zonas.php" class="btn btn-custom">VOLVER A ZONAS</a>
+                            <a href="../views/crearZona.php" class="btn btn-custom">CREAR NUEVA ZONA</a>
                         </div>
 
                         <!-- Mensajes de respuesta -->
@@ -64,23 +87,31 @@ if ($usuario['rol'] !== 'Administrador') {
                             <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
                         <?php endif; ?>
 
-                        <!-- Formulario de Crear Zona -->
+                        <!-- Formulario de Editar Zona -->
                         <div class="formulario-reserva">
-                            <h5 class="mb-4 formulario-titulo">Nueva Zona Común</h5>
+                            <h5 class="mb-4 formulario-titulo">
+                                Editar Zona: <?php echo htmlspecialchars($zona['zona_nombre']); ?>
+                                <small class="text-muted">(ID: <?php echo $zona['zona_id']; ?>)</small>
+                            </h5>
                             
-                            <form action="../controller/reservasController.php?action=crearZona" method="POST" id="formCrearZona" enctype="multipart/form-data">
+                            <form action="../controller/reservasController.php?action=actualizarZona" method="POST" id="formEditarZona" enctype="multipart/form-data">
+                                <!-- Campo oculto para el ID -->
+                                <input type="hidden" name="zona_id" value="<?php echo $zona['zona_id']; ?>">
+                                
                                 <!-- Información Básica -->
                                 <div class="row">
                                     <div class="col-md-8 mb-3">
                                         <label class="form-label">Nombre de la Zona <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="zona_nombre" placeholder="Ej: Salón Social, Piscina, Gimnasio..." required>
+                                        <input type="text" class="form-control" name="zona_nombre" 
+                                               value="<?php echo htmlspecialchars($zona['zona_nombre']); ?>" 
+                                               placeholder="Ej: Salón Social, Piscina, Gimnasio..." required>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Estado <span class="text-danger">*</span></label>
                                         <select class="form-select" name="zona_estado" required>
-                                            <option value="activo" selected>Activo</option>
-                                            <option value="inactivo">Inactivo</option>
-                                            <option value="mantenimiento">Mantenimiento</option>
+                                            <option value="activo" <?php echo ($zona['zona_estado'] === 'activo') ? 'selected' : ''; ?>>Activo</option>
+                                            <option value="inactivo" <?php echo ($zona['zona_estado'] === 'inactivo') ? 'selected' : ''; ?>>Inactivo</option>
+                                            <option value="mantenimiento" <?php echo ($zona['zona_estado'] === 'mantenimiento') ? 'selected' : ''; ?>>Mantenimiento</option>
                                         </select>
                                     </div>
                                 </div>
@@ -88,14 +119,30 @@ if ($usuario['rol'] !== 'Administrador') {
                                 <div class="mb-3">
                                     <label class="form-label">Descripción</label>
                                     <textarea class="form-control" name="zona_descripcion" rows="3" 
-                                              placeholder="Describe brevemente la zona común, sus características y uso..."></textarea>
+                                              placeholder="Describe brevemente la zona común, sus características y uso..."><?php echo htmlspecialchars($zona['zona_descripcion']); ?></textarea>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Imagen de la Zona</label>
                                     <input type="file" class="form-control" name="zona_imagen" 
                                            accept="image/*">
-                                    <div class="form-text">Opcional: Seleccione una imagen que represente la zona común (JPG, PNG, etc.).</div>
+                                    <div class="form-text">
+                                        Opcional: Seleccione una nueva imagen para reemplazar la actual (JPG, PNG, etc.).
+                                        <br>Si no selecciona ninguna imagen, se mantendrá la actual.
+                                    </div>
+                                    
+                                    <!-- Vista previa de imagen actual -->
+                                    <?php if (!empty($zona['zona_imagen'])): ?>
+                                        <div class="mt-2">
+                                            <label class="form-label">Imagen Actual:</label>
+                                            <div>
+                                                <img src="<?php echo htmlspecialchars($zona['zona_imagen']); ?>" 
+                                                     alt="Imagen actual" 
+                                                     style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 1px solid #ddd; object-fit: cover;">
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                    
                                     <div id="imagen-preview" class="mt-2"></div>
                                 </div>
 
@@ -107,18 +154,18 @@ if ($usuario['rol'] !== 'Administrador') {
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Capacidad Máxima <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="zona_capacidad" 
-                                               min="1" max="500" placeholder="Ej: 50" required>
+                                               min="1" max="500" value="<?php echo $zona['zona_capacidad']; ?>" required>
                                         <div class="form-text">Número máximo de personas permitidas.</div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Hora de Apertura <span class="text-danger">*</span></label>
                                         <input type="time" class="form-control" name="zona_hora_apertura" 
-                                               value="08:00" required>
+                                               value="<?php echo substr($zona['zona_hora_apertura'], 0, 5); ?>" required>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Hora de Cierre <span class="text-danger">*</span></label>
                                         <input type="time" class="form-control" name="zona_hora_cierre" 
-                                               value="20:00" required>
+                                               value="<?php echo substr($zona['zona_hora_cierre'], 0, 5); ?>" required>
                                     </div>
                                 </div>
 
@@ -127,7 +174,7 @@ if ($usuario['rol'] !== 'Administrador') {
                                         <label class="form-label">Duración Máxima por Reserva <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" name="zona_duracion_maxima" 
-                                                   min="1" max="24" value="2" required>
+                                                   min="1" max="24" value="<?php echo $zona['zona_duracion_maxima']; ?>" required>
                                             <span class="input-group-text">horas</span>
                                         </div>
                                         <div class="form-text">Tiempo máximo que puede durar una reserva.</div>
@@ -135,7 +182,14 @@ if ($usuario['rol'] !== 'Administrador') {
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Horario Calculado</label>
                                         <div class="form-control-plaintext bg-light p-2 rounded" id="horario-calculado">
-                                            08:00 - 20:00 (12 horas disponibles)
+                                            <?php 
+                                            $apertura = substr($zona['zona_hora_apertura'], 0, 5);
+                                            $cierre = substr($zona['zona_hora_cierre'], 0, 5);
+                                            $inicio = new DateTime($zona['zona_hora_apertura']);
+                                            $fin = new DateTime($zona['zona_hora_cierre']);
+                                            $horas = ($fin->getTimestamp() - $inicio->getTimestamp()) / 3600;
+                                            echo $apertura . ' - ' . $cierre . ' (' . $horas . ' horas disponibles)';
+                                            ?>
                                         </div>
                                         <div class="form-text">Horario total de disponibilidad de la zona.</div>
                                     </div>
@@ -148,7 +202,7 @@ if ($usuario['rol'] !== 'Administrador') {
                                 <div class="mb-3">
                                     <label class="form-label">Reglas y Condiciones de Uso</label>
                                     <textarea class="form-control" name="zona_terminos_condiciones" 
-                                              rows="6" placeholder="Ingrese las reglas y condiciones específicas para el uso de esta zona común..."></textarea>
+                                              rows="6" placeholder="Ingrese las reglas y condiciones específicas para el uso de esta zona común..."><?php echo htmlspecialchars($zona['zona_terminos_condiciones']); ?></textarea>
                                     <div class="form-text">
                                         Opcional: Especifique reglas de uso, horarios especiales, restricciones, etc.
                                     </div>
@@ -179,8 +233,8 @@ if ($usuario['rol'] !== 'Administrador') {
                                 <!-- Botones de acción -->
                                 <div class="d-flex justify-content-between mt-4">
                                     <div>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="limpiarFormulario()">
-                                            <i class="ri-refresh-line me-1"></i>Limpiar Formulario
+                                        <button type="button" class="btn btn-outline-secondary" onclick="resetearFormulario()">
+                                            <i class="ri-refresh-line me-1"></i>Restaurar Original
                                         </button>
                                     </div>
                                     <div>
@@ -188,7 +242,7 @@ if ($usuario['rol'] !== 'Administrador') {
                                             <i class="ri-arrow-left-line me-1"></i>Cancelar
                                         </a>
                                         <button type="submit" class="btn btn-reservar">
-                                            <i class="ri-save-line me-1"></i>CREAR ZONA
+                                            <i class="ri-save-line me-1"></i>GUARDAR CAMBIOS
                                         </button>
                                     </div>
                                 </div>
@@ -205,6 +259,18 @@ if ($usuario['rol'] !== 'Administrador') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Datos originales para restaurar
+        const datosOriginales = {
+            zona_nombre: '<?php echo addslashes($zona['zona_nombre']); ?>',
+            zona_descripcion: '<?php echo addslashes($zona['zona_descripcion']); ?>',
+            zona_capacidad: '<?php echo $zona['zona_capacidad']; ?>',
+            zona_estado: '<?php echo $zona['zona_estado']; ?>',
+            zona_hora_apertura: '<?php echo substr($zona['zona_hora_apertura'], 0, 5); ?>',
+            zona_hora_cierre: '<?php echo substr($zona['zona_hora_cierre'], 0, 5); ?>',
+            zona_duracion_maxima: '<?php echo $zona['zona_duracion_maxima']; ?>',
+            zona_terminos_condiciones: '<?php echo addslashes($zona['zona_terminos_condiciones']); ?>'
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             calcularHorario();
             
@@ -221,9 +287,14 @@ if ($usuario['rol'] !== 'Administrador') {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         preview.innerHTML = `
-                            <img src="${e.target.result}" alt="Vista previa" 
-                                 style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 1px solid #ddd; object-fit: cover;">
-                            <div class="form-text mt-1">Vista previa de la imagen seleccionada</div>
+                            <div class="mt-2">
+                                <label class="form-label">Nueva imagen seleccionada:</label>
+                                <div>
+                                    <img src="${e.target.result}" alt="Vista previa" 
+                                         style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 1px solid #ddd; object-fit: cover;">
+                                </div>
+                                <div class="form-text mt-1">Esta imagen reemplazará la actual al guardar.</div>
+                            </div>
                         `;
                     };
                     reader.readAsDataURL(file);
@@ -233,7 +304,7 @@ if ($usuario['rol'] !== 'Administrador') {
             });
             
             // Validación del formulario
-            document.getElementById('formCrearZona').addEventListener('submit', function(e) {
+            document.getElementById('formEditarZona').addEventListener('submit', function(e) {
                 if (!validarFormulario()) {
                     e.preventDefault();
                 }
@@ -270,6 +341,22 @@ if ($usuario['rol'] !== 'Administrador') {
             }
 
             return true;
+        }
+
+        function resetearFormulario() {
+            if (confirm('¿Está seguro de que desea restaurar todos los campos a sus valores originales?')) {
+                document.querySelector('input[name="zona_nombre"]').value = datosOriginales.zona_nombre;
+                document.querySelector('textarea[name="zona_descripcion"]').value = datosOriginales.zona_descripcion;
+                document.querySelector('input[name="zona_capacidad"]').value = datosOriginales.zona_capacidad;
+                document.querySelector('select[name="zona_estado"]').value = datosOriginales.zona_estado;
+                document.querySelector('input[name="zona_hora_apertura"]').value = datosOriginales.zona_hora_apertura;
+                document.querySelector('input[name="zona_hora_cierre"]').value = datosOriginales.zona_hora_cierre;
+                document.querySelector('input[name="zona_duracion_maxima"]').value = datosOriginales.zona_duracion_maxima;
+                document.querySelector('textarea[name="zona_terminos_condiciones"]').value = datosOriginales.zona_terminos_condiciones;
+                document.querySelector('input[name="zona_imagen"]').value = '';
+                document.getElementById('imagen-preview').innerHTML = '';
+                calcularHorario();
+            }
         }
 
         function aplicarPlantilla(tipo) {
@@ -379,14 +466,6 @@ if ($usuario['rol'] !== 'Administrador') {
             }
 
             textarea.value = terminos;
-        }
-
-        function limpiarFormulario() {
-            if (confirm('¿Está seguro de que desea limpiar todos los campos del formulario?')) {
-                document.getElementById('formCrearZona').reset();
-                document.getElementById('imagen-preview').innerHTML = '';
-                calcularHorario();
-            }
         }
     </script>
 </body>
