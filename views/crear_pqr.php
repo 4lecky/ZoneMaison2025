@@ -11,6 +11,7 @@ error_log("=== DEBUG CREAR_PQR ===");
 error_log("SESSION existe: " . (isset($_SESSION) ? 'SÍ' : 'NO'));
 error_log("SESSION['usuario'] existe: " . (isset($_SESSION['usuario']) ? 'SÍ' : 'NO'));
 
+// === CONTROL DE AUTENTICACIÓN ===
 // Verificar que el usuario esté logueado
 if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
     $_SESSION['error_mensaje'] = 'Debes iniciar sesión para crear una PQRS.';
@@ -20,6 +21,26 @@ if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
 
 $usuario = $_SESSION['usuario'];
 
+// === CONTROL DE ROLES ===
+// Obtener el rol del usuario
+$rol_usuario = $usuario['rol'] ?? '';
+
+// Verificar que el usuario tenga un rol asignado (no sea solo "usuario")
+if (empty($rol_usuario) || $rol_usuario === 'usuario') {
+    $_SESSION['error_mensaje'] = 'Tu cuenta no tiene un rol asignado. Contacta al administrador.';
+    header("Location: dashboard.php"); // o donde quieras redirigir
+    exit();
+}
+
+// Verificar que el rol sea uno de los permitidos para PQRS
+$roles_permitidos = ['Residente', 'Propietario', 'Vigilante', 'Administrador'];
+if (!in_array($rol_usuario, $roles_permitidos, true)) {
+    $_SESSION['error_mensaje'] = 'No tienes permisos para crear PQRS.';
+    header("Location: dashboard.php");
+    exit();
+}
+
+// === VERIFICACIÓN DE DATOS COMPLETOS ===
 // Verificar campos necesarios del usuario
 $camposRequeridos = ['usuario_cc', 'usu_cedula', 'usu_correo', 'usu_telefono', 'usu_nombre_completo'];
 $camposFaltantes = [];
@@ -37,6 +58,20 @@ if (!empty($camposFaltantes)) {
     exit();
 }
 
+// === PERMISOS ESPECÍFICOS POR ROL ===
+$permisos = [
+    'puede_crear_pqrs' => true, // Todos los roles permitidos pueden crear
+    'puede_ver_todas_pqrs' => in_array($rol_usuario, ['Administrador', 'Vigilante']),
+    'puede_gestionar_pqrs' => in_array($rol_usuario, ['Administrador', 'Vigilante']),
+    'es_admin_vigilante' => in_array($rol_usuario, ['Administrador', 'Vigilante'])
+];
+
+// Log para debug
+error_log("Usuario: " . $usuario['usu_nombre_completo']);
+error_log("Rol: " . $rol_usuario);
+error_log("Permisos: " . json_encode($permisos));
+
+// === MENSAJES DE SESIÓN ===
 // Obtener mensajes de la sesión
 $errores = $_SESSION['errores_pqrs'] ?? [];
 $mensajeExito = $_SESSION['mensaje_pqrs'] ?? null;
@@ -44,6 +79,7 @@ $mensajeExito = $_SESSION['mensaje_pqrs'] ?? null;
 // Limpiar mensajes de la sesión después de obtenerlos
 unset($_SESSION['errores_pqrs'], $_SESSION['mensaje_pqrs']);
 
+// === FUNCIONES AUXILIARES ===
 // Separar nombres y apellidos
 function separarNombreCompleto($nombreCompleto) {
     $partes = explode(' ', trim($nombreCompleto));
@@ -63,6 +99,52 @@ function separarNombreCompleto($nombreCompleto) {
 }
 
 $nombresSeparados = separarNombreCompleto($usuario['usu_nombre_completo']);
+
+// === MOSTRAR INFORMACIÓN DE ROL (OPCIONAL) ===
+?>
+
+<!-- Mostrar información del usuario y rol actual -->
+<div class="info-usuario mb-3">
+    <small class="text-muted">
+        Conectado como: <strong><?php echo htmlspecialchars($usuario['usu_nombre_completo']); ?></strong> 
+        - Rol: <strong><?php echo htmlspecialchars($rol_usuario); ?></strong>
+        <?php if ($permisos['es_admin_vigilante']): ?>
+            <span class="badge badge-primary ms-2">Acceso completo</span>
+        <?php endif; ?>
+    </small>
+</div>
+
+<?php
+// === LÓGICA CONDICIONAL SEGÚN ROL ===
+// Aquí puedes agregar lógica específica según el rol
+if ($permisos['es_admin_vigilante']) {
+    // Los administradores y vigilantes pueden ver estadísticas adicionales
+    echo "<!-- Administrador/Vigilante: mostrar panel completo -->";
+} else {
+    // Residentes y propietarios ven vista simplificada
+    echo "<!-- Residente/Propietario: vista estándar -->";
+}
+
+// === EJEMPLO DE USO EN CONSULTAS ===
+/*
+// Si necesitas hacer consultas diferentes según el rol:
+
+if ($permisos['puede_ver_todas_pqrs']) {
+    // Administrador/Vigilante ve todas las PQRS
+    $query = "SELECT * FROM tbl_pqrs ORDER BY fecha DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+} else {
+    // Residente/Propietario ve solo sus PQRS
+    $query = "SELECT * FROM tbl_pqrs WHERE usuario_cedula = :cedula ORDER BY fecha DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['cedula' => $usuario['usu_cedula']]);
+}
+
+$pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+*/
+
+// === RESTO DE TU CÓDIGO ORIGINAL AQUÍ ===
 ?>
 
 <!DOCTYPE html>

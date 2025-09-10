@@ -199,13 +199,6 @@ body {
 
 }
 
-.conjunto {
-    height: 50cqmax;
-    width: 100%;
-    opacity: 50%;
-    border-radius: 0% 50% 50% 0%;
-}
-
 .texto_superior {
     position: absolute;
     left: 18%;
