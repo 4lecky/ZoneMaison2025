@@ -62,7 +62,7 @@ $zonas = $stmt->fetchAll();
                         
                         <!-- Botón de crear zona alineado a la derecha -->
                         <div class="botones-navegacion">
-                            <a href="../views/crearZona.php" class="btn btn-custom">CREAR ZONA</a>
+                            <a href="../views/CrearZona.php" class="btn btn-custom">CREAR ZONA</a>
                         </div>
 
                         <!-- Mensajes de respuesta -->
@@ -80,7 +80,7 @@ $zonas = $stmt->fetchAll();
                                 <i class="ri-community-line" style="font-size: 3rem; color: #17a2b8;"></i>
                                 <h4 class="mt-3">No hay zonas comunes</h4>
                                 <p class="mb-3">Aún no se han configurado zonas comunes en el sistema.</p>
-                                <a href="../views/crearZona.php" class="btn btn-custom">
+                                <a href="../views/CrearZona.php" class="btn btn-custom">
                                     <i class="ri-add-line me-1"></i>Crear Primera Zona
                                 </a>
                             </div>
