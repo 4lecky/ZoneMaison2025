@@ -64,11 +64,11 @@ require_once "./Layout/header.php"
 
 
       <!-- Botón Consultar Parqueaderos -->
-      <div class="bloque" onclick="window.location.href='parqueadero_crud.php'">
+      <!-- <div class="bloque" onclick="window.location.href='parqueadero_crud.php'">
           <div class="boton consulta">
               Consultar Parqueaderos
           </div>
-      </div>
+      </div> -->
 
     </div>
   </aside>
@@ -196,7 +196,9 @@ require_once "./Layout/header.php"
 
 
           <h2>Mapa de Parqueaderos</h2>
-          <div id="parkingMap"></div>
+          <div class="mapa-parq">
+            <div id="parkingMap"></div>
+          </div>
 
           <div class="input-box">
             <label>Número de Parqueadero*</label>

@@ -41,8 +41,7 @@ unset($_SESSION['errorLogin']);
 
         <!-- <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/zonemaison2025/index.php?controller=Auth&action=login"> -->
             <form class="formulario_ingreso" id="formulario_ingreso" method="post" action="/index.php?controller=Auth&action=login">
-
-
+                
             <h2>Inicie sesión aquí</h2>
 
             <div class="container_mensajes_update">

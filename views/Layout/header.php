@@ -31,8 +31,12 @@ $rol = $_SESSION['usuario']['rol'] ?? '';
     <nav class="nav_expanded" id="main_nav"> 
         <a href="../views/novedades.php" class="nav-link"> Notificaciones </a>
         <a href="../views/reservas.php" class="nav-link"> Reservas </a>
+        <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
         <a href="../views/visitas.php" class="nav-link"> Visitas </a>
+        <?php endif;?>
+        <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
         <a href="../views/parqueadero.php" class="nav-link"> Parqueaderos </a>
+        <?php endif;?>
         <?php if (in_array($_SESSION['usuario']['rol'] ?? '', ['Administrador', 'Vigilante'], true)): ?>
             <a href="../views/crud.php" class="nav-link"> Usuarios </a>
         <?php endif;?>

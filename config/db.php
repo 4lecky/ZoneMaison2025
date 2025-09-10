@@ -31,7 +31,6 @@ try {
 }
 
 
-
 // Para pruebas de correo electronico (mailtrap)
 // define("HOST","sandbox.smtp.mailtrap.io");
 // define("PORT","587");
