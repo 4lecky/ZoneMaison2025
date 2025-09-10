@@ -213,7 +213,7 @@ $zonas = $stmt->fetchAll();
                                         <div class="d-flex align-items-start mb-3">
                                             <div class="zona-imagen-placeholder me-3">
                                                 <?php if (!empty($zona['zona_imagen'])): ?>
-                                                    <img src="<?php echo htmlspecialchars($zona['zona_imagen']); ?>" 
+                                                    <img src="../<?php echo htmlspecialchars($zona['zona_imagen']); ?>" 
                                                         alt="<?php echo htmlspecialchars($zona['zona_nombre']); ?>" 
                                                         class="zona-imagen-real">
                                                 <?php else: ?>

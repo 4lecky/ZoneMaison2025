@@ -70,6 +70,15 @@ $reservas = $stmt->fetchAll();
                             <a href="../views/reservas.php" class="btn btn-custom">NUEVA RESERVA</a>
                         </div>
 
+                        <!-- Mensajes de respuesta -->
+                        <?php if (isset($_SESSION['response'])): ?>
+                            <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show" role="alert">
+                                <?php echo $_SESSION['response']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+                        <?php endif; ?>
+
                         <?php if (empty($reservas)): ?>
                             <!-- Mensaje cuando no hay reservas -->
                             <div class="alert alert-info text-center">
@@ -267,7 +276,9 @@ $reservas = $stmt->fetchAll();
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <?php require_once "./Layout/footer.php"; ?>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -318,7 +329,21 @@ $reservas = $stmt->fetchAll();
                             columns: ':not(:last-child)'
                         }
                     }
-                ]
+                ],
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último", 
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
             });
             <?php endif; ?>
         });
@@ -386,12 +411,14 @@ $reservas = $stmt->fetchAll();
             }
         }
 
-        // Función para confirmar eliminación
+        // Función para confirmar eliminación - CORREGIDA
         function confirmarEliminacion(id, zona, fecha) {
             document.getElementById('modal-zona').textContent = zona;
             document.getElementById('modal-fecha').textContent = new Date(fecha).toLocaleDateString('es-ES');
+            
+            // CORRECCIÓN: Cambiar la URL para que apunte al controlador correcto
             document.getElementById('btn-confirmar-eliminacion').href = 
-                `/index.php?controller=Reservas&action=eliminarReserva&id=${id}`;
+                `../controller/reservasController.php?action=eliminarReserva&id=${id}`;
             
             new bootstrap.Modal(document.getElementById('modalConfirmarEliminacion')).show();
         }

@@ -304,6 +304,86 @@ class ReservasModel
         }
     }
 
+    /**
+     * Actualizar una zona completa
+     */
+    public function actualizarZona($zona_id, $nombre, $descripcion, $capacidad, $estado, $imagen, $hora_apertura, $hora_cierre, $duracion_maxima, $terminos_condiciones)
+    {
+        try {
+            $sql = "UPDATE tbl_zonas 
+                    SET zona_nombre = :nombre, 
+                        zona_descripcion = :descripcion, 
+                        zona_capacidad = :capacidad, 
+                        zona_estado = :estado, 
+                        zona_imagen = :imagen, 
+                        zona_hora_apertura = :hora_apertura, 
+                        zona_hora_cierre = :hora_cierre, 
+                        zona_duracion_maxima = :duracion_maxima, 
+                        zona_terminos_condiciones = :terminos_condiciones,
+                        zona_fecha_actualizacion = CURRENT_TIMESTAMP 
+                    WHERE zona_id = :zona_id";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':zona_id', $zona_id, PDO::PARAM_INT);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':capacidad', $capacidad, PDO::PARAM_INT);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':imagen', $imagen);
+            $stmt->bindParam(':hora_apertura', $hora_apertura);
+            $stmt->bindParam(':hora_cierre', $hora_cierre);
+            $stmt->bindParam(':duracion_maxima', $duracion_maxima, PDO::PARAM_INT);
+            $stmt->bindParam(':terminos_condiciones', $terminos_condiciones);
+            
+            return $stmt->execute();
+            
+        } catch (PDOException $e) {
+            throw new Exception("Error al actualizar zona: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Eliminar una zona (físicamente de la base de datos)
+     */
+    public function eliminarZona($zona_id)
+    {
+        try {
+            $sql = "DELETE FROM tbl_zonas WHERE zona_id = :zona_id";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':zona_id', $zona_id, PDO::PARAM_INT);
+            
+            return $stmt->execute();
+            
+        } catch (PDOException $e) {
+            throw new Exception("Error al eliminar zona: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Verificar si una zona tiene reservas activas
+     */
+    public function verificarReservasActivasZona($zona_id)
+    {
+        try {
+            $sql = "SELECT COUNT(*) as reservas_activas 
+                    FROM tbl_reservas 
+                    WHERE zona_id = :zona_id 
+                    AND reserva_estado = 'activa'
+                    AND reserva_fecha >= CURDATE()";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':zona_id', $zona_id, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $resultado['reservas_activas'];
+            
+        } catch (PDOException $e) {
+            throw new Exception("Error al verificar reservas activas de zona: " . $e->getMessage());
+        }
+    }
+
     // ================================
     // MÉTODOS DE VALIDACIÓN Y UTILIDADES
     // ================================

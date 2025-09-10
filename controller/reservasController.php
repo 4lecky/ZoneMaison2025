@@ -26,6 +26,15 @@ switch ($action) {
     case 'getReservasPorZona':
         getReservasPorZona();
         break;
+    case 'eliminarZona':
+        eliminarZona();
+        break;
+    case 'actualizarZona':
+        actualizarZona();
+        break;
+    case 'buscarUsuario':
+        buscarUsuario();
+        break;
     default:
         header('Location: ../views/reservas.php');
         exit;
@@ -65,7 +74,7 @@ function crearReserva() {
         }
         
         // Usar los datos del usuario encontrado
-        $usuario_id = $usuario['usuario_cc'];
+        $usuario_id = $usuario['usuario_cc']; // Usar el ID autoincremental
         $apartamento = $usuario['usu_apartamento_residencia'];
         $nombre_residente = $usuario['usu_nombre_completo'];
         
@@ -307,8 +316,10 @@ function eliminarReserva() {
         $_SESSION['response_type'] = 'danger';
     }
     
-    // Redirigir según el rol
-    if ($rol_usuario === 'Administrador') {
+    // Determinar a dónde redirigir basado en el referer
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+    
+    if (strpos($referer, 'todasReservas.php') !== false && ($rol_usuario === 'Administrador' || $rol_usuario === 'Vigilante')) {
         header('Location: ../views/todasReservas.php');
     } else {
         header('Location: ../views/misReservas.php');
@@ -327,7 +338,7 @@ function getReservasPorZona() {
         
         // Verificar si se envió el parámetro zona_id
         if (isset($_GET['zona_id']) && !empty($_GET['zona_id'])) {
-            $zona_id = (int)$_GET['zona_id']; // Convertir a entero para seguridad
+            $zona_id = (int)$_GET['zona_id'];
             
             $reservas = $reservasModel->obtenerReservasPorZona($zona_id);
             
@@ -337,14 +348,13 @@ function getReservasPorZona() {
             foreach ($reservas as $reserva) {
                 $reservasFormateadas[] = [
                     'fecha' => $reserva['reserva_fecha'],
-                    'hora_inicio' => substr($reserva['reserva_hora_inicio'], 0, 5), // Formato HH:MM
-                    'hora_fin' => substr($reserva['reserva_hora_fin'], 0, 5),       // Formato HH:MM
+                    'hora_inicio' => substr($reserva['reserva_hora_inicio'], 0, 5),
+                    'hora_fin' => substr($reserva['reserva_hora_fin'], 0, 5),
                     'residente' => $reserva['reserva_nombre_residente'],
                     'apartamento' => $reserva['reserva_apartamento']
                 ];
             }
             
-            // Enviar respuesta JSON
             echo json_encode([
                 'success' => true,
                 'data' => $reservasFormateadas,
@@ -352,7 +362,6 @@ function getReservasPorZona() {
             ]);
             
         } else {
-            // Si no se envió zona_id, devolver array vacío
             echo json_encode([
                 'success' => true,
                 'data' => [],
@@ -362,7 +371,6 @@ function getReservasPorZona() {
         }
         
     } catch (PDOException $e) {
-        // Manejo de errores de base de datos
         http_response_code(500);
         echo json_encode([
             'success' => false,
@@ -371,7 +379,6 @@ function getReservasPorZona() {
         ]);
         
     } catch (Exception $e) {
-        // Manejo de otros errores
         http_response_code(500);
         echo json_encode([
             'success' => false,
@@ -379,6 +386,194 @@ function getReservasPorZona() {
             'message' => $e->getMessage()
         ]);
     }
+}
+
+function eliminarZona() {
+    global $reservasModel;
+    
+    try {
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+            $_SESSION['response'] = "Error: ID de zona no válido.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        $zona_id = (int)$_GET['id'];
+        $rol_usuario = $_SESSION['usuario']['rol'] ?? 'Usuario';
+        
+        // Solo administradores pueden eliminar zonas
+        if ($rol_usuario !== 'Administrador') {
+            $_SESSION['response'] = "Error: No tiene permisos para eliminar zonas.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        // Verificar que la zona existe
+        $zona = $reservasModel->obtenerZonaPorId($zona_id);
+        
+        if (!$zona) {
+            $_SESSION['response'] = "Error: La zona no existe.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        // Verificar si hay reservas activas para esta zona
+        $reservasActivas = $reservasModel->verificarReservasActivasZona($zona_id);
+        
+        if ($reservasActivas > 0) {
+            $_SESSION['response'] = "Error: No se puede eliminar la zona porque tiene {$reservasActivas} reserva(s) activa(s). Cancele primero las reservas.";
+            $_SESSION['response_type'] = 'warning';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        // Eliminar imagen si existe
+        if (!empty($zona['zona_imagen']) && file_exists('../' . $zona['zona_imagen'])) {
+            unlink('../' . $zona['zona_imagen']);
+        }
+        
+        // Eliminar la zona
+        if ($reservasModel->eliminarZona($zona_id)) {
+            $_SESSION['response'] = "Zona '{$zona['zona_nombre']}' eliminada exitosamente.";
+            $_SESSION['response_type'] = 'success';
+        } else {
+            $_SESSION['response'] = "Error: No se pudo eliminar la zona.";
+            $_SESSION['response_type'] = 'danger';
+        }
+        
+    } catch (Exception $e) {
+        $_SESSION['response'] = "Error interno: " . $e->getMessage();
+        $_SESSION['response_type'] = 'danger';
+    }
+    
+    header('Location: ../views/zonas.php');
+    exit;
+}
+
+function actualizarZona() {
+    global $reservasModel;
+    
+    try {
+        // Verificar permisos de administrador
+        if (!isset($_SESSION['usuario']['rol']) || $_SESSION['usuario']['rol'] !== 'Administrador') {
+            $_SESSION['response'] = "Error: No tiene permisos para editar zonas.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        // Validar que se haya enviado el ID de la zona
+        if (!isset($_POST['zona_id']) || empty($_POST['zona_id'])) {
+            $_SESSION['response'] = "Error: ID de zona no válido.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        $zona_id = (int)$_POST['zona_id'];
+        
+        // Verificar que la zona existe
+        $zonaExistente = $reservasModel->obtenerZonaPorId($zona_id);
+        if (!$zonaExistente) {
+            $_SESSION['response'] = "Error: La zona no existe.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/zonas.php');
+            exit;
+        }
+        
+        // Validar campos requeridos
+        $camposRequeridos = ['zona_nombre', 'zona_capacidad', 'zona_hora_apertura', 'zona_hora_cierre', 'zona_duracion_maxima', 'zona_estado'];
+        
+        foreach ($camposRequeridos as $campo) {
+            if (empty($_POST[$campo])) {
+                $_SESSION['response'] = "Error: El campo {$campo} es obligatorio.";
+                $_SESSION['response_type'] = 'danger';
+                header('Location: ../views/editarZona.php?id=' . $zona_id);
+                exit;
+            }
+        }
+        
+        // Obtener datos del formulario
+        $zona_nombre = trim($_POST['zona_nombre']);
+        $zona_descripcion = trim($_POST['zona_descripcion'] ?? '');
+        $zona_capacidad = (int)$_POST['zona_capacidad'];
+        $zona_estado = $_POST['zona_estado'];
+        $zona_hora_apertura = $_POST['zona_hora_apertura'];
+        $zona_hora_cierre = $_POST['zona_hora_cierre'];
+        $zona_duracion_maxima = (int)$_POST['zona_duracion_maxima'];
+        $zona_terminos_condiciones = trim($_POST['zona_terminos_condiciones'] ?? '');
+        
+        // Validaciones
+        if ($zona_hora_apertura >= $zona_hora_cierre) {
+            $_SESSION['response'] = "Error: La hora de apertura debe ser anterior a la hora de cierre.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/editarZona.php?id=' . $zona_id);
+            exit;
+        }
+        
+        if ($zona_capacidad < 1 || $zona_capacidad > 500) {
+            $_SESSION['response'] = "Error: La capacidad debe estar entre 1 y 500 personas.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/editarZona.php?id=' . $zona_id);
+            exit;
+        }
+        
+        // Manejo de imagen (opcional)
+        $zona_imagen = $zonaExistente['zona_imagen']; // Mantener imagen actual por defecto
+        
+        if (isset($_FILES['zona_imagen']) && $_FILES['zona_imagen']['error'] === UPLOAD_ERR_OK) {
+            $directorio = '../uploads/zonas/';
+            if (!is_dir($directorio)) {
+                mkdir($directorio, 0777, true);
+            }
+            
+            $extension = pathinfo($_FILES['zona_imagen']['name'], PATHINFO_EXTENSION);
+            $nombreArchivo = uniqid('zona_') . '.' . $extension;
+            $rutaDestino = $directorio . $nombreArchivo;
+            
+            if (move_uploaded_file($_FILES['zona_imagen']['tmp_name'], $rutaDestino)) {
+                // Eliminar imagen anterior si existe
+                if (!empty($zonaExistente['zona_imagen']) && file_exists('../' . $zonaExistente['zona_imagen'])) {
+                    unlink('../' . $zonaExistente['zona_imagen']);
+                }
+                $zona_imagen = 'uploads/zonas/' . $nombreArchivo;
+            }
+        }
+        
+        // Actualizar la zona
+        $actualizado = $reservasModel->actualizarZona(
+            $zona_id,
+            $zona_nombre,
+            $zona_descripcion,
+            $zona_capacidad,
+            $zona_estado,
+            $zona_imagen,
+            $zona_hora_apertura,
+            $zona_hora_cierre,
+            $zona_duracion_maxima,
+            $zona_terminos_condiciones
+        );
+        
+        if ($actualizado) {
+            $_SESSION['response'] = "Zona '{$zona_nombre}' actualizada exitosamente.";
+            $_SESSION['response_type'] = 'success';
+            header('Location: ../views/zonas.php');
+        } else {
+            $_SESSION['response'] = "Error: No se pudo actualizar la zona. Intente nuevamente.";
+            $_SESSION['response_type'] = 'danger';
+            header('Location: ../views/editarZona.php?id=' . $zona_id);
+        }
+        
+    } catch (Exception $e) {
+        $_SESSION['response'] = "Error interno: " . $e->getMessage();
+        $_SESSION['response_type'] = 'danger';
+        header('Location: ../views/editarZona.php?id=' . $zona_id);
+    }
+    
+    exit;
 }
 
 function buscarUsuario() {

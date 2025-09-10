@@ -64,6 +64,15 @@ $reservas = $stmt->fetchAll();
                             <a href="../views/reservas.php" class="btn btn-custom">NUEVA RESERVA</a>
                         </div>
 
+                        <!-- Mensajes de respuesta -->
+                        <?php if (isset($_SESSION['response'])): ?>
+                            <div class="alert alert-<?php echo $_SESSION['response_type'] ?? 'info'; ?> alert-dismissible fade show" role="alert">
+                                <?php echo $_SESSION['response']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
+                        <?php endif; ?>
+
                         <?php if (empty($reservas)): ?>
                             <!-- Mensaje cuando no hay reservas -->
                             <div class="alert alert-info text-center">
@@ -231,12 +240,14 @@ $reservas = $stmt->fetchAll();
             <?php endif; ?>
         });
 
-        // Función para confirmar cancelación
+        // Función para confirmar cancelación - CORREGIDA
         function confirmarCancelacion(reservaId, zona, fecha) {
             document.getElementById('modal-zona').textContent = zona;
             document.getElementById('modal-fecha').textContent = new Date(fecha).toLocaleDateString('es-ES');
+            
+            // CORRECCIÓN: Cambiar la URL para que apunte al controlador correcto
             document.getElementById('btn-confirmar-cancelacion').href = 
-                `/index.php?controller=Reservas&action=eliminarReserva&id=${reservaId}`;
+                `../controller/reservasController.php?action=eliminarReserva&id=${reservaId}`;
             
             new bootstrap.Modal(document.getElementById('modalConfirmarCancelacion')).show();
         }
