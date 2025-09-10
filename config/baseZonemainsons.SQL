@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS tbl_consultaParqueadero (consulParq_id INT (50) NOT N
     -- consulParq_usuario_cedula INT (10),
     consulParq_numeroParqueadero INT NOT NULL,
     consulParq_estado ENUM('disponible', 'ocupado', 'mantenimiento') DEFAULT 'disponible',
-    consulParq_parq_id,
+    consulParq_parq_id INT (20) NOT NULL,
     UNIQUE (consulParq_numeroParqueadero),
     PRIMARY KEY (consulParq_id),
     -- FOREIGN KEY (consulParq_usuario_cedula) REFERENCES tbl_usuario (usu_cedula)
