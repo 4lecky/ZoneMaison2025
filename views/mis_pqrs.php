@@ -7,11 +7,6 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once './Layout/header.php';
 require_once '../models/pqrsModel.php';
 
-// Debug de sesión
-error_log("=== DEBUG MIS_PQRS ===");
-error_log("SESSION existe: " . (isset($_SESSION) ? 'SÍ' : 'NO'));
-error_log("SESSION['usuario'] existe: " . (isset($_SESSION['usuario']) ? 'SÍ' : 'NO'));
-
 // Verificar que el usuario esté logueado
 if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
     $_SESSION['error_mensaje'] = 'Debes iniciar sesión para ver tus PQRS.';
@@ -20,7 +15,68 @@ if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
 }
 
 $usuario = $_SESSION['usuario'];
-$usuarioCc = $usuario['usuario_cc'];
+
+// CORRECCIÓN: Obtener datos completos del usuario desde la BD (igual que pqrsController.php)
+try {
+    require_once '../config/db.php';
+    
+    // Verificar que $pdo esté disponible
+    if (!$pdo) {
+        throw new Exception("No se pudo obtener la conexión a la base de datos");
+    }
+    
+    $stmt = $pdo->prepare("SELECT 
+        usuario_cc,
+        usu_cedula,
+        usu_nombre_completo,
+        usu_correo,
+        usu_telefono,
+        usu_apartamento_residencia,
+        usu_torre_residencia,
+        usu_rol
+        FROM tbl_usuario 
+        WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+    
+    // CORRECCIÓN: Usar el campo correcto de la sesión
+    $usuarioId = $usuario['id'] ?? $usuario['usuario_cc'] ?? null;
+    
+    if (!$usuarioId) {
+        error_log("ERROR: No se encontró ID de usuario en sesión. Contenido: " . print_r($usuario, true));
+        $_SESSION['error_mensaje'] = 'Datos de sesión incompletos. Vuelve a iniciar sesión.';
+        header("Location: login.php");
+        exit();
+    }
+    
+    $stmt->execute([$usuarioId]);
+    $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$usuario_completo) {
+        error_log("No se encontró usuario en BD con ID: " . $usuarioId);
+        $_SESSION['error_mensaje'] = 'No se pudieron cargar los datos del usuario.';
+        header("Location: login.php");
+        exit();
+    }
+    
+    // Reemplazar datos del usuario con los de la BD
+    $usuario = [
+        'usuario_cc' => $usuario_completo['usuario_cc'],
+        'usu_cedula' => $usuario_completo['usu_cedula'],
+        'usu_nombre_completo' => $usuario_completo['usu_nombre_completo'],
+        'usu_correo' => $usuario_completo['usu_correo'],
+        'usu_telefono' => $usuario_completo['usu_telefono'],
+        'usu_apartamento_residencia' => $usuario_completo['usu_apartamento_residencia'],
+        'usu_torre_residencia' => $usuario_completo['usu_torre_residencia'],
+        'usu_rol' => $usuario_completo['usu_rol']
+    ];
+    
+    $usuarioCc = $usuario['usuario_cc']; // Ahora sí existe esta clave
+    
+} catch (Exception $e) {
+    error_log("Error obteniendo datos completos del usuario: " . $e->getMessage());
+    $_SESSION['error_mensaje'] = 'Error al cargar los datos del usuario.';
+    header("Location: login.php");
+    exit();
+}
 
 // Inicializar modelo
 try {
@@ -124,7 +180,7 @@ $mostrarExito = isset($_GET['success']) && $_GET['success'] == '1';
                     </thead>
                     <tbody>
                         <?php foreach ($registros as $pqr): 
-                            $medioAttr   = htmlspecialchars($pqr['medio_respuesta'] ?? 'correo_sms', ENT_QUOTES, 'UTF-8');
+                            $medioAttr   = htmlspecialchars($pqr['medio_respuesta'] ?? 'correo', ENT_QUOTES, 'UTF-8');
                             $tipoAttr    = htmlspecialchars($pqr['tipo_pqr'] ?? '', ENT_QUOTES, 'UTF-8');
                             $asuntoAttr  = htmlspecialchars($pqr['asunto'] ?? '', ENT_QUOTES, 'UTF-8');
                             // Mensaje sin saltos de línea para atributo data-*
@@ -316,9 +372,7 @@ $mostrarExito = isset($_GET['success']) && $_GET['success'] == '1';
                     <div class="form-group">
                         <label for="edit_medio">Medio de respuesta</label>
                         <select name="medio_respuesta" id="edit_medio" required>
-                            <option value="correo_sms">Correo y SMS</option>
                             <option value="correo">Correo</option>
-                            <option value="sms">SMS</option>
                         </select>
                     </div>
                 </div>
@@ -412,7 +466,7 @@ $mostrarExito = isset($_GET['success']) && $_GET['success'] == '1';
             document.getElementById('edit_tipo').value = d.tipo || 'peticion';
             document.getElementById('edit_asunto').value = d.asunto || '';
             document.getElementById('edit_mensaje').value = (d.mensaje || '').trim();
-            document.getElementById('edit_medio').value = d.medio || 'correo_sms';
+            document.getElementById('edit_medio').value = 'correo'; // Siempre correo ahora
             // Limpiar input de archivos
             document.getElementById('edit_archivos').value = '';
             // Mostrar modal
@@ -582,6 +636,7 @@ $mostrarExito = isset($_GET['success']) && $_GET['success'] == '1';
 
         /* Texto de éxito en notificaciones */
         .text-success { color: #28a745; }
+        .text-muted { color: #6c757d; }
 
         /* Responsividad */
         @media (max-width: 768px) {

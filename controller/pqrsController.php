@@ -1,5 +1,5 @@
 <?php
-// pqrsController.php - Versión SIN SMS
+// pqrsController.php - Versión DEBUG
 
 // Control estricto de errores
 error_reporting(E_ALL);
@@ -47,7 +47,7 @@ function redirectToPage($page, $message = null, $type = 'error') {
 }
 
 try {
-    logError("=== INICIO PROCESAMIENTO PQRS (SIN SMS) ===");
+    logError("=== INICIO PROCESAMIENTO PQRS (DEBUG) ===");
     
     // 1. VERIFICACIONES BÁSICAS
     if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
@@ -64,15 +64,74 @@ try {
     unset($_SESSION['errores_pqrs'], $_SESSION['mensaje_pqrs']);
 
     $usuario = $_SESSION['usuario'];
-    logError("Procesando PQRS para usuario", ['cc' => $usuario['usuario_cc'], 'nombre' => $usuario['usu_nombre_completo']]);
+    
+    // **DEBUG CRÍTICO: Verificar estructura del usuario en sesión**
+    logError("DEBUG: Contenido completo de \$_SESSION['usuario']", $usuario);
+    logError("DEBUG: Claves disponibles en usuario", array_keys($usuario));
+    
+    // **NUEVO: Obtener datos del usuario desde la BD como en crear_pqr.php**
+    try {
+        require_once '../config/db.php';
+        
+        if (!$pdo) {
+            logError("ERROR: db.php no retornó conexión PDO válida");
+            throw new Exception("db.php no retorna conexión válida");
+        }
+        
+        // Hacer $pdo disponible globalmente para el modelo
+        global $pdo;
+        
+        logError("Conexión PDO obtenida correctamente");
+        
+        // Usar el mismo método que crear_pqr.php para obtener datos del usuario
+        $stmt = $pdo->prepare("SELECT 
+            usuario_cc,
+            usu_cedula,
+            usu_nombre_completo,
+            usu_correo,
+            usu_telefono,
+            usu_apartamento_residencia,
+            usu_torre_residencia,
+            usu_rol
+            FROM tbl_usuario 
+            WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+        
+        $stmt->execute([$usuario['id']]);
+        $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$usuario_completo) {
+            logError("ERROR: No se encontraron datos del usuario en BD", ['usuario_id' => $usuario['id']]);
+            redirectToPage("../views/crear_pqr.php", "No se pudieron cargar los datos del usuario.");
+        }
+        
+        logError("Datos del usuario obtenidos de BD", $usuario_completo);
+        
+        // Reemplazar datos del usuario con los de la BD
+        $usuario = [
+            'usuario_cc' => $usuario_completo['usuario_cc'],
+            'usu_cedula' => $usuario_completo['usu_cedula'],
+            'usu_nombre_completo' => $usuario_completo['usu_nombre_completo'],
+            'usu_correo' => $usuario_completo['usu_correo'],
+            'usu_telefono' => $usuario_completo['usu_telefono'],
+            'usu_apartamento_residencia' => $usuario_completo['usu_apartamento_residencia'],
+            'usu_torre_residencia' => $usuario_completo['usu_torre_residencia'],
+            'usu_rol' => $usuario_completo['usu_rol']
+        ];
+        
+        logError("Usuario actualizado con datos de BD", ['cc' => $usuario['usuario_cc'], 'nombre' => $usuario['usu_nombre_completo']]);
+        
+    } catch (Exception $e) {
+        logError("ERROR obteniendo datos de usuario de BD: " . $e->getMessage());
+        redirectToPage("../views/crear_pqr.php", "Error al cargar los datos del usuario.");
+    }
 
-    // 2. CARGAR MODELO - MÉTODO SIMPLIFICADO
+    // 2. CARGAR MODELO 
     try {
         require_once '../models/pqrsModel.php';
         $pqrsModel = new PqrsModel();
         
         if (!$pqrsModel->verificarConexion()) {
-            throw new Exception("Conexión a base de datos no válida");
+            throw new Exception("Conexión a base de datos no válida en modelo");
         }
         
         logError("Modelo cargado correctamente");
@@ -82,16 +141,22 @@ try {
         redirectToPage("../views/crear_pqr.php", "Error del sistema. Intente más tarde. (Código: DB_001)");
     }
 
-    // 3. VALIDACIONES DE DATOS
+    // 3. VALIDACIONES DE DATOS (Ahora usando datos correctos de BD)
     $errores = [];
 
-    // Verificar datos del usuario
+    // Verificar datos del usuario (CORREGIDO)
     $camposUsuario = ['usuario_cc', 'usu_cedula', 'usu_correo', 'usu_telefono', 'usu_nombre_completo'];
     foreach ($camposUsuario as $campo) {
         if (!isset($usuario[$campo]) || empty($usuario[$campo])) {
-            $errores[] = "Datos de usuario incompletos. Vuelva a iniciar sesión.";
-            break;
+            $errores[] = "Datos de usuario incompletos: falta '$campo'. Vuelva a iniciar sesión.";
+            logError("Campo faltante en usuario", ['campo' => $campo, 'valor' => $usuario[$campo] ?? 'NO_EXISTE']);
         }
+    }
+
+    // Si hay errores de usuario, salir temprano
+    if (!empty($errores)) {
+        logError("Errores de datos de usuario", $errores);
+        redirectToPage("../views/crear_pqr.php", $errores);
     }
 
     // Verificar campos del formulario
@@ -111,15 +176,8 @@ try {
         $errores[] = "La descripción debe tener al menos 10 caracteres.";
     }
 
-    // CAMBIO: El medio de respuesta siempre será correo (validación simplificada)
-    $medioRespuesta = ['correo']; // Forzar siempre correo
-    if (isset($_POST['medio_respuesta']) && is_array($_POST['medio_respuesta'])) {
-        // Filtrar solo correo por si viene algo más
-        $medioRespuesta = array_intersect($_POST['medio_respuesta'], ['correo']);
-        if (empty($medioRespuesta)) {
-            $medioRespuesta = ['correo']; // Fallback a correo
-        }
-    }
+    // El medio de respuesta siempre será correo
+    $medioRespuesta = ['correo'];
 
     // Si hay errores, redirigir
     if (!empty($errores)) {
@@ -172,7 +230,7 @@ try {
         'asunto' => trim($_POST['asunto']),
         'mensaje' => trim($_POST['mensaje']),
         'archivos' => $archivosJson,
-        'medio_respuesta' => $medioRespuesta // Siempre será ['correo']
+        'medio_respuesta' => $medioRespuesta
     ];
 
     logError("Datos preparados para inserción", [

@@ -1,29 +1,50 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['rol'])) {
-    $_SESSION['rol'] = 'admin'; // Temporal para pruebas
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
 }
 
+// Verificar que sea administrador para acceder a esta vista
+$rol = $_SESSION['usuario']['rol'] ?? '';
+if (!in_array($rol, ['Administrador'], true)) {
+    header("Location: pqrs.php"); // Redirigir a la vista normal de PQRS
+    exit();
+}
+
+require_once "../config/db.php";
 require_once '../models/pqrsModel.php';
 require_once './Layout/header.php';
 
 $pqrsModel = new PqrsModel();
-$registros = $pqrsModel->obtenerTodos();
+
+// Obtener todos los PQRS para el administrador
+$registros = [];
+try {
+    $registros = $pqrsModel->obtenerTodos();
+} catch (Exception $e) {
+    error_log("Error al obtener PQRS: " . $e->getMessage());
+    $registros = [];
+}
 
 // Estadísticas para el dashboard
 $totalPqrs = count($registros);
 $pendientes = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'pendiente'));
 $enProceso = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'en_proceso'));
 $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resuelto'));
+
+// Recuperar mensaje de éxito si existe
+$mensaje = isset($_GET['success']) ? htmlspecialchars($_GET['success'], ENT_QUOTES, 'UTF-8') : '';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de PQRS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de PQRS - Administrador</title>
     <link rel="stylesheet" href="../assets/Css/pqrs.css">
     <link rel="stylesheet" href="../assets/Css/globals.css" />
     <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
@@ -78,7 +99,7 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
     
     .cabecera-tarjeta {
         display: flex;
-        justify-content: between;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 15px;
     }
@@ -164,6 +185,7 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
         display: inline-flex;
         align-items: center;
         gap: 5px;
+        margin: 2px;
     }
     
     .boton-ver {
@@ -203,10 +225,34 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
     .dt-button {
         margin-right: 5px !important;
     }
+    
+    .alert {
+        margin-bottom: 20px;
+    }
+    
+    .sin-datos {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+    
+    .sin-datos i {
+        font-size: 48px;
+        margin-bottom: 10px;
+        color: #ddd;
+    }
     </style>
 </head>
 <body>
     <div class="contenedor-admin">
+        <?php if ($mensaje): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i>
+                <?= $mensaje ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
         <!-- Header -->
         <div class="encabezado-admin animacion-entrada">
             <h1>
@@ -268,92 +314,100 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
                 </h2>
             </div>
             <div class="contenido-tabla">
-                <table class="tabla-pqrs table table-hover" id="tabla-pqrs">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Residente</th>
-                            <th>Tipo</th>
-                            <th>Medio</th>
-                            <th>Estado</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($registros as $pqr): ?>
+                <?php if (empty($registros)): ?>
+                    <div class="sin-datos">
+                        <i class="fas fa-inbox"></i>
+                        <h4>No hay PQRS registrados</h4>
+                        <p>Aún no se han enviado peticiones, quejas, reclamos o sugerencias.</p>
+                    </div>
+                <?php else: ?>
+                    <table class="tabla-pqrs table table-hover" id="tabla-pqrs">
+                        <thead>
                             <tr>
-                                <td>
-                                    <span class="fw-bold text-primary">
-                                        #<?= str_pad($pqr['id'], 4, '0', STR_PAD_LEFT) ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <div class="fw-semibold">
-                                            <?php 
-                                            // Usar nombre completo si está disponible, sino usar nombres y apellidos
-                                            $nombreCompleto = !empty($pqr['usu_nombre_completo']) 
-                                                ? $pqr['usu_nombre_completo'] 
-                                                : trim($pqr['nombres'] . ' ' . $pqr['apellidos']);
-                                            echo htmlspecialchars($nombreCompleto);
-                                            ?>
-                                        </div>
-                                        <small class="text-muted">
-                                            <?php if (!empty($pqr['usu_apartamento_residencia'])): ?>
-                                                <?= htmlspecialchars($pqr['usu_apartamento_residencia']) ?> - Torre <?= htmlspecialchars($pqr['usu_torre_residencia']) ?>
-                                            <?php else: ?>
-                                                Residente
-                                            <?php endif; ?>
-                                        </small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="tipo tipo-<?= strtolower($pqr['tipo_pqr']) ?>">
-                                        <?= ucfirst($pqr['tipo_pqr']) ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php
-                                    $medios = explode(',', $pqr['medio_respuesta']);
-                                    foreach ($medios as $medio) {
-                                        $medio = trim($medio);
-                                        $icono = $medio === 'correo' ? 'envelope' : 'sms';
-                                        echo '<i class="fas fa-' . $icono . '"></i> ' . ucfirst($medio) . '<br>';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <span class="estado estado-<?= str_replace('_', '-', $pqr['estado']) ?>">
-                                        <?= ucfirst(str_replace('_', ' ', $pqr['estado'])) ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <div class="fw-semibold">
-                                            <?= date('d/m/Y', strtotime($pqr['fecha_creacion'])) ?>
-                                        </div>
-                                        <small class="text-muted">
-                                            <?= date('H:i', strtotime($pqr['fecha_creacion'])) ?>
-                                        </small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="ver_pqr.php?id=<?= $pqr['id'] ?>" class="boton boton-ver">
-                                            <i class="fas fa-eye"></i>
-                                            Ver
-                                        </a>
-                                        <a href="responder_pqr.php?id=<?= $pqr['id'] ?>" class="boton boton-responder">
-                                            <i class="fas fa-reply"></i>
-                                            Responder
-                                        </a>
-                                    </div>
-                                </td>
+                                <th>ID</th>
+                                <th>Residente</th>
+                                <th>Tipo</th>
+                                <th>Medio</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
                             </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($registros as $pqr): ?>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-primary">
+                                            #<?= str_pad($pqr['id'], 4, '0', STR_PAD_LEFT) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <div class="fw-semibold">
+                                                <?php 
+                                                // Usar nombre completo si está disponible, sino usar nombres y apellidos
+                                                $nombreCompleto = !empty($pqr['usu_nombre_completo']) 
+                                                    ? $pqr['usu_nombre_completo'] 
+                                                    : trim(($pqr['nombres'] ?? '') . ' ' . ($pqr['apellidos'] ?? ''));
+                                                echo htmlspecialchars($nombreCompleto ?: 'Usuario');
+                                                ?>
+                                            </div>
+                                            <small class="text-muted">
+                                                <?php if (!empty($pqr['usu_apartamento_residencia'])): ?>
+                                                    <?= htmlspecialchars($pqr['usu_apartamento_residencia']) ?> - Torre <?= htmlspecialchars($pqr['usu_torre_residencia']) ?>
+                                                <?php else: ?>
+                                                    Residente
+                                                <?php endif; ?>
+                                            </small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="tipo tipo-<?= strtolower($pqr['tipo_pqr']) ?>">
+                                            <?= ucfirst($pqr['tipo_pqr']) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $medios = explode(',', $pqr['medio_respuesta']);
+                                        foreach ($medios as $medio) {
+                                            $medio = trim($medio);
+                                            $icono = $medio === 'correo' ? 'envelope' : 'sms';
+                                            echo '<i class="fas fa-' . $icono . '"></i> ' . ucfirst($medio) . '<br>';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <span class="estado estado-<?= str_replace('_', '-', $pqr['estado']) ?>">
+                                            <?= ucfirst(str_replace('_', ' ', $pqr['estado'])) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <div class="fw-semibold">
+                                                <?= date('d/m/Y', strtotime($pqr['fecha_creacion'])) ?>
+                                            </div>
+                                            <small class="text-muted">
+                                                <?= date('H:i', strtotime($pqr['fecha_creacion'])) ?>
+                                            </small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <a href="ver_pqr.php?id=<?= $pqr['id'] ?>" class="boton boton-ver">
+                                                <i class="fas fa-eye"></i>
+                                                Ver
+                                            </a>
+                                            <a href="responder_pqr.php?id=<?= $pqr['id'] ?>" class="boton boton-responder">
+                                                <i class="fas fa-reply"></i>
+                                                Responder
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -362,6 +416,7 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <?php if (!empty($registros)): ?>
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -398,7 +453,7 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
                     text: '<i class="fas fa-file-excel"></i> Excel',
                     className: 'btn btn-success btn-sm',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5] // Excluir columna de acciones
+                        columns: [0, 1, 2, 3, 4, 5, 6] // Excluir columna de acciones (ahora índice 7)
                     }
                 },
                 {
@@ -413,6 +468,9 @@ $resueltos = count(array_filter($registros, fn($pqr) => $pqr['estado'] === 'resu
         });
     });
     </script>
+    <?php endif; ?>
 
 </body>
 </html>
+
+<?php require_once './Layout/footer.php'; ?>

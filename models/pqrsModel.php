@@ -5,10 +5,21 @@ class PqrsModel {
 
     public function __construct() {
         try {
-            $this->conn = require __DIR__ . '/../config/db.php';
-            if (!$this->conn || !($this->conn instanceof PDO)) {
-                throw new Exception("No se pudo establecer conexión a la base de datos");
+            // SOLUCIÓN: Usar la conexión global existente o crear nueva
+            global $pdo;
+            
+            if (!$pdo || !($pdo instanceof PDO)) {
+                // Si no existe $pdo global, incluir db.php
+                $pdo = require_once __DIR__ . '/../config/db.php';
+                
+                if (!$pdo || !($pdo instanceof PDO)) {
+                    throw new Exception("No se pudo establecer conexión a la base de datos");
+                }
             }
+
+            $this->conn = $pdo;
+            error_log("PqrsModel: Conexión establecida correctamente");
+
         } catch (Exception $e) {
             error_log("Error en constructor PqrsModel: " . $e->getMessage());
             throw new Exception("Error de conexión a base de datos: " . $e->getMessage());
@@ -391,4 +402,3 @@ class PqrsModel {
     }
 }
 ?>
-

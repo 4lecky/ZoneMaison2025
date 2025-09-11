@@ -1,5 +1,29 @@
 <?php
-require_once './Layout/header.php'
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    // Solo iniciar sesión si no existe
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    // Verificar nuevamente después de iniciar sesión
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: login.php");
+        exit();
+    }
+}
+
+// Obtener el rol del usuario
+$rol_usuario = $_SESSION['usuario']['rol'] ?? '';
+
+// Verificar que el usuario tenga un rol válido para PQRS
+$roles_con_acceso_pqrs = ['Residente', 'Propietario', 'Vigilante', 'Administrador'];
+if (!in_array($rol_usuario, $roles_con_acceso_pqrs, true)) {
+    $_SESSION['error_mensaje'] = 'No tienes permisos para acceder al módulo PQRS.';
+    header("Location: novedades.php"); // Redirigir a página principal
+    exit();
+}
+
+require_once './Layout/header.php';
 ?>
 
 <?php if (isset($_GET['editado'])): ?>
@@ -68,23 +92,30 @@ require_once './Layout/header.php'
   </p>
 </div>
 
-
     <!-- Fondo con mensaje y opciones -->
     <div class="fondo-container">
         <div class="mensaje-container">
     <div class="contenedor-limitado">
 
-    <!-- Primera fila: Crear PQR -->
+    <!-- Primera fila: Crear PQR - Solo para roles específicos -->
       <div class="fila-crear">
-        <div class="opcion opcion-grande" onclick="location.href='crear_pqr.php'">
+        <?php if (in_array($rol_usuario, ['Residente', 'Propietario', 'Vigilante'], true)): ?>
+        <div class="opcion opcion-grande" onclick="window.location.href='crear_pqr.php'">
           <img src="../assets/img/crear_pqr.png" alt="Crear PQR">
           <p>Crear PQR</p>
         </div>
+        <?php else: ?>
+        <div class="opcion opcion-grande opcion-deshabilitada" title="Solo residentes, propietarios y vigilantes pueden crear PQRS">
+          <img src="../assets/img/crear_pqr.png" alt="Crear PQR">
+          <p>Crear PQR</p>
+          <small class="texto-deshabilitado">No disponible para tu rol</small>
+        </div>
+        <?php endif; ?>
       </div>
 
       <!-- Segunda fila: Estado y Preguntas -->
       <div class="fila-secundaria">
-        <div class="opcion" onclick="location.href='mis_pqrs.php'">
+        <div class="opcion" onclick="window.location.href='mis_pqrs.php'">
           <img src="../assets/img/estado_pqr.png" alt="Estado de mi PQR">
           <p>Mis PQRS</p>
         </div>

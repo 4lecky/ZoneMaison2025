@@ -1,77 +1,73 @@
 <?php
-// Asegurarse de que la sesión esté iniciada
+// Verificar si el usuario ha iniciado sesión
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once './Layout/header.php';
-
-// Debug de sesión
-error_log("=== DEBUG CREAR_PQR ===");
-error_log("SESSION existe: " . (isset($_SESSION) ? 'SÍ' : 'NO'));
-error_log("SESSION['usuario'] existe: " . (isset($_SESSION['usuario']) ? 'SÍ' : 'NO'));
-
-// === CONTROL DE AUTENTICACIÓN ===
-// Verificar que el usuario esté logueado
-if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
-    $_SESSION['error_mensaje'] = 'Debes iniciar sesión para crear una PQRS.';
+if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
+
+// Obtener el rol del usuario
+$rol_usuario = $_SESSION['usuario']['rol'] ?? '';
+
+// Verificar que solo Residente, Propietario y Vigilante puedan acceder
+$roles_permitidos = ['Residente', 'Propietario', 'Vigilante'];
+if (!in_array($rol_usuario, $roles_permitidos, true)) {
+    $_SESSION['error_mensaje'] = 'No tienes permisos para crear PQRS.';
+    header("Location: pqrs.php");
+    exit();
+}
+
+require_once './Layout/header.php';
 
 $usuario = $_SESSION['usuario'];
 
-// === CONTROL DE ROLES ===
-// Obtener el rol del usuario
-$rol_usuario = $usuario['rol'] ?? '';
+// **NUEVA FUNCIONALIDAD: Consultar datos completos del usuario desde la BD**
+require_once '../config/db.php';
 
-// Verificar que el usuario tenga un rol asignado (no sea solo "usuario")
-if (empty($rol_usuario) || $rol_usuario === 'usuario') {
-    $_SESSION['error_mensaje'] = 'Tu cuenta no tiene un rol asignado. Contacta al administrador.';
-    header("Location: dashboard.php"); // o donde quieras redirigir
-    exit();
-}
-
-// Verificar que el rol sea uno de los permitidos para PQRS
-$roles_permitidos = ['Residente', 'Propietario', 'Vigilante', 'Administrador'];
-if (!in_array($rol_usuario, $roles_permitidos, true)) {
-    $_SESSION['error_mensaje'] = 'No tienes permisos para crear PQRS.';
-    header("Location: dashboard.php");
-    exit();
-}
-
-// === VERIFICACIÓN DE DATOS COMPLETOS ===
-// Verificar campos necesarios del usuario
-$camposRequeridos = ['usuario_cc', 'usu_cedula', 'usu_correo', 'usu_telefono', 'usu_nombre_completo'];
-$camposFaltantes = [];
-
-foreach ($camposRequeridos as $campo) {
-    if (!isset($usuario[$campo]) || empty($usuario[$campo])) {
-        $camposFaltantes[] = $campo;
+try {
+    $stmt = $pdo->prepare("SELECT 
+        usuario_cc,
+        usu_cedula,
+        usu_nombre_completo,
+        usu_correo,
+        usu_telefono,
+        usu_apartamento_residencia,
+        usu_torre_residencia,
+        usu_rol
+        FROM tbl_usuario 
+        WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+    
+    $stmt->execute([$usuario['id']]);
+    $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$usuario_completo) {
+        $_SESSION['error_mensaje'] = 'No se pudieron cargar los datos del usuario.';
+        header("Location: pqrs.php");
+        exit();
     }
-}
-
-if (!empty($camposFaltantes)) {
-    error_log("Campos faltantes en usuario: " . implode(', ', $camposFaltantes));
-    $_SESSION['error_mensaje'] = 'Información de usuario incompleta. Vuelve a iniciar sesión.';
-    header("Location: login.php");
+    
+} catch (Exception $e) {
+    error_log("Error al consultar datos usuario: " . $e->getMessage());
+    $_SESSION['error_mensaje'] = 'Error al cargar los datos del usuario.';
+    header("Location: pqrs.php");
     exit();
 }
 
-// === PERMISOS ESPECÍFICOS POR ROL ===
-$permisos = [
-    'puede_crear_pqrs' => true, // Todos los roles permitidos pueden crear
-    'puede_ver_todas_pqrs' => in_array($rol_usuario, ['Administrador', 'Vigilante']),
-    'puede_gestionar_pqrs' => in_array($rol_usuario, ['Administrador', 'Vigilante']),
-    'es_admin_vigilante' => in_array($rol_usuario, ['Administrador', 'Vigilante'])
+// Mapear datos completos de la BD
+$usuario_mapeado = [
+    'usuario_cc' => $usuario_completo['usuario_cc'],
+    'usu_cedula' => $usuario_completo['usu_cedula'],
+    'usu_correo' => $usuario_completo['usu_correo'],
+    'usu_telefono' => $usuario_completo['usu_telefono'],
+    'usu_nombre_completo' => $usuario_completo['usu_nombre_completo'],
+    'usu_rol' => $usuario_completo['usu_rol'],
+    'usu_apartamento_residencia' => $usuario_completo['usu_apartamento_residencia'],
+    'usu_torre_residencia' => $usuario_completo['usu_torre_residencia']
 ];
 
-// Log para debug
-error_log("Usuario: " . $usuario['usu_nombre_completo']);
-error_log("Rol: " . $rol_usuario);
-error_log("Permisos: " . json_encode($permisos));
-
-// === MENSAJES DE SESIÓN ===
 // Obtener mensajes de la sesión
 $errores = $_SESSION['errores_pqrs'] ?? [];
 $mensajeExito = $_SESSION['mensaje_pqrs'] ?? null;
@@ -79,8 +75,7 @@ $mensajeExito = $_SESSION['mensaje_pqrs'] ?? null;
 // Limpiar mensajes de la sesión después de obtenerlos
 unset($_SESSION['errores_pqrs'], $_SESSION['mensaje_pqrs']);
 
-// === FUNCIONES AUXILIARES ===
-// Separar nombres y apellidos
+// Función para separar nombres y apellidos
 function separarNombreCompleto($nombreCompleto) {
     $partes = explode(' ', trim($nombreCompleto));
     
@@ -98,53 +93,7 @@ function separarNombreCompleto($nombreCompleto) {
     }
 }
 
-$nombresSeparados = separarNombreCompleto($usuario['usu_nombre_completo']);
-
-// === MOSTRAR INFORMACIÓN DE ROL (OPCIONAL) ===
-?>
-
-<!-- Mostrar información del usuario y rol actual -->
-<div class="info-usuario mb-3">
-    <small class="text-muted">
-        Conectado como: <strong><?php echo htmlspecialchars($usuario['usu_nombre_completo']); ?></strong> 
-        - Rol: <strong><?php echo htmlspecialchars($rol_usuario); ?></strong>
-        <?php if ($permisos['es_admin_vigilante']): ?>
-            <span class="badge badge-primary ms-2">Acceso completo</span>
-        <?php endif; ?>
-    </small>
-</div>
-
-<?php
-// === LÓGICA CONDICIONAL SEGÚN ROL ===
-// Aquí puedes agregar lógica específica según el rol
-if ($permisos['es_admin_vigilante']) {
-    // Los administradores y vigilantes pueden ver estadísticas adicionales
-    echo "<!-- Administrador/Vigilante: mostrar panel completo -->";
-} else {
-    // Residentes y propietarios ven vista simplificada
-    echo "<!-- Residente/Propietario: vista estándar -->";
-}
-
-// === EJEMPLO DE USO EN CONSULTAS ===
-/*
-// Si necesitas hacer consultas diferentes según el rol:
-
-if ($permisos['puede_ver_todas_pqrs']) {
-    // Administrador/Vigilante ve todas las PQRS
-    $query = "SELECT * FROM tbl_pqrs ORDER BY fecha DESC";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-} else {
-    // Residente/Propietario ve solo sus PQRS
-    $query = "SELECT * FROM tbl_pqrs WHERE usuario_cedula = :cedula ORDER BY fecha DESC";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['cedula' => $usuario['usu_cedula']]);
-}
-
-$pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-*/
-
-// === RESTO DE TU CÓDIGO ORIGINAL AQUÍ ===
+$nombresSeparados = separarNombreCompleto($usuario_mapeado['usu_nombre_completo']);
 ?>
 
 <!DOCTYPE html>
@@ -209,21 +158,21 @@ $pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="info-usuario-logueado">
           <div class="alert alert-info">
             <i class="ri-user-fill"></i>
-            <strong>Solicitud registrada como:</strong> <?= htmlspecialchars($usuario['usu_nombre_completo']) ?>
+            <strong>Solicitud registrada como:</strong> <?= htmlspecialchars($usuario_mapeado['usu_nombre_completo']) ?>
             <br><small>
-                <strong>Rol:</strong> <?= htmlspecialchars($usuario['usu_rol'] ?? 'Usuario') ?> | 
-                <strong>Apartamento:</strong> <?= htmlspecialchars($usuario['usu_apartamento_residencia'] ?? 'N/A') ?> - Torre <?= htmlspecialchars($usuario['usu_torre_residencia'] ?? 'N/A') ?>
+                <strong>Rol:</strong> <?= htmlspecialchars($usuario_mapeado['usu_rol']) ?> | 
+                <strong>Apartamento:</strong> <?= htmlspecialchars($usuario_mapeado['usu_apartamento_residencia']) ?> - Torre <?= htmlspecialchars($usuario_mapeado['usu_torre_residencia']) ?>
             </small>
           </div>
         </div>
 
         <!-- Campos ocultos -->
-        <input type="hidden" name="usuario_cc" value="<?= htmlspecialchars($usuario['usuario_cc']) ?>">
+        <input type="hidden" name="usuario_cc" value="<?= htmlspecialchars($usuario_mapeado['usuario_cc']) ?>">
         <input type="hidden" name="nombres" value="<?= htmlspecialchars($nombresSeparados['nombres']) ?>">
         <input type="hidden" name="apellidos" value="<?= htmlspecialchars($nombresSeparados['apellidos']) ?>">
-        <input type="hidden" name="identificacion" value="<?= htmlspecialchars($usuario['usu_cedula']) ?>">
-        <input type="hidden" name="email" value="<?= htmlspecialchars($usuario['usu_correo']) ?>">
-        <input type="hidden" name="telefono" value="<?= htmlspecialchars($usuario['usu_telefono']) ?>">
+        <input type="hidden" name="identificacion" value="<?= htmlspecialchars($usuario_mapeado['usu_cedula']) ?>">
+        <input type="hidden" name="email" value="<?= htmlspecialchars($usuario_mapeado['usu_correo']) ?>">
+        <input type="hidden" name="telefono" value="<?= htmlspecialchars($usuario_mapeado['usu_telefono']) ?>">
         <!-- Campo oculto para medio de respuesta fijo en correo -->
         <input type="hidden" name="medio_respuesta[]" value="correo">
 
@@ -232,12 +181,12 @@ $pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="input-box">
             <label for="identificacion_display">Número de Identificación</label>
             <input type="text" id="identificacion_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_cedula']) ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_cedula']) ?>" readonly>
           </div>
           <div class="input-box">
             <label for="nombre_completo_display">Nombre Completo</label>
             <input type="text" id="nombre_completo_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_nombre_completo']) ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_nombre_completo']) ?>" readonly>
           </div>
         </div>
 
@@ -245,12 +194,12 @@ $pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="input-box">
             <label for="email_display">Correo Electrónico</label>
             <input type="email" id="email_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_correo']) ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_correo']) ?>" readonly>
           </div>
           <div class="input-box">
             <label for="telefono_display">Teléfono de Contacto</label>
             <input type="tel" id="telefono_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_telefono']) ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_telefono']) ?>" readonly>
           </div>
         </div>
 
@@ -258,12 +207,12 @@ $pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="input-box">
             <label for="apartamento_display">Apartamento</label>
             <input type="text" id="apartamento_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_apartamento_residencia'] ?? 'N/A') ?> - Torre <?= htmlspecialchars($usuario['usu_torre_residencia'] ?? 'N/A') ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_apartamento_residencia']) ?> - Torre <?= htmlspecialchars($usuario_mapeado['usu_torre_residencia']) ?>" readonly>
           </div>
           <div class="input-box">
             <label for="rol_display">Rol</label>
             <input type="text" id="rol_display" class="form-control readonly-field" 
-                   value="<?= htmlspecialchars($usuario['usu_rol'] ?? 'Usuario') ?>" readonly>
+                   value="<?= htmlspecialchars($usuario_mapeado['usu_rol']) ?>" readonly>
           </div>
         </div>
       </fieldset>
@@ -312,7 +261,7 @@ $pqrs_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="alert alert-info">
             <i class="ri-mail-line"></i>
             <strong>Medio de respuesta:</strong> Recibirás la respuesta por <strong>correo electrónico</strong> 
-            a la dirección: <strong><?= htmlspecialchars($usuario['usu_correo']) ?></strong>
+            a la dirección: <strong><?= htmlspecialchars($usuario_mapeado['usu_correo']) ?></strong>
           </div>
         </div>
       </fieldset>
