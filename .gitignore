@@ -1,1 +1,6 @@
 /vendor/
+# Ignorar todos los archivos dentro de uploads/
+uploads/*
+
+# Pero mantener la carpeta uploads vacía
+!uploads/.gitkeep
