@@ -419,3 +419,25 @@ select:focus {
   color: #e74c3c;
   font-style: italic;
 }
+
+.contenedor-boton {
+  display: flex;
+  justify-content: center; 
+  margin: 16px 0;
+}
+
+.boton_cancelarcrud {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #e74c3c;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color .2s, transform .12s;
+}
+.boton_cancelarcrud:hover {
+  background-color: #c0392b; 
+  transform: translateY(-1px); 
+}

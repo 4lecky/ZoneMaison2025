@@ -95,8 +95,11 @@ $stmt = $pdo->query($sql);
                             <a href="visitascrud/Editar.php?id=<?= $datos->vis_id ?>" class="btn btn-warning btn-sm">
                                 <i class="ri-edit-box-line"></i>
                             </a>
-                            <a href="visitascrud/Eliminar.php?id=<?= $datos->vis_id ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar esta visita?');">
-                                <i class="ri-delete-bin-2-line"></i>
+                            <a href="visitascrud/Eliminar.php?id=<?= $datos->vis_id ?>" 
+                            class="btn btn-danger btn-sm" 
+                            onclick="return confirm('¿Seguro que deseas eliminar esta visita?');">
+                            <i class="ri-delete-bin-2-line"></i>
+                            </a>
                             </a>
                         </td>
                     </tr>
@@ -105,6 +108,10 @@ $stmt = $pdo->query($sql);
         </table>
     </div>
 </section>
+
+<div class="contenedor-boton">
+  <a href="../views/visitas.php" class="boton_cancelarcrud">Cancelar</a>
+</div>
 
 
 <?php require_once "./Layout/footer.php"; ?>

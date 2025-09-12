@@ -37,11 +37,24 @@ class EditCrudVisiModel {
             ':id'            => $data['id']
         ]);
     }
-
-    // ✅ Eliminar visita
-    public function eliminarVisita($id) {
-        $sql = "DELETE FROM tbl_visita WHERE vis_id = :id";
+    // ✅ Eliminar visitante y automáticamente visitas asociadas (ON DELETE CASCADE)
+    public function eliminarVisitante($id) {
+        $sql = "DELETE FROM tbl_visitante WHERE visi_id = :id";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([ ':id' => $id ]);
+
+        if ($stmt->execute([":id" => $id])) {
+            if ($stmt->rowCount() > 0) {
+                echo "✅ Se eliminó el visitante con ID: " . $id . " y sus visitas asociadas.";
+                return true;
+            } else {
+                echo "⚠️ No se encontró ningún visitante con visi_id = " . $id;
+                return false;
+            }
+        } else {
+            echo "❌ Error en DELETE: ";
+            print_r($stmt->errorInfo());
+            return false;
+        }
     }
+
 }
