@@ -26,19 +26,42 @@ try {
         throw new Exception('ID de PQRS no válido');
     }
     
+    // CORRECCIÓN: Obtener datos completos del usuario desde la BD (igual que en mis_pqrs.php)
+    $usuario = $_SESSION['usuario'];
+    
+    // Obtener conexión a BD para verificar usuario
+    require_once '../config/db.php';
+    
+    if (!$pdo) {
+        throw new Exception("No se pudo obtener la conexión a la base de datos");
+    }
+    
+    $stmt = $pdo->prepare("SELECT usuario_cc FROM tbl_usuario WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+    $usuarioId = $usuario['id'] ?? $usuario['usuario_cc'] ?? null;
+    
+    if (!$usuarioId) {
+        throw new Exception('Datos de sesión incompletos');
+    }
+    
+    $stmt->execute([$usuarioId]);
+    $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$usuario_completo) {
+        throw new Exception('Usuario no encontrado en la base de datos');
+    }
+    
+    $usuarioCc = $usuario_completo['usuario_cc'];
+    
+    // Obtener PQRS
     $pqrsModel = new PqrsModel();
-    $pqrs = $pqrsModel->obtenerPqrsCompleta($id);
+    $pqrs = $pqrsModel->obtenerPorId($id);
     
     if (!$pqrs) {
         throw new Exception('PQRS no encontrada');
     }
     
-    // Verificar permisos: solo el usuario dueño o admin puede ver
-    $usuario = $_SESSION['usuario'];
-    $esAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
-    $esPropietario = $usuario['usuario_cc'] == $pqrs['usuario_cc'];
-    
-    if (!$esAdmin && !$esPropietario) {
+    // Verificar permisos: solo el usuario dueño puede ver
+    if ($usuarioCc != $pqrs['usuario_cc']) {
         throw new Exception('No tiene permisos para ver esta PQRS');
     }
     
@@ -54,6 +77,7 @@ try {
     ]);
     
 } catch (Exception $e) {
+    error_log("Error en obtenerDetallesPqr.php: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
@@ -73,7 +97,6 @@ function generarHtmlRespuesta($pqrs) {
     
     $numeroRadicado = str_pad($pqrs['id'], 4, '0', STR_PAD_LEFT);
     $fechaRespuesta = $pqrs['fecha_respuesta'] ? date('d/m/Y H:i', strtotime($pqrs['fecha_respuesta'])) : 'N/A';
-    $nombreAdmin = $pqrs['nombre_admin'] ?? 'Administración';
     
     $html = "
     <div class='respuesta-container'>
@@ -83,7 +106,6 @@ function generarHtmlRespuesta($pqrs) {
                 <div class='respuesta-meta'>
                     <span class='radicado'>Radicado: PQRS-" . date('Y') . "-$numeroRadicado</span>
                     <span class='fecha'>Respondida el: $fechaRespuesta</span>
-                    <span class='respondido-por'>Por: $nombreAdmin</span>
                 </div>
             </div>
             <div class='respuesta-estado'>
@@ -111,15 +133,7 @@ function generarHtmlRespuesta($pqrs) {
         <div class='respuesta-acciones'>
             <div class='notificacion-info'>
                 <i class='ri-notification-3-line'></i>
-                <small>Esta respuesta fue enviada a su correo electrónico";
-    
-    // Agregar info de SMS si aplica
-    $medios = explode(',', $pqrs['medio_respuesta']);
-    if (in_array('sms', array_map('trim', $medios))) {
-        $html .= " y por SMS";
-    }
-    
-    $html .= ".</small>
+                <small>Esta respuesta fue enviada a su correo electrónico.</small>
             </div>
         </div>
     </div>
@@ -154,13 +168,9 @@ function generarHtmlRespuesta($pqrs) {
         color: #666;
     }
     
-    .respuesta-meta span {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    
-    .estado-tag {
+    .estado-tag.resuelto {
+        background: #d4edda;
+        color: #155724;
         padding: 8px 16px;
         border-radius: 20px;
         font-size: 0.85em;
@@ -170,19 +180,8 @@ function generarHtmlRespuesta($pqrs) {
         gap: 5px;
     }
     
-    .estado-tag.resuelto {
-        background: #d4edda;
-        color: #155724;
-    }
-    
     .solicitud-resumen {
         margin-bottom: 25px;
-    }
-    
-    .solicitud-resumen h4 {
-        color: #666;
-        margin-bottom: 15px;
-        font-size: 1.1em;
     }
     
     .solicitud-box {
@@ -190,14 +189,6 @@ function generarHtmlRespuesta($pqrs) {
         padding: 15px;
         border-radius: 8px;
         border-left: 4px solid #6c757d;
-    }
-    
-    .mensaje-original {
-        margin-top: 10px;
-        font-style: italic;
-        color: #555;
-        max-height: 100px;
-        overflow-y: auto;
     }
     
     .respuesta-contenido h4 {
@@ -213,7 +204,6 @@ function generarHtmlRespuesta($pqrs) {
         border: 2px solid #28a745;
         line-height: 1.6;
         font-size: 1.05em;
-        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.1);
     }
     
     .respuesta-acciones {
@@ -230,10 +220,6 @@ function generarHtmlRespuesta($pqrs) {
         justify-content: center;
         gap: 8px;
         color: #666;
-    }
-    
-    .notificacion-info i {
-        color: #007bff;
     }
     </style>";
     
@@ -269,15 +255,6 @@ function generarHtmlDetalles($pqrs) {
         }
     }
     
-    // Procesar medios de respuesta
-    $medios = explode(',', $pqrs['medio_respuesta']);
-    $mediosHtml = '';
-    foreach ($medios as $medio) {
-        $medio = trim($medio);
-        $icono = $medio === 'correo' ? 'mail-line' : 'message-3-line';
-        $mediosHtml .= "<span class='medio-tag'><i class='ri-$icono'></i> " . ucfirst($medio) . "</span>";
-    }
-    
     $html = "
     <div class='detalles-container'>
         <div class='detalles-header'>
@@ -302,7 +279,6 @@ function generarHtmlDetalles($pqrs) {
                     <p><strong>Identificación:</strong> " . htmlspecialchars($pqrs['identificacion']) . "</p>
                     <p><strong>Email:</strong> " . htmlspecialchars($pqrs['email']) . "</p>
                     <p><strong>Teléfono:</strong> " . htmlspecialchars($pqrs['telefono']) . "</p>
-                    <p><strong>Medios de respuesta:</strong><br>$mediosHtml</p>
                 </div>
             </div>
             
@@ -337,13 +313,11 @@ function generarHtmlDetalles($pqrs) {
     
     // Si tiene respuesta, mostrarla
     if (!empty($pqrs['respuesta'])) {
-        $nombreAdmin = $pqrs['nombre_admin'] ?? 'Administración';
         $html .= "
         <div class='seccion-respuesta'>
             <h4><i class='ri-chat-3-line'></i> Respuesta administrativa</h4>
             <div class='respuesta-box-detalles'>
                 <div class='respuesta-meta-admin'>
-                    <span><strong>Respondida por:</strong> $nombreAdmin</span>
                     <span><strong>Fecha:</strong> $fechaRespuesta</span>
                 </div>
                 <div class='respuesta-contenido-admin'>
@@ -357,238 +331,30 @@ function generarHtmlDetalles($pqrs) {
     </div>
     
     <style>
-    .detalles-container {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-    }
-    
-    .detalles-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 20px;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        border-radius: 10px;
-        border-left: 4px solid #007bff;
-    }
-    
-    .titulo-pqrs {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .titulo-pqrs h3 {
-        color: #007bff;
-        margin: 0;
-        font-size: 1.4em;
-    }
-    
-    .estado-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.8em;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    
+    .detalles-container { font-family: Arial, sans-serif; line-height: 1.6; }
+    .detalles-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 10px; border-left: 4px solid #007bff; }
+    .titulo-pqrs { display: flex; align-items: center; gap: 15px; }
+    .titulo-pqrs h3 { color: #007bff; margin: 0; font-size: 1.4em; }
+    .estado-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
     .estado-pendiente { background: #fff3cd; color: #856404; }
     .estado-en_proceso { background: #cce5ff; color: #004085; }
     .estado-resuelto { background: #d1edda; color: #155724; }
-    
-    .tipo-badge {
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    
+    .tipo-badge { padding: 8px 16px; border-radius: 20px; font-size: 0.9em; font-weight: bold; text-transform: uppercase; }
     .tipo-peticion { background: #e3f2fd; color: #1976d2; }
     .tipo-queja { background: #ffebee; color: #c62828; }
     .tipo-reclamo { background: #fff3e0; color: #ef6c00; }
     .tipo-sugerencia { background: #f3e5f5; color: #7b1fa2; }
-    
-    .detalles-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 25px;
-    }
-    
-    .seccion-usuario, .seccion-fechas {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #dee2e6;
-    }
-    
-    .seccion-usuario h4, .seccion-fechas h4 {
-        color: #495057;
-        margin: 0 0 15px 0;
-        font-size: 1.1em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .info-usuario-detalles p, .info-fechas p {
-        margin: 8px 0;
-        color: #333;
-    }
-    
-    .medio-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 4px 8px;
-        background: #e9ecef;
-        border-radius: 15px;
-        font-size: 0.85em;
-        margin-right: 10px;
-        margin-bottom: 5px;
-    }
-    
-    .seccion-contenido {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #dee2e6;
-        margin-bottom: 20px;
-    }
-    
-    .seccion-contenido h4 {
-        color: #495057;
-        margin: 0 0 15px 0;
-        font-size: 1.1em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .contenido-box h5 {
-        color: #6c757d;
-        margin: 15px 0 8px 0;
-        font-size: 1em;
-    }
-    
-    .asunto-detalles {
-        background: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-        border-left: 3px solid #007bff;
-        font-weight: 500;
-    }
-    
-    .mensaje-detalles {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 5px;
-        border-left: 3px solid #6c757d;
-        white-space: pre-wrap;
-        max-height: 200px;
-        overflow-y: auto;
-    }
-    
-    .archivos-adjuntos {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #dee2e6;
-        margin-bottom: 20px;
-    }
-    
-    .archivos-adjuntos h5 {
-        color: #495057;
-        margin: 0 0 15px 0;
-        font-size: 1.1em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .lista-archivos {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .lista-archivos li {
-        margin-bottom: 8px;
-    }
-    
-    .enlace-archivo {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #007bff;
-        text-decoration: none;
-        padding: 8px 12px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-    
-    .enlace-archivo:hover {
-        background-color: #f8f9fa;
-        text-decoration: none;
-    }
-    
-    .seccion-respuesta {
-        background: #e8f5e8;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #28a745;
-        margin-bottom: 20px;
-    }
-    
-    .seccion-respuesta h4 {
-        color: #28a745;
-        margin: 0 0 15px 0;
-        font-size: 1.2em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .respuesta-box-detalles {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid #28a745;
-    }
-    
-    .respuesta-meta-admin {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 15px;
-        font-size: 0.9em;
-        color: #666;
-    }
-    
-    .respuesta-contenido-admin {
-        color: #333;
-        line-height: 1.6;
-        white-space: pre-wrap;
-    }
-    
-    @media (max-width: 768px) {
-        .detalles-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .detalles-header {
-            flex-direction: column;
-            gap: 15px;
-            text-align: center;
-        }
-        
-        .titulo-pqrs {
-            flex-direction: column;
-            gap: 10px;
-        }
-    }
+    .detalles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+    .seccion-usuario, .seccion-fechas { background: white; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+    .seccion-contenido { background: white; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; margin-bottom: 20px; }
+    .contenido-box h5 { color: #6c757d; margin: 15px 0 8px 0; font-size: 1em; }
+    .asunto-detalles { background: #f8f9fa; padding: 10px; border-radius: 5px; border-left: 3px solid #007bff; font-weight: 500; }
+    .mensaje-detalles { background: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 3px solid #6c757d; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+    .seccion-respuesta { background: #e8f5e8; padding: 20px; border-radius: 8px; border: 1px solid #28a745; margin-bottom: 20px; }
+    .respuesta-box-detalles { background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745; }
+    @media (max-width: 768px) { .detalles-grid { grid-template-columns: 1fr; } }
     </style>";
     
     return $html;
 }
+?>

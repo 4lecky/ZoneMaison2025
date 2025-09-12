@@ -479,67 +479,108 @@ $mediosRespuesta = explode(',', $pqrs['medio_respuesta']);
         </div>
 
         <!-- Archivos adjuntos -->
-        <?php if (!empty($pqrs['archivos'])): ?>
+                 <?php if (!empty($pqrs['archivos'])): ?>
         <div class="tarjeta-detalle animacion-entrada">
             <div class="cabecera-seccion">
                 <h2><i class="fas fa-paperclip"></i> Archivos Adjuntos</h2>
             </div>
             <div class="contenido-seccion">
                 <?php
-                // Procesar archivos de manera más segura
+                // CORRECCIÓN: Procesar archivos de manera correcta
                 $archivos = [];
                 
                 if (!empty($pqrs['archivos'])) {
                     try {
-                        // Intentar decodificar como JSON
+                        // Intentar decodificar como JSON primero
                         $archivosJson = json_decode($pqrs['archivos'], true);
                         
                         if (json_last_error() === JSON_ERROR_NONE && is_array($archivosJson)) {
+                            // Es un JSON válido con array de archivos
                             $archivos = $archivosJson;
                         } else {
-                            // Tratar como archivo simple
-                            $archivos = [['nombre_archivo' => $pqrs['archivos'], 'nombre_original' => $pqrs['archivos']]];
+                            // Podría ser un string simple o JSON malformado
+                            // Intentar como archivo simple
+                            if (is_string($pqrs['archivos']) && strlen(trim($pqrs['archivos'])) > 0) {
+                                $archivos = [[
+                                    'nombre_original' => basename($pqrs['archivos']),
+                                    'nombre_archivo' => $pqrs['archivos'],
+                                    'ruta' => 'uploads/pqrs/' . $pqrs['archivos']
+                                ]];
+                            }
                         }
                     } catch (Exception $e) {
-                        $archivos = [['nombre_archivo' => $pqrs['archivos'], 'nombre_original' => $pqrs['archivos']]];
+                        error_log("Error procesando archivos PQRS ID {$pqrs['id']}: " . $e->getMessage());
+                        $archivos = [];
                     }
                 }
                 
-                foreach ($archivos as $archivo):
-                    $nombreArchivo = $archivo['nombre_archivo'] ?? $archivo['nombre_original'] ?? 'archivo';
-                    $nombreOriginal = $archivo['nombre_original'] ?? $nombreArchivo;
-                    $tamanio = $archivo['tamaño'] ?? $archivo['tamano'] ?? null;
-                ?>
-                <div class="archivo-adjunto">
-                    <i class="fas fa-file"></i>
-                    <?php
-                    // Verificar si el archivo existe antes de crear el enlace
-                    $rutaArchivo = '../uploads/' . $nombreArchivo;
-                    if (file_exists($rutaArchivo)): ?>
-                        <a href="<?= $rutaArchivo ?>" target="_blank" class="enlace-archivo">
-                            <?= htmlspecialchars($nombreOriginal) ?>
-                        </a>
-                    <?php else: ?>
-                        <span class="enlace-archivo" style="color: #dc3545;">
-                            <?= htmlspecialchars($nombreOriginal) ?> (Archivo no encontrado)
-                        </span>
-                    <?php endif; ?>
-                    
-                    <span class="tamaño-archivo">
-                        <?php
-                        if ($tamanio) {
-                            echo '(' . number_format($tamanio / 1024, 2) . ' KB)';
-                        } elseif (file_exists($rutaArchivo)) {
-                            $tamanioReal = filesize($rutaArchivo);
-                            echo '(' . number_format($tamanioReal / 1024, 2) . ' KB)';
+                if (empty($archivos)): ?>
+                    <p class="text-muted">No se pudieron cargar los archivos adjuntos.</p>
+                <?php else: ?>
+                    <?php foreach ($archivos as $archivo): 
+                        // CORRECCIÓN: Manejo seguro de datos del archivo
+                        $nombreOriginal = $archivo['nombre_original'] ?? $archivo['nombre_archivo'] ?? 'archivo';
+                        $nombreArchivo = $archivo['nombre_archivo'] ?? $archivo['ruta'] ?? $nombreOriginal;
+                        $tamanio = $archivo['tamaño'] ?? $archivo['tamano'] ?? $archivo['size'] ?? null;
+                        
+                        // CORRECCIÓN: Construir ruta correcta
+                        // Si ya tiene la ruta completa, usarla; si no, construirla
+                        if (isset($archivo['ruta']) && strpos($archivo['ruta'], 'uploads/') !== false) {
+                            $rutaArchivo = '../' . $archivo['ruta'];
+                        } else {
+                            // Construir ruta asumiendo que está en uploads/pqrs/
+                            $rutaArchivo = '../uploads/pqrs/' . $nombreArchivo;
                         }
-                        ?>
-                    </span>
-                </div>
-                <?php endforeach; ?>
+                        
+                        // URL para el navegador (sin ../)
+                        if (isset($archivo['ruta']) && strpos($archivo['ruta'], 'uploads/') !== false) {
+                            $urlArchivo = '../' . $archivo['ruta'];
+                        } else {
+                            $urlArchivo = '../uploads/pqrs/' . $nombreArchivo;
+                        }
+                    ?>
+                    <div class="archivo-adjunto">
+                        <i class="fas fa-file"></i>
+                        
+                        <?php if (file_exists($rutaArchivo)): ?>
+                            <a href="<?= htmlspecialchars($urlArchivo) ?>" target="_blank" class="enlace-archivo">
+                                <?= htmlspecialchars($nombreOriginal) ?>
+                            </a>
+                        <?php else: ?>
+                            <span class="enlace-archivo" style="color: #dc3545;">
+                                <?= htmlspecialchars($nombreOriginal) ?> 
+                                <small>(Archivo no encontrado)</small>
+                            </span>
+                            
+                            <?php
+                            // DEBUG: Mostrar información adicional para troubleshooting
+                            error_log("Archivo no encontrado - PQRS ID: {$pqrs['id']}");
+                            error_log("  - Ruta buscada: $rutaArchivo");
+                            error_log("  - Nombre original: $nombreOriginal");
+                            error_log("  - Nombre archivo: $nombreArchivo");
+                            error_log("  - Datos completos: " . print_r($archivo, true));
+                            ?>
+                        <?php endif; ?>
+                        
+                        <span class="tamaño-archivo">
+                            <?php
+                            if ($tamanio && is_numeric($tamanio)) {
+                                echo '(' . number_format($tamanio / 1024, 2) . ' KB)';
+                            } elseif (file_exists($rutaArchivo)) {
+                                $tamanioReal = filesize($rutaArchivo);
+                                echo '(' . number_format($tamanioReal / 1024, 2) . ' KB)';
+                            } else {
+                                echo '(Tamaño desconocido)';
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         <?php endif; ?>
+
 
         <!-- Configuración de respuesta -->
         <div class="tarjeta-detalle animacion-entrada">
@@ -685,3 +726,4 @@ $mediosRespuesta = explode(',', $pqrs['medio_respuesta']);
     </script>
 </body>
 </html>
+<!-- Archivos adjuntos -->

@@ -1,23 +1,17 @@
 <?php
-// obtenerPqr.php - Para obtener datos de una PQRS específica para edición
+// obtenerPqr.php - Controlador para obtener datos de una PQRS específica para edición
 
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+header('Content-Type: application/json');
 
 // Verificar que el usuario esté logueado
 if (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) {
     echo json_encode([
         'success' => false,
-        'message' => 'Debe iniciar sesión'
-    ]);
-    exit;
-}
-
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'ID de PQRS no válido'
+        'message' => 'Usuario no autenticado'
     ]);
     exit;
 }
@@ -25,55 +19,66 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 require_once '../models/pqrsModel.php';
 
 try {
-    $pqrsModel = new PqrsModel();
-    $pqr = $pqrsModel->obtenerPorId($_GET['id']);
+    $id = (int)($_GET['id'] ?? 0);
     
-    if (!$pqr) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'PQRS no encontrada'
-        ]);
-        exit;
+    if ($id <= 0) {
+        throw new Exception('ID de PQRS no válido');
     }
-
-    // Verificar que la PQRS pertenezca al usuario logueado
+    
+    // CORRECCIÓN: Obtener datos completos del usuario desde la BD
     $usuario = $_SESSION['usuario'];
-    if ($pqr['usuario_cc'] != $usuario['usuario_cc']) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'No tiene permisos para acceder a esta PQRS'
-        ]);
-        exit;
+    
+    // Obtener conexión a BD para verificar usuario
+    require_once '../config/db.php';
+    
+    if (!$pdo) {
+        throw new Exception("No se pudo obtener la conexión a la base de datos");
     }
-
-    // Verificar que la PQRS esté en estado pendiente (solo se pueden editar pendientes)
-    if ($pqr['estado'] !== 'pendiente') {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Solo se pueden editar PQRS que estén en estado pendiente'
-        ]);
-        exit;
+    
+    $stmt = $pdo->prepare("SELECT usuario_cc FROM tbl_usuario WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+    $usuarioId = $usuario['id'] ?? $usuario['usuario_cc'] ?? null;
+    
+    if (!$usuarioId) {
+        throw new Exception('Datos de sesión incompletos');
     }
-
+    
+    $stmt->execute([$usuarioId]);
+    $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$usuario_completo) {
+        throw new Exception('Usuario no encontrado en la base de datos');
+    }
+    
+    $usuarioCc = $usuario_completo['usuario_cc'];
+    
+    // Obtener PQRS
+    $pqrsModel = new PqrsModel();
+    $pqrs = $pqrsModel->obtenerPorId($id);
+    
+    if (!$pqrs) {
+        throw new Exception('PQRS no encontrada');
+    }
+    
+    // Verificar permisos: solo el usuario dueño puede ver
+    if ($usuarioCc != $pqrs['usuario_cc']) {
+        throw new Exception('No tiene permisos para ver esta PQRS');
+    }
+    
+    // Solo se pueden editar PQRS pendientes
+    if ($pqrs['estado'] !== 'pendiente') {
+        throw new Exception('Solo se pueden editar PQRS pendientes');
+    }
+    
     echo json_encode([
         'success' => true,
-        'data' => [
-            'id' => $pqr['id'],
-            'tipo_pqr' => $pqr['tipo_pqr'],
-            'asunto' => $pqr['asunto'],
-            'mensaje' => $pqr['mensaje'],
-            'medio_respuesta' => $pqr['medio_respuesta'],
-            'archivos' => $pqr['archivos'],
-            'estado' => $pqr['estado'],
-            'fecha_creacion' => $pqr['fecha_creacion']
-        ]
+        'data' => $pqrs
     ]);
-
+    
 } catch (Exception $e) {
-    error_log("Error en obtenerPqr: " . $e->getMessage());
+    error_log("Error en obtenerPqr.php: " . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor'
+        'message' => $e->getMessage()
     ]);
 }
 ?>

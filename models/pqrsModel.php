@@ -172,18 +172,30 @@ class PqrsModel {
     /**
      * Eliminar PQRS pendiente
      */
-    public function eliminar($id) {
+     public function eliminar($id, $usuario_cc = null) {
         try {
-            $query = "DELETE FROM " . $this->table_name . " 
-                      WHERE id = :id AND estado = 'pendiente'";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            // Si se proporciona usuario_cc, validar que la PQRS pertenezca al usuario
+            if ($usuario_cc !== null) {
+                $query = "DELETE FROM " . $this->table_name . " 
+                          WHERE id = :id AND usuario_cc = :usuario_cc AND estado = 'pendiente'";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->bindParam(':usuario_cc', $usuario_cc, PDO::PARAM_INT);
+            } else {
+                // Método original para compatibilidad con otros usos
+                $query = "DELETE FROM " . $this->table_name . " 
+                          WHERE id = :id AND estado = 'pendiente'";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            }
+            
             return $stmt->execute();
         } catch (Exception $e) {
             error_log("Error eliminando PQRS: " . $e->getMessage());
             return false;
         }
     }
+
 
     /**
      * Actualizar estado de PQRS

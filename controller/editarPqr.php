@@ -26,7 +26,32 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once '../models/pqrsModel.php';
 
 try {
+    // CORRECCIÓN: Obtener datos completos del usuario desde la BD
     $usuario = $_SESSION['usuario'];
+    
+    // Obtener conexión a BD para verificar usuario
+    require_once '../config/db.php';
+    
+    if (!$pdo) {
+        throw new Exception("No se pudo obtener la conexión a la base de datos");
+    }
+    
+    $stmt = $pdo->prepare("SELECT usuario_cc FROM tbl_usuario WHERE usuario_cc = ? AND usu_estado = 'Activo'");
+    $usuarioId = $usuario['id'] ?? $usuario['usuario_cc'] ?? null;
+    
+    if (!$usuarioId) {
+        throw new Exception('Datos de sesión incompletos');
+    }
+    
+    $stmt->execute([$usuarioId]);
+    $usuario_completo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$usuario_completo) {
+        throw new Exception('Usuario no encontrado en la base de datos');
+    }
+    
+    $usuarioCc = $usuario_completo['usuario_cc'];
+    
     $pqrsModel = new PqrsModel();
     
     // Validar datos recibidos
@@ -51,7 +76,7 @@ try {
         exit;
     }
 
-    if ($pqrExistente['usuario_cc'] != $usuario['usuario_cc']) {
+    if ($pqrExistente['usuario_cc'] != $usuarioCc) {
         echo json_encode([
             'success' => false,
             'message' => 'No tiene permisos para editar esta PQRS'
@@ -153,7 +178,7 @@ try {
     error_log("Error en editarPqr: " . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Error interno del servidor'
+        'message' => 'Error interno del servidor: ' . $e->getMessage()
     ]);
 }
 

@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS tbl_reservas (
     reserva_hora_inicio TIME NOT NULL,
     reserva_hora_fin TIME NOT NULL,
     reserva_estado ENUM('activa','cancelada','completada') DEFAULT 'activa',
-    reserva_observaciones TEXT DEFAULT NULL,
     reserva_fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reserva_fecha_actualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (reserva_id),

@@ -67,118 +67,239 @@ require_once './Layout/header.php';
 
     <!-- JS principal -->
     <script src="../assets/js/pqrs.js" defer></script>
+
+        <!-- ESTILOS TEMPORALES PARA FAQ - ALTA PRIORIDAD -->
+    <style>
+    .faq-item.active .faq-answer {
+        max-height: 200px !important;
+        padding: 20px 25px !important;
+        border-top: 1px solid #9D825D !important;
+    }
+    
+    .faq-item.active .arrow {
+        transform: rotate(180deg) !important;
+        color: #7b9a82 !important;
+    }
+    
+    .faq-item.active .faq-question {
+        background: linear-gradient(135deg, #9D825D, #7b9a82) !important;
+        color: white !important;
+    }
+    
+    .faq-item.active .faq-question .icono-pregunta,
+    .faq-item.active .faq-question .arrow {
+        color: white !important;
+    }
+    </style>
 </head>
-<body> 
-
-<div class="pqrs-intro">
-  <h2>📋PQRS</h2>
-
-  <p>
-    El módulo de <strong>PQRS</strong> facilita la comunicación entre 
-    <strong>residentes, propietarios, vigilantes</strong> y la 
-    <strong>administración</strong>.
-  </p>
-
-  <p>
-    Aquí puedes reportar fallas, temas de seguridad o dar sugerencias de forma rápida y centralizada.
-  </p>
-
-  <p>
-    ✅ Haz clic en <strong>"Crear PQR"</strong>, completa el formulario y recibirás respuesta por <strong>correo electrónico</strong> al igual que en esta plataforma.
-  </p>
-
-  <p>
-    🔍 Para consultar el estado o respuesta de tus solicitudes, entra en <strong>"Mis PQRS"</strong> y revisa su avance.
-  </p>
-</div>
-
-    <!-- Fondo con mensaje y opciones -->
-    <div class="fondo-container">
-        <div class="mensaje-container">
-    <div class="contenedor-limitado">
-
-    <!-- Primera fila: Crear PQR - Solo para roles específicos -->
-      <div class="fila-crear">
-        <?php if (in_array($rol_usuario, ['Residente', 'Propietario', 'Vigilante'], true)): ?>
-        <div class="opcion opcion-grande" onclick="window.location.href='crear_pqr.php'">
-          <img src="../assets/img/crear_pqr.png" alt="Crear PQR">
-          <p>Crear PQR</p>
-        </div>
-        <?php else: ?>
-        <div class="opcion opcion-grande opcion-deshabilitada" title="Solo residentes, propietarios y vigilantes pueden crear PQRS">
-          <img src="../assets/img/crear_pqr.png" alt="Crear PQR">
-          <p>Crear PQR</p>
-          <small class="texto-deshabilitado">No disponible para tu rol</small>
-        </div>
-        <?php endif; ?>
-      </div>
-
-      <!-- Segunda fila: Estado y Preguntas -->
-      <div class="fila-secundaria">
-        <div class="opcion" onclick="window.location.href='mis_pqrs.php'">
-          <img src="../assets/img/estado_pqr.png" alt="Estado de mi PQR">
-          <p>Mis PQRS</p>
-        </div>
-
-        <div class="opcion" onclick="location.href='#dudas'">
-          <img src="../assets/img/preguntas.png" alt="Preguntas Frecuentes">
-          <p>Preguntas Frecuentes</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-    <div class="inquietudes-container" id="dudas">
-        <h2>¿Tienes inquietudes sobre tus PQR?</h2>
-    
-        <div class="faq-item">
-            <button class="faq-question">
-                📌 ¿Quién puede ver mis PQRS? <span class="arrow">▼</span>
-            </button>
-            <div class="faq-answer">
-                Solo tú y los administradores autorizados pueden ver el contenido de tus PQRS.
-            </div>
-        </div>
-    
-        <div class="faq-item">
-            <button class="faq-question">
-                📌 ¿Cuánto tiempo tarda en resolverse una PQR? <span class="arrow">▼</span>
-            </button>
-            <div class="faq-answer">
-                El tiempo puede variar, pero generalmente se responde en un plazo de 5 a 10 días hábiles.
-            </div>
-        </div>
-    
-        <div class="faq-item">
-            <button class="faq-question">
-                📌 ¿Puedo adjuntar documentos o imágenes a mi PQR? <span class="arrow">▼</span>
-            </button>
-            <div class="faq-answer">
-                Sí, el sistema permite adjuntar archivos PDF, imágenes y documentos relacionados.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">
-                📌 ¿Puedo modificar o cancelar una PQR enviada? <span class="arrow">▼</span>
-            </button>
-            <div class="faq-answer">
-                Sí, puedes modificar o cancelar tu PQR dentro de los primeros 20 minutos después de haberla registrado, siempre y cuando su estado aún sea "pendiente". Pasado ese tiempo o si ya está en proceso, no se permiten cambios.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question">
-                📌 ¿Cómo me notifican sobre la respuesta a mi PQR? <span class="arrow">▼</span>
-            </button>
-            <div class="faq-answer">
-                Recibirás una notificación por correo electrónico y también podrás ver el estado actualizado desde la plataforma en tiempo real.
-            </div>
+<body>
+    <!-- Alertas -->
+    <div class="alerta alerta-exito">
+        <i class="ri-check-circle-fill"></i>
+        <div>
+            <strong>¡PQRS enviada exitosamente!</strong><br>
+            Su número de radicado es: <strong>ZM-2025-001234</strong><br>
+            Puede hacer seguimiento desde 'Mis PQRS'.
         </div>
     </div>
-    
+
+    <!-- Encabezado principal -->
+    <div class="encabezado-pqrs">
+        <h1>
+            <i class="ri-file-list-3-line"></i>
+            Sistema de PQRS
+        </h1>
+        <p class="subtitulo">
+            Administra y responde las peticiones, quejas, reclamos y sugerencias de los residentes
+        </p>
+    </div>
+
+    <!-- Tarjetas informativas -->
+    <div class="tarjetas-info">
+        <div class="tarjeta-info">
+            <div class="icono">
+                <i class="ri-user-line"></i>
+            </div>
+            <h3>Para Residentes</h3>
+            <p>Facilita la comunicación entre residentes, propietarios, vigilantes y la administración de manera rápida y centralizada.</p>
+        </div>
+        
+        <div class="tarjeta-info">
+            <div class="icono">
+                <i class="ri-mail-send-line"></i>
+            </div>
+            <h3>Respuesta Garantizada</h3>
+            <p>Recibirás respuesta por correo electrónico y podrás hacer seguimiento en tiempo real desde la plataforma.</p>
+        </div>
+        
+        <div class="tarjeta-info">
+            <div class="icono">
+                <i class="ri-shield-check-line"></i>
+            </div>
+            <h3>Seguro y Privado</h3>
+            <p>Solo tú y los administradores autorizados pueden ver el contenido de tus PQRS. Tu información está protegida.</p>
+        </div>
+    </div>
+
+    <div class="contenedor-principal">
+        <!-- Sección principal de crear PQR -->
+        <div class="seccion-crear">
+            <div class="cabecera">
+                <h2>¿Necesitas reportar algo?</h2>
+                <p>Crea tu PQRS de forma rápida y sencilla</p>
+            </div>
+            <div class="contenido">
+                <a href="crear_pqr.php" class="boton-crear">
+                    <i class="ri-add-circle-line"></i>
+                    Crear Nueva PQR
+                </a>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                    <i class="ri-time-line"></i>
+                    Proceso rápido • Respuesta en 5-10 días hábiles
+                </p>
+            </div>
+        </div>
+
+        <!-- Opciones secundarias -->
+        <div class="opciones-secundarias">
+            <a href="mis_pqrs.php" class="opcion-card">
+                <div class="imagen">
+                    <img src="../assets/img/estado_pqr.png" alt="Estado de mi PQR">
+                </div>
+                <div class="contenido-card">
+                    <h3>Mis PQRS</h3>
+                    <p>Consulta el estado y respuesta de todas tus solicitudes enviadas</p>
+                </div>
+            </a>
+
+            <a href="#faq-section" class="opcion-card">
+                <div class="imagen">
+                    <img src="../assets/img/preguntas.png" alt="Preguntas Frecuentes">
+                </div>
+                <div class="contenido-card">
+                    <h3>Preguntas Frecuentes</h3>
+                    <p>Resuelve tus dudas sobre el sistema de PQRS y sus procesos</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sección FAQ -->
+    <div class="seccion-faq" id="faq-section">
+        <div class="cabecera-faq">
+            <h2>Preguntas Frecuentes</h2>
+        </div>
+        <div class="contenido-faq">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>
+                        <i class="ri-eye-line icono-pregunta"></i>
+                        ¿Quién puede ver mis PQRS?
+                    </span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Solo tú y los administradores autorizados pueden ver el contenido de tus PQRS. La información está protegida y es completamente confidencial.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>
+                        <i class="ri-time-line icono-pregunta"></i>
+                        ¿Cuánto tiempo tarda en resolverse una PQR?
+                    </span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>El tiempo puede variar según la complejidad, pero generalmente se responde en un plazo de 5 a 10 días hábiles.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>
+                        <i class="ri-attachment-line icono-pregunta"></i>
+                        ¿Puedo adjuntar documentos o imágenes?
+                    </span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sí, el sistema permite adjuntar archivos PDF, imágenes y documentos relacionados para complementar tu solicitud.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>
+                        <i class="ri-edit-line icono-pregunta"></i>
+                        ¿Puedo modificar una PQR enviada?
+                    </span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sí, puedes modificar o cancelar tu PQR dentro de los primeros 20 minutos después de haberla registrado, siempre que su estado sea "pendiente".</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>
+                        <i class="ri-notification-line icono-pregunta"></i>
+                        ¿Cómo me notifican sobre la respuesta?
+                    </span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Recibirás una notificación por correo electrónico y también podrás ver el estado actualizado desde la plataforma en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Cerrar todas las preguntas
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Abrir la pregunta actual si no estaba activa
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-ocultar alertas después de 5 segundos
+        setTimeout(() => {
+            const alertas = document.querySelectorAll('.alerta');
+            alertas.forEach(alerta => {
+                alerta.style.opacity = '0';
+                alerta.style.transform = 'translateY(-20px)';
+                setTimeout(() => alerta.remove(), 300);
+            });
+        }, 5000);
+    </script>
 </body>
 
 <?php

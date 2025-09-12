@@ -1,400 +1,3 @@
-/* ======================= */
-/*    INDEX - PÁGINA INICIO   */
-/* ======================= */
-
-/* Elimina márgenes y padding predeterminados de todos los elementos */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Evita que width y height se vean afectados por padding y border */
-    font-family: Arial, sans-serif; /* Fuente predeterminada */
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-
-/* Configuración general del cuerpo */
-
-
-
-/* 
-==================
-ESTILOS DEL HEADER
-==================
-*/
-
-
-/* Logo alineado a la izquierda */
-.logo-container {
-    position: absolute;
-    left: 15px;
-    flex-shrink: 0; /* Evita que el logo se reduzca */
-
-}
-
-/* Configuración del logo */
-.logo {
-    width: 130px; /* Tamaño del logo */
-    height: auto; /* Mantiene la proporción */
-}
-
-/* Estilos del título principal */
-.title {
-    font-size: 50px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-decoration: underline;
-    width: 100%;
-    text-align: center;
-    margin: 0;
-}
-
-.pqrs-intro {
-  background-color: rgb(248, 246, 241);
-  max-width: 1000px; /* MÁS ANCHO */
-  margin: 0 auto;
-  padding: 30px 40px;
-  border-radius: 15px;
-  text-align: center;
-  font-size: 1.2rem; /* texto más grande */
-  color: #4a4a4a;
-  line-height: 1.8;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.pqrs-intro h2 {
-  color: black;
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-.pqrs-intro p {
-  margin-bottom: 15px;
-}
-
-
-
-
-
-
-/* Animación de entrada */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-
-
-
-/* 
-=====================
-ESTILOS DEL FONDO
-=====================
-*/
-
-/* Contenedor principal del fondo */
-.fondo-container {
-    position: relative;
-    width: 100vw;
-    min-height: auto;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Alinea el contenido arriba */
-    padding-bottom: 60px;
-    padding-top: 60px; /* Ajusta este valor según qué tan pegado lo quieres al título */
-}
-
-.mensaje-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.titulo-container {
-  margin: 35px auto 20px auto; /* Centrado horizontal y separación vertical */
-  padding: 15px 25px;
-  background: white;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 10px;
-  color: rgb(0, 0, 0);
-  max-width: 90%;
-  width: fit-content; /* Se ajusta al contenido */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-
-/* 
-=========================
-ESTILOS DEL TEXTO SOBRE EL FONDO
-=========================
-*/
-/* NUEVO: contenedor central que limita el ancho en pantallas grandes */
-/* Limita el ancho general en pantallas grandes */
-
-.contenedor-limitado {
-    max-width: 700px;
-    width: 100%;
-
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
-
-.opciones-container {
-    display: grid;
-    gap: 40px 80px;
-    justify-content: center;
-    justify-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
-}
-
-
-/* Cada opción */
-.opcion {
-    width: 325px;
-    min-height: 325px;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
-
-a.opcion {
-  text-decoration: none;      /* quita el subrayado */
-  color: inherit;   
-  display: block;         /* mantiene el color original */
-          
-}
-
-
-/* Imagen ocupa casi todo el bloque */
-.opcion img {
-    width: 100%;
-    height: 287px;
-    object-fit: cover;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-/* Texto como pie */
-.opcion p {
-    font-weight: bold;
-    font-size: 22px;
-    color: #333;
-    margin: 6px 0 0;
-    padding: 6px 10px;
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* NUEVO: adaptamos para móviles */
-@media (max-width: 640px) {
-    .opciones-container {
-        max-width: 100%;
-        gap: 20px;
-    }
-
-    .opcion {
-        width: 90%;
-        height: auto;
-    }
-
-    .opcion img {
-        height: 180px;
-    }
-}
-
-/* Efecto al pasar el mouse sobre la opción */
-.opcion:hover {
-    transform: scale(1.05);
-}
-
-.fila-crear {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
-}
-
-.fila-secundaria {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.opcion-grande {
-    width: 700px;
-    max-width: 100%;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .fila-secundaria {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .opcion-grande {
-        width: 90%;
-    }
-}
-
-
-
-/* Estilos del modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-
-/* Contenido del modal */
-.modal-content {
-    background: rgb(252, 244, 219);
-    padding: 20px;
-    border-radius: 10px;
-    width: 350px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Botón para cerrar el modal */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* Estilos generales del botón */
-.btn {
-    background-color: #7b9a82;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-/* Efecto al pasar el mouse sobre el botón */
-.btn:hover {
-    background-color: #5a7b62;
-}
-
-
-
-/* Contenedor principal ajustado */
-/* REEMPLAZA toda la sección FAQ en pqrs.css con esto: */
-/* Contenedor principal ajustado */
-.inquietudes-container {
-    flex: 1;
-    padding: 90px 50px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
-}
-
-.inquietudes-container h2 {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 40px;
-    color: #1f1f1f;
-    font-family: 'Kavoon', cursive;
-}
-
-.faq-item {
-    background-color: #fff;
-    border: 3px solid #9D825D;
-    border-radius: 8px;
-    max-width: 860px;
-    margin: 15px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-
-.faq-question {
-    width: 100%;
-    background-color: #fefefe;
-    border: none;
-    padding: 16px 20px;
-    font-size: 23px;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 620;
-    color: #1f1f1f;
-    transition: background-color 0.3s ease;
-}
-
-.faq-question:hover {
-    background-color: #f0f0f0;
-}
-
-.arrow {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-    color: #666;
-}
-
-.faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    background-color: #ffffff;
-    border-left: 4px solid #7b9a82;
-    font-size: 19px;
-    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-}
-
-/* Estados activos */
-.faq-item.active .faq-answer {
-    max-height: 200px; /* Cambiado: altura fija suficiente para el contenido */
-    padding: 20px;
-}
-
-.faq-item.active .arrow {
-    transform: rotate(180deg);
-}
-
 /* Inicio estilos crear_pqr.html */
 
 xto-container
@@ -2193,4 +1796,498 @@ a:focus {
         display: none;
     }
 }
+
+
+
+
+
+/* Variables CSS con tu paleta de colores */
+:root {
+    --color-primario: #9D825D; /* café principal */
+    --color-secundario: #7b9a82; /* verde */
+    --color-exito: #7b9a82; /* verde para éxito */
+    --color-advertencia: #9D825D; /* café para advertencias */
+    --color-peligro: #dc3545;
+    --color-info: #9D825D; /* café para info */
+    --color-gris: #6c757d;
+    --color-gris-claro: #f8f9fa;
+    --color-blanco: #ffffff;
+    --color-negro: #000000;
+    --sombra-suave: 0 2px 10px rgba(0,0,0,0.1);
+    --sombra-media: 0 4px 20px rgba(0,0,0,0.15);
+    --transicion-suave: all 0.3s ease;
+    --radio-borde: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Encabezado principal */
+.encabezado-pqrs {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+    padding: 40px 30px;
+    border-radius: var(--radio-borde);
+    margin: 20px auto 30px;
+    max-width: 1200px;
+    text-align: center;
+    box-shadow: var(--sombra-media);
+}
+
+.encabezado-pqrs h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.encabezado-pqrs .subtitulo {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* Tarjetas informativas */
+.tarjetas-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.tarjeta-info {
+    background: white;
+    border-radius: var(--radio-borde);
+    padding: 25px;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion-suave);
+    border-left: 4px solid var(--color-primario);
+}
+
+.tarjeta-info:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-media);
+}
+
+.tarjeta-info .icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.tarjeta-info h3 {
+    color: var(--color-negro);
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.tarjeta-info p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Contenedor principal de opciones */
+.contenedor-principal {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Sección de crear PQR destacada */
+.seccion-crear {
+    background: white;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    margin-bottom: 40px;
+    overflow: hidden;
+    border: 2px solid var(--color-primario);
+}
+
+.seccion-crear .cabecera {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+.seccion-crear .cabecera h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seccion-crear .cabecera p {
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.seccion-crear .contenido {
+    padding: 30px;
+    text-align: center;
+}
+
+.boton-crear {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transicion-suave);
+    cursor: pointer;
+}
+
+.boton-crear:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(157, 130, 93, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.boton-crear.deshabilitado {
+    background: var(--color-gris);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.boton-crear.deshabilitado:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Opciones secundarias */
+.opciones-secundarias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.opcion-card {
+    background: white;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    transition: var(--transicion-suave);
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #e2e8f0;
+}
+
+.opcion-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-media);
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Estilo específico para las imágenes en las cards */
+.opcion-card .imagen {
+    height: 200px;
+    background: linear-gradient(45deg, var(--color-gris-claro), #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--color-primario);
+    padding: 0;
+    overflow: hidden;
+}
+
+.opcion-card .imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+    border-radius: 0;
+}
+
+.opcion-card:hover .imagen img {
+    transform: scale(1.02);
+}
+
+.opcion-card .contenido-card {
+    padding: 20px;
+    text-align: center;
+}
+
+.opcion-card h3 {
+    color: var(--color-negro);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.opcion-card p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* ========================================= */
+/* SECCIÓN FAQ - VERSIÓN LIMPIA Y FUNCIONAL */
+/* ========================================= */
+.seccion-faq {
+    background: white;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    margin: 40px auto;
+    max-width: 1200px;
+    overflow: hidden;
+    border: 2px solid var(--color-primario);
+}
+
+.seccion-faq .cabecera-faq {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+    padding: 25px 30px;
+    text-align: center;
+}
+
+.seccion-faq .cabecera-faq h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.contenido-faq {
+    padding: 30px;
+}
+
+/* FAQ Items - VERSIÓN LIMPIA */
+.faq-item {
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-primario);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    transition: var(--transicion-suave);
+}
+
+.faq-item:hover {
+    box-shadow: var(--sombra-media);
+    border-color: var(--color-secundario);
+}
+
+.faq-question {
+    width: 100%;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: none;
+    padding: 18px 25px;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-negro);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transicion-suave);
+}
+
+.faq-question:hover {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+}
+
+.faq-question .icono-pregunta {
+    margin-right: 10px;
+    color: var(--color-primario);
+}
+
+.faq-question .arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: var(--color-primario);
+    font-weight: bold;
+}
+
+/* CORRECCIÓN CRÍTICA DEL FAQ */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    background: var(--color-blanco);
+    padding: 0 25px;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    border-top: 1px solid transparent;
+}
+
+/* Estado activo - ESTA ES LA CLAVE */
+.seccion-faq .contenido-faq .faq-item.active .faq-answer {
+    max-height: 200px !important;
+    padding: 20px 25px !important;
+    border-top: 1px solid var(--color-primario) !important;
+}
+
+.seccion-faq .contenido-faq .faq-item.active .arrow {
+    transform: rotate(180deg) !important;
+    color: var(--color-secundario) !important;
+}
+
+.seccion-faq .contenido-faq .faq-item.active .faq-question {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario)) !important;
+    color: white !important;
+}
+
+.seccion-faq .contenido-faq .faq-item.active .faq-question .icono-pregunta,
+.seccion-faq .contenido-faq .faq-item.active .faq-question .arrow {
+    color: white !important;
+}
+
+.faq-answer p {
+    color: var(--color-negro);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Alertas con colores actualizados */
+.alerta {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--sombra-suave);
+}
+
+.alerta-exito {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: var(--color-negro);
+    border-left: 4px solid var(--color-secundario);
+}
+
+.alerta-error {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    border-left: 4px solid var(--color-peligro);
+}
+
+.alerta i {
+    font-size: 1.3rem;
+    color: var(--color-secundario);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .encabezado-pqrs {
+        margin: 10px;
+        padding: 30px 20px;
+    }
+
+    .encabezado-pqrs h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tarjetas-info {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+
+    .contenedor-principal {
+        padding: 0 10px;
+    }
+
+    .opciones-secundarias {
+        grid-template-columns: 1fr;
+    }
+
+    .seccion-crear .contenido,
+    .contenido-faq {
+        padding: 20px;
+    }
+
+    .opcion-card .imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Contenedor de cada pregunta */
+.faq-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Botón de pregunta */
+.faq-question {
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #2c5530;
+    transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+    background: #f0f0f0;
+}
+
+/* Flecha */
+.faq-question .arrow {
+    transition: transform 0.3s ease;
+}
+
+/* Respuesta oculta por defecto */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    background: #fafafa;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 20px;
+}
+
+/* Cuando está activa (esto lo maneja tu JS) */
+.faq-item.active .faq-answer {
+    max-height: 200px; /* ajusta según contenido */
+    padding: 15px 20px;
+}
+
+
 

@@ -1,52 +1,117 @@
 // assets/js/pqrs.js
-// Versión unificada y corregida: FAQ global, sin duplicados de funciones ni listeners
+// Versión completa con debug específico para FAQ
 
 console.log('PQRS JS cargado correctamente');
 
 /* =======================
-   FAQ (GLOBAL) - VERSIÓN ÚNICA
+   FAQ (GLOBAL) - VERSIÓN CON DEBUG ESPECÍFICO
    ======================= */
 function initFAQ() {
-    console.log("Inicializando FAQ");
+    console.log("=== INICIALIZANDO FAQ ===");
+    console.log("Hora de carga:", new Date().toLocaleTimeString());
 
+    // Verificar si los elementos existen
     const faqItems = document.querySelectorAll('.faq-item');
-
+    console.log(`Encontrados ${faqItems.length} elementos .faq-item`);
+    
     if (faqItems.length === 0) {
-        console.warn("No se encontraron .faq-item");
+        console.warn("No se encontraron elementos .faq-item en el DOM");
+        // Mostrar todo el HTML del body para debug
+        console.log("HTML del body:", document.body.innerHTML.substring(0, 500));
         return;
     }
 
     faqItems.forEach((item, index) => {
-        const button = item.querySelector('.faq-question');
+        console.log(`--- FAQ ITEM ${index + 1} ---`);
         
-        if (!button) return;
-
-        // Verificar si ya tiene listener para evitar duplicados
-        if (button.hasAttribute('data-faq-initialized')) {
+        const button = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        if (!button) {
+            console.warn(`No se encontró .faq-question en item ${index}`);
             return;
         }
         
+        if (!answer) {
+            console.warn(`No se encontró .faq-answer en item ${index}`);
+            return;
+        }
+
+        console.log(`FAQ ${index + 1}: button y answer encontrados`);
+        console.log(`Altura inicial del answer: ${answer.scrollHeight}px`);
+
+        // Verificar si ya tiene listener para evitar duplicados
+        if (button.hasAttribute('data-faq-initialized')) {
+            console.log(`FAQ ${index + 1} ya estaba inicializado, saltando...`);
+            return;
+        }
+        
+        // Marcar como inicializado
         button.setAttribute('data-faq-initialized', 'true');
         
-        button.addEventListener('click', (e) => {
+        // Agregar el evento click
+        button.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log(`Click en FAQ ${index + 1}`);
+            console.log(`CLICK en FAQ ${index + 1}`);
 
-            // Simplemente alternar la clase active
-            item.classList.toggle('active');
+            const wasActive = item.classList.contains('active');
+            console.log(`Estado anterior: ${wasActive ? 'ACTIVO' : 'INACTIVO'}`);
+            
+            // Debug de clases CSS
+            console.log(`Clases del item antes:`, item.className);
+            console.log(`Max-height del answer antes:`, window.getComputedStyle(answer).maxHeight);
+
+            // Alternar la clase active
+            if (wasActive) {
+                item.classList.remove('active');
+                console.log(`FAQ ${index + 1} CERRADO`);
+            } else {
+                // Opcional: cerrar otros FAQs (descomenta si solo quieres uno abierto)
+                // faqItems.forEach(otherItem => otherItem.classList.remove('active'));
+                
+                item.classList.add('active');
+                console.log(`FAQ ${index + 1} ABIERTO`);
+            }
+
+            // Debug después del cambio
+            console.log(`Clases del item después:`, item.className);
+            console.log(`Max-height del answer después:`, window.getComputedStyle(answer).maxHeight);
+            
+            // Verificar si los estilos CSS se están aplicando
+            setTimeout(() => {
+                const computedStyle = window.getComputedStyle(answer);
+                console.log(`Después de 100ms - Max-height: ${computedStyle.maxHeight}, Padding: ${computedStyle.padding}`);
+            }, 100);
         });
+
+        console.log(`Event listener agregado al FAQ ${index + 1}`);
     });
+
+    console.log("=== FAQ INICIALIZACIÓN COMPLETA ===");
+    
+    // Debug adicional: verificar que los estilos CSS estén cargados
+    const testElement = document.querySelector('.faq-item');
+    if (testElement) {
+        const styles = window.getComputedStyle(testElement);
+        console.log("CSS cargado correctamente:", styles.borderRadius !== '0px');
+    }
 }
 
 /* =======================
    MAIN: se ejecuta al cargar el DOM
    ======================= */
 document.addEventListener("DOMContentLoaded", function () {
-    // 1) Inicializar FAQ - SOLO UNA VEZ
-    initFAQ();
+    console.log("DOM cargado, iniciando PQRS...");
+    console.log("Timestamp:", new Date().toLocaleString());
+    
+    // Pequeña pausa para asegurar que todo esté cargado
+    setTimeout(() => {
+        console.log("Iniciando FAQ después de delay...");
+        initFAQ();
+    }, 100);
 
     // ========================
-    // MODAL CONSULTA PQR (el que pide la cédula)
+    // MODAL CONSULTA PQR
     // ========================
     const modalConsulta = document.getElementById("modal");
     const openBtn = document.getElementById("openModal");
@@ -254,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* =========================================================
-   Tabla de resultados (si se usa en la vista modal de consulta)
+   Tabla de resultados
    ========================================================= */
 function inicializarTablaResultados() {
     const tableEl = document.getElementById("tabla-resultado");
@@ -274,7 +339,7 @@ function inicializarTablaResultados() {
 }
 
 /* =========================================================
-   Modales utilitarios (se crean si no existen)
+   Modales
    ========================================================= */
 function ensureDetallesModal() {
     let modal = document.getElementById('modalDetallesCompletos');
@@ -349,7 +414,6 @@ function ensureEditarModal() {
     modal.querySelector('#btn-cerrar-editar').onclick = () => modal.style.display = 'none';
     window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
 
-    // Bind submit aquí (una sola vez)
     const formEditar = modal.querySelector('#form-editar');
     formEditar.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -375,9 +439,6 @@ function ensureEditarModal() {
     return modal;
 }
 
-/* =========================================================
-   Funciones para Ver / Editar
-   ========================================================= */
 function verDetallesCompletos(id) {
     const modal = ensureDetallesModal();
     const contenido = document.getElementById('contenido-detalles-completos');
