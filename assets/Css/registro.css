@@ -110,6 +110,12 @@ body {
 
 }
 
+.requerido{
+  color: red;
+  font-weight: bold;
+}
+
+
 .campo {
     position: relative;
 }
