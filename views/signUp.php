@@ -50,7 +50,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="NombreUsuario" class="titulo_campo">
-                        Nombres y apellidos<span class="requerido">*</span>
+                        Nombres y apellidos
                     </label>
                     <input type="text" placeholder="Ingrese la información" class="campos" name="NombreUsuario" required>
                     <i class="ri-user-3-fill"></i>
@@ -58,7 +58,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="NumeroCedula" class="titulo_campo">
-                        Numero de documento<span class="requerido">*</span>
+                        Numero de documento
                     </label>
                     <i class="ri-hashtag"></i>
                     <input type="number" placeholder="Ingrese su de cedula" name="NumeroCedula" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
@@ -69,9 +69,7 @@ unset($_SESSION['errorRegistro']);
             <div class="columnas">
 
                 <div class="campo">
-                    <label for="TipoDocumento" class="titulo_campo">
-                        Tipo de documento <span class="requerido">*</span>
-                    </label>
+                    <label for="TipoDocumento" class="titulo_campo">Tipo de documento</label>
                     <i class="ri-asterisk"></i>
                     <select class="campos_select" id="validationCustom04" name="TipoDocumento">
 
@@ -86,7 +84,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="NumeroTelefonico" class="titulo_campo">
-                        Teléfono<span class="requerido">*</span>
+                        Teléfono
                     </label>
                     <i class="ri-phone-fill"></i>
                     <input type="tel" placeholder="Ingrese su número telefónico" name="NumeroTelefonico" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
@@ -100,7 +98,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="Apartamento" class="titulo_campo">
-                    Apartamento<span class="requerido">*</span>
+                    Apartamento
                     </label>
                     <i class="ri-building-line"></i>
                     <input type="text" placeholder="  Ingrese el apartamento donde vive" class="campos" name="Apartamento" required>
@@ -108,7 +106,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="Torre" class="titulo_campo">
-                        Torre<span class="requerido">*</span>
+                        Torre
                     </label>
                     <i class="ri-building-line"></i>
                     <input type="text" placeholder="Ingrese donde vive" class="campos" name="Torre" required>
@@ -121,7 +119,7 @@ unset($_SESSION['errorRegistro']);
                 <div class="campo">
 
                     <label for="Parqueadero" class="titulo_campo">
-                        Parqueadero<span class="requerido">*</span>
+                        Parqueadero
                     </label>
                     <i class="ri-car-fill"></i>
                     <input type="text" placeholder="Ingrese su parqueadero asignado" class="campos" name="Parqueadero" required>
@@ -131,7 +129,7 @@ unset($_SESSION['errorRegistro']);
                 <div class="campo">
 
                     <label for="Propiedades" class="titulo_campo">
-                        Propiedades<span class="requerido">*</span>
+                        Propiedades
                     </label>
                     <i class="ri-home-6-fill"></i>
                     <input type="text" placeholder="Ej: Apto 12 Torre 2 / Sin propiedades" class="campos" name="Propiedades" required>
@@ -145,7 +143,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="Email" class="titulo_campo">
-                    Correo electronico<span class="requerido">*</span>
+                    Correo electronico
                     </label>
                     <i class="ri-mail-star-fill"></i>
                     <input type="email" placeholder="Defina su correo electronico" name="Email" class="campos <?php echo $errorRegistro ? 'input-error-registro' : ''; ?>" required>
@@ -154,7 +152,7 @@ unset($_SESSION['errorRegistro']);
 
                 <div class="campo">
                     <label for="Password" class="titulo_campo">
-                     Contraseña<span class="requerido">*</span>
+                     Contraseña
                     </label>
                     <i class="ri-lock-fill"></i>
                     <input type="password" placeholder="Defina una contraseña" class="campos" name="Password" required>

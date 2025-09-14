@@ -1,100 +1,117 @@
 // assets/js/pqrs.js
-// Versión completa con debug específico para FAQ
+// VERSIÓN CORREGIDA PARA FAQ
 
 console.log('PQRS JS cargado correctamente');
 
 /* =======================
-   FAQ (GLOBAL) - VERSIÓN CON DEBUG ESPECÍFICO
+   FAQ (GLOBAL) - VERSIÓN CORREGIDA
    ======================= */
 function initFAQ() {
     console.log("=== INICIALIZANDO FAQ ===");
-    console.log("Hora de carga:", new Date().toLocaleTimeString());
-
-    // Verificar si los elementos existen
-    const faqItems = document.querySelectorAll('.faq-item');
-    console.log(`Encontrados ${faqItems.length} elementos .faq-item`);
     
-    if (faqItems.length === 0) {
-        console.warn("No se encontraron elementos .faq-item en el DOM");
-        // Mostrar todo el HTML del body para debug
-        console.log("HTML del body:", document.body.innerHTML.substring(0, 500));
-        return;
-    }
-
-    faqItems.forEach((item, index) => {
-        console.log(`--- FAQ ITEM ${index + 1} ---`);
+    // Esperar a que todo esté completamente cargado
+    setTimeout(() => {
+        const faqItems = document.querySelectorAll('.faq-item');
+        console.log(`Encontrados ${faqItems.length} elementos .faq-item`);
         
-        const button = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
-        if (!button) {
-            console.warn(`No se encontró .faq-question en item ${index}`);
-            return;
-        }
-        
-        if (!answer) {
-            console.warn(`No se encontró .faq-answer en item ${index}`);
+        if (faqItems.length === 0) {
+            console.warn("No se encontraron elementos .faq-item en el DOM");
             return;
         }
 
-        console.log(`FAQ ${index + 1}: button y answer encontrados`);
-        console.log(`Altura inicial del answer: ${answer.scrollHeight}px`);
-
-        // Verificar si ya tiene listener para evitar duplicados
-        if (button.hasAttribute('data-faq-initialized')) {
-            console.log(`FAQ ${index + 1} ya estaba inicializado, saltando...`);
-            return;
-        }
-        
-        // Marcar como inicializado
-        button.setAttribute('data-faq-initialized', 'true');
-        
-        // Agregar el evento click
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log(`CLICK en FAQ ${index + 1}`);
-
-            const wasActive = item.classList.contains('active');
-            console.log(`Estado anterior: ${wasActive ? 'ACTIVO' : 'INACTIVO'}`);
+        faqItems.forEach((item, index) => {
+            const button = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
             
-            // Debug de clases CSS
-            console.log(`Clases del item antes:`, item.className);
-            console.log(`Max-height del answer antes:`, window.getComputedStyle(answer).maxHeight);
-
-            // Alternar la clase active
-            if (wasActive) {
-                item.classList.remove('active');
-                console.log(`FAQ ${index + 1} CERRADO`);
-            } else {
-                // Opcional: cerrar otros FAQs (descomenta si solo quieres uno abierto)
-                // faqItems.forEach(otherItem => otherItem.classList.remove('active'));
-                
-                item.classList.add('active');
-                console.log(`FAQ ${index + 1} ABIERTO`);
+            if (!button || !answer) {
+                console.warn(`FAQ ${index + 1}: elementos faltantes`);
+                return;
             }
 
-            // Debug después del cambio
-            console.log(`Clases del item después:`, item.className);
-            console.log(`Max-height del answer después:`, window.getComputedStyle(answer).maxHeight);
+            console.log(`FAQ ${index + 1}: Configurando...`);
+
+            // Limpiar eventos anteriores para evitar duplicados
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
             
-            // Verificar si los estilos CSS se están aplicando
-            setTimeout(() => {
-                const computedStyle = window.getComputedStyle(answer);
-                console.log(`Después de 100ms - Max-height: ${computedStyle.maxHeight}, Padding: ${computedStyle.padding}`);
-            }, 100);
+            // Agregar evento al botón nuevo
+            newButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log(`CLICK en FAQ ${index + 1}`);
+                
+                const isActive = item.classList.contains('active');
+                console.log(`Estado anterior: ${isActive ? 'ACTIVO' : 'INACTIVO'}`);
+                
+                // Cerrar todos los otros FAQs (opcional - descomenta si solo quieres uno abierto)
+                // faqItems.forEach(otherItem => {
+                //     if (otherItem !== item) {
+                //         otherItem.classList.remove('active');
+                //     }
+                // });
+                
+                // Alternar estado del FAQ actual
+                if (isActive) {
+                    item.classList.remove('active');
+                    console.log(`FAQ ${index + 1} CERRADO`);
+                } else {
+                    item.classList.add('active');
+                    console.log(`FAQ ${index + 1} ABIERTO`);
+                }
+                
+                // Debug del estado final
+                console.log(`Clases finales:`, item.className);
+                
+                // Verificar que los estilos se aplicaron correctamente
+                setTimeout(() => {
+                    const computedAnswer = window.getComputedStyle(answer);
+                    console.log(`Max-height aplicado: ${computedAnswer.maxHeight}`);
+                    console.log(`Padding aplicado: ${computedAnswer.padding}`);
+                }, 50);
+            });
+
+            console.log(`FAQ ${index + 1}: Event listener agregado correctamente`);
         });
 
-        console.log(`Event listener agregado al FAQ ${index + 1}`);
-    });
+        console.log("=== FAQ INICIALIZACIÓN COMPLETA ===");
+    }, 200); // Delay para asegurar que CSS esté completamente cargado
+}
 
-    console.log("=== FAQ INICIALIZACIÓN COMPLETA ===");
-    
-    // Debug adicional: verificar que los estilos CSS estén cargados
-    const testElement = document.querySelector('.faq-item');
-    if (testElement) {
-        const styles = window.getComputedStyle(testElement);
-        console.log("CSS cargado correctamente:", styles.borderRadius !== '0px');
-    }
+/* =======================
+   SMOOTH SCROLL para enlaces internos
+   ======================= */
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+/* =======================
+   AUTO-OCULTAR ALERTAS
+   ======================= */
+function initAlertas() {
+    setTimeout(() => {
+        const alertas = document.querySelectorAll('.alerta');
+        alertas.forEach(alerta => {
+            alerta.style.opacity = '0';
+            alerta.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                if (alerta.parentNode) {
+                    alerta.remove();
+                }
+            }, 300);
+        });
+    }, 5000);
 }
 
 /* =======================
@@ -104,11 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM cargado, iniciando PQRS...");
     console.log("Timestamp:", new Date().toLocaleString());
     
-    // Pequeña pausa para asegurar que todo esté cargado
-    setTimeout(() => {
-        console.log("Iniciando FAQ después de delay...");
-        initFAQ();
-    }, 100);
+    // Inicializar componentes
+    initFAQ();
+    initSmoothScroll();
+    initAlertas();
 
     // ========================
     // MODAL CONSULTA PQR
@@ -264,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (medios === 0) { alert('Debe seleccionar al menos un medio para recibir respuesta'); return false; }
             return true;
         }
+        
         function actualizarEstadoBoton() {
             if (!btnEnviar) return;
             const tipoSel = tipoSelect?.value;
@@ -275,17 +292,51 @@ document.addEventListener("DOMContentLoaded", function () {
             btnEnviar.classList.toggle('btn-enabled', !!ok);
             btnEnviar.classList.toggle('btn-disabled', !ok);
         }
-        function restaurarBoton(boton, texto) { if (boton) { boton.disabled = false; boton.innerHTML = texto; actualizarEstadoBoton(); } }
-        function mostrarMensajeExito(m) { removerMensajesTemporales(); const d = document.createElement('div'); d.className = 'alert alert-success mensaje-temporal'; d.innerHTML = `<i class="ri-check-circle-fill"></i><strong>${m}</strong>`; formularioPQRS.insertBefore(d, formularioPQRS.firstChild); d.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-        function mostrarErrores(errs) { removerMensajesTemporales(); let h = '<div class="alert alert-danger mensaje-temporal"><i class="ri-error-warning-fill"></i><strong>Por favor, corrige los siguientes errores:</strong><ul>'; errs.forEach(e => h += `<li>${e}</li>`); h += '</ul></div>'; formularioPQRS.insertAdjacentHTML('afterbegin', h); const n = document.querySelector('.mensaje-temporal'); n && n.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-        function removerMensajesTemporales() { document.querySelectorAll('.mensaje-temporal').forEach(m => m.remove()); }
-        setTimeout(() => { const ok = document.getElementById('mensaje-exito-servidor'); const er = document.getElementById('mensaje-errores-servidor'); if (ok) { ok.style.opacity = '0'; setTimeout(() => ok.remove(), 500); } if (er) { er.style.opacity = '0'; setTimeout(() => er.remove(), 500); } }, 5000);
+        
+        function restaurarBoton(boton, texto) { 
+            if (boton) { 
+                boton.disabled = false; 
+                boton.innerHTML = texto; 
+                actualizarEstadoBoton(); 
+            } 
+        }
+        
+        function mostrarMensajeExito(m) { 
+            removerMensajesTemporales(); 
+            const d = document.createElement('div'); 
+            d.className = 'alert alert-success mensaje-temporal'; 
+            d.innerHTML = `<i class="ri-check-circle-fill"></i><strong>${m}</strong>`; 
+            formularioPQRS.insertBefore(d, formularioPQRS.firstChild); 
+            d.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+        }
+        
+        function mostrarErrores(errs) { 
+            removerMensajesTemporales(); 
+            let h = '<div class="alert alert-danger mensaje-temporal"><i class="ri-error-warning-fill"></i><strong>Por favor, corrige los siguientes errores:</strong><ul>'; 
+            errs.forEach(e => h += `<li>${e}</li>`); 
+            h += '</ul></div>'; 
+            formularioPQRS.insertAdjacentHTML('afterbegin', h); 
+            const n = document.querySelector('.mensaje-temporal'); 
+            n && n.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+        }
+        
+        function removerMensajesTemporales() { 
+            document.querySelectorAll('.mensaje-temporal').forEach(m => m.remove()); 
+        }
+        
+        // Auto-remover mensajes del servidor después de 5 segundos
+        setTimeout(() => { 
+            const ok = document.getElementById('mensaje-exito-servidor'); 
+            const er = document.getElementById('mensaje-errores-servidor'); 
+            if (ok) { ok.style.opacity = '0'; setTimeout(() => ok.remove(), 500); } 
+            if (er) { er.style.opacity = '0'; setTimeout(() => er.remove(), 500); } 
+        }, 5000);
     } else {
         console.log('Formulario PQRS no encontrado en esta página');
     }
 
     // ========================
-    // ELIMINAR (delegado)
+    // ELIMINAR PQR (delegado)
     // ========================
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".btn-eliminar");
@@ -296,12 +347,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch("../controller/eliminarPqr.php?id=" + encodeURIComponent(id))
             .then(res => res.text())
-            .then(() => { alert("PQR eliminada correctamente."); location.reload(); })
+            .then(() => { 
+                alert("PQR eliminada correctamente."); 
+                location.reload(); 
+            })
             .catch(() => alert("Error de red al intentar eliminar."));
     });
 
     // ========================
-    // VER / EDITAR (delegado)
+    // VER / EDITAR PQR (delegado)
     // ========================
     document.addEventListener("click", function (e) {
         const verBtn = e.target.closest(".btn-ver");
@@ -319,8 +373,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* =========================================================
-   Tabla de resultados
+   FUNCIONES AUXILIARES
    ========================================================= */
+
+// Tabla de resultados
 function inicializarTablaResultados() {
     const tableEl = document.getElementById("tabla-resultado");
     if (!tableEl) return;
@@ -338,9 +394,7 @@ function inicializarTablaResultados() {
     }
 }
 
-/* =========================================================
-   Modales
-   ========================================================= */
+// Modal de detalles completos
 function ensureDetallesModal() {
     let modal = document.getElementById('modalDetallesCompletos');
     if (modal) return modal;
@@ -348,11 +402,11 @@ function ensureDetallesModal() {
     modal = document.createElement('div');
     modal.id = 'modalDetallesCompletos';
     modal.className = 'modal';
-    modal.style.display = 'none';
+    modal.style.cssText = 'display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.4);';
     modal.innerHTML = `
-        <div class="modal-content" style="width:90%;max-height:80vh;overflow-y:auto;position:relative;">
-            <span class="close-detalles" style="position:absolute;right:20px;top:15px;cursor:pointer;font-size:28px">&times;</span>
-            <h2 style="margin-top:0">Detalles Completos de PQRS</h2>
+        <div class="modal-content" style="background:#fefefe;margin:5% auto;padding:20px;border:2px solid #9D825D;border-radius:10px;width:90%;max-width:800px;max-height:80vh;overflow-y:auto;position:relative;">
+            <span class="close-detalles" style="color:#9D825D;float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2 style="margin-top:0;color:#9D825D;">Detalles Completos de PQRS</h2>
             <div id="contenido-detalles-completos"></div>
         </div>`;
     document.body.appendChild(modal);
@@ -362,6 +416,7 @@ function ensureDetallesModal() {
     return modal;
 }
 
+// Modal de edición
 function ensureEditarModal() {
     let modal = document.getElementById('modalEditar');
     if (modal) return modal;
@@ -369,16 +424,16 @@ function ensureEditarModal() {
     modal = document.createElement('div');
     modal.id = 'modalEditar';
     modal.className = 'modal';
-    modal.style.display = 'none';
+    modal.style.cssText = 'display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.4);';
     modal.innerHTML = `
-        <div class="modal-content" style="width:90%;max-height:80vh;overflow-y:auto;position:relative;">
-            <span class="close-editar" style="position:absolute;right:20px;top:15px;cursor:pointer;font-size:28px">&times;</span>
-            <h2 style="margin-top:0">Editar PQRS</h2>
-            <form id="form-editar" enctype="multipart/form-data">
+        <div class="modal-content" style="background:#fefefe;margin:5% auto;padding:20px;border:2px solid #9D825D;border-radius:10px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;position:relative;">
+            <span class="close-editar" style="color:#9D825D;float:right;font-size:28px;font-weight:bold;cursor:pointer;">&times;</span>
+            <h2 style="margin-top:0;color:#9D825D;">Editar PQRS</h2>
+            <form id="form-editar" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:15px;">
                 <input type="hidden" name="id" id="edit-id">
                 <div>
-                    <label for="edit-tipo">Tipo</label>
-                    <select name="tipo_pqr" id="edit-tipo" required>
+                    <label for="edit-tipo" style="display:block;margin-bottom:5px;font-weight:600;color:#333;">Tipo</label>
+                    <select name="tipo_pqr" id="edit-tipo" required style="width:100%;padding:8px;border:2px solid #9D825D;border-radius:5px;">
                         <option value="peticion">Petición</option>
                         <option value="queja">Queja</option>
                         <option value="reclamo">Reclamo</option>
@@ -386,25 +441,27 @@ function ensureEditarModal() {
                     </select>
                 </div>
                 <div>
-                    <label for="edit-asunto">Asunto</label>
-                    <input type="text" name="asunto" id="edit-asunto" required minlength="5" maxlength="255">
+                    <label for="edit-asunto" style="display:block;margin-bottom:5px;font-weight:600;color:#333;">Asunto</label>
+                    <input type="text" name="asunto" id="edit-asunto" required minlength="5" maxlength="255" style="width:100%;padding:8px;border:2px solid #9D825D;border-radius:5px;">
                 </div>
                 <div>
-                    <label for="edit-mensaje">Descripción</label>
-                    <textarea name="mensaje" id="edit-mensaje" required minlength="10" rows="4"></textarea>
+                    <label for="edit-mensaje" style="display:block;margin-bottom:5px;font-weight:600;color:#333;">Descripción</label>
+                    <textarea name="mensaje" id="edit-mensaje" required minlength="10" rows="4" style="width:100%;padding:8px;border:2px solid #9D825D;border-radius:5px;resize:vertical;"></textarea>
                 </div>
                 <div>
-                    <label>Medio de respuesta</label>
-                    <label><input type="checkbox" name="medio_respuesta[]" value="correo" id="edit-resp-correo"> Correo</label>
-                    <label><input type="checkbox" name="medio_respuesta[]" value="sms" id="edit-resp-sms"> SMS</label>
+                    <label style="display:block;margin-bottom:5px;font-weight:600;color:#333;">Medio de respuesta</label>
+                    <div style="display:flex;gap:15px;">
+                        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" name="medio_respuesta[]" value="correo" id="edit-resp-correo"> Correo</label>
+                        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" name="medio_respuesta[]" value="sms" id="edit-resp-sms"> SMS</label>
+                    </div>
                 </div>
                 <div>
-                    <label for="edit-archivos">Reemplazar archivos (opcional)</label>
-                    <input type="file" name="archivos[]" id="edit-archivos" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <label for="edit-archivos" style="display:block;margin-bottom:5px;font-weight:600;color:#333;">Reemplazar archivos (opcional)</label>
+                    <input type="file" name="archivos[]" id="edit-archivos" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="width:100%;padding:8px;border:2px solid #9D825D;border-radius:5px;">
                 </div>
-                <div style="margin-top:12px;display:flex;gap:10px;justify-content:center">
-                    <button type="submit" class="btn-primary">Guardar cambios</button>
-                    <button type="button" class="btn-secondary" id="btn-cerrar-editar">Cancelar</button>
+                <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;">
+                    <button type="submit" style="background:#7b9a82;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:600;">Guardar cambios</button>
+                    <button type="button" id="btn-cerrar-editar" style="background:#6c757d;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:600;">Cancelar</button>
                 </div>
             </form>
         </div>`;
@@ -439,11 +496,12 @@ function ensureEditarModal() {
     return modal;
 }
 
+// Ver detalles completos
 function verDetallesCompletos(id) {
     const modal = ensureDetallesModal();
     const contenido = document.getElementById('contenido-detalles-completos');
     contenido.innerHTML = "<p>Cargando detalles...</p>";
-    modal.style.display = 'flex';
+    modal.style.display = 'block';
 
     fetch(`../controller/obtenerDetallesPqr.php?id=${encodeURIComponent(id)}`)
         .then(r => r.json())
@@ -460,6 +518,7 @@ function verDetallesCompletos(id) {
         });
 }
 
+// Editar PQR
 function editarPqr(id) {
     const modal = ensureEditarModal();
 
@@ -480,7 +539,7 @@ function editarPqr(id) {
             document.getElementById('edit-resp-correo').checked = medios.includes('correo');
             document.getElementById('edit-resp-sms').checked = medios.includes('sms');
 
-            modal.style.display = 'flex';
+            modal.style.display = 'block';
         })
         .catch(err => {
             console.error(err);

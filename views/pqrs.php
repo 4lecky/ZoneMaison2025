@@ -67,42 +67,8 @@ require_once './Layout/header.php';
 
     <!-- JS principal -->
     <script src="../assets/js/pqrs.js" defer></script>
-
-        <!-- ESTILOS TEMPORALES PARA FAQ - ALTA PRIORIDAD -->
-    <style>
-    .faq-item.active .faq-answer {
-        max-height: 200px !important;
-        padding: 20px 25px !important;
-        border-top: 1px solid #9D825D !important;
-    }
-    
-    .faq-item.active .arrow {
-        transform: rotate(180deg) !important;
-        color: #7b9a82 !important;
-    }
-    
-    .faq-item.active .faq-question {
-        background: linear-gradient(135deg, #9D825D, #7b9a82) !important;
-        color: white !important;
-    }
-    
-    .faq-item.active .faq-question .icono-pregunta,
-    .faq-item.active .faq-question .arrow {
-        color: white !important;
-    }
-    </style>
 </head>
 <body>
-    <!-- Alertas -->
-    <div class="alerta alerta-exito">
-        <i class="ri-check-circle-fill"></i>
-        <div>
-            <strong>¡PQRS enviada exitosamente!</strong><br>
-            Su número de radicado es: <strong>ZM-2025-001234</strong><br>
-            Puede hacer seguimiento desde 'Mis PQRS'.
-        </div>
-    </div>
-
     <!-- Encabezado principal -->
     <div class="encabezado-pqrs">
         <h1>
@@ -110,7 +76,7 @@ require_once './Layout/header.php';
             Sistema de PQRS
         </h1>
         <p class="subtitulo">
-            Administra y responde las peticiones, quejas, reclamos y sugerencias de los residentes
+            Envía y consulta tus peticiones, quejas, reclamos y sugerencias fácilmente
         </p>
     </div>
 
@@ -256,50 +222,6 @@ require_once './Layout/header.php';
             </div>
         </div>
     </div>
-
-    <script>
-        // Funcionalidad FAQ
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // Cerrar todas las preguntas
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Abrir la pregunta actual si no estaba activa
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-
-        // Smooth scroll para enlaces internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Auto-ocultar alertas después de 5 segundos
-        setTimeout(() => {
-            const alertas = document.querySelectorAll('.alerta');
-            alertas.forEach(alerta => {
-                alerta.style.opacity = '0';
-                alerta.style.transform = 'translateY(-20px)';
-                setTimeout(() => alerta.remove(), 300);
-            });
-        }, 5000);
-    </script>
 </body>
 
 <?php
