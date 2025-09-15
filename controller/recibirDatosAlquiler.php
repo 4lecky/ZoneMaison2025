@@ -27,6 +27,7 @@ try {
 
     $ticket->marcarIngreso(new DateTime($fechaEntrada));
     $ticket->marcarSalida(new DateTime("$fechaSalida $horaSalida"));
+    $ticket->marcarHoraSalida(new DateTime("$horaSalida"));
 
     $horas = $ticket->calcularHoras();
     $precio = $ticket->calcularCosto();

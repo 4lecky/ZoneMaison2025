@@ -17,7 +17,7 @@ document.getElementById('enviarBtn').addEventListener('click', function (e) {
             return;
         }
 
-        // Asignar costo recibido al input oculto
+        // Asignar precio recibido al input oculto
         formulario.querySelector('#campoCosto').value = data.calculo.costo_neto;
 
         // Extraer datos del JSON
@@ -46,9 +46,10 @@ document.getElementById('enviarBtn').addEventListener('click', function (e) {
                     <p><strong>Placa:</strong> ${alquiler.placa}</p>
                     <p><strong>Parqueadero:</strong> ${alquiler.numParqueadero}</p>
                     <p><strong>Ingreso:</strong> ${alquiler.horaIngreso}</p>
-                    <p><strong>Salida:</strong> ${alquiler.fechaSalida} ${alquiler.horaSalida}</p>
+                    <p><strong>Salida:</strong> ${alquiler.fechaSalida}</p>
+                    <p><strong>Hora de Salida:</strong> ${alquiler.horaSalida}</p>
                     <p><strong>Horas de uso:</strong> ${calculo.horas}</p>
-                    <p><strong>Total Pagado:</strong> $${calculo.costo} COP</p>
+                    <p><strong>Total Pagado:</strong> $${calculo.precio} COP</p>
                     <hr style="border: none; border-top: 1px dashed #aaa;">
                     <p style="text-align: center;">¡Gracias por su visita y conduzca seguro!</p>
                 </div>

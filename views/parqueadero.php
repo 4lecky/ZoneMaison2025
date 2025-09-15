@@ -113,12 +113,12 @@ require_once "./Layout/header.php"
         <div class="input-group">
           <div class="input-box">
             <label>Placa*</label>
-            <input type="text" name="placa" placeholder=" ABC-123" />
+            <input type="text" name="placa" placeholder="Ejem: ABC-123" />
           </div>
 
           <div class="input-box">
             <label>N° Parqueadero*</label>
-            <input type="number" name="numeroParqueadero" placeholder="45" required />
+            <input type="number" name="numeroParqueadero" placeholder="Ejem: 45" required />
           </div>
         </div>
 
@@ -184,7 +184,7 @@ require_once "./Layout/header.php"
 
             <div class="input-box">
               <label for="placa">Placa*</label>
-              <input type="text" id="placa" name="consulParq_placa" placeholder=" ABC-123" required>
+              <input type="text" id="placa" name="consulParq_placa" placeholder="Ejem: ABC-123" required>
             </div>
           </div>
 
@@ -202,7 +202,7 @@ require_once "./Layout/header.php"
 
           <div class="input-box">
             <label>Número de Parqueadero*</label>
-            <input type="number" name="consulParq_numeroParqueadero" placeholder="Ej 45">
+            <input type="number" name="consulParq_numeroParqueadero" placeholder="Ejem: 45">
           </div>
 
           <div class="input-box">
@@ -271,7 +271,7 @@ require_once "./Layout/header.php"
         <div class="input-group">
           <div class="input-box">
             <label for="num_torre">Num. Torre*:</label>
-            <input type="text" name="torre" id="num_torre" placeholder="Ejem: Torre 1" required>
+            <input type="text" name="torre" id="num_torre" placeholder="Ejem: 22" required>
           </div>
           <div class="input-box">
             <label for="num_apto">Num. Apto*</label>
@@ -282,11 +282,11 @@ require_once "./Layout/header.php"
         <div class="input-group">
           <div class="input-box">
             <label for="placa">Placa*</label>
-            <input type="text" name="placa" id="placa" placeholder=" ABC-123" required>
+            <input type="text" name="placa" id="placa" placeholder="Ejem: ABC-123" required>
           </div>
           <div class="input-box">
             <label for="num_parqueadero">Num. Parqueadero*</label>
-            <input type="number" name="numParqueadero" id="num_parqueadero" placeholder="45">
+            <input type="number" name="numParqueadero" id="num_parqueadero" placeholder="Ejem: 45">
           </div>
         </div>
 

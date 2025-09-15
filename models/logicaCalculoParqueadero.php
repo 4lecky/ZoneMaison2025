@@ -34,6 +34,7 @@ class Ticket {
     private $tarifa;
     private $horaIngreso;
     private $horaSalida;
+    private $fechaSalida;
 
     public function __construct(Vehiculo $vehiculo, Tarifa $tarifa) {
         $this->vehiculo = $vehiculo;
@@ -45,6 +46,10 @@ class Ticket {
     }
 
     public function marcarSalida(DateTime $hora) {
+        $this->horaSalida = $hora;
+    }
+
+    public function marcarHoraSalida(DateTime $hora) {
         $this->horaSalida = $hora;
     }
 
