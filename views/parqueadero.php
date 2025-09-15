@@ -244,13 +244,13 @@ require_once "./Layout/header.php"
 
         <div class="input-box">
           <label for="num_recibo">Número de Recibo*</label>
-          <input type="text" name="alqu_num_recibo" id="num_recibo" placeholder="Ejem: 0001" required>
+          <input type="text" name="recibo" id="num_recibo" placeholder="Ejem: 0001" required>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="tipo_doc">Tipo Doc*</label>
-            <select name="alqu_tipo_doc_vehi" id="tipo_doc" required>
+            <select name="tipoDoc" id="tipo_doc" required>
               <option value="">-- Selecciona un tipo --</option>
               <option value="CC">Cédula de Ciudadanía (CC)</option>
               <option value="TI">Tarjeta de Identidad (TI)</option>
@@ -259,62 +259,62 @@ require_once "./Layout/header.php"
           </div>
           <div class="input-box">
             <label for="num_doc">Número Documento*</label>
-            <input type="text" name="alqu_num_doc_vehi" id="num_doc" placeholder="Ingrese numero de documento" required>
+            <input type="text" name="numDoc" id="num_doc" placeholder="Ingrese numero de documento" required>
           </div>
         </div>
 
         <div class="input-box">
           <label for="nombre_residente">Nombre Completo Residente/Propietario*</label>
-          <input type="text" name="alqu_nombre_propietario" id="nombre_residente" placeholder="Nombres y Apellidos Completos" required>
+          <input type="text" name="nombrePropietario" id="nombre_residente" placeholder="Nombres y Apellidos Completos" required>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="num_torre">Num. Torre*:</label>
-            <input type="text" name="alqu_torre" id="num_torre" placeholder="Ejem: Torre 1" required>
+            <input type="text" name="torre" id="num_torre" placeholder="Ejem: Torre 1" required>
           </div>
           <div class="input-box">
             <label for="num_apto">Num. Apto*</label>
-            <input type="text" name="alqu_apartamento" id="num_apto" placeholder="Ejem: 101" required>
+            <input type="text" name="apartamento" id="num_apto" placeholder="Ejem: 101" required>
           </div>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="placa">Placa*</label>
-            <input type="text" name="alqu_placa" id="placa" placeholder=" ABC-123" required>
+            <input type="text" name="placa" id="placa" placeholder=" ABC-123" required>
           </div>
           <div class="input-box">
             <label for="num_parqueadero">Num. Parqueadero*</label>
-            <input type="number" name="alqu_numeroParqueadero" id="num_parqueadero" placeholder="45">
+            <input type="number" name="numParqueadero" id="num_parqueadero" placeholder="45">
           </div>
         </div>
 
         <div class="input-box">
           <label for="observaciones">Observaciones / Estado de Salida*</label>
-          <textarea name="alqu_estadoSalida" id="observaciones" rows="2" placeholder="Describa el estado en el que sale el vehiculo" required></textarea>
+          <textarea name="estadoSalida" id="observaciones" rows="2" placeholder="Describa el estado en el que sale el vehiculo" required></textarea>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="fecha_ingreso">Fecha de Ingreso*</label>
-            <input type="date" name="alqu_fecha_entrada" id="fecha_ingreso" required>
+            <input type="date" name="fechaEntrada" id="fecha_ingreso" required>
           </div>
           <div class="input-box">
             <label for="fecha_salida">Fecha de Salida*</label>
-            <input type="date" name="alqu_fecha_salida" id="fecha_salida" required>
+            <input type="date" name="fechaSalida" id="fecha_salida" required>
           </div>
         </div>
 
   
           <div class="input-box">
             <label for="hora_salida">Hora de Salida*</label>
-            <input type="time" name="alqu_hora_salida" id="hora_salida" required>
+            <input type="time" name="horaSalida" id="hora_salida" required>
           </div>
 
 
-        <input type="hidden" name="costo" id="campoCosto">
-        <!-- <input type="hidden" name="alqu_precio" id="campoCosto"> -->
+        <input type="hidden" name="precio" id="campoCosto">
+        <!-- <input type="hidden" name="precio" id="campoCosto"> -->
 
 
       </fieldset>

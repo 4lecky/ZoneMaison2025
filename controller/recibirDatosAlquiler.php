@@ -6,18 +6,18 @@ require_once __DIR__ . '/../models/logicaCalculoParqueadero.php';
 $model = new insertaRegistroAlquiler($pdo);
 
 // Recibir datos del formulario
-$numRecibo       = $_POST['alqu_num_recibo'] ?? null;
-$tipoDoc         = $_POST['alqu_tipo_doc_vehi'] ?? null;
-$numDoc          = $_POST['alqu_num_doc_vehi'] ?? null;
-$nombrePropietario = $_POST['alqu_nombre_propietario'] ?? null;
-$torre           = $_POST['alqu_torre'] ?? null;
-$apartamento     = $_POST['alqu_apartamento'] ?? null;
-$placa           = $_POST['alqu_placa'] ?? null;
-$numParqueadero  = $_POST['alqu_numeroParqueadero'] ?? null;
-$estadoSalida    = $_POST['alqu_estadoSalida'] ?? null;
-$fechaEntrada    = $_POST['alqu_fecha_entrada'] ?? null;
-$fechaSalida     = $_POST['alqu_fecha_salida'] ?? null;
-$horaSalida      = $_POST['alqu_hora_salida'] ?? null;
+$numRecibo       = $_POST['recibo'] ?? null;
+$tipoDoc         = $_POST['tipoDoc'] ?? null;
+$numDoc          = $_POST['numDoc'] ?? null;
+$nombrePropietario = $_POST['nombrePropietario'] ?? null;
+$torre           = $_POST['torre'] ?? null;
+$apartamento     = $_POST['apartamento'] ?? null;
+$placa           = $_POST['placa'] ?? null;
+$numParqueadero  = $_POST['numParqueadero'] ?? null;
+$estadoSalida    = $_POST['estadoSalida'] ?? null;
+$fechaEntrada    = $_POST['fechaEntrada'] ?? null;
+$fechaSalida     = $_POST['fechaSalida'] ?? null;
+$horaSalida      = $_POST['horaSalida'] ?? null;
 
 // Calcular precio
 try {
@@ -57,7 +57,7 @@ if ($resultado) {
         ],
         'calculo' => [
             'horas' => $horas,
-            'costo' => number_format($precio, 0, ',', '.'),
+            'precio' => number_format($precio, 0, ',', '.'),
             'costo_neto' => $precio
         ]
     ]);
