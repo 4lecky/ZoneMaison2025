@@ -101,31 +101,31 @@ require_once "./Layout/header.php"
 
           <div class="input-box">
             <label>Número Documento Propietario Vehículo*</label>
-            <input type="text" name="numDocVehiculo" required />
+            <input type="text" name="numDocVehiculo" placeholder="Ingrese numero de documento" />
           </div>
         </div>
 
         <div class="input-box">
           <label>Nombre Propietario Vehículo*</label>
-          <input type="text" name="nombrePropVehiculo" required />
+          <input type="text" name="nombrePropVehiculo" placeholder="Nombres y Apellidos Completos" />
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label>Placa*</label>
-            <input type="text" name="placa" required />
+            <input type="text" name="placa" placeholder=" ABC-123" />
           </div>
 
           <div class="input-box">
             <label>N° Parqueadero*</label>
-            <input type="number" name="numeroParqueadero" required />
+            <input type="number" name="numeroParqueadero" placeholder="45" required />
           </div>
         </div>
 
 
         <div class="input-box">
           <label>Observaciones/Estado de Entrada*</label>
-          <textarea name="estadoIngreso" id="estado"></textarea>
+          <textarea name="estadoIngreso" id="estado" placeholder="Describa el estado en el que ingresa el vehiculo"></textarea>
         </div>
 
 
@@ -145,7 +145,7 @@ require_once "./Layout/header.php"
 
         <div class="input-box">
           <label>Hora de Ingreso*</label>
-          <input type="time" name="horaEntrada" />
+          <input type="time" name="horaEntrada"/>
         </div>
 
 
@@ -184,14 +184,14 @@ require_once "./Layout/header.php"
 
             <div class="input-box">
               <label for="placa">Placa*</label>
-              <input type="text" id="placa" name="consulParq_placa" required>
+              <input type="text" id="placa" name="consulParq_placa" placeholder=" ABC-123" required>
             </div>
           </div>
 
 
           <div class="input-box">
             <label for="observaciones">Observaciones / Estado del Vehículo*</label>
-            <textarea id="observaciones" name="consulParq_observaciones" required></textarea>
+            <textarea id="observaciones" name="consulParq_observaciones" placeholder="Describa algun evento y/o situacion que considere importante"></textarea>
           </div>
 
 
@@ -202,7 +202,7 @@ require_once "./Layout/header.php"
 
           <div class="input-box">
             <label>Número de Parqueadero*</label>
-            <input type="number" name="consulParq_numeroParqueadero" required>
+            <input type="number" name="consulParq_numeroParqueadero" placeholder="Ej 45">
           </div>
 
           <div class="input-box">
@@ -244,7 +244,7 @@ require_once "./Layout/header.php"
 
         <div class="input-box">
           <label for="num_recibo">Número de Recibo*</label>
-          <input type="text" name="alqu_num_recibo" id="num_recibo" required>
+          <input type="text" name="alqu_num_recibo" id="num_recibo" placeholder="Ejem: 0001" required>
         </div>
 
         <div class="input-group">
@@ -259,40 +259,40 @@ require_once "./Layout/header.php"
           </div>
           <div class="input-box">
             <label for="num_doc">Número Documento*</label>
-            <input type="text" name="alqu_num_doc_vehi" id="num_doc" required>
+            <input type="text" name="alqu_num_doc_vehi" id="num_doc" placeholder="Ingrese numero de documento" required>
           </div>
         </div>
 
         <div class="input-box">
           <label for="nombre_residente">Nombre Completo Residente/Propietario*</label>
-          <input type="text" name="alqu_nombre_propietario" id="nombre_residente" required>
+          <input type="text" name="alqu_nombre_propietario" id="nombre_residente" placeholder="Nombres y Apellidos Completos" required>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="num_torre">Num. Torre*:</label>
-            <input type="text" name="alqu_torre" id="num_torre" required>
+            <input type="text" name="alqu_torre" id="num_torre" placeholder="Ejem: Torre 1" required>
           </div>
           <div class="input-box">
             <label for="num_apto">Num. Apto*</label>
-            <input type="text" name="alqu_apartamento" id="num_apto" required>
+            <input type="text" name="alqu_apartamento" id="num_apto" placeholder="Ejem: 101" required>
           </div>
         </div>
 
         <div class="input-group">
           <div class="input-box">
             <label for="placa">Placa*</label>
-            <input type="text" name="alqu_placa" id="placa" required>
+            <input type="text" name="alqu_placa" id="placa" placeholder=" ABC-123" required>
           </div>
           <div class="input-box">
             <label for="num_parqueadero">Num. Parqueadero*</label>
-            <input type="number" name="alqu_numeroParqueadero" id="num_parqueadero">
+            <input type="number" name="alqu_numeroParqueadero" id="num_parqueadero" placeholder="45">
           </div>
         </div>
 
         <div class="input-box">
           <label for="observaciones">Observaciones / Estado de Salida*</label>
-          <textarea name="alqu_estadoSalida" id="observaciones" rows="2" required></textarea>
+          <textarea name="alqu_estadoSalida" id="observaciones" rows="2" placeholder="Describa el estado en el que sale el vehiculo" required></textarea>
         </div>
 
         <div class="input-group">
