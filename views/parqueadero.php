@@ -189,12 +189,6 @@ require_once "./Layout/header.php"
           </div>
 
 
-          <div class="input-box">
-            <label for="observaciones">Observaciones / Estado del Vehículo*</label>
-            <textarea id="observaciones" name="consulParq_observaciones" placeholder="Describa algun evento y/o situacion que considere importante"></textarea>
-          </div>
-
-
           <h2>Mapa de Parqueaderos</h2>
           <div class="mapa-parq">
             <div id="parkingMap"></div>

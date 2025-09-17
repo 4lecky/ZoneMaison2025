@@ -20,7 +20,7 @@ CREATE TABLE if NOT EXISTS tbl_usuario (usuario_cc INT (10) AUTO_INCREMENT,
     usu_telefono BIGINT (10) NOT NULL,
     usu_correo Varchar(50) NOT null,
     usu_password Varchar(225) NOT null,
-	usu_apartamento_residencia  Varchar(100) NOT null,
+	usu_apartamento_residencia  Varchar(100) NOT null,.
 	usu_torre_residencia Varchar(100) NOT null,
 	usu_parqueadero_asignado  Varchar(20) NOT null,
 	usu_propiedades  Varchar(100) NOT null,  
@@ -168,8 +168,7 @@ CREATE TABLE IF NOT EXISTS tbl_parqueadero(parq_id INT (20) NOT NULL AUTO_INCREM
 
 CREATE TABLE IF NOT EXISTS tbl_consultaParqueadero (consulParq_id INT (50) NOT NULL AUTO_INCREMENT,
     consulParq_tipoVehiculo ENUM('Carro', 'Moto') NOT NULL,
-    consulParq_placa VARCHAR (10) NOT NULL,
-    consulParq_observaciones TEXT (30000) NOT NULL, 
+    consulParq_placa VARCHAR (10) NOT NULL, 
     -- consulParq_usuario_cedula INT (10),
     consulParq_numeroParqueadero INT NOT NULL,
     consulParq_estado ENUM('disponible', 'ocupado', 'mantenimiento') DEFAULT 'disponible',

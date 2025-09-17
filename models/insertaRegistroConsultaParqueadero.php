@@ -11,19 +11,17 @@ class insertaRegistroConsultaParqueadero {
     }
 
     // Método para insertar datos en la tabla
-    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $observaciones, $numeroParqueadero, $estado, $consulParqId) {
+    public function insertarConsultaParqueadero($tipoVehiculo, $placa, $numeroParqueadero, $estado, $consulParqId) {
         //ATRIBUTOS DE LAS TABLAS EN MYSQL
         $sql = "INSERT INTO tbl_consultaParqueadero (
                     consulParq_tipoVehiculo,
                     consulParq_placa,
-                    consulParq_observaciones,
                     consulParq_numeroParqueadero,   
                     consulParq_estado,
                     consulParq_parq_id
                 ) VALUES (
                     :consulParq_tipoVehiculo,
                     :consulParq_placa,
-                    :consulParq_observaciones,
                     :consulParq_numeroParqueadero,
                     :consulParq_estado,
                     :consulParq_parq_id
@@ -35,7 +33,6 @@ class insertaRegistroConsultaParqueadero {
         // Asignar parámetros
         $stmt->bindParam(':consulParq_tipoVehiculo', $tipoVehiculo, PDO::PARAM_STR);
         $stmt->bindParam(':consulParq_placa', $placa, PDO::PARAM_STR);
-        $stmt->bindParam(':consulParq_observaciones', $observaciones, PDO::PARAM_STR);
         $stmt->bindParam(':consulParq_numeroParqueadero', $numeroParqueadero, PDO::PARAM_INT);
         $stmt->bindParam(':consulParq_estado', $estado, PDO::PARAM_STR);
         // $stmt->bindParam(':consulParq_parq_id', $consulParqId, PDO::PARAM_STR);
