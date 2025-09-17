@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (
         empty($_POST['consulParq_tipoVehiculo']) ||
         empty($_POST['consulParq_placa']) ||
-        empty($_POST['consulParq_observaciones']) ||
         empty($_POST['consulParq_numeroParqueadero']) ||
         empty($_POST['consulParq_estado'])
     ) {
@@ -19,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ===== Capturar datos del formulario =====
     $tipoVehiculo      = $_POST['consulParq_tipoVehiculo'];
     $placa             = $_POST['consulParq_placa'];
-    $observaciones     = $_POST['consulParq_observaciones'] ?? "";
     $numeroParqueadero = $_POST['consulParq_numeroParqueadero'];
     $estado            = $_POST['consulParq_estado'];
     $consulParqId      = $_POST['consulParq_parq_id'] ?? null;
@@ -31,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($modelo->insertarConsultaParqueadero(
             $tipoVehiculo,
             $placa,
-            $observaciones,
             $numeroParqueadero,
             $estado,
             $consulParqId
