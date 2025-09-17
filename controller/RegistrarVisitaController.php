@@ -3,14 +3,40 @@ session_start();
 
 require_once __DIR__ . '/../models/RegistrarVisitaModel.php';
 
-
-
-/*  Solo procesamos si llega por POST y desde el botón
-    name="registrarFormVisi" del formulario */
+/* Solo procesamos si llega por POST */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $modelo = new RegistrarVisitaModel();
 
+    /* 🔍 Validar si llega petición de búsqueda por AJAX */
+    if (isset($_POST['action']) && $_POST['action'] === 'buscarResidente') {
+        $cedula = $_POST['cedula'] ?? null;
+
+        if ($cedula) {
+            // 🔹 Ahora buscamos en tbl_usuario (residentes)
+            $residente = $modelo->buscarResidentePorCedula($cedula);
+
+            if ($residente) {
+                echo json_encode([
+                    "status" => "ok",
+                    "data"   => $residente
+                ]);
+            } else {
+                echo json_encode([
+                    "status"  => "error",
+                    "message" => "No existe un residente con la cédula $cedula"
+                ]);
+            }
+        } else {
+            echo json_encode([
+                "status"  => "error",
+                "message" => "Cédula vacía"
+            ]);
+        }
+        exit;
+    }
+
+    /* 📝 Si no es búsqueda, asumimos registro de visita */
     $datos = [
         'tipo_doc'      => $_POST['tipo_doc']      ?? null,
         'numero_doc'    => $_POST['numero_doc']    ?? null,
@@ -36,4 +62,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo $ok;
     exit;
 }
-

@@ -14,7 +14,7 @@ $filtro = $_GET['filtro'] ?? 'todos';
 // Construir consulta SQL con filtros
 $sql = "SELECT   vi.* , v.*
         FROM tbl_Visitante vi
-        INNER JOIN tbl_visita v ON vi.visi_id = v.vis_visi_id;";
+        INNER JOIN tbl_visita v ON vi.visi_id = v.vis_visi_id";
 
 switch ($filtro) {
     case 'hoy':
@@ -60,7 +60,7 @@ $stmt = $pdo->query($sql);
 
 <section class="table-card">
     <div class="tabla-responsive">
-        <table class="table table-striped">
+        <table id="tablaVisitas" class="table table-striped">
             <thead>
                 <tr>
                     <th>ID Visita</th>
@@ -74,6 +74,9 @@ $stmt = $pdo->query($sql);
                     <th>Hora Salida</th>
                     <th>Fecha Entrada</th>
                     <th>Fecha Salida</th>
+                    <!-- ✅ Nuevas columnas visuales -->
+                    <th>Total Visitas</th>
+                    <th>Tipo Visitante</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -91,6 +94,9 @@ $stmt = $pdo->query($sql);
                         <td><?= $datos->vis_hora_salida ?></td>
                         <td><?= $datos->vis_fecha_entrada ?></td>
                         <td><?= $datos->vis_fecha_salida ?></td>
+                        <!-- ✅ Columnas vacías que se llenan con JS -->
+                        <td></td>
+                        <td></td>
                         <td>
                             <a href="visitascrud/Editar.php?id=<?= $datos->vis_id ?>" class="btn btn-warning btn-sm">
                                 <i class="ri-edit-box-line"></i>
@@ -99,7 +105,6 @@ $stmt = $pdo->query($sql);
                             class="btn btn-danger btn-sm" 
                             onclick="return confirm('¿Seguro que deseas eliminar esta visita?');">
                             <i class="ri-delete-bin-2-line"></i>
-                            </a>
                             </a>
                         </td>
                     </tr>
@@ -116,5 +121,35 @@ $stmt = $pdo->query($sql);
 
 <?php require_once "./Layout/footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!-- ✅ Script para calcular las columnas visuales -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filas = document.querySelectorAll("#tablaVisitas tbody tr");
+    let conteo = {};
+
+    // 1️⃣ Contar visitas por documento
+    filas.forEach(fila => {
+        let documento = fila.cells[3].textContent.trim(); // columna Documento
+        conteo[documento] = (conteo[documento] || 0) + 1;
+    });
+
+    // 2️⃣ Llenar las celdas de Total Visitas y Tipo Visitante
+    filas.forEach(fila => {
+        let documento = fila.cells[3].textContent.trim();
+        let total = conteo[documento];
+
+        // columna Total Visitas (antes de Tipo Visitante)
+        fila.cells[fila.cells.length - 3].textContent = total;
+
+        // columna Tipo Visitante (antes de Acciones)
+        fila.cells[fila.cells.length - 2].innerHTML =
+            total >= 3
+                ? '<span class="badge bg-success">Frecuente</span>'
+                : '<span class="badge bg-warning text-dark">Ocasional</span>';
+    });
+});
+</script>
+
 </body>
 </html>

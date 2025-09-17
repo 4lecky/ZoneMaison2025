@@ -61,4 +61,13 @@ class RegistrarVisitaModel {
             return 'Error en la base de datos: ' . $e->getMessage();
         }
     }
+        public function buscarResidentePorCedula($cedula) {
+            $stmt = $this->pdo->prepare("SELECT usu_cedula, usu_nombre_completo, usu_correo, usu_telefono, usu_torre_residencia, usu_apartamento_residencia 
+                                        FROM tbl_usuario 
+                                        WHERE usu_cedula = ?");
+            $stmt->execute([$cedula]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+
 }

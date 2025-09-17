@@ -81,11 +81,10 @@ require_once "./Layout/header.php"
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <div class="input-box" style="width: 100%;">
-                            <label for="usuario">Cédula del Residente <span class="requerido">*</span></label>
-                            <input type="number" class="form-control" name="usuario" id="usuario" placeholder="Ej: 1234567890" data-validate="telefono" min="1" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="cedulaResidente">Cédula del Residente</label>
+                        <input type="number" id="cedulaResidente" placeholder="Ej:1023456789"  name="cedulaResidente" class="form-control">
+                    <div id="infoResidente"></div>
                     </div>
 
                 </fieldset>
@@ -154,6 +153,37 @@ require_once "./Layout/header.php"
            
     </main>
 
+    <script>
+            document.getElementById("cedulaResidente").addEventListener("blur", function() {
+            let cedula = this.value.trim();
+
+            if (cedula !== "") {
+                fetch("../controller/RegistrarVisitaController.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "action=buscarResidente&cedula=" + cedula
+                })
+                .then(res => res.json())
+                .then(data => {
+                    let info = document.getElementById("infoResidente");
+                    if (data.status === "ok") {
+                        info.innerHTML = `
+                            <div class="alert alert-success">
+                                <b>Residente encontrado:</b><br>
+                                ${data.data.usu_nombre_completo} <br>
+                                Torre: ${data.data.usu_torre_residencia}, Apto: ${data.data.usu_apartamento_residencia}
+                            </div>
+                        `;
+                    } else {
+                        info.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                    }
+                })
+                .catch(err => console.error("Error:", err));
+            }
+        });
+    </script>
+
+
     <!-- Scripts -->
     <script src="../assets/js/visitas.js"></script>
     <?php
@@ -161,6 +191,7 @@ require_once "./Layout/header.php"
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
