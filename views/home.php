@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="assets/img/logoZM.png" alt="ZoneMaisons" height="50">
+                <img src="../assets/img/LogoZM.png" alt="ZoneMaisons" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="assets/img/Conjunto_fondo_reset.jpg" alt="Gestión de Conjuntos" class="img-fluid">
+                    <img src="../assets/img/Conjunto_fondo_reset.jpg" alt="Gestión de Conjuntos" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <img src="assets/img/equipo.jpg" alt="Sobre Nosotros" class="img-fluid rounded shadow">
+                    <img src="../assets/img/equipo.jpg" alt="Sobre Nosotros" class="img-fluid rounded shadow">
                 </div>
                 <div class="col-lg-6">
                     <h3 class="mb-4">Transformando la Administración de Propiedad Horizontal</h3>
