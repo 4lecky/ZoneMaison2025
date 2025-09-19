@@ -14,11 +14,10 @@
                     <div class="footer-col">
                         <h3 class="Titulos_footer">Enlaces</h3>
                         <ul class="nosotros_redes">
-                            <li><a href="#">Inicio</a></li>
-                            <li><a href="#">Nosotros</a></li>
-                            <li><a href="#">Funciones</a></li>
-                            <li><a href="#">Precios</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="../views/home.php">Inicio</a></li>
+                            <li><a href="../views/home.php">Nosotros</a></li>
+                            <li><a href="../views/home.php">Modulos</a></li>
+                            <li><a href="../views/home.php">Planes</a></li>
                         </ul>
                     </div>
 
@@ -33,16 +32,24 @@
                     </div>
 
                 </div>
-
-                    <div class="footer-col_redes">
-
                             <ul class="redes_sociales">
-                                <li><i class="ri-whatsapp-fill"></i></li>
-                                <li><i class="ri-facebook-circle-fill"></i></li>
-                                <li><i class="ri-twitter-x-line"></i></li>
-                                <li><i class="ri-instagram-fill"></i></li>
-                                <li><i class="ri-github-fill"></i></li>
+                                <li>
+                                    <a href="https://whatsapp.com/channel/0029VbBNufa7YSd3u3USZz2U" target="_blank" rel="noopener noreferrer">
+                                        <i class="ri-whatsapp-fill"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://x.com/zonemaisons" target="_blank" rel="noopener noreferrer">
+                                        <i class="ri-twitter-x-line"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/zonemaisons?igsh=MXdkZW53enAwMnkzOQ==" target="_blank" rel="noopener noreferrer">
+                                        <i class="ri-instagram-fill"></i>
+                                    </a>
+                                </li>
                             </ul>
+
     
                     </div>
 
