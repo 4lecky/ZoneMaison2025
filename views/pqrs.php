@@ -66,7 +66,7 @@ require_once './Layout/header.php';
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <!-- JS principal -->
-    <script src="../assets/js/pqrs.js" defer></script>
+    <script src="../assets/Js/pqrs.js" defer></script>
 </head>
 <body>
     <!-- Encabezado principal -->

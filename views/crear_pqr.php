@@ -103,7 +103,7 @@ $nombresSeparados = separarNombreCompleto($usuario_mapeado['usu_nombre_completo'
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CREAR PQR</title>
-  <link rel="stylesheet" href="../assets/css/pqrs.css" />
+  <link rel="stylesheet" href="../assets/Css/pqrs.css" />
   <link rel="stylesheet" href="../assets/Css/globals.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/header.css" />
   <link rel="stylesheet" href="../assets/Css/Layout/footer.css" />
