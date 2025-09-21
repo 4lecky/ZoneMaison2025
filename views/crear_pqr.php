@@ -113,8 +113,14 @@ $nombresSeparados = separarNombreCompleto($usuario_mapeado['usu_nombre_completo'
 <body>
 
   <section class="titulo-principal">
-    <h1>PETICIONES, QUEJAS Y RECLAMOS</h1>
+      <div class="decoration"></div>
+      <div class="decoration"></div>
+      <div class="decoration"></div>
+      <div class="decoration"></div>
+      <h1>PETICIONES, QUEJAS Y RECLAMOS</h1>
   </section>
+
+
 
   <div class="principal-page">
     <h2>Formulario PQRS</h2>
