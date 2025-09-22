@@ -5,10 +5,14 @@ if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // sanitizar
 
     $modelo = new EditCrudVisiModel();
-    $resultado = $modelo->eliminarVisita($id);
-    $resultado = $modelo->eliminarVisitante($id); // ✅ ahora borra visitante
 
-    if ($resultado) {
+    // Primero eliminamos la visita
+    $okVisita = $modelo->eliminarVisita($id);
+
+    // Luego intentamos eliminar el visitante (si aplica)
+    $okVisitante = $modelo->eliminarVisitante($id);
+
+    if ($okVisita || $okVisitante) {
         // ✅ Eliminado con éxito
         header("Location: ../visitas.php?msg=eliminado");
         exit;

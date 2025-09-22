@@ -17,5 +17,13 @@ class EditCrudVisiControl {
     // Guardar cambios
     public function actualizar($data) {
         return $this->model->actualizarVisita($data);
+
+        if ($resultado) {
+        header("Location: ../views/visitas.php?msg=editado");
+        exit;
+    } else {
+        header("Location: ../views/visitas.php?msg=error");
+        exit;
+        }
     }
 }
