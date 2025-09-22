@@ -38,8 +38,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <label>Tipo de Documento<span class="asterisco">*</span></label>
           <select class="form-control" name="tipo_doc" id="tipo_doc" required>
             <option value="">Seleccione el Tipo de Documento</option>
-            <option> Cedula de cidadania </option>
-            <option> Cedula de extrangeria </option>
+            <option> Cédula de ciudadania </option>
+            <option> Cédula de extrangeria </option>
             <option> Pasaporte </option>
             <option> Permiso especial de permanencia (PEP) </option>
           </select>

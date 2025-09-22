@@ -57,9 +57,9 @@ require_once "./Layout/header.php"
                             <label for="tipo_doc">Tipo de Documento <span class="requerido">*</span></label>
                             <select class="form-control" name="tipo_doc" id="tipo_doc" required>
                                 <option selected disabled>Seleccione el Tipo de Documento</option>
-                                <option value="C.C.">C.C.</option>
-                                <option value="T.I.">T.I.</option>
-                                <option value="C.E.">C.E.</option>
+                                <option value="C.C">C.C.</option>
+                                <option value="T.I">T.I.</option>
+                                <option value="C.E">C.E.</option>
                             </select>
                         </div>
 
@@ -83,7 +83,7 @@ require_once "./Layout/header.php"
 
                     <div class="form-group">
                         <label for="cedulaResidente">Cédula del Residente</label>
-                        <input type="number" id="cedulaResidente" placeholder="Ej:1023456789"  name="cedulaResidente" class="form-control">
+                        <input type="number" id="cedulaResidente" placeholder="Ej:1023456789"  name="usuario" class="form-control">
                     <div id="infoResidente"></div>
                     </div>
 

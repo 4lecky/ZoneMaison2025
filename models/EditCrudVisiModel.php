@@ -38,23 +38,63 @@ class EditCrudVisiModel {
         ]);
     }
     // ✅ Eliminar visitante y automáticamente visitas asociadas (ON DELETE CASCADE)
-    public function eliminarVisitante($id) {
-        $sql = "DELETE FROM tbl_visitante WHERE visi_id = :id";
-        $stmt = $this->pdo->prepare($sql);
+    // public function eliminarVisitante($id) {
+    //     $sql = "DELETE FROM tbl_visitante WHERE visi_id = :id";
+    //     $stmt = $this->pdo->prepare($sql);
 
-        if ($stmt->execute([":id" => $id])) {
-            if ($stmt->rowCount() > 0) {
-                echo "✅ Se eliminó el visitante con ID: " . $id . " y sus visitas asociadas.";
-                return true;
-            } else {
-                echo "⚠️ No se encontró ningún visitante con visi_id = " . $id;
-                return false;
-            }
+    //     if ($stmt->execute([":id" => $id])) {
+    //         if ($stmt->rowCount() > 0) {
+    //             echo "✅ Se eliminó el visitante con ID: " . $id . " y sus visitas asociadas.";
+    //             return true;
+    //         } else {
+    //             echo "⚠️ No se encontró ningún visitante con visi_id = " . $id;
+    //             return false;
+    //         }
+    //     } else {
+    //         echo "❌ Error en DELETE: ";
+    //         print_r($stmt->errorInfo());
+    //         return false;
+    //     }
+    // }
+
+public function eliminarVisita($id) {
+    $sql = "DELETE FROM tbl_visita WHERE vis_id = :id";
+    $stmt = $this->pdo->prepare($sql);
+
+    if ($stmt->execute([":id" => $id])) {
+        if ($stmt->rowCount() > 0) {
+            echo "✅ Se eliminó la visita con ID: " . $id;
+            return true;
         } else {
-            echo "❌ Error en DELETE: ";
-            print_r($stmt->errorInfo());
+            echo "⚠️ No se encontró ninguna visita con vis_id = " . $id;
             return false;
         }
+    } else {
+        echo "❌ Error en DELETE: ";
+        print_r($stmt->errorInfo());
+        return false;
     }
+}
+
+public function eliminarVisitante($id) {
+    // ✅ Si la relación en la DB tiene ON DELETE CASCADE,
+    // al borrar un visitante se borran también sus visitas
+    $sql = "DELETE FROM tbl_visitante WHERE visi_id = :id";
+    $stmt = $this->pdo->prepare($sql);
+
+    if ($stmt->execute([":id" => $id])) {
+        if ($stmt->rowCount() > 0) {
+            echo "✅ Se eliminó el visitante con ID: " . $id . " y sus visitas asociadas.";
+            return true;
+        } else {
+            echo "⚠️ No se encontró ningún visitante con visi_id = " . $id;
+            return false;
+        }
+    } else {
+        echo "❌ Error en DELETE: ";
+        print_r($stmt->errorInfo());
+        return false;
+    }
+}
 
 }

@@ -70,7 +70,7 @@ $datos = $control->editar($id);
         </div>
 
         <button type="submit" class="boton confirmar">Confirmar</button>
-        <a href="../views/visita_crud.php" class="boton cancelar">Cancelar</a>    
+        <a href="../visita_crud.php" class="boton cancelar">Cancelar</a>    
     </form>
 </div>
 </body>

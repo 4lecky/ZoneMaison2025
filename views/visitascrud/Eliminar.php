@@ -5,6 +5,7 @@ if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // sanitizar
 
     $modelo = new EditCrudVisiModel();
+    $resultado = $modelo->eliminarVisita($id);
     $resultado = $modelo->eliminarVisitante($id); // ✅ ahora borra visitante
 
     if ($resultado) {
