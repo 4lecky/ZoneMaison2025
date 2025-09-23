@@ -15,6 +15,9 @@ if (!isset($_SESSION['usuario'])) {
 require_once "../config/db.php";
 require_once "./Layout/header.php";
 
+// Obtener el rol del usuario actual
+$rolUsuario = $_SESSION['usuario']['rol'] ?? 'Usuario';
+
 // Consultar zonas activas y en mantenimiento
 $sql = "SELECT * FROM tbl_zonas WHERE zona_estado IN ('activo', 'mantenimiento') ORDER BY zona_nombre";
 $stmt = $pdo->prepare($sql);
@@ -48,11 +51,19 @@ $zonas = $stmt->fetchAll();
                             <h3 class="mb-0">RESERVAR</h3>
                         </div>
                         
-                        <!-- Botones de navegación alineados a la derecha -->
+                        <!-- Botones de navegación con control de acceso -->
                         <div class="botones-navegacion">
-                            <a href="../views/zonas.php" class="btn btn-custom">ZONAS COMUNES</a>
-                            <a href="../views/misReservas.php" class="btn btn-custom">MIS RESERVAS</a>
-                            <a href="../views/todasReservas.php" class="btn btn-custom">TODAS LAS RESERVAS</a>
+                            <?php if ($rolUsuario === 'Administrador'): ?>
+                                <a href="../views/zonas.php" class="btn btn-custom">ZONAS COMUNES</a>
+                            <?php endif; ?>
+                            
+                            <?php if (in_array($rolUsuario, ['Administrador', 'Residente', 'Propietario', 'Vigilante'], true)): ?>
+                                <a href="../views/misReservas.php" class="btn btn-custom">MIS RESERVAS</a>
+                            <?php endif; ?>
+                            
+                            <?php if (in_array($rolUsuario, ['Administrador', 'Vigilante'], true)): ?>
+                                <a href="../views/todasReservas.php" class="btn btn-custom">TODAS LAS RESERVAS</a>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Mensajes de respuesta -->
@@ -64,7 +75,8 @@ $zonas = $stmt->fetchAll();
                             <?php unset($_SESSION['response'], $_SESSION['response_type']); ?>
                         <?php endif; ?>
                         
-                        <!-- Formulario de Nueva Reserva -->
+                        <!-- Formulario de Nueva Reserva - Solo mostrar si NO es Usuario -->
+                        <?php if ($rolUsuario !== 'Usuario'): ?>
                         <div class="formulario-reserva">
                             <h5 class="mb-4 formulario-titulo">Nueva Reserva</h5>
                             
@@ -137,7 +149,10 @@ $zonas = $stmt->fetchAll();
                                 </div>
                             </form>
                         </div>
+                        <?php endif; ?>
 
+                        <!-- Calendario de Reservas - Visible para todos excepto Usuario -->
+                        <?php if ($rolUsuario !== 'Usuario'): ?>
                         <div class="card shadow-sm mt-4">
                             <div class="card-header calendario-header">
                                 <h5 class="mb-0">Calendario de Reservas</h5>
@@ -190,6 +205,7 @@ $zonas = $stmt->fetchAll();
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -290,8 +306,10 @@ $zonas = $stmt->fetchAll();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- Solo cargar JavaScript del calendario si el usuario tiene permisos -->
+    <?php if ($rolUsuario !== 'Usuario'): ?>
     <script>
-        // Variables globales del calendario
+        // Todo tu JavaScript del calendario aquí (sin cambios)
         let fechaActual = new Date();
         let usuarioEncontrado = false;
         const meses = [
@@ -331,30 +349,24 @@ $zonas = $stmt->fetchAll();
             const año = fechaActual.getFullYear();
             const mes = fechaActual.getMonth();
             
-            // Actualizar título
             document.getElementById('mes-actual-titulo').textContent = `${meses[mes]} ${año}`;
             
             const primerDia = new Date(año, mes, 1);
             const ultimoDia = new Date(año, mes + 1, 0);
             const diasEnMes = ultimoDia.getDate();
             
-            // Ajustar para que lunes sea el primer día
             let primerDiaSemana = primerDia.getDay();
             primerDiaSemana = primerDiaSemana === 0 ? 6 : primerDiaSemana - 1;
             
             const grid = document.getElementById('calendario-grid');
             
-            // Mostrar indicador de carga
             grid.innerHTML = '<div style="grid-column: span 7; text-align: center; padding: 20px; color: #6c757d;">Cargando reservas...</div>';
             
-            // Cargar reservas de la zona seleccionada
             const zonaSeleccionada = document.getElementById('zona-select-calendario').value;
             const reservasZona = await cargarReservasZona(zonaSeleccionada);
             
-            // Limpiar grid y regenerar
             grid.innerHTML = '';
             
-            // Headers de días
             diasSemana.forEach(dia => {
                 const header = document.createElement('div');
                 header.className = 'calendario-dia-header';
@@ -362,7 +374,6 @@ $zonas = $stmt->fetchAll();
                 grid.appendChild(header);
             });
             
-            // Días del mes anterior
             const mesAnterior = new Date(año, mes - 1, 0).getDate();
             for (let i = primerDiaSemana - 1; i >= 0; i--) {
                 const dia = document.createElement('div');
@@ -371,13 +382,11 @@ $zonas = $stmt->fetchAll();
                 grid.appendChild(dia);
             }
             
-            // Días del mes actual
             const hoy = new Date();
             for (let dia = 1; dia <= diasEnMes; dia++) {
                 const diaElement = document.createElement('div');
                 diaElement.className = 'calendario-dia';
                 
-                // Marcar día actual
                 if (año === hoy.getFullYear() && mes === hoy.getMonth() && dia === hoy.getDate()) {
                     diaElement.classList.add('calendario-hoy');
                 }
@@ -386,7 +395,6 @@ $zonas = $stmt->fetchAll();
                 
                 let contenido = `<div class="calendario-numero">${dia}</div>`;
                 
-                // Agregar reservas reales de la base de datos
                 if (reservasZona.length > 0) {
                     const reservasDia = reservasZona.filter(r => r.fecha === fechaDia);
                     reservasDia.forEach(reserva => {
@@ -399,7 +407,6 @@ $zonas = $stmt->fetchAll();
                 grid.appendChild(diaElement);
             }
             
-            // Días del siguiente mes
             const diasRestantes = 42 - (primerDiaSemana + diasEnMes);
             for (let dia = 1; dia <= diasRestantes; dia++) {
                 const diaElement = document.createElement('div');
@@ -409,15 +416,14 @@ $zonas = $stmt->fetchAll();
             }
         }
 
-        // Búsqueda automática de usuario por cédula (MEJORADA)
+        // Búsqueda automática de usuario por cédula
         document.querySelector('input[name="numero_documento"]').addEventListener('input', async function() {
             const cedula = this.value.trim();
             const infoDiv = document.getElementById('info-usuario');
             const btnConfirmar = document.getElementById('btn-confirmar');
             
-            if (cedula.length >= 7) { // Validar que tenga al menos 7 dígitos
+            if (cedula.length >= 7) {
                 try {
-                    // Mostrar indicador de carga
                     infoDiv.innerHTML = '<small class="text-info">Buscando usuario...</small>';
                     
                     const response = await fetch(`../controller/reservasController.php?action=buscarUsuario&cedula=${cedula}`);
@@ -426,17 +432,14 @@ $zonas = $stmt->fetchAll();
                         const result = await response.json();
                         
                         if (result.success && result.data) {
-                            // Llenar automáticamente los campos ocultos
                             document.getElementById('apartamento').value = result.data.apartamento;
                             document.getElementById('nombre_residente').value = result.data.nombre;
                             
-                            // Mostrar información al usuario
                             this.style.borderColor = '#28a745';
                             infoDiv.innerHTML = `<small class="text-success">✓ Usuario encontrado: <strong>${result.data.nombre}</strong> - ${result.data.apartamento}</small>`;
                             usuarioEncontrado = true;
                             btnConfirmar.disabled = false;
                         } else {
-                            // Usuario no encontrado
                             document.getElementById('apartamento').value = '';
                             document.getElementById('nombre_residente').value = '';
                             this.style.borderColor = '#dc3545';
@@ -453,7 +456,6 @@ $zonas = $stmt->fetchAll();
                     btnConfirmar.disabled = true;
                 }
             } else {
-                // Limpiar campos si no hay suficientes dígitos
                 document.getElementById('apartamento').value = '';
                 document.getElementById('nombre_residente').value = '';
                 this.style.borderColor = '';
@@ -489,15 +491,6 @@ $zonas = $stmt->fetchAll();
             generarCalendario();
         });
 
-        // Función para mostrar términos dinámicos
-        function mostrarTerminos(zonaId, nombreZona, terminos) {
-            document.getElementById('modalTerminosLabel').textContent = 'Términos y Condiciones - ' + nombreZona;
-            document.getElementById('modalTerminosContent').innerHTML = terminos || '<p>No hay términos disponibles para esta zona.</p>';
-            
-            const modal = new bootstrap.Modal(document.getElementById('modalTerminos'));
-            modal.show();
-        }
-
         // Validación de horarios según zona seleccionada
         document.querySelector('select[name="zona_id"]').addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
@@ -519,6 +512,18 @@ $zonas = $stmt->fetchAll();
         document.addEventListener('DOMContentLoaded', function() {
             generarCalendario();
         });
+    </script>
+    <?php endif; ?>
+
+    <script>
+        // Función para mostrar términos dinámicos - Disponible para todos los roles
+        function mostrarTerminos(zonaId, nombreZona, terminos) {
+            document.getElementById('modalTerminosLabel').textContent = 'Términos y Condiciones - ' + nombreZona;
+            document.getElementById('modalTerminosContent').innerHTML = terminos || '<p>No hay términos disponibles para esta zona.</p>';
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalTerminos'));
+            modal.show();
+        }
     </script>
 </body>
 </html>
