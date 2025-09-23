@@ -28,6 +28,31 @@ require_once "./Layout/header.php"
 
 <body>
 
+<!-- Mensajes -->
+    <?php if (isset($_GET['msg'])): ?>
+        <?php if ($_GET['msg'] == 'registrado'): ?>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                ✅ Visita registrada exitosamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        <?php elseif ($_GET['msg'] == 'editado'): ?>
+            <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                ✏️ Visita editada correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        <?php elseif ($_GET['msg'] == 'eliminado'): ?>
+            <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                🗑️ Visita eliminada correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        <?php elseif ($_GET['msg'] == 'error'): ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                ❌ Ocurrió un error al procesar la acción.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
 
     <!-- Registro de Visitas -->
     <main class="container mt-4">

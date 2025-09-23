@@ -53,12 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ok = $modelo->insertarVisitaCompleta($datos);
 
     if ($ok === true) {
-        /* Ruta absoluta: evita 404 y problemas con “..” */
-        header('Location: ../views/visitas.php');
+        header('Location: ../views/visitas.php?msg=registrado');
         exit;
     }
-
-    /* Si $ok trae un mensaje de error lo mostramos */
-    echo $ok;
-    exit;
-}
+    }

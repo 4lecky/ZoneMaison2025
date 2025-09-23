@@ -37,6 +37,16 @@
   font-weight: bold;
 }
 
+/* Mensaje */
+.alert {
+    max-width: 400px;        /* ancho máximo reducido */
+    margin: 15px auto;       /* centrado horizontal y con margen superior */
+    border-radius: 8px;      /* bordes redondeados */
+    padding: 8px 12px;       /* espacio interno más compacto */
+    font-size: 14px;         /* texto más pequeño */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* sombrita */
+} 
+
 /* Botón Consultar Residente */
 .boton-residente {
   text-align: right;      /* lo manda a la derecha */
@@ -441,3 +451,5 @@ select:focus {
   background-color: #c0392b; 
   transform: translateY(-1px); 
 }
+
+
