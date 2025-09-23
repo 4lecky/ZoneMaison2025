@@ -6,7 +6,6 @@ require_once __DIR__ . '/../models/logicaCalculoParqueadero.php';
 $model = new insertaRegistroAlquiler($pdo);
 
 // Recibir datos del formulario
-$numRecibo       = $_POST['recibo'] ?? null;
 $tipoDoc         = $_POST['tipoDoc'] ?? null;
 $numDoc          = $_POST['numDoc'] ?? null;
 $nombrePropietario = $_POST['nombrePropietario'] ?? null;
@@ -39,7 +38,7 @@ try {
 
 // Insertar en la base de datos
 $resultado = $model->insertarAlquiler(
-    $numRecibo, $tipoDoc, $numDoc, $nombrePropietario,
+    $tipoDoc, $numDoc, $nombrePropietario,
     $torre, $apartamento, $placa, $numParqueadero,
     $estadoSalida, $fechaEntrada, $fechaSalida, $horaSalida,
     $precio, null, null

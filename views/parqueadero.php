@@ -62,14 +62,6 @@ require_once "./Layout/header.php"
         <button class="menu-button" onclick="mostrarFormulario('formularioCobro')">COBRO TARIFAS</button>
       </div>
 
-
-      <!-- Botón Consultar Parqueaderos -->
-      <!-- <div class="bloque" onclick="window.location.href='parqueadero_crud.php'">
-          <div class="boton consulta">
-              Consultar Parqueaderos
-          </div>
-      </div> -->
-
     </div>
   </aside>
 
@@ -82,6 +74,15 @@ require_once "./Layout/header.php"
 <!-- Formulario Registro de Vehiculos -->
 <main id="formularioRegistro" style="display: none;">
   <div class="formulario-container">
+
+  <!-- ✅ BOTÓN AGREGADO DIRECTAMENTE -->
+    <div class="boton-parqueadero">
+      <button onclick="window.location.href='parqueadero_crud.php'">
+        Consultar Crud Parqueadero
+      </button>
+    </div>
+
+
     <h2>REGISTRO DE VEHÍCULOS</h2>
 
     <form action="../controller/recibirDatosRegistroParqueadero.php" method="POST" class="formulario-registro">
@@ -235,11 +236,6 @@ require_once "./Layout/header.php"
     <form action="../controller/recibirDatosAlquiler.php" method="POST" class="formulario-Cobro">
       <fieldset>
         <legend>Datos del Residente y Vehículo</legend>
-
-        <div class="input-box">
-          <label for="num_recibo">Número de Recibo*</label>
-          <input type="text" name="recibo" id="num_recibo" placeholder="Ejem: 0001" required>
-        </div>
 
         <div class="input-group">
           <div class="input-box">

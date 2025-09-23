@@ -1,6 +1,3 @@
-// parqueadero.js (versión corregida)
-
-// Mostrar / ocultar formularios (el CRUD queda siempre visible)
 function mostrarFormulario(formularioId) {
   const formularios = ['formularioRegistro', 'formularioCobro', 'formularioPropietario'];
 
@@ -16,6 +13,17 @@ function mostrarFormulario(formularioId) {
   const target = document.getElementById(formularioId);
   if (target) {
     target.style.display = 'block';
+    
+    // ✅ AGREGADO: Insertar botón SOLO en el formulario de registro
+    if (formularioId === 'formularioRegistro' && !target.querySelector(".boton-parqueadero")) {
+      target.insertAdjacentHTML("afterbegin", `
+        <div class="boton-parqueadero">
+          <button onclick="window.location.href='parqueadero_crud.php'">
+            Consultar Crud Parqueadero
+          </button>
+        </div>
+      `);
+    }
   }
 }
 
@@ -49,7 +57,7 @@ async function cargarTablaParqueaderos() {
         <td>${index + 1}</td>
         <td contenteditable="true" data-campo="parq_vehi_placa" data-id="${reg.parq_id}">${escapeHtml(reg.parq_vehi_placa)}</td>
         <td contenteditable="true" data-campo="parq_nombre_propietario_vehi" data-id="${reg.parq_id}">${escapeHtml(reg.parq_nombre_propietario_vehi)}</td>
-        <td contenteditable="true" data-campo="parq_vehi_estadiIngreso" data-id="${reg.parq_id}">${escapeHtml(reg.parq_vehi_estadiIngreso)}</td>
+        <td contenteditable="true" data-campo="parq_vehi_estadoIngreso" data-id="${reg.parq_id}">${escapeHtml(reg.parq_vehi_estadoIngreso)}</td>
         <td>
           <button type="button" onclick="eliminarRegistro(${reg.parq_id})" class="btn-eliminar">🗑️</button>
         </td>
@@ -164,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Forzar recarga de estilos "repaint" (a veces ayuda)
   document.body.offsetHeight; 
 });
-
 
 
 

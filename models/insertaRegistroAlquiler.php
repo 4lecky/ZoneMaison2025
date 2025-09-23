@@ -7,13 +7,12 @@ class insertaRegistroAlquiler {
     }
 
     public function insertarAlquiler(
-        $numRecibo, $tipoDoc, $numDoc, $nombrePropietario,
+        $tipoDoc, $numDoc, $nombrePropietario,
         $torre, $apartamento, $placa, $numParqueadero,
         $estadoSalida, $fechaEntrada, $fechaSalida, $horaSalida, 
         $precio = null
     ) {
         $sql = "INSERT INTO tbl_alquiler (
-                    alqu_num_recibo,
                     alqu_tipo_doc_vehi,
                     alqu_num_doc_vehi,
                     alqu_nombre_propietario,
@@ -27,7 +26,6 @@ class insertaRegistroAlquiler {
                     alqu_hora_salida,
                     alqu_precio
                 ) VALUES (
-                    :recibo,
                     :tipoDoc,
                     :numDoc,
                     :nombrePropietario,
@@ -45,7 +43,6 @@ class insertaRegistroAlquiler {
         $stmt = $this->db->prepare($sql);
 
         // Vincular parámetros (manejo de NULL correctamente)
-        $stmt->bindValue(':recibo', $numRecibo ?: null, PDO::PARAM_NULL | PDO::PARAM_STR);
         $stmt->bindValue(':tipoDoc', $tipoDoc);
         $stmt->bindValue(':numDoc', $numDoc);
         $stmt->bindValue(':nombrePropietario', $nombrePropietario);
